@@ -1,0 +1,104 @@
+This is a hacked version of rakarrack. The effects are being ported to LV2 plugins.
+Originally the intention was to leave the existing code untouched, but this proved
+impossible, so don't try to compile through the normal method.
+
+Instead:
+
+ cd lv2
+ mkdir build
+ cd build
+ cmake ..
+ make
+ sudo make install
+
+That is all.
+
+
+
+
+This app was born after an informal conversation about effects for guitar using GNU/linux.
+The major part of this apps are discontinued or simply not have new versions after few
+years. Josep Andreu say on the IRC chat "I can made an app based on the effects set 
+hiden on code of ZynAddSubFX (by Paul Nasca Octavian). Some time after here is the
+result of our work... 
+
+This app has 42 effects: EQ Lineal, Compressor, Distortion, Overdrive, Echo, Chorus,
+Phaser, Flanger, Reverb , Parametric EQ, Wah Wah, Alienwha, Harmonizer etc. 
+The effects are procesed in cascade... The order of effects are configurable by the user. 
+The state of rack can be saved as 'presets'. Sets of presets can be stored as 'banks'. 
+The rack also has an integrated tuner and can receive MIDI control orders and can send MIDI 
+notes to MIDI devices like synthesizers.
+
+rakarrack is a JACK app.
+
+The dependencies are:
+
+libfltk1.1
+libxpm
+libjack100.0
+libasound2
+libsamplerate0
+libsndfile1
+aconnect  (part of Debian Package alsa-utils, name may vary on other distributions)
+jackd
+libxft2
+
+If you want to compile you will also need the development packages:
+
+libxpm-dev 
+libfltk1.1-dev
+libjack-dev
+libsndfile1-dev
+libsamplerate0-dev
+libasound2-dev
+libxft-dev
+
+The name of the packages are typical of the naming convention for Debian-based distributions.
+These can be a little different for each distro. Use your package manager search function
+to find the equivalent package for your distribution.
+
+If you are new to building packages from source code on Linux you will need a few other things
+to set up a minimal development environment.
+1) g++ (the compiler)
+2) make
+3) autotools-dev
+
+Then if compiling from git repository, you need these too.
+1) git-core (it is probable you have this if you're reading this README as it is likely you already used it to git the code).
+2) autogen
+
+If working from a graphical environment, you may wish to install 
+qjackctl or patchage to aid with configuring jackd and connecting JACK clients.
+
+This program was tested on a:
+
+Pentium3 Coopermine 933
+640MB RAM
+2.6.24.3-rt3 PREEMPT RT
+Creative Labs sblive 
+
+iBook G4 (PowerPC)
+1.2GB RAM, 1.33GHz Processor
+Debian Lenny 5.0, stock Kernel
+Debian Squeeze (testing as of Dec 2009), stock Kernel
+
+Dell Dimension 9200
+Intel Core DUO, 2.13GHz, 2GB RAM
+Debian Lenny 5.0, stock Kernel
+
+Intel(R) Core(TM)2 Quad CPU    Q6600  @ 2.40GHz
+4GB RAM
+2.6.31.6-rt19
+Intel HDA
+
+Intel(R) Xeon(TM) CPU 3.20GHz (Dual processor -- Dell PowerEdge 1750 server)
+3GB RAM
+2.6.26-2-686
+Debian Stable
+
+
+For more information about this app or help compiling, please visit http://rakarrack.sourceforge.net or
+join the #rakarrack chanel in freenode IRC.
+
+Thanks for downloading and using this app... any comments or suggestions are welcome.
+

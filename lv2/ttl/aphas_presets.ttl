@@ -1,0 +1,278 @@
+@prefix atom: <http://lv2plug.in/ns/ext/atom#> .
+@prefix lv2: <http://lv2plug.in/ns/lv2core#> .
+@prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix state: <http://lv2plug.in/ns/ext/state#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://rakarrack.sourceforge.net/effects.html#aphas:preset:phaser_1> 
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#aphas> ;
+	rdfs:label "Phaser 1" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 64.0
+	] , [
+		lv2:symbol "DISTORT" ;
+		pset:value 20.0
+	] , [
+		lv2:symbol "TEMPO" ;
+		pset:value 14.0
+	] , [
+		lv2:symbol "RND" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "STDL" ;
+		pset:value 64.0
+	] , [
+		lv2:symbol "WIDTH" ;
+		pset:value 110.0
+	] , [
+		lv2:symbol "FB" ;
+		pset:value 40.0
+	] , [
+		lv2:symbol "STAGES" ;
+		pset:value 4.0
+	] , [
+		lv2:symbol "MISMATCH" ;
+		pset:value 10.0
+	] , [
+		lv2:symbol "SUB" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "DEPTH" ;
+		pset:value 64.0
+	] , [
+		lv2:symbol "HYPER" ;
+		pset:value 1.0
+	] .
+
+<http://rakarrack.sourceforge.net/effects.html#aphas:preset:phaser_2> 
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#aphas> ;
+	rdfs:label "Phaser 2" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 64.0
+	] , [
+		lv2:symbol "DISTORT" ;
+		pset:value 20.0
+	] , [
+		lv2:symbol "TEMPO" ;
+		pset:value 14.0
+	] , [
+		lv2:symbol "RND" ;
+		pset:value 5.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "STDL" ;
+		pset:value 64.0
+	] , [
+		lv2:symbol "WIDTH" ;
+		pset:value 110.0
+	] , [
+		lv2:symbol "FB" ;
+		pset:value 40.0
+	] , [
+		lv2:symbol "STAGES" ;
+		pset:value 6.0
+	] , [
+		lv2:symbol "MISMATCH" ;
+		pset:value 10.0
+	] , [
+		lv2:symbol "SUB" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "DEPTH" ;
+		pset:value 70.0
+	] , [
+		lv2:symbol "HYPER" ;
+		pset:value 1.0
+	] .
+
+<http://rakarrack.sourceforge.net/effects.html#aphas:preset:phaser_3> 
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#aphas> ;
+	rdfs:label "Phaser 3" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 64.0
+	] , [
+		lv2:symbol "DISTORT" ;
+		pset:value 20.0
+	] , [
+		lv2:symbol "TEMPO" ;
+		pset:value 9.0
+	] , [
+		lv2:symbol "RND" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "STDL" ;
+		pset:value 64.0
+	] , [
+		lv2:symbol "WIDTH" ;
+		pset:value 40.0
+	] , [
+		lv2:symbol "FB" ;
+		pset:value 40.0
+	] , [
+		lv2:symbol "STAGES" ;
+		pset:value 8.0
+	] , [
+		lv2:symbol "MISMATCH" ;
+		pset:value 10.0
+	] , [
+		lv2:symbol "SUB" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "DEPTH" ;
+		pset:value 60.0
+	] , [
+		lv2:symbol "HYPER" ;
+		pset:value 0.0
+	] .
+
+<http://rakarrack.sourceforge.net/effects.html#aphas:preset:phaser_4> 
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#aphas> ;
+	rdfs:label "Phaser 4" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 64.0
+	] , [
+		lv2:symbol "DISTORT" ;
+		pset:value 20.0
+	] , [
+		lv2:symbol "TEMPO" ;
+		pset:value 14.0
+	] , [
+		lv2:symbol "RND" ;
+		pset:value 10.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "STDL" ;
+		pset:value 64.0
+	] , [
+		lv2:symbol "WIDTH" ;
+		pset:value 110.0
+	] , [
+		lv2:symbol "FB" ;
+		pset:value 80.0
+	] , [
+		lv2:symbol "STAGES" ;
+		pset:value 7.0
+	] , [
+		lv2:symbol "MISMATCH" ;
+		pset:value 10.0
+	] , [
+		lv2:symbol "SUB" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "DEPTH" ;
+		pset:value 45.0
+	] , [
+		lv2:symbol "HYPER" ;
+		pset:value 1.0
+	] .
+
+<http://rakarrack.sourceforge.net/effects.html#aphas:preset:phaser_5> 
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#aphas> ;
+	rdfs:label "Phaser 5" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 25.0
+	] , [
+		lv2:symbol "DISTORT" ;
+		pset:value 20.0
+	] , [
+		lv2:symbol "TEMPO" ;
+		pset:value 240.0
+	] , [
+		lv2:symbol "RND" ;
+		pset:value 10.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "STDL" ;
+		pset:value 64.0
+	] , [
+		lv2:symbol "WIDTH" ;
+		pset:value 25.0
+	] , [
+		lv2:symbol "FB" ;
+		pset:value 16.0
+	] , [
+		lv2:symbol "STAGES" ;
+		pset:value 8.0
+	] , [
+		lv2:symbol "MISMATCH" ;
+		pset:value 100.0
+	] , [
+		lv2:symbol "SUB" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "DEPTH" ;
+		pset:value 25.0
+	] , [
+		lv2:symbol "HYPER" ;
+		pset:value 0.0
+	] .
+
+<http://rakarrack.sourceforge.net/effects.html#aphas:preset:phaser_6> 
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#aphas> ;
+	rdfs:label "Phaser 6" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 64.0
+	] , [
+		lv2:symbol "DISTORT" ;
+		pset:value 20.0
+	] , [
+		lv2:symbol "TEMPO" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "RND" ;
+		pset:value 10.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "STDL" ;
+		pset:value 64.0
+	] , [
+		lv2:symbol "WIDTH" ;
+		pset:value 110.0
+	] , [
+		lv2:symbol "FB" ;
+		pset:value 40.0
+	] , [
+		lv2:symbol "STAGES" ;
+		pset:value 12.0
+	] , [
+		lv2:symbol "MISMATCH" ;
+		pset:value 10.0
+	] , [
+		lv2:symbol "SUB" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "DEPTH" ;
+		pset:value 70.0
+	] , [
+		lv2:symbol "HYPER" ;
+		pset:value 1.0
+	] .
+

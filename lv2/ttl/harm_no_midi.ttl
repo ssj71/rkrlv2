@@ -1,0 +1,235 @@
+@prefix doap:  <http://usefulinc.com/ns/doap#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix units: <http://lv2plug.in/ns/extensions/units#> .
+@prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+
+@prefix lv2:   <http://lv2plug.in/ns/lv2core#> .
+@prefix ui:   <http://lv2plug.in/ns/extensions/ui#> .
+
+# <http://rakarrack.sourceforge.net/effects.html#har_ui>
+# 	a ui:X11UI ;
+# 	ui:binary <rkrlv2_ui.so> ;
+# 	lv2:extensionData ui:idle;
+# 	lv2:optionalFeature ui:noUserResize ;
+# 	.
+
+<http://rakarrack.sourceforge.net/effects.html#har_no_mid>
+        a lv2:Plugin, lv2:PitchPlugin ;
+        doap:name "rkr Harmonizer (no midi)" ;
+        doap:maintainer [
+                foaf:name "Rakarrack Team" ;
+                foaf:homepage <http://rakarrack.sourceforge.net>;
+                foaf:mbox <ssjackson71@gmail.com> ;
+        ] ;
+        lv2:requiredFeature <http://lv2plug.in/ns/ext/urid#map> ;
+        lv2:optionalFeature lv2:hardRTCapable ;
+#        ui:ui  <http://rakarrack.sourceforge.net/effects.html#har_ui> ;
+
+        lv2:port [
+                a lv2:InputPort, lv2:AudioPort ;
+                lv2:index 0 ;
+                lv2:symbol "INPUT_L" ;
+                lv2:name "Audio In L" ;
+        ] ;
+        lv2:port [
+                a lv2:InputPort, lv2:AudioPort ;
+                lv2:index 1 ;
+                lv2:symbol "INPUT_R" ;
+                lv2:name "Audio In R" ;
+        ] ;
+        lv2:port [
+                a lv2:OutputPort, lv2:AudioPort ;
+                lv2:index 2 ;
+                lv2:symbol "OUTPUT_L" ;
+                lv2:name "Audio Out L" ;
+        ] ;
+        lv2:port [
+                a lv2:OutputPort, lv2:AudioPort ;
+                lv2:index 3 ;
+                lv2:symbol "OUTPUT_R" ;
+                lv2:name "Audio Out R" ;
+        ] ;
+
+        lv2:port [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 4 ;
+                lv2:symbol "WETDRY" ;
+                lv2:name "Wet/Dry" ;
+                lv2:default 64 ;
+                lv2:minimum 0 ;
+                lv2:maximum 127 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 5 ;
+                lv2:symbol "PAN" ;
+                lv2:name "Pan" ;
+                lv2:default 0 ;
+                lv2:minimum -64 ;
+                lv2:maximum 63 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 6 ;
+                lv2:symbol "GAIN" ;
+                lv2:name "Gain" ;
+                lv2:default 0 ;
+                lv2:minimum -64 ;
+                lv2:maximum 63 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 7 ;
+                lv2:symbol "INT" ;
+                lv2:name "Interval" ;
+                lv2:default 0 ;
+                lv2:minimum -12 ;
+                lv2:maximum 12 ;
+                lv2:portProperty lv2:integer ;
+                units:unit units:semitone12TET ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 8 ;
+                lv2:symbol "FREQ" ;
+                lv2:name "Filter Frequency" ;
+                lv2:default 6000 ;
+                lv2:minimum 20 ;
+                lv2:maximum 26000 ;
+                lv2:portProperty lv2:integer ;
+                units:unit units:hz ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 9 ;
+                lv2:symbol "SELECT" ;
+                lv2:name "Select Chord Mode" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 1 ;
+                lv2:portProperty lv2:integer ;
+                lv2:portProperty lv2:toggled ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 10 ;
+                lv2:symbol "NOTE" ;
+                lv2:name "Note" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 23 ;
+                lv2:portProperty lv2:integer ;
+                lv2:portProperty lv2:enumeration;
+                lv2:scalePoint [ rdfs:label "C"; rdf:value 0 ] ;
+                lv2:scalePoint [ rdfs:label "Db"; rdf:value 1 ] ;
+                lv2:scalePoint [ rdfs:label "D"; rdf:value 2 ] ;
+                lv2:scalePoint [ rdfs:label "Eb"; rdf:value 3 ] ;
+                lv2:scalePoint [ rdfs:label "E"; rdf:value 4 ] ;
+                lv2:scalePoint [ rdfs:label "F"; rdf:value 5 ] ;
+                lv2:scalePoint [ rdfs:label "Gb"; rdf:value 6 ] ;
+                lv2:scalePoint [ rdfs:label "G"; rdf:value 7 ] ;
+                lv2:scalePoint [ rdfs:label "Ab"; rdf:value 8 ] ;
+                lv2:scalePoint [ rdfs:label "A"; rdf:value 9 ] ;
+                lv2:scalePoint [ rdfs:label "Bb"; rdf:value 10 ] ;
+                lv2:scalePoint [ rdfs:label "B"; rdf:value 11 ] ;
+                lv2:scalePoint [ rdfs:label "C"; rdf:value 12 ] ;
+                lv2:scalePoint [ rdfs:label "C#"; rdf:value 13 ] ;
+                lv2:scalePoint [ rdfs:label "D"; rdf:value 14 ] ;
+                lv2:scalePoint [ rdfs:label "D#"; rdf:value 15 ] ;
+                lv2:scalePoint [ rdfs:label "E"; rdf:value 16 ] ;
+                lv2:scalePoint [ rdfs:label "F"; rdf:value 17 ] ;
+                lv2:scalePoint [ rdfs:label "F#"; rdf:value 18 ] ;
+                lv2:scalePoint [ rdfs:label "G"; rdf:value 19 ] ;
+                lv2:scalePoint [ rdfs:label "G#"; rdf:value 20 ] ;
+                lv2:scalePoint [ rdfs:label "A"; rdf:value 21 ] ;
+                lv2:scalePoint [ rdfs:label "A#"; rdf:value 22 ] ;
+                lv2:scalePoint [ rdfs:label "A"; rdf:value 23 ] ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 11 ;
+                lv2:symbol "CHORD" ;
+                lv2:name "Chord" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 33 ;
+                lv2:portProperty lv2:integer ;
+                lv2:portProperty lv2:enumeration;
+                lv2:scalePoint [ rdfs:label "None"; rdf:value 0 ] ;
+                lv2:scalePoint [ rdfs:label "6"; rdf:value 1 ] ;
+                lv2:scalePoint [ rdfs:label "Maj7"; rdf:value 2 ] ;
+                lv2:scalePoint [ rdfs:label "lyd"; rdf:value 3 ] ;
+                lv2:scalePoint [ rdfs:label "Maj(9)"; rdf:value 4 ] ;
+                lv2:scalePoint [ rdfs:label "Maj7(9)"; rdf:value 5 ] ;
+                lv2:scalePoint [ rdfs:label "6/9"; rdf:value 6 ] ;
+                lv2:scalePoint [ rdfs:label "+"; rdf:value 7 ] ;
+                lv2:scalePoint [ rdfs:label "min"; rdf:value 8 ] ;
+                lv2:scalePoint [ rdfs:label "min6"; rdf:value 9 ] ;
+                lv2:scalePoint [ rdfs:label "min7"; rdf:value 10 ] ;
+                lv2:scalePoint [ rdfs:label "min7(b5)"; rdf:value 11 ] ;
+                lv2:scalePoint [ rdfs:label "min9"; rdf:value 12 ] ;
+                lv2:scalePoint [ rdfs:label "min7(9)"; rdf:value 13 ] ;
+                lv2:scalePoint [ rdfs:label "min7(11)"; rdf:value 14 ] ;
+                lv2:scalePoint [ rdfs:label "min(Maj7)"; rdf:value 15 ] ;
+                lv2:scalePoint [ rdfs:label "min(Maj7)(9)"; rdf:value 16 ] ;
+                lv2:scalePoint [ rdfs:label "dim"; rdf:value 17 ] ;
+                lv2:scalePoint [ rdfs:label "dim7"; rdf:value 18 ] ;
+                lv2:scalePoint [ rdfs:label "7"; rdf:value 19 ] ;
+                lv2:scalePoint [ rdfs:label "7(Sus4)"; rdf:value 20 ] ;
+                lv2:scalePoint [ rdfs:label "7(b5)"; rdf:value 21 ] ;
+                lv2:scalePoint [ rdfs:label "7(9)"; rdf:value 22 ] ;
+                lv2:scalePoint [ rdfs:label "7(#11)"; rdf:value 23 ] ;
+                lv2:scalePoint [ rdfs:label "7(13)"; rdf:value 24 ] ;
+                lv2:scalePoint [ rdfs:label "7(b9)"; rdf:value 25 ] ;
+                lv2:scalePoint [ rdfs:label "7(b13)"; rdf:value 26 ] ;
+                lv2:scalePoint [ rdfs:label "7(#9)"; rdf:value 27 ] ;
+                lv2:scalePoint [ rdfs:label "+Maj7"; rdf:value 28 ] ;
+                lv2:scalePoint [ rdfs:label "+7"; rdf:value 29 ] ;
+                lv2:scalePoint [ rdfs:label "1+8"; rdf:value 30 ] ;
+                lv2:scalePoint [ rdfs:label "1+5"; rdf:value 31 ] ;
+                lv2:scalePoint [ rdfs:label "(Sus4)"; rdf:value 32 ] ;
+                lv2:scalePoint [ rdfs:label "2"; rdf:value 33 ] ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 12 ;
+                lv2:symbol "FGAIN" ;
+                lv2:name "Filter Gain" ;
+                lv2:default 0 ;
+                lv2:minimum -64 ;
+                lv2:maximum 63 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 13 ;
+                lv2:symbol "FQ" ;
+                lv2:name "Filter Q" ;
+                lv2:default 0 ;
+                lv2:minimum -64 ;
+                lv2:maximum 63 ;
+                lv2:portProperty lv2:integer ;
+#        ], [
+#                a lv2:InputPort, lv2:ControlPort ;
+#                lv2:index 14 ;
+#                lv2:symbol "MIDI" ;
+#                lv2:name "MIDI Mode" ;
+#                lv2:default 0 ;
+#                lv2:minimum 0 ;
+#                lv2:maximum 1 ;
+#                lv2:portProperty lv2:integer ;
+#                lv2:portProperty lv2:toggled ;
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#har_no_mid:preset:plain>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#har_no_mid> ;
+        rdfs:seeAlso <harm_no_midi_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#har_no_mid:preset:octavador>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#har_no_mid> ;
+        rdfs:seeAlso <harm_no_midi_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#har_no_mid:preset:3mdown>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#har_no_mid> ;
+        rdfs:seeAlso <harm_no_midi_presets.ttl> .
+

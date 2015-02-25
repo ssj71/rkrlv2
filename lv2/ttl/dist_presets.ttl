@@ -1,0 +1,254 @@
+@prefix atom: <http://lv2plug.in/ns/ext/atom#> .
+@prefix lv2: <http://lv2plug.in/ns/lv2core#> .
+@prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix state: <http://lv2plug.in/ns/ext/state#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://rakarrack.sourceforge.net/effects.html#dist:preset:overdrive_1>
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#dist> ;
+#	rdfs:label "overdrive 1" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 84.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "LRCr" ;
+		pset:value 99.0
+	] , [
+		lv2:symbol "DRIVE" ;
+		pset:value 56.0
+	] , [
+		lv2:symbol "LEVEL" ;
+		pset:value 40.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "NEG" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "LPF" ;
+		pset:value 6703.0
+	] , [
+		lv2:symbol "HPF" ;
+		pset:value 21.0
+	] , [
+		lv2:symbol "STEREO" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "PREFILTER" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "OCT" ;
+		pset:value 0.0
+	] .
+
+<http://rakarrack.sourceforge.net/effects.html#dist:preset:overdrive_2>
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#dist> ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 85.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "LRCr" ;
+		pset:value 35.0
+	] , [
+		lv2:symbol "DRIVE" ;
+		pset:value 29.0
+	] , [
+		lv2:symbol "LEVEL" ;
+		pset:value 45.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "NEG" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "LPF" ;
+		pset:value 25040.0
+	] , [
+		lv2:symbol "HPF" ;
+		pset:value 21.0
+	] , [
+		lv2:symbol "STEREO" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "PREFILTER" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "OCT" ;
+		pset:value 0.0
+	] .
+
+<http://rakarrack.sourceforge.net/effects.html#dist:preset:distortion_1>
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#dist> ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "LRCr" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "DRIVE" ;
+		pset:value 87.0
+	] , [
+		lv2:symbol "LEVEL" ;
+		pset:value 14.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 6.0
+	] , [
+		lv2:symbol "NEG" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "LPF" ;
+		pset:value 3134.0
+	] , [
+		lv2:symbol "HPF" ;
+		pset:value 157.0
+	] , [
+		lv2:symbol "STEREO" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "PREFILTER" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "OCT" ;
+		pset:value 0.0
+	] .
+
+<http://rakarrack.sourceforge.net/effects.html#dist:preset:distortion_2>
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#dist> ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "LRCr" ;
+		pset:value 127.0
+	] , [
+		lv2:symbol "DRIVE" ;
+		pset:value 87.0
+	] , [
+		lv2:symbol "LEVEL" ;
+		pset:value 14.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "NEG" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "LPF" ;
+		pset:value 3134.0
+	] , [
+		lv2:symbol "HPF" ;
+		pset:value 102.0
+	] , [
+		lv2:symbol "STEREO" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "PREFILTER" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "OCT" ;
+		pset:value 20.0
+	] .
+
+<http://rakarrack.sourceforge.net/effects.html#dist:preset:distortion_3>
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#dist> ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "LRCr" ;
+		pset:value 127.0
+	] , [
+		lv2:symbol "DRIVE" ;
+		pset:value 127.0
+	] , [
+		lv2:symbol "LEVEL" ;
+		pset:value 12.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 13.0
+	] , [
+		lv2:symbol "NEG" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "LPF" ;
+		pset:value 5078.0
+	] , [
+		lv2:symbol "HPF" ;
+		pset:value 56.0
+	] , [
+		lv2:symbol "STEREO" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "PREFILTER" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "OCT" ;
+		pset:value 0.0
+	] .
+
+<http://rakarrack.sourceforge.net/effects.html#dist:preset:guitar_amp>
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#dist> ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 84.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "LRCr" ;
+		pset:value 35.0
+	] , [
+		lv2:symbol "DRIVE" ;
+		pset:value 63.0
+	] , [
+		lv2:symbol "LEVEL" ;
+		pset:value 50.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 2.0
+	] , [
+		lv2:symbol "NEG" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "LPF" ;
+		pset:value 824.0
+	] , [
+		lv2:symbol "HPF" ;
+		pset:value 21.0
+	] , [
+		lv2:symbol "STEREO" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "PREFILTER" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "OCT" ;
+		pset:value 0.0
+	] .

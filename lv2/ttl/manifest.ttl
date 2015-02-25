@@ -1,0 +1,52 @@
+@prefix lv2:  <http://lv2plug.in/ns/lv2core#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<http://rakarrack.sourceforge.net/effects.html#eql>
+        a lv2:Plugin, lv2:MultiEQPlugin ;
+        lv2:binary <rkrlv2.so> ;
+        rdfs:seeAlso <eql.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#comp>
+        a lv2:Plugin, lv2:CompressorPlugin ;
+        lv2:binary <rkrlv2.so> ;
+        rdfs:seeAlso <comp.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#dist>
+        a lv2:Plugin, lv2:DistortionPlugin ;
+        lv2:binary <rkrlv2.so> ;
+        rdfs:seeAlso <dist.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#eco>
+        a lv2:Plugin, lv2:ReverbPlugin ;
+        lv2:binary <rkrlv2.so> ;
+        rdfs:seeAlso <echo.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#chor>
+        a lv2:Plugin, lv2:ChorusPlugin ;
+        lv2:binary <rkrlv2.so> ;
+        rdfs:seeAlso <chorus.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#aphas>
+        a lv2:Plugin, lv2:PhaserPlugin ;
+        lv2:binary <rkrlv2.so> ;
+        rdfs:seeAlso <aphas.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#har_no_mid>
+        a lv2:Plugin, lv2:PitchPlugin ;
+        lv2:binary <rkrlv2.so> ;
+        rdfs:seeAlso <harm_no_midi.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#Exciter>
+        a lv2:Plugin, lv2:DistortionPlugin ;
+        lv2:binary <rkrlv2.so> ;
+        rdfs:seeAlso <exciter.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#pan>
+        a lv2:Plugin, lv2:SpatialPlugin ;
+        lv2:binary <rkrlv2.so> ;
+        rdfs:seeAlso <pan.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#awha>
+        a lv2:Plugin, lv2:PhaserPlugin ;
+        lv2:binary <rkrlv2.so> ;
+        rdfs:seeAlso <alienwah.ttl> .

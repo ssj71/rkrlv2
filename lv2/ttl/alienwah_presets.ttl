@@ -1,0 +1,163 @@
+@prefix atom: <http://lv2plug.in/ns/ext/atom#> .
+@prefix lv2: <http://lv2plug.in/ns/lv2core#> .
+@prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix state: <http://lv2plug.in/ns/ext/state#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://rakarrack.sourceforge.net/effects.html#awha:preset:alienwah_1>
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#awha> ;
+	rdfs:label "AlienWah 1" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 64.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "TEMPO" ;
+		pset:value 80.0
+	] , [
+		lv2:symbol "RND" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "STDL" ;
+		pset:value -2.0
+	] , [
+		lv2:symbol "DEPTH" ;
+		pset:value 60.0
+	] , [
+		lv2:symbol "FB" ;
+		pset:value 105.0
+	] , [
+		lv2:symbol "DELAY" ;
+		pset:value 25.0
+	] , [
+		lv2:symbol "LRCR" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "PHASE" ;
+		pset:value 64.0
+	] .
+
+<http://rakarrack.sourceforge.net/effects.html#awha:preset:alienwah_2>
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#awha> ;
+	rdfs:label "AlienWah 2" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 64.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "TEMPO" ;
+		pset:value 95.0
+	] , [
+		lv2:symbol "RND" ;
+		pset:value 106.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "STDL" ;
+		pset:value 35.0
+	] , [
+		lv2:symbol "DEPTH" ;
+		pset:value 60.0
+	] , [
+		lv2:symbol "FB" ;
+		pset:value 105.0
+	] , [
+		lv2:symbol "DELAY" ;
+		pset:value 17.0
+	] , [
+		lv2:symbol "LRCR" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "PHASE" ;
+		pset:value 64.0
+	] .
+
+<http://rakarrack.sourceforge.net/effects.html#awha:preset:alienwah_3>
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#awha> ;
+	rdfs:label "AlienWah 3" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 64.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "TEMPO" ;
+		pset:value 55.0
+	] , [
+		lv2:symbol "RND" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "STDL" ;
+		pset:value 36.0
+	] , [
+		lv2:symbol "DEPTH" ;
+		pset:value 112.0
+	] , [
+		lv2:symbol "FB" ;
+		pset:value 105.0
+	] , [
+		lv2:symbol "DELAY" ;
+		pset:value 31.0
+	] , [
+		lv2:symbol "LRCR" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "PHASE" ;
+		pset:value 42.0
+	] .
+
+<http://rakarrack.sourceforge.net/effects.html#awha:preset:alienwah_4>
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#awha> ;
+	rdfs:label "AlienWah 4" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 64.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "TEMPO" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "RND" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "STDL" ;
+		pset:value 2.0
+	] , [
+		lv2:symbol "DEPTH" ;
+		pset:value 101.0
+	] , [
+		lv2:symbol "FB" ;
+		pset:value 11.0
+	] , [
+		lv2:symbol "DELAY" ;
+		pset:value 47.0
+	] , [
+		lv2:symbol "LRCR" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "PHASE" ;
+		pset:value 86.0
+	] .
