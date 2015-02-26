@@ -1,19 +1,71 @@
-This is a hacked version of rakarrack. The effects are being ported to LV2 plugins.
-Originally the intention was to leave the existing code untouched, but this proved
-impossible, so don't try to compile through the normal method.
+This project is the rakarrack effects ported to LV2 plugins.
+The ports are done such that hopefully when rakarrack gets
+an active maintainer these will get merged into the original
+project. This was forked from version 6.1 (git commit 7dba0c4bccf88740c56867568d5b218b4a131499).
 
-Instead:
+To install simply download the files and open a terminal in the extracted directory
+and execute:
 
- cd lv2
  mkdir build
  cd build
  cmake ..
  make
  sudo make install
 
-That is all.
+
+EFFECTS (X - done, W - won't do, x - done with missing features)
+[X] Lineal EQ
+[X]  Compressor
+[X] Distortion 
+[W] Overdrive - exact same engine as distortion, but has fewer controls, presets were added to dist.
+[X] Echo 
+[X] Chorus 
+[W] Phaser - I'm not planning to do this, but its nogotiable. I'm only interested in the analog phaser version
+[X] Analog Phaser 
+[W] Flanger - this is identical to the chorus, presets from this will be included there
+[ ] Reverb 
+[ ] Parametric EQ 
+[ ] Cabinet Emulation 
+[X] AutoPan/Stereo Expander 
+[x] Harmonizer - still need to do midi mode version
+[ ] Musical Delay 
+[W] Noise Gate - Direct copy of Steve Harris's Gate ladspa 
+[ ] WahWah 
+[X] AlienWah 
+[ ] Derelict 
+[ ] Valve 
+[ ] Dual Flange 
+[ ] Ring 
+[X] Exciter 
+[ ] DistBand 
+[ ] Arpie 
+[ ] Expander 
+[ ] Shuffle 
+[.] Synthfilter 
+[ ] VaryBand 
+[W] Convolotron - these require special input files, adding complexity. other excellent lv2 convolution engines already exist
+[W] Looper - other good lv2 loopers exist
+[.] MuTroMojo 
+[ ] Echoverse 
+[ ] CoilCrafter 
+[ ] ShelfBoost 
+[ ] Vocoder 
+[ ] Sustainer 
+[ ] Sequence 
+[ ] Shifter 
+[.] StompBox - this will be broken up into the various stomps
+[ ] Reverbtron 
+[.] Echotron - this has been requested, considering
+[W] StereoHarm - this seems like its limited use in plugin form, just use 2 instances of the mono version
+[ ] CompBand 
+[.] Opticaltrem 
+[.] Vibe 
+[.] Infinity
 
 
+
+
+Here is the original rakarrack README:
 
 
 This app was born after an informal conversation about effects for guitar using GNU/linux.

@@ -5,55 +5,6 @@ I'm porting this, but it really ends up being an issue of creating a lot of meta
 
 Eventually I'd like to port them all, but we'll see if my interest lasts that long. You can always request something.
 
-EFFECTS (X - done, W - won't do, P - planned, x - done with missing features)
-[X] Lineal EQ
-[X]  Compressor
-[X] Distortion 
-[W] Overdrive - exact same engine as distortion, but has fewer controls, presets were added to dist.
-[X] Echo 
-[X] Chorus 
-[W] Phaser - I'm not planning to do this, but its nogotiable. I'm only interested in the analog phaser version
-[X] Analog Phaser 
-[W] Flanger - this is identical to the chorus, presets from this will be included there
-[ ] Reverb 
-[ ] Parametric EQ 
-[ ] Cabinet Emulation 
-[X] AutoPan/Stereo Expander 
-[x] Harmonizer - still need to do midi mode version
-[ ] Musical Delay 
-[W] Noise Gate - Direct copy of Steve Harris's Gate ladspa 
-[ ] WahWah 
-[X] AlienWah 
-[ ] Derelict 
-[ ] Valve 
-[ ] Dual Flange 
-[ ] Ring 
-[X] Exciter 
-[ ] DistBand 
-[ ] Arpie 
-[ ] Expander 
-[ ] Shuffle 
-[P] Synthfilter 
-[ ] VaryBand 
-[W] Convolotron - these require special input files, adding complexity. other excellent lv2 convolution engines already exist
-[W] Looper - other good lv2 loopers exist
-[P] MuTroMojo 
-[ ] Echoverse 
-[ ] CoilCrafter 
-[ ] ShelfBoost 
-[ ] Vocoder 
-[ ] Sustainer 
-[ ] Sequence 
-[ ] Shifter 
-[P] StompBox - this will be broken up into the various stomps
-[W] Reverbtron 
-[W] Echotron - this has been requested, considering
-[W] StereoHarm - this seems like its limited use in plugin form, just use 2 instances of the mono version
-[ ] CompBand 
-[P] Opticaltrem 
-[P] Vibe 
-[P] Infinity
-
 
 ===== NOTES ======
 
