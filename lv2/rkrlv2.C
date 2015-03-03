@@ -1,5 +1,11 @@
 //Spencer Jackson
 #include<lv2.h>
+#include<lv2/lv2plug.in/ns/ext/urid/urid.h>
+#include<lv2/lv2plug.in/ns/ext/midi/midi.h>
+#include<lv2/lv2plug.in/ns/ext/atom/util.h>
+#include<lv2/lv2plug.in/ns/ext/time/time.h>
+#include<lv2/lv2plug.in/ns/ext/buf-size/buf-size.h>
+#include<lv2/lv2plug.in/ns/ext/options/options.h>
 #include<stdlib.h>
 #include<stdio.h>
 #include<string.h>
@@ -57,10 +63,12 @@
 //float aFreq;
 //char *s_uuid;
 
+
 typedef struct _RKRLV2
 {
     uint8_t nparams;
     uint8_t effectindex;//index of effect
+    uint16_t period_max;
 //    float* tempbuf_l;
 //    float* tempbuf_r;
 
@@ -70,6 +78,15 @@ typedef struct _RKRLV2
     float *output_r_p;
     float *param_p[16];
     float *dbg_p; 
+
+    struct urids
+    {
+        LV2_URID    midi_MidiEvent;
+        LV2_URID    atom_Float;
+        LV2_URID    atom_Int;
+        LV2_URID    bufsz_max;
+
+    } URIDs;
 
     EQ* eq;             //0
     Compressor* comp;   //1
@@ -112,6 +129,49 @@ wetdry_mix (float inl[], float inr[], float outl[], float outr[], float mix, uin
     };
 
 }
+
+//TODO: make this return error is required feature not supported
+void getFeatures(RKRLV2* plug, const LV2_Feature * const* host_features)
+{
+    uint8_t i,j;
+    LV2_URID_Map *urid_map;
+    plug->period_max = INTERMEDIATE_BUFSIZE;
+    for(i=0; host_features[i]; i++)
+    {
+        if(!strcmp(host_features[i]->URI,LV2_OPTIONS__options))
+        {
+            LV2_Options_Option* option;
+            option = (LV2_Options_Option*)host_features[i]->data;
+            for(j=0; option[j].key; j++)
+            {
+                if(option[j].key == plug->URIDs.bufsz_max)
+                {
+                    if(option[j].type == plug->URIDs.atom_Int)
+                    {
+                        plug->period_max = *(const int*)option[j].value;
+                    }
+                    //other types?
+                }
+            } 
+        }
+        else if(!strcmp(host_features[i]->URI,LV2_URID__map))
+        {
+            urid_map = (LV2_URID_Map *) host_features[i]->data;
+            if(urid_map)
+            {
+                plug->URIDs.atom_Int = urid_map->map(urid_map->handle,LV2_ATOM__Int);
+                plug->URIDs.atom_Float = urid_map->map(urid_map->handle,LV2_ATOM__Float);
+                plug->URIDs.midi_MidiEvent = urid_map->map(urid_map->handle,LV2_MIDI__MidiEvent);
+                plug->URIDs.bufsz_max = urid_map->map(urid_map->handle,LV2_BUF_SIZE__maxBlockLength);
+            }
+        }
+    }
+}
+
+
+/////////////////////////////////////////
+//      EFFECTS            
+////////////////////////////////////////
 
 ///// EQ /////////
 LV2_Handle init_eqlv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
@@ -245,8 +305,10 @@ LV2_Handle init_distlv2(const LV2_Descriptor *descriptor,double sample_freq, con
     plug->nparams = 12;
     plug->effectindex = 2;
 
-    plug->dist = new Distorsion(0,0,sample_freq,INTERMEDIATE_BUFSIZE,//hoping 1024 buffer is enough
-    		/*oversampling*/4, /*up interpolation*/0, /*down interpolation*/2);
+    getFeatures(plug,host_features);
+
+    plug->dist = new Distorsion(0,0, sample_freq, plug->period_max, /*oversampling*/4, 
+                                /*up interpolation method*/0, /*down interpolation method*/2);
 
     return plug;
 }
