@@ -26,7 +26,7 @@
 
 //#include"global.h"
 
-//hopefully hosts don't use periods of more than this
+//this is the default hopefully hosts don't use periods of more than this
 #define INTERMEDIATE_BUFSIZE 1024
 
 
@@ -586,8 +586,10 @@ LV2_Handle init_harmnomidlv2(const LV2_Descriptor *descriptor,double sample_freq
     plug->nparams = 10;
     plug->effectindex = 6;
 
+    getFeatures(plug,host_features);
+
     //magic numbers: shift qual 4, downsample 5, up qual 4, down qual 2,
-    plug->harm = new Harmonizer(0,0,4,5,4,2, INTERMEDIATE_BUFSIZE, sample_freq);
+    plug->harm = new Harmonizer(0,0,4,5,4,2, plug->period_max, sample_freq);
     plug->noteID = new Recognize(0,0,.6, sample_freq, 440.0);//.6 is default trigger value
     plug->chordID = new RecChord();
 
@@ -705,7 +707,9 @@ LV2_Handle init_exciterlv2(const LV2_Descriptor *descriptor,double sample_freq, 
     plug->nparams = 13;
     plug->effectindex = 7;
 
-    plug->exciter = new Exciter(0,0, sample_freq, INTERMEDIATE_BUFSIZE);
+    getFeatures(plug,host_features);
+
+    plug->exciter = new Exciter(0,0, sample_freq, plug->period_max);
 
     return plug;
 }
