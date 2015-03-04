@@ -1,0 +1,476 @@
+@prefix atom: <http://lv2plug.in/ns/ext/atom#> .
+@prefix lv2: <http://lv2plug.in/ns/lv2core#> .
+@prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix state: <http://lv2plug.in/ns/ext/state#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://rakarrack.sourceforge.net/effects.html#reve:preset:cathedral_1>
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#reve> ;
+	rdfs:label "Cathedral 1" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 80.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "TIME" ;
+		pset:value 63.0
+	] , [
+		lv2:symbol "IDEL" ;
+		pset:value 24.0
+	] , [
+		lv2:symbol "IDELFB" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "LPF" ;
+		pset:value 4002.0
+	] , [
+		lv2:symbol "HPF" ;
+		pset:value 27.0
+	] , [
+		lv2:symbol "DAMP" ;
+		pset:value 83.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "RS" ;
+		pset:value 64.0
+	] .
+
+<http://rakarrack.sourceforge.net/effects.html#reve:preset:cathedral_2>
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#reve> ;
+	rdfs:label "Cathedral 2" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 80.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "TIME" ;
+		pset:value 69.0
+	] , [
+		lv2:symbol "IDEL" ;
+		pset:value 35.0
+	] , [
+		lv2:symbol "IDELFB" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "LPF" ;
+		pset:value 25040.0
+	] , [
+		lv2:symbol "HPF" ;
+		pset:value 21.0
+	] , [
+		lv2:symbol "DAMP" ;
+		pset:value 71.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "RS" ;
+		pset:value 64.0
+	] .
+
+<http://rakarrack.sourceforge.net/effects.html#reve:preset:cathedral_3>
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#reve> ;
+	rdfs:label "Cathedral 3" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 80.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "TIME" ;
+		pset:value 69.0
+	] , [
+		lv2:symbol "IDEL" ;
+		pset:value 24.0
+	] , [
+		lv2:symbol "IDELFB" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "LPF" ;
+		pset:value 25040.0
+	] , [
+		lv2:symbol "HPF" ;
+		pset:value 2417.0
+	] , [
+		lv2:symbol "DAMP" ;
+		pset:value 78.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "RS" ;
+		pset:value 85.0
+	] .
+
+<http://rakarrack.sourceforge.net/effects.html#reve:preset:hall_1>
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#reve> ;
+	rdfs:label "Hall 1" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 90.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "TIME" ;
+		pset:value 51.0
+	] , [
+		lv2:symbol "IDEL" ;
+		pset:value 10.0
+	] , [
+		lv2:symbol "IDELFB" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "LPF" ;
+		pset:value 25040.0
+	] , [
+		lv2:symbol "HPF" ;
+		pset:value 81.0
+	] , [
+		lv2:symbol "DAMP" ;
+		pset:value 78.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "RS" ;
+		pset:value 64.0
+	] .
+
+<http://rakarrack.sourceforge.net/effects.html#reve:preset:hall_2>
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#reve> ;
+	rdfs:label "Hall 2" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 90.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "TIME" ;
+		pset:value 53.0
+	] , [
+		lv2:symbol "IDEL" ;
+		pset:value 20.0
+	] , [
+		lv2:symbol "IDELFB" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "LPF" ;
+		pset:value 25040.0
+	] , [
+		lv2:symbol "HPF" ;
+		pset:value 2417.0
+	] , [
+		lv2:symbol "DAMP" ;
+		pset:value 71.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "RS" ;
+		pset:value 64.0
+	] .
+
+<http://rakarrack.sourceforge.net/effects.html#reve:preset:room_1>
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#reve> ;
+	rdfs:label "Room 1" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 100.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "TIME" ;
+		pset:value 33.0
+	] , [
+		lv2:symbol "IDEL" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "IDELFB" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "LPF" ;
+		pset:value 25040.0
+	] , [
+		lv2:symbol "HPF" ;
+		pset:value 21.0
+	] , [
+		lv2:symbol "DAMP" ;
+		pset:value 106.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "RS" ;
+		pset:value 30.0
+	] .
+
+<http://rakarrack.sourceforge.net/effects.html#reve:preset:room_2>
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#reve> ;
+	rdfs:label "Room 2" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 100.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "TIME" ;
+		pset:value 21.0
+	] , [
+		lv2:symbol "IDEL" ;
+		pset:value 26.0
+	] , [
+		lv2:symbol "IDELFB" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "LPF" ;
+		pset:value 1223.0
+	] , [
+		lv2:symbol "HPF" ;
+		pset:value 21.0
+	] , [
+		lv2:symbol "DAMP" ;
+		pset:value 77.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "RS" ;
+		pset:value 45.0
+	] .
+
+<http://rakarrack.sourceforge.net/effects.html#reve:preset:basement>
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#reve> ;
+	rdfs:label "Basement" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 110.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "TIME" ;
+		pset:value 14.0
+	] , [
+		lv2:symbol "IDEL" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "IDELFB" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "LPF" ;
+		pset:value 25040.0
+	] , [
+		lv2:symbol "HPF" ;
+		pset:value 27.0
+	] , [
+		lv2:symbol "DAMP" ;
+		pset:value 71.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "RS" ;
+		pset:value 25.0
+	] .
+
+<http://rakarrack.sourceforge.net/effects.html#reve:preset:tunnel>
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#reve> ;
+	rdfs:label "Tunnel" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 85.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 16.0
+	] , [
+		lv2:symbol "TIME" ;
+		pset:value 84.0
+	] , [
+		lv2:symbol "IDEL" ;
+		pset:value 20.0
+	] , [
+		lv2:symbol "IDELFB" ;
+		pset:value 42.0
+	] , [
+		lv2:symbol "LPF" ;
+		pset:value 652.0
+	] , [
+		lv2:symbol "HPF" ;
+		pset:value 21.0
+	] , [
+		lv2:symbol "DAMP" ;
+		pset:value 78.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "RS" ;
+		pset:value 105.0
+	] .
+
+<http://rakarrack.sourceforge.net/effects.html#reve:preset:echoed_1>
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#reve> ;
+	rdfs:label "Echoed 1" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 95.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "TIME" ;
+		pset:value 26.0
+	] , [
+		lv2:symbol "IDEL" ;
+		pset:value 60.0
+	] , [
+		lv2:symbol "IDELFB" ;
+		pset:value 71.0
+	] , [
+		lv2:symbol "LPF" ;
+		pset:value 14722.0
+	] , [
+		lv2:symbol "HPF" ;
+		pset:value 21.0
+	] , [
+		lv2:symbol "DAMP" ;
+		pset:value 64.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "RS" ;
+		pset:value 64.0
+	] .
+
+<http://rakarrack.sourceforge.net/effects.html#reve:preset:echoed_2>
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#reve> ;
+	rdfs:label "Echoed 2" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 90.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "TIME" ;
+		pset:value 40.0
+	] , [
+		lv2:symbol "IDEL" ;
+		pset:value 88.0
+	] , [
+		lv2:symbol "IDELFB" ;
+		pset:value 71.0
+	] , [
+		lv2:symbol "LPF" ;
+		pset:value 14722.0
+	] , [
+		lv2:symbol "HPF" ;
+		pset:value 21.0
+	] , [
+		lv2:symbol "DAMP" ;
+		pset:value 88.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "RS" ;
+		pset:value 64.0
+	] .
+
+<http://rakarrack.sourceforge.net/effects.html#reve:preset:verylong_1>
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#reve> ;
+	rdfs:label "Very Long 1" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 90.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "TIME" ;
+		pset:value 93.0
+	] , [
+		lv2:symbol "IDEL" ;
+		pset:value 15.0
+	] , [
+		lv2:symbol "IDELFB" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "LPF" ;
+		pset:value 14722.0
+	] , [
+		lv2:symbol "HPF" ;
+		pset:value 21.0
+	] , [
+		lv2:symbol "DAMP" ;
+		pset:value 77.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "RS" ;
+		pset:value 95.0
+	] .
+
+<http://rakarrack.sourceforge.net/effects.html#reve:preset:verylong_2>
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#reve> ;
+	rdfs:label "Very Long 2" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 90.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "TIME" ;
+		pset:value 111.0
+	] , [
+		lv2:symbol "IDEL" ;
+		pset:value 30.0
+	] , [
+		lv2:symbol "IDELFB" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "LPF" ;
+		pset:value 14722.0
+	] , [
+		lv2:symbol "HPF" ;
+		pset:value 5058.0
+	] , [
+		lv2:symbol "DAMP" ;
+		pset:value 74.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "RS" ;
+		pset:value 80.0
+	] .
+
