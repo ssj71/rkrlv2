@@ -23,13 +23,13 @@ EFFECTS (X - done, W - won't do, x - done with missing features)
 [W] Phaser - I'm not planning to do this, but its nogotiable. I'm only interested in the analog phaser version
 [X] Analog Phaser 
 [W] Flanger - this is identical to the chorus, presets from this will be included there
-[ ] Reverb 
+[X] Reverb 
 [ ] Parametric EQ 
 [ ] Cabinet Emulation 
 [X] AutoPan/Stereo Expander 
 [x] Harmonizer - still need to do midi mode version
 [ ] Musical Delay 
-[W] Noise Gate - Direct copy of Steve Harris's Gate ladspa 
+[W] Noise Gate - Direct copy of Steve Harris's Gate ladspa plugin
 [ ] WahWah 
 [X] AlienWah 
 [ ] Derelict 

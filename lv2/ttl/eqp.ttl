@@ -3,19 +3,37 @@
 @prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix units: <http://lv2plug.in/ns/extensions/units#> .
+@prefix pg: <http://lv2plug.in/ns/ext/port-groups#> .
+@prefix param: <http://lv2plug.in/ns/ext/parameters#> .
 
 @prefix lv2:   <http://lv2plug.in/ns/lv2core#> .
 @prefix ui:   <http://lv2plug.in/ns/extensions/ui#> .
 
-# <http://rakarrack.sourceforge.net/effects.html#eql_ui>
+# <http://rakarrack.sourceforge.net/effects.html#eqp_ui>
 # 	a ui:X11UI ;
 # 	ui:binary <rkrlv2_ui.so> ;
 # 	lv2:extensionData ui:idle;
 # 	lv2:optionalFeature ui:noUserResize ;
 # 	.
 
-<http://rakarrack.sourceforge.net/effects.html#eql>
-        a lv2:Plugin, lv2:MultiEQPlugin ;
+<http://rakarrack.sourceforge.net/effects.html#eqp:group:low>
+    a param:ControlGroup ;
+    lv2:index 0 ;
+    lv2:name "Low Band" ;
+    lv2:symbol "low" .
+<http://rakarrack.sourceforge.net/effects.html#eqp:group:mid>
+    a param:ControlGroup ;
+    lv2:index 1 ;
+    lv2:name "Mid Band" ;
+    lv2:symbol "mid" .
+<http://rakarrack.sourceforge.net/effects.html#eqp:group:high>
+    a param:ControlGroup ;
+    lv2:index 2 ;
+    lv2:name "High Band" ;
+    lv2:symbol "hi" .
+
+<http://rakarrack.sourceforge.net/effects.html#eqp>
+        a lv2:Plugin, lv2:ParaEQPlugin ;
         doap:name "rkr Parametric EQ" ;
         doap:maintainer [
                 foaf:name "Rakarrack Team" ;
@@ -23,7 +41,7 @@
                 foaf:mbox <ssjackson71@gmail.com> ;
         ] ;
         lv2:optionalFeature lv2:hardRTCapable ;
-#        ui:ui  <http://rakarrack.sourceforge.net/effects.html#eql_ui> ;
+#        ui:ui  <http://rakarrack.sourceforge.net/effects.html#eqp_ui> ;
 
         lv2:port [
                 a lv2:InputPort, lv2:AudioPort ;
@@ -61,143 +79,95 @@
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 5 ;
-                lv2:symbol "Q" ;
-                lv2:name "Q" ;
+                lv2:symbol "LFREQ" ;
+                lv2:name "Frequency" ;
                 lv2:default 0 ;
-                lv2:minimum -64 ;
-                lv2:maximum 63 ;
+                lv2:minimum 20 ;
+                lv2:maximum 1000 ;
                 lv2:portProperty lv2:integer ;
+                units:unit units:hz ;
+                pg:group <http://rakarrack.sourceforge.net/effects.html#eqp:group:low> ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 6 ;
-                lv2:symbol "HZ31" ;
-                lv2:name "31 Hz" ;
+                lv2:symbol "LGAIN" ;
+                lv2:name "Gain" ;
                 lv2:default 0 ;
                 lv2:minimum -64 ;
                 lv2:maximum 63 ;
                 lv2:portProperty lv2:integer ;
+                pg:group <http://rakarrack.sourceforge.net/effects.html#eqp:group:low> ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 7 ;
-                lv2:symbol "HZ63" ;
-                lv2:name "63 Hz" ;
+                lv2:symbol "LQ" ;
+                lv2:name "Width" ;
                 lv2:default 0 ;
                 lv2:minimum -64 ;
                 lv2:maximum 63 ;
                 lv2:portProperty lv2:integer ;
+                pg:group <http://rakarrack.sourceforge.net/effects.html#eqp:group:low> ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 8 ;
-                lv2:symbol "HZ125" ;
-                lv2:name "125 Hz" ;
+                lv2:symbol "MFREQ" ;
+                lv2:name "Frequency" ;
                 lv2:default 0 ;
-                lv2:minimum -64 ;
-                lv2:maximum 63 ;
+                lv2:minimum 80 ;
+                lv2:maximum 8000 ;
                 lv2:portProperty lv2:integer ;
+                units:unit units:hz ;
+                pg:group <http://rakarrack.sourceforge.net/effects.html#eqp:group:mid> ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 9 ;
-                lv2:symbol "HZ250" ;
-                lv2:name "250 Hz" ;
+                lv2:symbol "MGAIN" ;
+                lv2:name "Gain" ;
                 lv2:default 0 ;
                 lv2:minimum -64 ;
                 lv2:maximum 63 ;
                 lv2:portProperty lv2:integer ;
+                pg:group <http://rakarrack.sourceforge.net/effects.html#eqp:group:mid> ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 10 ;
-                lv2:symbol "HZ500" ;
-                lv2:name "500 Hz" ;
+                lv2:symbol "MQ" ;
+                lv2:name "Width" ;
                 lv2:default 0 ;
                 lv2:minimum -64 ;
                 lv2:maximum 63 ;
                 lv2:portProperty lv2:integer ;
+                pg:group <http://rakarrack.sourceforge.net/effects.html#eqp:group:mid> ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 11 ;
-                lv2:symbol "KHZ1" ;
-                lv2:name "1 kHz" ;
+                lv2:symbol "HFREQ" ;
+                lv2:name "Frequency" ;
                 lv2:default 0 ;
-                lv2:minimum -64 ;
-                lv2:maximum 63 ;
+                lv2:minimum 6000 ;
+                lv2:maximum 26000 ;
                 lv2:portProperty lv2:integer ;
+                units:unit units:hz ;
+                pg:group <http://rakarrack.sourceforge.net/effects.html#eqp:group:high> ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 12 ;
-                lv2:symbol "KHZ2" ;
-                lv2:name "2 kHz" ;
+                lv2:symbol "HGAIN" ;
+                lv2:name "Gain" ;
                 lv2:default 0 ;
                 lv2:minimum -64 ;
                 lv2:maximum 63 ;
                 lv2:portProperty lv2:integer ;
+                pg:group <http://rakarrack.sourceforge.net/effects.html#eqp:group:high> ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 13 ;
-                lv2:symbol "KHZ4" ;
-                lv2:name "4 kHz" ;
+                lv2:symbol "HQ" ;
+                lv2:name "Width" ;
                 lv2:default 0 ;
                 lv2:minimum -64 ;
                 lv2:maximum 63 ;
                 lv2:portProperty lv2:integer ;
-        ], [
-                a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 14 ;
-                lv2:symbol "KHZ8" ;
-                lv2:name "8 kHz" ;
-                lv2:default 0 ;
-                lv2:minimum -64 ;
-                lv2:maximum 63 ;
-                lv2:portProperty lv2:integer ;
-        ], [
-                a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 15 ;
-                lv2:symbol "KHZ16" ;
-                lv2:name "16 kHz" ;
-                lv2:default 0 ;
-                lv2:minimum -64 ;
-                lv2:maximum 63 ;
-                lv2:portProperty lv2:integer ;
-#        ], [
-#                a lv2:InputPort, lv2:ControlPort ;
-#                lv2:index 16 ;
-#                lv2:symbol "8KHZ" ;
-#                lv2:name "8 kHz" ;
-#                lv2:default 0 ;
-#                lv2:minimum -64 ;
-#                lv2:maximum 63 ;
-#                lv2:portProperty lv2:integer ;
-#        ], [
-#                a lv2:InputPort, lv2:ControlPort ;
-#                lv2:index 17 ;
-#                lv2:symbol "8KHZ" ;
-#                lv2:name "8 kHz" ;
-#                lv2:default 0 ;
-#                lv2:minimum -64 ;
-#                lv2:maximum 63 ;
-#                lv2:portProperty lv2:integer ;
-#        ], [
-#                a lv2:InputPort, lv2:ControlPort ;
-#                lv2:index 18 ;
-#                lv2:symbol "8KHZ" ;
-#                lv2:name "8 kHz" ;
-#                lv2:default 0 ;
-#                lv2:minimum -64 ;
-#                lv2:maximum 63 ;
-#                lv2:portProperty lv2:integer ;
-#        ], [
-#                a lv2:InputPort, lv2:ControlPort ;
-#                lv2:index 19 ;
-#                lv2:symbol "16KHZ" ;
-#                lv2:name "16 kHz" ;
-#                lv2:default 0 ;
-#                lv2:minimum -64 ;
-#                lv2:maximum 63 ;
-#                lv2:portProperty lv2:integer ;
+                pg:group <http://rakarrack.sourceforge.net/effects.html#eqp:group:high> ;
         ] ;
-        #lv2:port [
-        #        a lv2:InputPort, lv2:AudioPort ;#CVPort ;
-        #        lv2:index 5 ;
-        #        lv2:symbol "TRIGGER" ;
-        #        lv2:name "Trigger" ;
-        #] ;
 	.
