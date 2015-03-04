@@ -30,11 +30,11 @@
 
 /*TODO: EarlyReflections,Prdelay,Perbalance */
 
-Reverb::Reverb (float * efxoutl_, float * efxoutr_)
+Reverb::Reverb (float * efxoutl_, float * efxoutr_, double samplerate, uint16_t intermediate_bufsize)
 {
     efxoutl = efxoutl_;
     efxoutr = efxoutr_;
-    inputbuf = new float[period];
+    inputbuf = new float[intermediate_bufsize];
     //filterpars=NULL;
 
 
@@ -56,6 +56,8 @@ Reverb::Reverb (float * efxoutl_, float * efxoutr_)
     rs = 1.0f;
     rs_coeff = rs / (float) REV_COMBS;
 
+    fSAMPLE_RATE = samplerate;
+
     for (int i = 0; i < REV_COMBS * 2; i++) {
         comblen[i] = 800 + (int) (RND * 1400);
         combk[i] = 0;
@@ -70,8 +72,8 @@ Reverb::Reverb (float * efxoutl_, float * efxoutr_)
         ap[i] = NULL;
     };
 
-    lpf =  new AnalogFilter (2, 22000, 1, 0);;
-    hpf =  new AnalogFilter (3, 20, 1, 0);
+    lpf =  new AnalogFilter (2, 22000, 1, 0, samplerate);;
+    hpf =  new AnalogFilter (3, 20, 1, 0, samplerate);
     idelay = NULL;
 
     setpreset (Ppreset);
@@ -114,9 +116,9 @@ Reverb::cleanup ()
  * Process one channel; 0=left,1=right
  */
 void
-Reverb::processmono (int ch, float * output)
+Reverb::processmono (unsigned int ch, float * output, uint32_t period)
 {
-    int i, j;
+    unsigned int i, j;
     float fbout, tmp;
     //TODO: implement the high part from lohidamp
 
@@ -160,9 +162,9 @@ Reverb::processmono (int ch, float * output)
  * Effect output
  */
 void
-Reverb::out (float * smps_l, float * smps_r)
+Reverb::out (float * smps_l, float * smps_r, uint32_t period)
 {
-    int i;
+    unsigned int i;
 
     for (i = 0; i < period; i++) {
         inputbuf[i] = (smps_l[i] + smps_r[i]) * .5f;
@@ -178,18 +180,18 @@ Reverb::out (float * smps_l, float * smps_r)
     };
 
 
-    lpf->filterout (inputbuf);
-    hpf->filterout (inputbuf);
+    lpf->filterout (inputbuf, period);
+    hpf->filterout (inputbuf, period);
 
-    processmono (0, efxoutl);	//left
-    processmono (1, efxoutr);	//right
+    processmono (0, efxoutl, period);	//left
+    processmono (1, efxoutr, period);	//right
 
 
 
     float lvol = rs_coeff * pan * 2.0f;
     float rvol = rs_coeff * (1.0f - pan) * 2.0f;
 
-    for (int i = 0; i < period; i++) {
+    for (unsigned int i = 0; i < period; i++) {
         efxoutl[i] *= lvol;
         efxoutr[i] *= rvol;
 
@@ -384,6 +386,7 @@ Reverb::setpreset (int npreset)
 {
     const int PRESET_SIZE = 12;
     const int NUM_PRESETS = 13;
+    int pdata[PRESET_SIZE];
     int presets[NUM_PRESETS][PRESET_SIZE] = {
         //Cathedral1
         {80, 64, 63, 24, 0, 0, 0, 4002, 27, 83, 1, 64},
@@ -416,7 +419,7 @@ Reverb::setpreset (int npreset)
 
     if(npreset>NUM_PRESETS-1) {
 
-        Fpre->ReadPreset(8,npreset-NUM_PRESETS+1);
+        Fpre->ReadPreset(8,npreset-NUM_PRESETS+1,pdata);
         for (int n = 0; n < PRESET_SIZE; n++)
             changepar (n, pdata[n]);
     } else {

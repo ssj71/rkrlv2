@@ -32,9 +32,9 @@
 class Reverb
 {
 public:
-    Reverb (float * efxoutl_, float * efxoutr_);
+    Reverb (float * efxoutl_, float * efxoutr_, double samplerate, uint16_t intermediate_bufsize);
     ~Reverb ();
-    void out (float * smps_l, float * smps_r);
+    void out (float * smps_l, float * smps_r, uint32_t period);
     void cleanup ();
 
     void setpreset (int npreset);
@@ -61,8 +61,9 @@ private:
     void setlpf (int Plpf);
     void settype (int Ptype);
     void setroomsize (int Proomsize);
-    void processmono (int ch, float * output);
+    void processmono (unsigned int ch, float * output, uint32_t period);
 
+    float fSAMPLE_RATE;
 
 
     //Parametrii

@@ -42,6 +42,7 @@ add_library(rkrlv2 SHARED
   ../src/HarmonicEnhancer.C
   ../src/Pan.C
   ../src/Alienwah.C
+  ../src/Reverb.C
 )
 
 set_target_properties(rkrlv2 PROPERTIES PREFIX "")

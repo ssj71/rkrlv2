@@ -9,10 +9,9 @@
 #define APHASELV2_URI "http://rakarrack.sourceforge.net/effects.html#aphas"
 #define PANLV2_URI "http://rakarrack.sourceforge.net/effects.html#pan"
 #define ALIENLV2_URI "http://rakarrack.sourceforge.net/effects.html#awha"
-
 #define HARMNOMIDLV2_URI "http://rakarrack.sourceforge.net/effects.html#har_no_mid"
-
 #define EXCITERLV2_URI "http://rakarrack.sourceforge.net/effects.html#Exciter"
+#define REVELV2_URI "http://rakarrack.sourceforge.net/effects.html#reve"
 
 enum RKRLV2_ports_
 {

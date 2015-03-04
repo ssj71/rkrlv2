@@ -23,6 +23,7 @@
 #include"Exciter.h"
 #include"Pan.h"
 #include"Alienwah.h"
+#include"Reverb.h"
 
 //#include"global.h"
 
@@ -99,7 +100,8 @@ typedef struct _RKRLV2
      Recognize* noteID;
     Exciter* exciter;	//7
     Pan* pan;			//8
-    Alienwah* alien;
+    Alienwah* alien;    //9
+    Reverb* reve;       //10
 }RKRLV2;
 
 
@@ -887,7 +889,78 @@ void run_alienlv2(LV2_Handle handle, uint32_t nframes)
     return;
 }
 
-///////// END OF FX /////////////
+///// reverb /////////
+LV2_Handle init_revelv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 10;
+    plug->effectindex = 10;
+
+    getFeatures(plug,host_features);
+
+    plug->reve = new Reverb(0,0,sample_freq,plug->period_max);
+
+    return plug;
+}
+
+void run_revelv2(LV2_Handle handle, uint32_t nframes)
+{
+    int i;
+    int val;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    //check and set changed parameters
+    i=0;
+    val = (int)*plug->param_p[i];//0 Wet/Dry
+    if(plug->reve->getpar(i) != val)
+    {
+        plug->reve->changepar(i,val);
+    }
+    i++;
+    val = (int)*plug->param_p[i] +64;// 1 pan is offset
+    if(plug->reve->getpar(i) != val)
+    {
+        plug->reve->changepar(i,val);
+    }
+    for(i++;i<5;i++)//2-4
+    {
+        val = (int)*plug->param_p[i];
+        if(plug->reve->getpar(i) != val)
+        {
+            plug->reve->changepar(i,val);
+        }
+    }
+    for(;i<plug->nparams;i++)//7-11 (5 and 6 are skipped
+    {
+        val = (int)*plug->param_p[i];
+        if(plug->reve->getpar(i+2) != val)
+        {
+            plug->reve->changepar(i+2,val);
+        }
+    }
+
+    //now set out ports and global period size
+    plug->reve->efxoutl = plug->output_l_p;
+    plug->reve->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->reve->out(plug->input_l_p,plug->input_r_p,nframes);
+
+    //and for whatever reason we have to do the wet/dry mix ourselves
+    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->reve->outvolume, nframes);
+
+    return;
+}
+
+
+
+
+/////////////////////////////////
+///////// END OF FX ///////////// 
+/////////////////////////////////
+
 
 
 void connect_rkrlv2_ports(LV2_Handle handle, uint32_t port, void *data)
@@ -949,11 +1022,16 @@ void cleanup_rkrlv2(LV2_Handle handle)
         	delete plug->chordID;
         	break;
         case 7:
+            delete plug->exciter;
+            break;
+        case 8:
         	delete plug->pan;
         	break;
-        case 8:
+        case 9:
         	delete plug->alien;
         	break;
+        case 10:
+            delete plug->reve;
     }
     free(plug);
 }
@@ -1068,6 +1146,17 @@ static const LV2_Descriptor alienlv2_descriptor={
     0//extension
 };
 
+static const LV2_Descriptor revelv2_descriptor={
+    REVELV2_URI,
+    init_revelv2,
+    connect_rkrlv2_ports,
+    0,//activate
+    run_revelv2,
+    0,//deactivate
+    cleanup_rkrlv2,
+    0//extension
+};
+
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor* lv2_descriptor(uint32_t index)
 {
@@ -1092,6 +1181,8 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
     	return &panlv2_descriptor ;
     case 9:
     	return &alienlv2_descriptor ;
+    case 10:
+    	return &revelv2_descriptor ;
     default:
         return 0;
     }
