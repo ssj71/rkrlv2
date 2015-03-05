@@ -24,8 +24,8 @@ EFFECTS (X - done, W - won't do, x - done with missing features)
 [X] Analog Phaser 
 [W] Flanger - this is identical to the chorus, presets from this will be included there
 [X] Reverb 
-[ ] Parametric EQ 
-[ ] Cabinet Emulation 
+[X] Parametric EQ 
+[X] Cabinet Emulation 
 [X] AutoPan/Stereo Expander 
 [x] Harmonizer - still need to do midi mode version
 [ ] Musical Delay 
