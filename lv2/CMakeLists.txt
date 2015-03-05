@@ -43,6 +43,7 @@ add_library(rkrlv2 SHARED
   ../src/Pan.C
   ../src/Alienwah.C
   ../src/Reverb.C
+  ../src/Cabinet.C
 )
 
 set_target_properties(rkrlv2 PROPERTIES PREFIX "")
