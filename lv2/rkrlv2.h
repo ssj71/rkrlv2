@@ -14,6 +14,7 @@
 #define REVELV2_URI "http://rakarrack.sourceforge.net/effects.html#reve"
 #define EQPLV2_URI "http://rakarrack.sourceforge.net/effects.html#eqp"
 #define CABLV2_URI "http://rakarrack.sourceforge.net/effects.html#cabe"
+#define MDELLV2_URI "http://rakarrack.sourceforge.net/effects.html#delm"
 
 enum RKRLV2_ports_
 {

@@ -28,41 +28,52 @@ EFFECTS (X - done, W - won't do, x - done with missing features)
 [X] Cabinet Emulation 
 [X] AutoPan/Stereo Expander 
 [x] Harmonizer - still need to do midi mode version
-[ ] Musical Delay 
+[X] Musical Delay 
 [W] Noise Gate - Direct copy of Steve Harris's Gate ladspa plugin
 [ ] WahWah 
 [X] AlienWah 
 [ ] Derelict 
 [ ] Valve 
-[ ] Dual Flange 
-[ ] Ring 
+[.] Dual Flange 
+[.] Ring 
 [X] Exciter 
 [ ] DistBand 
-[ ] Arpie 
-[ ] Expander 
+[.] Arpie 
+[.] Expander 
 [ ] Shuffle 
 [.] Synthfilter 
 [ ] VaryBand 
 [W] Convolotron - these require special input files, adding complexity. other excellent lv2 convolution engines already exist
 [W] Looper - other good lv2 loopers exist
 [.] MuTroMojo 
-[ ] Echoverse 
+[.] Echoverse 
 [ ] CoilCrafter 
 [ ] ShelfBoost 
 [ ] Vocoder 
-[ ] Sustainer 
-[ ] Sequence 
+[.] Sustainer 
+[.] Sequence 
 [ ] Shifter 
 [.] StompBox - this will be broken up into the various stomps
-[ ] Reverbtron 
+[.] Reverbtron 
 [.] Echotron - this has been requested, considering
 [W] StereoHarm - this seems like its limited use in plugin form, just use 2 instances of the mono version
 [ ] CompBand 
-[.] Opticaltrem 
-[.] Vibe 
-[.] Infinity
+[ ] Opticaltrem 
+[ ] Vibe 
+[ ] Infinity
 
-
+stompbox
+echotron
+reverbtron
+expander
+sustainer
+ring
+synthfilter
+arpie
+mutromojo
+dualflange
+echoversse
+equence
 
 
 Here is the original rakarrack README:

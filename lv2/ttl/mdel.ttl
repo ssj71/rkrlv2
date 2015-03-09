@@ -1,0 +1,229 @@
+@prefix doap:  <http://usefulinc.com/ns/doap#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix units: <http://lv2plug.in/ns/extensions/units#> .
+@prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+@prefix pg: <http://lv2plug.in/ns/ext/port-groups#> .
+@prefix param: <http://lv2plug.in/ns/ext/parameters#> .
+
+@prefix lv2:   <http://lv2plug.in/ns/lv2core#> .
+@prefix ui:   <http://lv2plug.in/ns/extensions/ui#> .
+
+# <http://rakarrack.sourceforge.net/effects.html#delm_ui>
+# 	a ui:X11UI ;
+# 	ui:binary <rkrlv2_ui.so> ;
+# 	lv2:extensionData ui:idle;
+# 	lv2:optionalFeature ui:noUserResize ;
+# 	.
+
+<http://rakarrack.sourceforge.net/effects.html#delm:group:del1>
+    a param:ControlGroup ;
+    lv2:index 0 ;
+    lv2:name "Delay 1" ;
+    lv2:symbol "delline1" .
+<http://rakarrack.sourceforge.net/effects.html#delm:group:del2>
+    a param:ControlGroup ;
+    lv2:index 1 ;
+    lv2:name "Delay 2" ;
+    lv2:symbol "delline1" .
+
+<http://rakarrack.sourceforge.net/effects.html#delm>
+        a lv2:Plugin, lv2:DelayPlugin ;
+        doap:name "rkr Musical Delay" ;
+        doap:maintainer [
+                foaf:name "Rakarrack Team" ;
+                foaf:homepage <http://rakarrack.sourceforge.net>;
+                foaf:mbox <ssjackson71@gmail.com> ;
+        ] ;
+        lv2:optionalFeature lv2:hardRTCapable,
+            <http://lv2plug.in/ns/ext/urid#map>,
+            <http://lv2plug.in/ns/ext/bufsz#maxBlockLength>;
+#        ui:ui  <http://rakarrack.sourceforge.net/effects.html#delm_ui> ;
+
+        lv2:port [
+                a lv2:InputPort, lv2:AudioPort ;
+                lv2:index 0 ;
+                lv2:symbol "INPUT_L" ;
+                lv2:name "Audio In L" ;
+        ] ;
+        lv2:port [
+                a lv2:InputPort, lv2:AudioPort ;
+                lv2:index 1 ;
+                lv2:symbol "INPUT_R" ;
+                lv2:name "Audio In R" ;
+        ] ;
+        lv2:port [
+                a lv2:OutputPort, lv2:AudioPort ;
+                lv2:index 2 ;
+                lv2:symbol "OUTPUT_L" ;
+                lv2:name "Audio Out L" ;
+        ] ;
+        lv2:port [
+                a lv2:OutputPort, lv2:AudioPort ;
+                lv2:index 3 ;
+                lv2:symbol "OUTPUT_R" ;
+                lv2:name "Audio Out R" ;
+        ] ;
+        lv2:port [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 4 ;
+                lv2:symbol "WETDRY" ;
+                lv2:name "Wet/Dry" ;
+                lv2:default 64 ;
+                lv2:minimum 0 ;
+                lv2:maximum 127 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 5 ;
+                lv2:symbol "PAN1" ;
+                lv2:name "Panning" ;
+                lv2:default -64 ;
+                lv2:minimum -64 ;
+                lv2:maximum 63 ;
+                lv2:portProperty lv2:integer ;
+                pg:group <http://rakarrack.sourceforge.net/effects.html#delm:group:del1> ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 6 ;
+                lv2:symbol "DEL1" ;
+                lv2:name "Delay" ;
+                lv2:default 2 ;
+                lv2:minimum 1 ;
+                lv2:maximum 6 ;
+                lv2:portProperty lv2:integer ;
+                units:unit units:beat ;
+                pg:group <http://rakarrack.sourceforge.net/effects.html#delm:group:del1> ;
+                lv2:portProperty lv2:enumeration;
+                lv2:scalePoint [ rdfs:label "1"; rdf:value 1 ] ;
+                lv2:scalePoint [ rdfs:label "1/2"; rdf:value 2 ] ;
+                lv2:scalePoint [ rdfs:label "1/3"; rdf:value 3 ] ;
+                lv2:scalePoint [ rdfs:label "1/4"; rdf:value 4 ] ;
+                lv2:scalePoint [ rdfs:label "1/5"; rdf:value 5 ] ;
+                lv2:scalePoint [ rdfs:label "1/6"; rdf:value 6 ] ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 7 ;
+                lv2:symbol "OFFS" ;
+                lv2:name "Delay Offset" ;
+                lv2:default 7 ;
+                lv2:minimum 1 ;
+                lv2:maximum 7 ;
+                lv2:portProperty lv2:integer ;
+                lv2:portProperty lv2:enumeration;
+                lv2:scalePoint [ rdfs:label "1"; rdf:value 1 ] ;
+                lv2:scalePoint [ rdfs:label "1/2"; rdf:value 2 ] ;
+                lv2:scalePoint [ rdfs:label "1/3"; rdf:value 3 ] ;
+                lv2:scalePoint [ rdfs:label "1/4"; rdf:value 4 ] ;
+                lv2:scalePoint [ rdfs:label "1/5"; rdf:value 5 ] ;
+                lv2:scalePoint [ rdfs:label "1/6"; rdf:value 6 ] ;
+                lv2:scalePoint [ rdfs:label "0"; rdf:value 7 ] ;
+                units:unit units:beat ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 8 ;
+                lv2:symbol "LRCr" ;
+                lv2:name "Left/Right Crossover" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 127 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 9 ;
+                lv2:symbol "FB1" ;
+                lv2:name "Feedback" ;
+                lv2:default 59 ;
+                lv2:minimum 0 ;
+                lv2:maximum 127 ;
+                lv2:portProperty lv2:integer ;
+                pg:group <http://rakarrack.sourceforge.net/effects.html#delm:group:del1> ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 10 ;
+                lv2:symbol "DAMP" ;
+                lv2:name "Damping" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 127 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 11 ;
+                lv2:symbol "PAN2" ;
+                lv2:name "Panning" ;
+                lv2:default 63 ;
+                lv2:minimum -64.0 ;
+                lv2:maximum 63.0 ;
+                lv2:portProperty lv2:integer ;
+                pg:group <http://rakarrack.sourceforge.net/effects.html#delm:group:del2> ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 12 ;
+                lv2:symbol "DEL2" ;
+                lv2:name "Delay" ;
+                lv2:default 4.0 ;
+                lv2:minimum 1.0 ;
+                lv2:maximum 6.0 ;
+                lv2:portProperty lv2:integer ;
+                units:unit units:beat ;
+                pg:group <http://rakarrack.sourceforge.net/effects.html#delm:group:del2> ;
+                lv2:portProperty lv2:enumeration;
+                lv2:scalePoint [ rdfs:label "1"; rdf:value 1 ] ;
+                lv2:scalePoint [ rdfs:label "1/2"; rdf:value 2 ] ;
+                lv2:scalePoint [ rdfs:label "1/3"; rdf:value 3 ] ;
+                lv2:scalePoint [ rdfs:label "1/4"; rdf:value 4 ] ;
+                lv2:scalePoint [ rdfs:label "1/5"; rdf:value 5 ] ;
+                lv2:scalePoint [ rdfs:label "1/6"; rdf:value 6 ] ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 13 ;
+                lv2:symbol "FB2" ;
+                lv2:name "Feedback" ;
+                lv2:default 59 ;
+                lv2:minimum 0 ;
+                lv2:maximum 127 ;
+                lv2:portProperty lv2:integer ;
+                pg:group <http://rakarrack.sourceforge.net/effects.html#delm:group:del2> ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 14 ;
+                lv2:symbol "TEMPO" ;
+                lv2:name "Tempo" ;
+                lv2:default 106 ;
+                lv2:minimum 10 ;
+                lv2:maximum 480 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 15 ;
+                lv2:symbol "GAIN1" ;
+                lv2:name "Gain" ;
+                lv2:default 75 ;
+                lv2:minimum 0 ;
+                lv2:maximum 127 ;
+                lv2:portProperty lv2:integer ;
+                pg:group <http://rakarrack.sourceforge.net/effects.html#delm:group:del1> ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 16 ;
+                lv2:symbol "GAIN2" ;
+                lv2:name "Gain" ;
+                lv2:default 75 ;
+                lv2:minimum 0 ;
+                lv2:maximum 127 ;
+                lv2:portProperty lv2:integer ;
+                pg:group <http://rakarrack.sourceforge.net/effects.html#delm:group:del2> ;
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#delm:preset:echo_1>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#delm> ;
+        rdfs:seeAlso <mdel_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#delm:preset:echo_2>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#delm> ;
+        rdfs:seeAlso <mdel_presets.ttl> .
