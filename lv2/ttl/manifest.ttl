@@ -61,3 +61,8 @@
         a lv2:Plugin, lv2:ParaEQPlugin ;
         lv2:binary <rkrlv2.so> ;
         rdfs:seeAlso <eqp.ttl> .
+# 12
+<http://rakarrack.sourceforge.net/effects.html#cabe>
+        a lv2:Plugin, lv2:FilterPlugin ;
+        lv2:binary <rkrlv2.so> ;
+        rdfs:seeAlso <cab.ttl> .

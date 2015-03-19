@@ -24,6 +24,7 @@
 #include"Pan.h"
 #include"Alienwah.h"
 #include"Reverb.h"
+#include"Cabinet.h"
 
 //#include"global.h"
 
@@ -89,7 +90,7 @@ typedef struct _RKRLV2
 
     } URIDs;
 
-    EQ* eq;             //0
+    EQ* eq;             //0, 11
     Compressor* comp;   //1
     Distorsion* dist;   //2
     Echo* echo;         //3
@@ -102,7 +103,7 @@ typedef struct _RKRLV2
     Pan* pan;			//8
     Alienwah* alien;    //9
     Reverb* reve;       //10
-    EQ* eqp;
+    Cabinet* cab;       //12
 }RKRLV2;
 
 
@@ -964,13 +965,14 @@ LV2_Handle init_eqplv2(const LV2_Descriptor *descriptor,double sample_freq, cons
     plug->nparams = 10;
     plug->effectindex = 11;
 
-    plug->eqp = new EQ(0,0,sample_freq);
+    plug->eq = new EQ(0,0,sample_freq);
 
     //eq has a bunch of setup stuff. Why isn't this in the EQ initalizer?
-    for (int i = 0; i <= 10; i += 5) {
-        plug->eqp->changepar (i + 10, 7);
-        plug->eqp->changepar (i + 13, 64);
-        plug->eqp->changepar (i + 14, 0);
+    for (int i = 0; i <= 10; i += 5) 
+    {
+        plug->eq->changepar (i + 10, 7);
+        plug->eq->changepar (i + 13, 64);
+        plug->eq->changepar (i + 14, 0);
 
     }
     return plug;
@@ -984,38 +986,36 @@ void run_eqplv2(LV2_Handle handle, uint32_t nframes)
     RKRLV2* plug = (RKRLV2*)handle;
 
     //check and set changed parameters
-    //eq1 is a little strange for parameters
-    // DON'T USE THIS ONE AS AN EXAMPLE
     i = 0;
 
     val = (int)*plug->param_p[0]+64;//gain
-    if(plug->eqp->getpar(0) != val)
+    if(plug->eq->getpar(0) != val)
     {
-        plug->eqp->changepar(0,val);
+        plug->eq->changepar(0,val);
     }
     
     for(i=1;i<4;i++)//1-3 low band
     {
         val = (int)*plug->param_p[i]+64;
-        if(plug->eqp->getpar(i + 10) != val)
+        if(plug->eq->getpar(i + 10) != val)
         {
-            plug->eqp->changepar(i+10,val);
+            plug->eq->changepar(i+10,val);
         }
     }
     for(;i<7;i++)//4-6 mid band
     {
         val = (int)*plug->param_p[i]+64;
-        if(plug->eqp->getpar(i + 12) != val)
+        if(plug->eq->getpar(i + 12) != val)
         {
-            plug->eqp->changepar(i+12,val);
+            plug->eq->changepar(i+12,val);
         }
     }
     for(;i<plug->nparams;i++)//7-9 high band
     {
         val = (int)*plug->param_p[i]+64;
-        if(plug->eqp->getpar(i + 14) != val)
+        if(plug->eq->getpar(i + 14) != val)
         {
-            plug->eqp->changepar(i+14,val);
+            plug->eq->changepar(i+14,val);
         }
     }
 
@@ -1024,11 +1024,57 @@ void run_eqplv2(LV2_Handle handle, uint32_t nframes)
     memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
 
     //now set out ports
-    plug->eqp->efxoutl = plug->output_l_p;
-    plug->eqp->efxoutr = plug->output_r_p;
+    plug->eq->efxoutl = plug->output_l_p;
+    plug->eq->efxoutr = plug->output_r_p;
 
     //now run
-    plug->eqp->out(plug->output_l_p,plug->output_r_p,nframes);
+    plug->eq->out(plug->output_l_p,plug->output_r_p,nframes);
+    
+    return;
+}
+
+///// Cabinet /////////
+LV2_Handle init_cablv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 10;
+    plug->effectindex = 11;
+
+    plug->cab = new Cabinet(0,0,sample_freq);
+
+    return plug;
+}
+
+void run_cablv2(LV2_Handle handle, uint32_t nframes)
+{
+    int val;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    //check and set changed parameters 
+    val = (int)*plug->param_p[0]+64;//gain
+    if(plug->cab->getpar(0) != val)
+    {
+        plug->cab->changepar(0,val);
+    }
+    
+    val = (int)*plug->param_p[1];
+    if(plug->cab->Cabinet_Preset != val)
+    {
+        plug->cab->setpreset(val);
+    }
+
+    //cab does it inline?
+    memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+    memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+
+    //now set out ports
+    plug->cab->efxoutl = plug->output_l_p;
+    plug->cab->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->cab->out(plug->output_l_p,plug->output_r_p,nframes);
     
     return;
 }
@@ -1076,7 +1122,8 @@ void cleanup_rkrlv2(LV2_Handle handle)
     switch(plug->effectindex)
     {
         case 0:
-            delete plug->eq;
+        case 11:
+            delete plug->eq;//eql, eqp, cabinet
             break;
         case 1:
         	delete plug->comp;
@@ -1109,6 +1156,10 @@ void cleanup_rkrlv2(LV2_Handle handle)
         	break;
         case 10:
             delete plug->reve;
+            break;
+        case 12:
+            delete plug->cab;
+            break;
     }
     free(plug);
 }
@@ -1245,6 +1296,17 @@ static const LV2_Descriptor eqplv2_descriptor={
     0//extension
 };
 
+static const LV2_Descriptor cablv2_descriptor={
+    CABLV2_URI,
+    init_cablv2,
+    connect_rkrlv2_ports,
+    0,//activate
+    run_cablv2,
+    0,//deactivate
+    cleanup_rkrlv2,
+    0//extension
+};
+
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor* lv2_descriptor(uint32_t index)
 {
@@ -1273,6 +1335,8 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
     	return &revelv2_descriptor ;
     case 11:
     	return &eqplv2_descriptor ;
+    case 12:
+    	return &cablv2_descriptor ;
     default:
         return 0;
     }

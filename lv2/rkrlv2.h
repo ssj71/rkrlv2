@@ -13,6 +13,7 @@
 #define EXCITERLV2_URI "http://rakarrack.sourceforge.net/effects.html#Exciter"
 #define REVELV2_URI "http://rakarrack.sourceforge.net/effects.html#reve"
 #define EQPLV2_URI "http://rakarrack.sourceforge.net/effects.html#eqp"
+#define CABLV2_URI "http://rakarrack.sourceforge.net/effects.html#cabe"
 
 enum RKRLV2_ports_
 {
