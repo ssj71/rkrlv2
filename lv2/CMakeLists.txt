@@ -44,6 +44,7 @@ add_library(rkrlv2 SHARED
   ../src/Alienwah.C
   ../src/Reverb.C
   ../src/Cabinet.C
+  ../src/MusicDelay.C
 )
 
 set_target_properties(rkrlv2 PROPERTIES PREFIX "")

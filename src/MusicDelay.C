@@ -27,10 +27,12 @@
 #include <math.h>
 #include "MusicDelay.h"
 
-MusicDelay::MusicDelay (float * efxoutl_, float * efxoutr_)
+MusicDelay::MusicDelay (float * efxoutl_, float * efxoutr_, double sample_rate)
 {
     efxoutl = efxoutl_;
     efxoutr = efxoutr_;
+
+    fSAMPLE_RATE = sample_rate;
 
     //default values
     Ppreset = 0;
@@ -48,7 +50,7 @@ MusicDelay::MusicDelay (float * efxoutl_, float * efxoutr_)
     Ptempo = 100;
     Phidamp = 60;
 
-    maxx_delay = SAMPLE_RATE * MAX_DELAY;
+    maxx_delay = sample_rate * MAX_DELAY;
     ldelay1 = new float[maxx_delay];
     rdelay1 = new float[maxx_delay];
     ldelay2 = new float[maxx_delay];
@@ -141,9 +143,9 @@ MusicDelay::initdelays ()
  * Effect output
  */
 void
-MusicDelay::out (float * smpsl, float * smpsr)
+MusicDelay::out (float * smpsl, float * smpsr, uint32_t period)
 {
-    int i;
+    unsigned int i;
     float l1, r1, ldl1, rdl1, l2, r2, ldl2, rdl2;
 
     for (i = 0; i < period; i++) {
@@ -331,6 +333,7 @@ MusicDelay::setpreset (int npreset)
 {
     const int PRESET_SIZE = 13;
     const int NUM_PRESETS = 3;
+    int pdata[PRESET_SIZE];
     int presets[NUM_PRESETS][PRESET_SIZE] = {
         //Echo 1
         {64, 0, 2, 7, 0, 59, 0, 127, 4, 59, 106, 75, 75},
@@ -340,7 +343,7 @@ MusicDelay::setpreset (int npreset)
 
     if(npreset>NUM_PRESETS-1) {
 
-        Fpre->ReadPreset(15,npreset-NUM_PRESETS+1);
+        Fpre->ReadPreset(15,npreset-NUM_PRESETS+1, pdata);
         for (int n = 0; n < PRESET_SIZE; n++)
             changepar (n, pdata[n]);
     } else {

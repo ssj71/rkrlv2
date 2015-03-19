@@ -25,10 +25,11 @@
 #include"Alienwah.h"
 #include"Reverb.h"
 #include"Cabinet.h"
+#include"MusicDelay.h"
 
 //#include"global.h"
 
-//this is the default hopefully hosts don't use periods of more than this
+//this is the default hopefully hosts don't use periods of more than this, or they will communicate the max bufsize
 #define INTERMEDIATE_BUFSIZE 1024
 
 
@@ -104,6 +105,7 @@ typedef struct _RKRLV2
     Alienwah* alien;    //9
     Reverb* reve;       //10
     Cabinet* cab;       //12
+    MusicDelay* mdel; 	//13
 }RKRLV2;
 
 
@@ -1039,7 +1041,7 @@ LV2_Handle init_cablv2(const LV2_Descriptor *descriptor,double sample_freq, cons
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 10;
-    plug->effectindex = 11;
+    plug->effectindex = 12;
 
     plug->cab = new Cabinet(0,0,sample_freq);
 
@@ -1076,6 +1078,77 @@ void run_cablv2(LV2_Handle handle, uint32_t nframes)
     //now run
     plug->cab->out(plug->output_l_p,plug->output_r_p,nframes);
     
+    return;
+}
+
+
+///// Musical Delay /////////
+LV2_Handle init_mdellv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 13;
+    plug->effectindex = 13;
+
+    plug->mdel = new MusicDelay (0,0,sample_freq);
+
+    return plug;
+}
+
+void run_mdellv2(LV2_Handle handle, uint32_t nframes)
+{
+    int val;
+    uint8_t i;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    //check and set changed parameters
+    i = 0;
+
+    val = (int)*plug->param_p[0];//wetdry
+    if(plug->mdel->getpar(0) != val)
+    {
+        plug->mdel->changepar(0,val);
+    }
+    val = (int)*plug->param_p[1]+64;//pan1
+    if(plug->mdel->getpar(1) != val)
+    {
+        plug->mdel->changepar(1,val);
+    }
+    
+    for(i=2;i<7;i++)//2-6 
+    {
+        val = (int)*plug->param_p[i];
+        if(plug->mdel->getpar(i) != val)
+        {
+            plug->mdel->changepar(i,val);
+        }
+    }
+    val = (int)*plug->param_p[i]+64;//pan2
+    if(plug->mdel->getpar(i) != val)
+    {
+        plug->mdel->changepar(i,val);
+    }
+    for(i++;i<plug->nparams;i++)//8-12
+    {
+        val = (int)*plug->param_p[i];
+        if(plug->mdel->getpar(i) != val)
+        {
+            plug->mdel->changepar(i,val);
+        }
+    }
+
+    //now set out ports and global period size
+    plug->mdel->efxoutl = plug->output_l_p;
+    plug->mdel->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->mdel->out(plug->input_l_p,plug->input_r_p,nframes);
+
+    //and for whatever reason we have to do the wet/dry mix ourselves
+    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->mdel->outvolume, nframes);
+
+
     return;
 }
 
@@ -1307,6 +1380,17 @@ static const LV2_Descriptor cablv2_descriptor={
     0//extension
 };
 
+static const LV2_Descriptor mdellv2_descriptor={
+    MDELLV2_URI,
+    init_mdellv2,
+    connect_rkrlv2_ports,
+    0,//activate
+    run_mdellv2,
+    0,//deactivate
+    cleanup_rkrlv2,
+    0//extension
+};
+
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor* lv2_descriptor(uint32_t index)
 {
@@ -1337,6 +1421,8 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
     	return &eqplv2_descriptor ;
     case 12:
     	return &cablv2_descriptor ;
+    case 13:
+    	return &mdellv2_descriptor ;
     default:
         return 0;
     }

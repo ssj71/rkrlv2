@@ -66,3 +66,8 @@
         a lv2:Plugin, lv2:FilterPlugin ;
         lv2:binary <rkrlv2.so> ;
         rdfs:seeAlso <cab.ttl> .
+# 13
+<http://rakarrack.sourceforge.net/effects.html#delm>
+        a lv2:Plugin, lv2:DelayPlugin ;
+        lv2:binary <rkrlv2.so> ;
+        rdfs:seeAlso <mdel.ttl> .

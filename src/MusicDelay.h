@@ -31,9 +31,9 @@
 class MusicDelay
 {
 public:
-    MusicDelay (float * efxoutl_, float * efxoutr_);
+    MusicDelay (float * efxoutl_, float * efxoutr_, double sample_rate);
     ~MusicDelay ();
-    void out (float * smpsl, float * smpr);
+    void out (float * smpsl, float * smpr, uint32_t period);
     void setpreset (int npreset);
     void changepar (int npar, int value);
     int getpar (int npar);
@@ -61,6 +61,7 @@ private:
 
 
 
+    float fSAMPLE_RATE;
     //Parametrii
     int Pvolume;			//Volumul or E/R
     int Ppanning1;		//Panning
