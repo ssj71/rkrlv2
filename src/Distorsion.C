@@ -51,8 +51,8 @@ Distorsion::Distorsion (float * efxoutl_, float * efxoutr_, double samplerate,
     DCl->setfreq (30.0f);
     DCr->setfreq (30.0f);
 
-    dwshapel = new Waveshaper(samplerate, intermediate_bufsize, wave_res, wave_upq, wave_dnq);
-    dwshaper = new Waveshaper(samplerate, intermediate_bufsize, wave_res, wave_upq, wave_dnq);
+    dwshapel = new Waveshaper(samplerate, wave_res, wave_upq, wave_dnq, intermediate_bufsize);
+    dwshaper = new Waveshaper(samplerate, wave_res, wave_upq, wave_dnq, intermediate_bufsize);
 
     //default values
     Ppreset = 0;

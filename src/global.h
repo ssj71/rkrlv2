@@ -174,11 +174,18 @@ static inline float f_pow2(float x)
 #include <dirent.h>
 #include <search.h>
 #include <sys/time.h>
+#ifdef NOTLV2
 #include <alsa/asoundlib.h>
 #include <X11/xpm.h>
 #include <jack/jack.h>
 #include <jack/midiport.h>
 #include <FL/Fl_Preferences.H>
+#else
+#include <stdint.h>
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#endif
 #include "FPreset.h"
 #if(0)
 #include "Reverb.h"
