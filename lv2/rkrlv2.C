@@ -339,7 +339,7 @@ void run_distlv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->dist->changepar(i,val);
     }
-    for(;i<plug->nparams-1;i++)
+    for(i++;i<plug->nparams-1;i++)
     {
         val = (int)*plug->param_p[i];
        if(plug->dist->getpar(i) != val)
@@ -871,7 +871,7 @@ void run_alienlv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->alien->changepar(i,val);
     }
-    for(;i<plug->nparams;i++)//6-10
+    for(i++;i<plug->nparams;i++)//6-10
     {
         val = (int)*plug->param_p[i];
         if(plug->alien->getpar(i+1) != val)
