@@ -45,6 +45,10 @@ add_library(rkrlv2 SHARED
   ../src/Reverb.C
   ../src/Cabinet.C
   ../src/MusicDelay.C
+  ../src/DynamicFilter.C
+  ../src/FilterParams.C
+  ../src/SVFilter.C
+  ../src/FormantFilter.C
 )
 
 set_target_properties(rkrlv2 PROPERTIES PREFIX "")

@@ -31,9 +31,9 @@ class SVFilter:public Filter_
 {
 public:
     SVFilter (unsigned char Ftype, float Ffreq, float Fq,
-              unsigned char Fstages);
+              unsigned char Fstages, double sample_rate);
     ~SVFilter ();
-    void filterout (float * smp);
+    void filterout (float * smp, uint32_t period);
     void setfreq (float frequency);
     void setfreq_and_q (float frequency, float q_);
     void setq (float q_);
@@ -53,7 +53,7 @@ private:
     } par, ipar;
 
 
-    void singlefilterout (float * smp, fstage & x, parameters & par);
+    void singlefilterout (float * smp, fstage & x, parameters & par, uint32_t period);
     void computefiltercoefs ();
     int type;			//The type of the filter (LPF1,HPF1,LPF2,HPF2...)
     int stages;			//how many times the filter is applied (0->1,1->2,etc.)
@@ -64,6 +64,7 @@ private:
     float freq;		//Frequency given in Hz
     float q;			//Q factor (resonance or Q factor)
     float gain;		//the gain of the filter (if are shelf/peak) filters
+    float fSAMPLE_RATE;
 
 };
 

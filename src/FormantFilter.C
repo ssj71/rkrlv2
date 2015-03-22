@@ -30,10 +30,10 @@ FormantFilter::FormantFilter (FilterParams * pars)
 {
     numformants = pars->Pnumformants;
     for (int i = 0; i < numformants; i++)
-        formant[i] = new AnalogFilter (4 /*BPF*/, 1000.0f, 10.0f, pars->Pstages);
+        formant[i] = new AnalogFilter (4 /*BPF*/, 1000.0f, 10.0f, pars->Pstages, pars->fSAMPLE_RATE);
     cleanup ();
-    inbuffer = new float[period];
-    tmpbuf = new float[period];
+    inbuffer = new float[pars->tempbufsize];
+    tmpbuf = new float[pars->tempbufsize];
 
     for (int j = 0; j < FF_MAX_VOWELS; j++)
         for (int i = 0; i < numformants; i++) {
@@ -195,9 +195,9 @@ FormantFilter::setfreq_and_q (float frequency, float q_)
 
 
 void
-FormantFilter::filterout (float * smp)
+FormantFilter::filterout (float * smp, uint32_t period)
 {
-    int i, j;
+    unsigned int i, j;
     for (i = 0; i < period; i++) {
         inbuffer[i] = smp[i];
         smp[i] = 0.0;

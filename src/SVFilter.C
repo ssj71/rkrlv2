@@ -27,7 +27,7 @@
 #include "SVFilter.h"
 
 SVFilter::SVFilter (unsigned char Ftype, float Ffreq, float Fq,
-                    unsigned char Fstages)
+                    unsigned char Fstages, double sample_rate)
 {
     stages = Fstages;
     type = Ftype;
@@ -37,6 +37,7 @@ SVFilter::SVFilter (unsigned char Ftype, float Ffreq, float Fq,
     outgain = 1.0f;
     needsinterpolation = 0;
     firsttime = 1;
+    fSAMPLE_RATE = sample_rate;
     if (stages >= MAX_FILTER_STAGES)
         stages = MAX_FILTER_STAGES;
     cleanup ();
@@ -138,9 +139,9 @@ SVFilter::setstages (int stages_)
 };
 
 void
-SVFilter::singlefilterout (float * smp, fstage & x, parameters & par)
+SVFilter::singlefilterout (float * smp, fstage & x, parameters & par, uint32_t period)
 {
-    int i;
+    unsigned int i;
     float *out = NULL;
     switch (type) {
     case 0:
@@ -168,9 +169,9 @@ SVFilter::singlefilterout (float * smp, fstage & x, parameters & par)
 };
 
 void
-SVFilter::filterout (float * smp)
+SVFilter::filterout (float * smp, uint32_t period)
 {
-    int i;
+    unsigned int i;
     float *ismp = NULL;
 
     if (needsinterpolation != 0) {
@@ -178,13 +179,14 @@ SVFilter::filterout (float * smp)
         for (i = 0; i < period; i++)
             ismp[i] = smp[i];
         for (i = 0; i < stages + 1; i++)
-            singlefilterout (ismp, st[i], ipar);
+            singlefilterout (ismp, st[i], ipar, period);
     };
 
     for (i = 0; i < stages + 1; i++)
-        singlefilterout (smp, st[i], par);
+        singlefilterout (smp, st[i], par, period);
 
     if (needsinterpolation != 0) {
+        float fPERIOD = period;
         for (i = 0; i < period; i++) {
             float x = (float) i / fPERIOD;
             smp[i] = ismp[i] * (1.0f - x) + smp[i] * x;

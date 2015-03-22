@@ -29,13 +29,15 @@
 #include "FilterParams.h"
 
 FilterParams::FilterParams (unsigned char Ptype_, unsigned char Pfreq_,
-                            unsigned char Pq_)
+                            unsigned char Pq_, double sample_rate)
 {
 
     // setpresettype("Pfilter");
     Dtype = Ptype_;
     Dfreq = Pfreq_;
     Dq = Pq_;
+    SAMPLE_RATE = sample_rate;
+    fSAMPLE_RATE = sample_rate;
 
     changed = false;
     defaults ();

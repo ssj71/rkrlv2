@@ -71,3 +71,8 @@
         a lv2:Plugin, lv2:DelayPlugin ;
         lv2:binary <rkrlv2.so> ;
         rdfs:seeAlso <mdel.ttl> .
+# 14
+<http://rakarrack.sourceforge.net/effects.html#wha>
+        a lv2:Plugin, lv2:FilterPlugin ;
+        lv2:binary <rkrlv2.so> ;
+        rdfs:seeAlso <wha.ttl> .

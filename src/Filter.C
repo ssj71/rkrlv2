@@ -37,13 +37,13 @@ Filter::Filter (FilterParams * pars)
         filter = new FormantFilter (pars);
         break;
     case 2:
-        filter = new SVFilter(Ftype, 1000.0f, pars->getq (), Fstages);
+        filter = new SVFilter(Ftype, 1000.0f, pars->getq (), Fstages, pars->fSAMPLE_RATE);
         filter->outgain = dB2rap (pars->getgain ());
         if (filter->outgain > 1.0f)
             filter->outgain = sqrtf (filter->outgain);
         break;
     default:
-        filter = new AnalogFilter (Ftype, 1000.0f, pars->getq (), Fstages);
+        filter = new AnalogFilter (Ftype, 1000.0f, pars->getq (), Fstages, pars->fSAMPLE_RATE);
         if ((Ftype >= 6) && (Ftype <= 8))
             filter->setgain (pars->getgain ());
         else
@@ -57,9 +57,9 @@ Filter::~Filter ()
 };
 
 void
-Filter::filterout (float * smp)
+Filter::filterout (float * smp, uint32_t period)
 {
-    filter->filterout (smp);
+    filter->filterout (smp, period);
 };
 
 void

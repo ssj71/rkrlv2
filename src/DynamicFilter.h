@@ -32,9 +32,9 @@
 class DynamicFilter
 {
 public:
-    DynamicFilter (float * efxoutl_, float * efxoutr_);
+    DynamicFilter (float * efxoutl_, float * efxoutr_, double sample_rate, uint32_t intermediate_bufsize);
     ~DynamicFilter ();
-    void out (float * smpsl, float * smpsr);
+    void out (float * smpsl, float * smpsr, uint32_t period);
 
     void setpreset (int npreset);
     void changepar (int npar, int value);
@@ -45,20 +45,20 @@ public:
     int Ppreset;
     float *efxoutl;
     float *efxoutr;
-    float outvolume;
+    float outvolume; 
 
-
-
+    uint32_t PERIOD;
 
 private:
     //Parametrii DynamicFilter
-    EffectLFO lfo;		//lfo-ul DynamicFilter
+    EffectLFO* lfo;		//lfo-ul DynamicFilter
     int Pvolume;
     int Ppanning;
     int Pdepth;		//the depth of the lfo of the DynamicFilter
     int Pampsns;	//how the filter varies according to the input amplitude
     int Pampsnsinv;	//if the filter freq is lowered if the input amplitude rises
     int Pampsmooth;	//how smooth the input amplitude changes the filter
+    int Pmode;      //settings of filters
 
     //Control Parametrii
     void setvolume (int Pvolume);

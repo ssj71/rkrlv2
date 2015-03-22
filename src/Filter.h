@@ -38,7 +38,7 @@ class Filter
 public:
     Filter (FilterParams * pars);
     ~Filter ();
-    void filterout (float * smp);
+    void filterout (float * smp, uint32_t period);
     void setfreq (float frequency);
     void setfreq_and_q (float frequency, float q_);
     void setq (float q_);
