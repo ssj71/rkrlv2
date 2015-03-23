@@ -36,14 +36,15 @@
 class NewDist
 {
 public:
-    NewDist (float * efxoutl_, float * efxoutr_);
+    NewDist (float * efxoutl_, float * efxoutr_, double samplerate,
+        uint16_t intermdediate_bufsize, int wave_res, int wave_upq, int wave_dnq);
     ~NewDist ();
-    void out (float * smpsl, float * smpr);
+    void out (float * smpsl, float * smpr, uint32_t period);
     void setpreset (int npreset);
     void changepar (int npar, int value);
     int getpar (int npar);
     void cleanup ();
-    void applyfilters (float * efxoutl, float * efxoutr);
+    void applyfilters (float * efxoutl, float * efxoutr, uint32_t period);
 
     int Ppreset;
     float outvolume;

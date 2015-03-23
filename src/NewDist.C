@@ -31,13 +31,13 @@
  * Waveshape (this is called by OscilGen::waveshape and Distorsion::process)
  */
 
-NewDist::NewDist (float * efxoutl_, float * efxoutr_)
+NewDist::NewDist (float * efxoutl_, float * efxoutr_, double sampler_rate, uint32_t intermediate_bufsize, int wave_res, int wave_upq, int wave_dnq)
 {
     efxoutl = efxoutl_;
     efxoutr = efxoutr_;
 
-    octoutl = (float *) malloc (sizeof (float) * period);
-    octoutr = (float *) malloc (sizeof (float) * period);
+    octoutl = (float *) malloc (sizeof (float) * intermediate_bufsize);
+    octoutr = (float *) malloc (sizeof (float) * intermediate_bufsize);
 
 
 
@@ -132,12 +132,12 @@ NewDist::cleanup ()
  */
 
 void
-NewDist::applyfilters (float * efxoutl, float * efxoutr)
+NewDist::applyfilters (float * efxoutl, float * efxoutr, uint32_t period)
 {
-    lpfl->filterout(efxoutl);
-    hpfl->filterout(efxoutl);
-    lpfr->filterout(efxoutr);
-    hpfr->filterout(efxoutr);
+    lpfl->filterout(efxoutl, period);
+    hpfl->filterout(efxoutl, period);
+    lpfr->filterout(efxoutr, period);
+    hpfr->filterout(efxoutr, period);
 
 };
 

@@ -16,6 +16,7 @@
 #define CABLV2_URI "http://rakarrack.sourceforge.net/effects.html#cabe"
 #define MDELLV2_URI "http://rakarrack.sourceforge.net/effects.html#delm"
 #define WAHLV2_URI "http://rakarrack.sourceforge.net/effects.html#wha"
+#define DERELV2_URI "http://rakarrack.sourceforge.net/effects.html#dere"
 
 enum RKRLV2_ports_
 {
