@@ -30,7 +30,7 @@ EFFECTS (X - done, W - won't do, x - done with missing features)
 [x] Harmonizer - still need to do midi mode version
 [X] Musical Delay 
 [W] Noise Gate - Direct copy of Steve Harris's Gate ladspa plugin
-[ ] WahWah 
+[X] WahWah 
 [X] AlienWah 
 [ ] Derelict 
 [ ] Valve 

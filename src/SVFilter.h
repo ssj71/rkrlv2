@@ -25,7 +25,7 @@
 #ifndef SV_FILTER_H
 #define SV_FILTER_H
 
-//#include "global.h"
+#include "global.h"
 #include "Filter_.h"
 class SVFilter:public Filter_
 {
@@ -56,7 +56,7 @@ private:
     void singlefilterout (float * smp, fstage & x, parameters & par, uint32_t period);
     void computefiltercoefs ();
     int type;			//The type of the filter (LPF1,HPF1,LPF2,HPF2...)
-    int stages;			//how many times the filter is applied (0->1,1->2,etc.)
+    unsigned int stages;//how many times the filter is applied (0->1,1->2,etc.)
     int abovenq;			//this is 1 if the frequency is above the nyquist
     int oldabovenq;
     int needsinterpolation, firsttime;

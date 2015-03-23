@@ -13,3 +13,7 @@ change nparams and effect index
 lfo switch to reference, add PERIOD member and set before setparam()
 Fpre add pdata arg
 add destructor deletes
+
+
+I added a cabinet class and presets are managed there.
+I changed dynamic filter so that filter type is set in changepar instead of setpreset. Need to add this on gui

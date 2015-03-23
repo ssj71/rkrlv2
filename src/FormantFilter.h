@@ -56,7 +56,7 @@ private:
         unsigned char nvowel;
     } sequence[FF_MAX_SEQUENCE];
 
-    int sequencesize, numformants, firsttime;
+    unsigned int sequencesize, numformants, firsttime;
 
     float oldformantamp[FF_MAX_FORMANTS];
     float oldinput, slowinput;

@@ -46,6 +46,7 @@ add_library(rkrlv2 SHARED
   ../src/Cabinet.C
   ../src/MusicDelay.C
   ../src/DynamicFilter.C
+  ../src/Filter.C
   ../src/FilterParams.C
   ../src/SVFilter.C
   ../src/FormantFilter.C

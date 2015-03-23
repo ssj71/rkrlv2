@@ -315,7 +315,7 @@ LV2_Handle init_distlv2(const LV2_Descriptor *descriptor,double sample_freq, con
 
     getFeatures(plug,host_features);
 
-    plug->dist = new Distorsion(0,0, sample_freq, plug->period_max, /*oversampling*/4, 
+    plug->dist = new Distorsion(0,0, sample_freq, plug->period_max, /*oversampling*/2, 
                                 /*up interpolation method*/0, /*down interpolation method*/2);
 
     return plug;
@@ -330,18 +330,18 @@ void run_distlv2(LV2_Handle handle, uint32_t nframes)
 
     //check and set changed parameters
     i=0;
-    val = (int)*plug->param_p[i];
+    val = (int)*plug->param_p[i];//0 Wet/dry
     if(plug->dist->getpar(i) != val)
     {
         plug->dist->changepar(i,val);
     }
     i++;
-    val = (int)*plug->param_p[i]+64;
+    val = (int)*plug->param_p[i]+64;//1 pan
     if(plug->dist->getpar(i) != val)
     {
         plug->dist->changepar(i,val);
     }
-    for(i++;i<plug->nparams-1;i++)
+    for(i++;i<plug->nparams-1;i++)//2-10
     {
         val = (int)*plug->param_p[i];
        if(plug->dist->getpar(i) != val)
@@ -349,7 +349,7 @@ void run_distlv2(LV2_Handle handle, uint32_t nframes)
            plug->dist->changepar(i,val);
        }
     }
-    val = (int)*plug->param_p[i++];//skip one index
+    val = (int)*plug->param_p[i++];//skip one index, 12 octave
     if(plug->dist->getpar(i) != val)
     {
        plug->dist->changepar(i,val);
@@ -1162,7 +1162,9 @@ LV2_Handle init_wahlv2(const LV2_Descriptor *descriptor,double sample_freq, cons
     plug->nparams = 11;
     plug->effectindex = 14;
 
-    plug->wah = new DynamicFilter(0,0,sample_freq);
+    getFeatures(plug,host_features);
+
+    plug->wah = new DynamicFilter(0,0,sample_freq, plug->period_max);
 
     return plug;
 }
@@ -1203,7 +1205,7 @@ void run_wahlv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->wah->changepar(i,val);
     }
-    for(i++;i<plug->nparams;i++) // 6-10
+    for(i++;i<plug->nparams;i++) // 6-11
     {
         val = (int)*plug->param_p[i];
         if(plug->wah->getpar(i) != val)
