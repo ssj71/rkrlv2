@@ -32,7 +32,7 @@ EFFECTS (X - done, W - won't do, x - done with missing features)
 [W] Noise Gate - Direct copy of Steve Harris's Gate ladspa plugin
 [X] WahWah 
 [X] AlienWah 
-[ ] Derelict 
+[X] Derelict 
 [ ] Valve 
 [.] Dual Flange 
 [.] Ring 

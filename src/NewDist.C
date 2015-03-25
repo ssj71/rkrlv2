@@ -31,7 +31,10 @@
  * Waveshape (this is called by OscilGen::waveshape and Distorsion::process)
  */
 
-NewDist::NewDist (float * efxoutl_, float * efxoutr_, double sampler_rate, uint32_t intermediate_bufsize, int wave_res, int wave_upq, int wave_dnq)
+// does anyone else see how funny this calss is? say it out loud. Perhaps this will become so popular they will start a new_dist colony ;)
+
+NewDist::NewDist (float * efxoutl_, float * efxoutr_, double sample_rate, uint32_t intermediate_bufsize,
+		int wave_res, int wave_upq, int wave_dnq)
 {
     efxoutl = efxoutl_;
     efxoutr = efxoutr_;
@@ -41,27 +44,27 @@ NewDist::NewDist (float * efxoutl_, float * efxoutr_, double sampler_rate, uint3
 
 
 
-    lpfl = new AnalogFilter (2, 22000, 1, 0);
-    lpfr = new AnalogFilter (2, 22000, 1, 0);
-    hpfl = new AnalogFilter (3, 20, 1, 0);
-    hpfr = new AnalogFilter (3, 20, 1, 0);
-    blockDCl = new AnalogFilter (2, 75.0f, 1, 0);
-    blockDCr = new AnalogFilter (2, 75.0f, 1, 0);
-    wshapel = new Waveshaper();
-    wshaper = new Waveshaper();
+    lpfl = new AnalogFilter (2, 22000, 1, 0, sample_rate);
+    lpfr = new AnalogFilter (2, 22000, 1, 0, sample_rate);
+    hpfl = new AnalogFilter (3, 20, 1, 0, sample_rate);
+    hpfr = new AnalogFilter (3, 20, 1, 0, sample_rate);
+    blockDCl = new AnalogFilter (2, 75.0f, 1, 0, sample_rate);
+    blockDCr = new AnalogFilter (2, 75.0f, 1, 0, sample_rate);
+    wshapel = new Waveshaper(sample_rate, wave_res, wave_upq, wave_dnq, intermediate_bufsize);
+    wshaper = new Waveshaper(sample_rate, wave_res, wave_upq, wave_dnq, intermediate_bufsize);
 
     blockDCl->setfreq (75.0f);
     blockDCr->setfreq (75.0f);
 
-    DCl = new AnalogFilter (3, 30, 1, 0);
-    DCr = new AnalogFilter (3, 30, 1, 0);
+    DCl = new AnalogFilter (3, 30, 1, 0, sample_rate);
+    DCr = new AnalogFilter (3, 30, 1, 0, sample_rate);
     DCl->setfreq (30.0f);
     DCr->setfreq (30.0f);
 
 
 
 
-    filterpars = new FilterParams (0, 64, 64);
+    filterpars = new FilterParams (0, 64, 64, sample_rate);
 
     filterpars->Pcategory = 2;
     filterpars->Ptype = 0;
@@ -146,9 +149,9 @@ NewDist::applyfilters (float * efxoutl, float * efxoutr, uint32_t period)
  * Effect output
  */
 void
-NewDist::out (float * smpsl, float * smpsr)
+NewDist::out (float * smpsl, float * smpsr, uint32_t period)
 {
-    int i;
+    unsigned int i;
     float l, r, lout, rout;
 
     float inputvol = .5f;
@@ -158,7 +161,7 @@ NewDist::out (float * smpsl, float * smpsr)
 
 
     if (Pprefiltering != 0)
-        applyfilters (smpsl, smpsr);
+        applyfilters (smpsl, smpsr, period);
 
     //no optimised, yet (no look table)
 
@@ -193,19 +196,19 @@ NewDist::out (float * smpsl, float * smpsr)
         }
 
 
-        blockDCr->filterout (octoutr);
-        blockDCl->filterout (octoutl);
+        blockDCr->filterout (octoutr, period);
+        blockDCl->filterout (octoutl, period);
     }
 
 
 
-    filterl->filterout(smpsl);
-    filterr->filterout(smpsr);
+    filterl->filterout(smpsl, period);
+    filterr->filterout(smpsr, period);
 
 
 
     if (Pprefiltering == 0)
-        applyfilters (efxoutl, efxoutr);
+        applyfilters (efxoutl, efxoutr, period);
 
 
 
@@ -231,8 +234,8 @@ NewDist::out (float * smpsl, float * smpsr)
 
     };
 
-    DCr->filterout (efxoutr);
-    DCl->filterout (efxoutl);
+    DCr->filterout (efxoutr, period);
+    DCl->filterout (efxoutl, period);
 
 
 };
@@ -299,6 +302,7 @@ NewDist::setpreset (int npreset)
 {
     const int PRESET_SIZE = 11;
     const int NUM_PRESETS = 3;
+    int pdata[PRESET_SIZE];
     int presets[NUM_PRESETS][PRESET_SIZE] = {
         //NewDist 1
         {0, 64, 64, 83, 65, 15, 0, 2437, 169, 68, 0},
@@ -310,7 +314,7 @@ NewDist::setpreset (int npreset)
 
     if(npreset>NUM_PRESETS-1) {
 
-        Fpre->ReadPreset(17,npreset-NUM_PRESETS+1);
+        Fpre->ReadPreset(17,npreset-NUM_PRESETS+1, pdata);
         for (int n = 0; n < PRESET_SIZE; n++)
             changepar (n, pdata[n]);
     } else {

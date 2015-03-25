@@ -1,0 +1,134 @@
+@prefix doap:  <http://usefulinc.com/ns/doap#> .
+@prefix atom: <http://lv2plug.in/ns/ext/atom#> .
+@prefix lv2: <http://lv2plug.in/ns/lv2core#> .
+@prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix state: <http://lv2plug.in/ns/ext/state#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://rakarrack.sourceforge.net/effects.html#dere:preset:dist1>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#dere> ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 0.0 
+        ], [
+                lv2:symbol "PAN" ;
+                pset:value 0.0 
+        ], [
+                lv2:symbol "LRCr" ;
+                pset:value 64.0 
+        ], [
+                lv2:symbol "DRIVE" ;
+                pset:value 83.0 
+        ], [
+                lv2:symbol "LEVEL" ;
+                pset:value 65.0 
+        ], [
+                lv2:symbol "TYPE" ;
+                pset:value 15.0 
+        ], [
+                lv2:symbol "NEG" ;
+                pset:value 0.0 
+        ], [
+                lv2:symbol "LPF" ;
+                pset:value 2437.0 
+        ], [
+                lv2:symbol "HPF" ;
+                pset:value 169.0 
+        ], [
+                lv2:symbol "COLOR" ;
+                pset:value 68.0 
+        ], [
+                lv2:symbol "PREFILTER" ;
+                pset:value 0.0 
+        ], [
+                lv2:symbol "OCT" ;
+                pset:value 0.0 
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#dere:preset:dist2>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#dere> ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 0.0 
+        ], [
+                lv2:symbol "PAN" ;
+                pset:value 0.0 
+        ], [
+                lv2:symbol "LRCr" ;
+                pset:value 64.0 
+        ], [
+                lv2:symbol "DRIVE" ;
+                pset:value 95.0 
+        ], [
+                lv2:symbol "LEVEL" ;
+                pset:value 45.0 
+        ], [
+                lv2:symbol "TYPE" ;
+                pset:value 6.0 
+        ], [
+                lv2:symbol "NEG" ;
+                pset:value 0.0 
+        ], [
+                lv2:symbol "LPF" ;
+                pset:value 3459.0 
+        ], [
+                lv2:symbol "HPF" ;
+                pset:value 209.0 
+        ], [
+                lv2:symbol "COLOR" ;
+                pset:value 60.0 
+        ], [
+                lv2:symbol "PREFILTER" ;
+                pset:value 1.0 
+        ], [
+                lv2:symbol "OCT" ;
+                pset:value 0.0 
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#dere:preset:dist3>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#dere> ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 0.0 
+        ], [
+                lv2:symbol "PAN" ;
+                pset:value 0.0 
+        ], [
+                lv2:symbol "LRCr" ;
+                pset:value 64.0 
+        ], [
+                lv2:symbol "DRIVE" ;
+                pset:value 43.0 
+        ], [
+                lv2:symbol "LEVEL" ;
+                pset:value 77.0 
+        ], [
+                lv2:symbol "TYPE" ;
+                pset:value 16.0 
+        ], [
+                lv2:symbol "NEG" ;
+                pset:value 0.0 
+        ], [
+                lv2:symbol "LPF" ;
+                pset:value 2983.0 
+        ], [
+                lv2:symbol "HPF" ;
+                pset:value 118.0 
+        ], [
+                lv2:symbol "COLOR" ;
+                pset:value 83.0 
+        ], [
+                lv2:symbol "PREFILTER" ;
+                pset:value 0.0 
+        ], [
+                lv2:symbol "OCT" ;
+                pset:value 0.0 
+        ] ;
+	.

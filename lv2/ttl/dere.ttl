@@ -8,16 +8,16 @@
 @prefix lv2:   <http://lv2plug.in/ns/lv2core#> .
 @prefix ui:   <http://lv2plug.in/ns/extensions/ui#> .
 
-# <http://rakarrack.sourceforge.net/effects.html#dist_ui>
+# <http://rakarrack.sourceforge.net/effects.html#dere_ui>
 # 	a ui:X11UI ;
 # 	ui:binary <rkrlv2_ui.so> ;
 # 	lv2:extensionData ui:idle;
 # 	lv2:optionalFeature ui:noUserResize ;
 # 	.
 
-<http://rakarrack.sourceforge.net/effects.html#dist>
+<http://rakarrack.sourceforge.net/effects.html#dere>
         a lv2:Plugin, lv2:DistortionPlugin ;
-        doap:name "rkr Distorsion" ;
+        doap:name "rkr Derelict" ;
         doap:maintainer [
                 foaf:name "Rakarrack Team" ;
                 foaf:homepage <http://rakarrack.sourceforge.net>;
@@ -26,7 +26,7 @@
         lv2:optionalFeature lv2:hardRTCapable,
             <http://lv2plug.in/ns/ext/urid#map>,
             <http://lv2plug.in/ns/ext/bufsz#maxBlockLength>;
-#        ui:ui  <http://rakarrack.sourceforge.net/effects.html#dist_ui> ;
+#        ui:ui  <http://rakarrack.sourceforge.net/effects.html#dere_ui> ;
 
         lv2:port [
                 a lv2:InputPort, lv2:AudioPort ;
@@ -170,13 +170,12 @@
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 13 ;
-                lv2:symbol "STEREO" ;
-                lv2:name "Stereo" ;
+                lv2:symbol "COLOR" ;
+                lv2:name "Color" ;
                 lv2:default 0 ;
                 lv2:minimum 0 ;
-                lv2:maximum 1 ;
+                lv2:maximum 127 ;
                 lv2:portProperty lv2:integer ;
-                lv2:portProperty lv2:toggled ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 14 ;
@@ -199,38 +198,20 @@
         ] ;
 	.
 
-<http://rakarrack.sourceforge.net/effects.html#dist:preset:overdrive_1>
+<http://rakarrack.sourceforge.net/effects.html#dere:preset:dist1>
         a pset:Preset ;
-        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#dist> ;
-        rdfs:label "Overdrive 1" ;
-        rdfs:seeAlso <dist_presets.ttl> .
+        rdfs:label "Distortion 1" ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#dere> ;
+        rdfs:seeAlso <dere_presets.ttl> .
 
-<http://rakarrack.sourceforge.net/effects.html#dist:preset:overdrive_2>
+<http://rakarrack.sourceforge.net/effects.html#dere:preset:dist2>
         a pset:Preset ;
-        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#dist> ;
-        rdfs:label "Overdrive 2" ;
-        rdfs:seeAlso <dist_presets.ttl> .
+        rdfs:label "Distortion 2" ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#dere> ;
+        rdfs:seeAlso <dere_presets.ttl> .
 
-<http://rakarrack.sourceforge.net/effects.html#dist:preset:distortion_1>
+<http://rakarrack.sourceforge.net/effects.html#dere:preset:dist3>
         a pset:Preset ;
-        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#dist> ;
-        rdfs:label "Distorsion 1" ;
-        rdfs:seeAlso <dist_presets.ttl> .
-
-<http://rakarrack.sourceforge.net/effects.html#dist:preset:distortion_2>
-        a pset:Preset ;
-        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#dist> ;
-        rdfs:label "Distorsion 2" ;
-        rdfs:seeAlso <dist_presets.ttl> .
-
-<http://rakarrack.sourceforge.net/effects.html#dist:preset:distortion_3>
-        a pset:Preset ;
-        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#dist> ;
-        rdfs:label "Distorsion 3" ;
-        rdfs:seeAlso <dist_presets.ttl> .
-
-<http://rakarrack.sourceforge.net/effects.html#dist:preset:guitar_amp>
-        a pset:Preset ;
-        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#dist> ;
-        rdfs:label "Guitar Amp" ;
-        rdfs:seeAlso <dist_presets.ttl> .
+        rdfs:label "Distortion 3" ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#dere> ;
+        rdfs:seeAlso <dere_presets.ttl> .

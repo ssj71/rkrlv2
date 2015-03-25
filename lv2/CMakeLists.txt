@@ -50,6 +50,7 @@ add_library(rkrlv2 SHARED
   ../src/FilterParams.C
   ../src/SVFilter.C
   ../src/FormantFilter.C
+  ../src/NewDist.C
 )
 
 set_target_properties(rkrlv2 PROPERTIES PREFIX "")

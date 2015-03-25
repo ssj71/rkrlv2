@@ -27,6 +27,7 @@
 #include"Cabinet.h"
 #include"MusicDelay.h"
 #include"DynamicFilter.h"
+#include"NewDist.h"
 
 //#include"global.h"
 
@@ -108,6 +109,7 @@ typedef struct _RKRLV2
     Cabinet* cab;       //12
     MusicDelay* mdel; 	//13
     DynamicFilter* wah; //14
+    NewDist* dere; 		//15
 }RKRLV2;
 
 
@@ -1227,6 +1229,64 @@ void run_wahlv2(LV2_Handle handle, uint32_t nframes)
     return;
 }
 
+///// derelict /////////
+LV2_Handle init_derelv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 12;
+    plug->effectindex = 15;
+
+    getFeatures(plug,host_features);
+
+    plug->dere = new NewDist(0,0, sample_freq, plug->period_max, /*oversampling*/2,
+                                /*up interpolation method*/0, /*down interpolation method*/2);
+
+    return plug;
+}
+
+void run_derelv2(LV2_Handle handle, uint32_t nframes)
+{
+    int i;
+    int val;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    //check and set changed parameters
+    i=0;
+    val = (int)*plug->param_p[i];//0 Wet/dry
+    if(plug->dere->getpar(i) != val)
+    {
+        plug->dere->changepar(i,val);
+    }
+    i++;
+    val = (int)*plug->param_p[i]+64;//1 pan
+    if(plug->dere->getpar(i) != val)
+    {
+        plug->dere->changepar(i,val);
+    }
+    for(i++;i<plug->nparams;i++)//2-11
+    {
+        val = (int)*plug->param_p[i];
+       if(plug->dere->getpar(i) != val)
+       {
+           plug->dere->changepar(i,val);
+       }
+    }
+
+    //now set out ports and global period size
+    plug->dere->efxoutl = plug->output_l_p;
+    plug->dere->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->dere->out(plug->input_l_p,plug->input_r_p,nframes);
+
+    //and for whatever reason we have to do the wet/dry mix ourselves
+    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->dere->outvolume, nframes);
+
+    return;
+}
+
 /////////////////////////////////
 ///////// END OF FX ///////////// 
 /////////////////////////////////
@@ -1312,6 +1372,9 @@ void cleanup_rkrlv2(LV2_Handle handle)
             break;
         case 14:
             delete plug->wah;
+            break;
+        case 15:
+            delete plug->dere;
             break;
     }
     free(plug);
@@ -1482,6 +1545,17 @@ static const LV2_Descriptor wahlv2_descriptor={
     0//extension
 };
 
+static const LV2_Descriptor derelv2_descriptor={
+    DERELV2_URI,
+    init_derelv2,
+    connect_rkrlv2_ports,
+    0,//activate
+    run_derelv2,
+    0,//deactivate
+    cleanup_rkrlv2,
+    0//extension
+};
+
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor* lv2_descriptor(uint32_t index)
 {
@@ -1516,6 +1590,8 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
     	return &mdellv2_descriptor ;
     case 14:
     	return &wahlv2_descriptor ;
+    case 15:
+    	return &derelv2_descriptor ;
     default:
         return 0;
     }
