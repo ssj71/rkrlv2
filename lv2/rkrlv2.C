@@ -28,6 +28,7 @@
 #include"MusicDelay.h"
 #include"DynamicFilter.h"
 #include"NewDist.h"
+#include"Valve.h"
 
 //#include"global.h"
 
@@ -110,6 +111,7 @@ typedef struct _RKRLV2
     MusicDelay* mdel; 	//13
     DynamicFilter* wah; //14
     NewDist* dere; 		//15
+    Valve* valve;		//16
 }RKRLV2;
 
 
@@ -1287,6 +1289,63 @@ void run_derelv2(LV2_Handle handle, uint32_t nframes)
     return;
 }
 
+///// valve /////////
+LV2_Handle init_valvelv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 13;
+    plug->effectindex = 16;
+
+    getFeatures(plug,host_features);
+
+    plug->valve = new Valve(0,0, sample_freq, plug->period_max);
+
+    return plug;
+}
+
+void run_valvelv2(LV2_Handle handle, uint32_t nframes)
+{
+    int i;
+    int val;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    //check and set changed parameters
+    i=0;
+    val = (int)*plug->param_p[i];//0 Wet/dry
+    if(plug->valve->getpar(i) != val)
+    {
+        plug->valve->changepar(i,val);
+    }
+    i++;
+    val = (int)*plug->param_p[i]+64;//1 pan
+    if(plug->valve->getpar(i) != val)
+    {
+        plug->valve->changepar(i,val);
+    }
+    for(i++;i<plug->nparams;i++)//2-12
+    {
+        val = (int)*plug->param_p[i];
+       if(plug->valve->getpar(i) != val)
+       {
+           plug->valve->changepar(i,val);
+       }
+    }
+
+    //now set out ports and global period size
+    plug->valve->efxoutl = plug->output_l_p;
+    plug->valve->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->valve->out(plug->input_l_p,plug->input_r_p,nframes);
+
+    //and for whatever reason we have to do the wet/dry mix ourselves
+    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->valve->outvolume, nframes);
+
+    return;
+}
+
 /////////////////////////////////
 ///////// END OF FX ///////////// 
 /////////////////////////////////
@@ -1375,6 +1434,9 @@ void cleanup_rkrlv2(LV2_Handle handle)
             break;
         case 15:
             delete plug->dere;
+            break;
+        case 16:
+            delete plug->valve;
             break;
     }
     free(plug);
@@ -1556,6 +1618,17 @@ static const LV2_Descriptor derelv2_descriptor={
     0//extension
 };
 
+static const LV2_Descriptor valvelv2_descriptor={
+    VALVELV2_URI,
+    init_valvelv2,
+    connect_rkrlv2_ports,
+    0,//activate
+    run_valvelv2,
+    0,//deactivate
+    cleanup_rkrlv2,
+    0//extension
+};
+
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor* lv2_descriptor(uint32_t index)
 {
@@ -1592,6 +1665,8 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
     	return &wahlv2_descriptor ;
     case 15:
     	return &derelv2_descriptor ;
+    case 16:
+    	return &valvelv2_descriptor ;
     default:
         return 0;
     }

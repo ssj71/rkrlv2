@@ -29,16 +29,16 @@
 
 
 
-Valve::Valve (float * efxoutl_, float * efxoutr_)
+Valve::Valve (float * efxoutl_, float * efxoutr_, double sample_rate, uint32_t intermediate_bufsize)
 {
     efxoutl = efxoutl_;
     efxoutr = efxoutr_;
 
-    lpfl = new AnalogFilter (2, 22000.0f, 1.0f, 0);
-    lpfr = new AnalogFilter (2, 22000.0f, 1.0f, 0);
-    hpfl = new AnalogFilter (3, 20.0f, 1.0f, 0);
-    hpfr = new AnalogFilter (3, 20.0f, 1.0f, 0);
-    harm = new HarmEnhancer (rm, 20.0f,20000.0f,1.0f);
+    lpfl = new AnalogFilter (2, 22000.0f, 1.0f, 0, sample_rate);
+    lpfr = new AnalogFilter (2, 22000.0f, 1.0f, 0, sample_rate);
+    hpfl = new AnalogFilter (3, 20.0f, 1.0f, 0, sample_rate);
+    hpfr = new AnalogFilter (3, 20.0f, 1.0f, 0, sample_rate);
+    harm = new HarmEnhancer (rm, 20.0f,20000.0f,1.0f, sample_rate, intermediate_bufsize);
 
 
     //default values
@@ -58,7 +58,7 @@ Valve::Valve (float * efxoutl_, float * efxoutr_)
     dist = 0.0f;
     setlpf(127);
     sethpf(1);
-    atk = 1.0f - 40.0f/fSAMPLE_RATE;
+    atk = 1.0f - 40.0f/sample_rate;
 
     for(int i=0; i<10; i++) rm[i]=0.0;
     rm[0]=1.0f;
@@ -75,6 +75,11 @@ Valve::Valve (float * efxoutl_, float * efxoutr_)
 
 Valve::~Valve ()
 {
+	delete lpfl;
+	delete lpfr;
+	delete hpfl;
+	delete hpfr;
+	delete harm;
 };
 
 /*
@@ -103,15 +108,15 @@ Valve::cleanup ()
  */
 
 void
-Valve::applyfilters (float * efxoutl, float * efxoutr)
+Valve::applyfilters (float * efxoutl, float * efxoutr, uint32_t period)
 {
-    lpfl->filterout (efxoutl);
-    hpfl->filterout (efxoutl);
+    lpfl->filterout (efxoutl, period);
+    hpfl->filterout (efxoutl, period);
 
     if (Pstereo != 0) {
         //stereo
-        lpfr->filterout (efxoutr);
-        hpfr->filterout (efxoutr);
+        lpfr->filterout (efxoutr, period);
+        hpfr->filterout (efxoutr, period);
     };
 
 };
@@ -133,9 +138,9 @@ Valve::Wshape(float x)
  * Effect output
  */
 void
-Valve::out (float * smpsl, float * smpsr)
+Valve::out (float * smpsl, float * smpsr, uint32_t period)
 {
-    int i;
+    unsigned int i;
 
     float l, r, lout, rout, fx;
 
@@ -153,11 +158,11 @@ Valve::out (float * smpsl, float * smpsr)
         };
     };
 
-    harm->harm_out(efxoutl,efxoutr);
+    harm->harm_out(efxoutl,efxoutr, period);
 
 
     if (Pprefiltering != 0)
-        applyfilters (efxoutl, efxoutr);
+        applyfilters (efxoutl, efxoutr, period);
 
     if(Ped) {
         for (i =0; i<period; i++) {
@@ -222,7 +227,7 @@ Valve::out (float * smpsl, float * smpsr)
 
 
     if (Pprefiltering == 0)
-        applyfilters (efxoutl, efxoutr);
+        applyfilters (efxoutl, efxoutr, period);
 
     if (Pstereo == 0) memcpy (efxoutr , efxoutl, period * sizeof(float));
 
@@ -333,6 +338,7 @@ Valve::setpreset (int npreset)
 {
     const int PRESET_SIZE = 13;
     const int NUM_PRESETS = 3;
+    int pdata[PRESET_SIZE];
     int presets[NUM_PRESETS][PRESET_SIZE] = {
         //Valve 1
         {0, 64, 64, 127, 64, 0, 5841, 61, 1, 0, 69, 1, 84},
@@ -344,7 +350,7 @@ Valve::setpreset (int npreset)
     };
 
     if(npreset>NUM_PRESETS-1) {
-        Fpre->ReadPreset(19,npreset-NUM_PRESETS+1);
+        Fpre->ReadPreset(19,npreset-NUM_PRESETS+1,pdata);
         for (int n = 0; n < PRESET_SIZE; n++)
             changepar (n, pdata[n]);
     } else {

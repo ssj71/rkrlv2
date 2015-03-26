@@ -13,29 +13,29 @@ and execute:
  sudo make install
 
 
-EFFECTS (X - done, W - won't do, x - done with missing features)
+EFFECTS (X - done, W - won't do, + - done with missing features)
 [X] Lineal EQ
-[X]  Compressor
+[X] Compressor
 [X] Distortion 
 [W] Overdrive - exact same engine as distortion, but has fewer controls, presets were added to dist.
 [X] Echo 
 [X] Chorus 
-[W] Phaser - I'm not planning to do this, but its nogotiable. I'm only interested in the analog phaser version
+[W] Phaser - I'm not planning to do this, but it's nogotiable. I'm only interested in the analog phaser version
 [X] Analog Phaser 
 [W] Flanger - this is identical to the chorus, presets from this will be included there
 [X] Reverb 
 [X] Parametric EQ 
-[X] Cabinet Emulation 
+[X] Cabinet Emulation - created new class for it 
 [X] AutoPan/Stereo Expander 
-[x] Harmonizer - still need to do midi mode version
+[+] Harmonizer - still need to do midi mode version
 [X] Musical Delay 
 [W] Noise Gate - Direct copy of Steve Harris's Gate ladspa plugin
 [X] WahWah 
 [X] AlienWah 
 [X] Derelict 
-[ ] Valve 
-[.] Dual Flange 
-[.] Ring 
+[X] Valve 
+[ ] Dual Flange 
+[ ] Ring 
 [X] Exciter 
 [ ] DistBand 
 [.] Arpie 
@@ -56,12 +56,13 @@ EFFECTS (X - done, W - won't do, x - done with missing features)
 [.] StompBox - this will be broken up into the various stomps
 [.] Reverbtron 
 [.] Echotron - this has been requested, considering
-[W] StereoHarm - this seems like its limited use in plugin form, just use 2 instances of the mono version
+[W] StereoHarm - this seems like it's of limited use in plugin form, just use 2 instances of the mono version
 [ ] CompBand 
 [ ] Opticaltrem 
 [ ] Vibe 
 [ ] Infinity
 
+__fx in preset bank 1__
 stompbox
 echotron
 reverbtron
