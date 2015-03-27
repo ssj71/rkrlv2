@@ -1,0 +1,372 @@
+@prefix atom: <http://lv2plug.in/ns/ext/atom#> .
+@prefix lv2: <http://lv2plug.in/ns/lv2core#> .
+@prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix state: <http://lv2plug.in/ns/ext/state#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://rakarrack.sourceforge.net/effects.html#Dual_Flange:preset:preset1>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Dual_Flange> ;
+        rdfs:label "Preset 1" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 32.0
+        ], [
+                lv2:symbol "PAN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LRC" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "DEPTH" ;
+                pset:value 110.0
+        ], [
+                lv2:symbol "WIDTH" ;
+                pset:value 800.0
+        ], [
+                lv2:symbol "OFFS" ;
+                pset:value 10.0
+        ], [
+                lv2:symbol "FB" ;
+                pset:value -27.0
+        ], [
+                lv2:symbol "LPF" ;
+                pset:value 16000.0
+        ], [
+                lv2:symbol "SUB" ;
+                pset:value 1.0
+        ], [
+                lv2:symbol "THZ" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 24.0
+        ], [
+                lv2:symbol "STDL" ;
+                pset:value 64.0
+        ], [
+                lv2:symbol "TYPE" ;
+                pset:value 1.0
+        ], [
+                lv2:symbol "RND" ;
+                pset:value 10.0
+        ], [
+                lv2:symbol "INTENSE" ;
+                pset:value 0.0
+        ] ;
+        .
+	
+<http://rakarrack.sourceforge.net/effects.html#Dual_Flange:preset:flangewah>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Dual_Flange> ; 
+        rdfs:label "FlangeWah" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 64.0
+        ], [
+                lv2:symbol "PAN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LRC" ;
+                pset:value 64.0
+        ], [
+                lv2:symbol "DEPTH" ;
+                pset:value 500.0
+        ], [
+                lv2:symbol "WIDTH" ;
+                pset:value 3000.0
+        ], [
+                lv2:symbol "OFFS" ;
+                pset:value 50.0
+        ], [
+                lv2:symbol "FB" ;
+                pset:value -40.0
+        ], [
+                lv2:symbol "LPF" ;
+                pset:value 8000.0
+        ], [
+                lv2:symbol "SUB" ;
+                pset:value 1.0
+        ], [
+                lv2:symbol "THZ" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 196.0
+        ], [
+                lv2:symbol "STDL" ;
+                pset:value 96.0
+        ], [
+                lv2:symbol "TYPE" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "RND" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "INTENSE" ;
+                pset:value 0.0
+        ] ;
+        .
+	
+<http://rakarrack.sourceforge.net/effects.html#Dual_Flange:preset:fbflange>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Dual_Flange> ; 
+        rdfs:label "Feedback Flange" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 64.0
+        ], [
+                lv2:symbol "PAN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LRC" ;
+                pset:value 64.0
+        ], [
+                lv2:symbol "DEPTH" ;
+                pset:value 68.0
+        ], [
+                lv2:symbol "WIDTH" ;
+                pset:value 75.0
+        ], [
+                lv2:symbol "OFFS" ;
+                pset:value 50.0
+        ], [
+                lv2:symbol "FB" ;
+                pset:value -50.0
+        ], [
+                lv2:symbol "LPF" ;
+                pset:value 8000.0
+        ], [
+                lv2:symbol "SUB" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "THZ" ;
+                pset:value 1.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 23.0
+        ], [
+                lv2:symbol "STDL" ;
+                pset:value 96.0
+        ], [
+                lv2:symbol "TYPE" ;
+                pset:value 5.0
+        ], [
+                lv2:symbol "RND" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "INTENSE" ;
+                pset:value 0.0
+        ] ;
+        .
+	
+<http://rakarrack.sourceforge.net/effects.html#Dual_Flange:preset:softflange>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Dual_Flange> ;
+        rdfs:label "Soft Flange" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 32.0
+        ], [
+                lv2:symbol "PAN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LRC" ;
+                pset:value 64.0
+        ], [
+                lv2:symbol "DEPTH" ;
+                pset:value 60.0
+        ], [
+                lv2:symbol "WIDTH" ;
+                pset:value 10.0
+        ], [
+                lv2:symbol "OFFS" ;
+                pset:value 100.0
+        ], [
+                lv2:symbol "FB" ;
+                pset:value 20.0
+        ], [
+                lv2:symbol "LPF" ;
+                pset:value 16000.0
+        ], [
+                lv2:symbol "SUB" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "THZ" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 16.0
+        ], [
+                lv2:symbol "STDL" ;
+                pset:value 90.0
+        ], [
+                lv2:symbol "TYPE" ;
+                pset:value 4.0
+        ], [
+                lv2:symbol "RND" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "INTENSE" ;
+                pset:value 0.0
+        ] ;
+        .
+
+<http://rakarrack.sourceforge.net/effects.html#Dual_Flange:preset:flanger>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Dual_Flange> ;
+        rdfs:label "Flanger" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 32.0
+        ], [
+                lv2:symbol "PAN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LRC" ;
+                pset:value 64.0
+        ], [
+                lv2:symbol "DEPTH" ;
+                pset:value 170.0
+        ], [
+                lv2:symbol "WIDTH" ;
+                pset:value 1200.0
+        ], [
+                lv2:symbol "OFFS" ;
+                pset:value 50.0
+        ], [
+                lv2:symbol "FB" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LPF" ;
+                pset:value 16000.0
+        ], [
+                lv2:symbol "SUB" ;
+                pset:value 1.0
+        ], [
+                lv2:symbol "THZ" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 68.0
+        ], [
+                lv2:symbol "STDL" ;
+                pset:value 127.0
+        ], [
+                lv2:symbol "TYPE" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "RND" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "INTENSE" ;
+                pset:value 0.0
+        ] ;
+        .
+
+<http://rakarrack.sourceforge.net/effects.html#Dual_Flange:preset:chorus1>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Dual_Flange> ;
+        rdfs:label "Chorus 1" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 49.0
+        ], [
+                lv2:symbol "PAN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LRC" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "DEPTH" ;
+                pset:value 42.0
+        ], [
+                lv2:symbol "WIDTH" ;
+                pset:value 12.0
+        ], [
+                lv2:symbol "OFFS" ;
+                pset:value 50.0
+        ], [
+                lv2:symbol "FB" ;
+                pset:value -10.0
+        ], [
+                lv2:symbol "LPF" ;
+                pset:value 1500.0
+        ], [
+                lv2:symbol "SUB" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "THZ" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 120.0
+        ], [
+                lv2:symbol "STDL" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "TYPE" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "RND" ;
+                pset:value 20.0
+        ], [
+                lv2:symbol "INTENSE" ;
+                pset:value 0.0
+        ] ;
+        .
+
+<http://rakarrack.sourceforge.net/effects.html#Dual_Flange:preset:chorus2>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Dual_Flange> ;
+        rdfs:label "Chorus 2" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 24.0
+        ], [
+                lv2:symbol "PAN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LRC" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "DEPTH" ;
+                pset:value 35.0
+        ], [
+                lv2:symbol "WIDTH" ;
+                pset:value 9.0
+        ], [
+                lv2:symbol "OFFS" ;
+                pset:value 67.0
+        ], [
+                lv2:symbol "FB" ;
+                pset:value 12.0
+        ], [
+                lv2:symbol "LPF" ;
+                pset:value 4700.0
+        ], [
+                lv2:symbol "SUB" ;
+                pset:value 1.0
+        ], [
+                lv2:symbol "THZ" ;
+                pset:value 1.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 160.0
+        ], [
+                lv2:symbol "STDL" ;
+                pset:value 75.0
+        ], [
+                lv2:symbol "TYPE" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "RND" ;
+                pset:value 60.0
+        ], [
+                lv2:symbol "INTENSE" ;
+                pset:value 0.0
+        ] ;
+        .
+

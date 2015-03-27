@@ -32,12 +32,11 @@
 #include <math.h>
 #include "Dual_Flange.h"
 
-Dflange::Dflange (float * efxoutl_, float * efxoutr_)
+Dflange::Dflange (float * efxoutl_, float * efxoutr_, double sample_rate)
 {
     efxoutl = efxoutl_;
     efxoutr = efxoutr_;
-
-    period_const = 1.0f/fPERIOD;
+    fSAMPLE_RATE = sample_rate;
 
     //default values
     Ppreset = 0;
@@ -46,16 +45,16 @@ Dflange::Dflange (float * efxoutl_, float * efxoutr_)
     rdelay = NULL;
 
 
-    maxx_delay = (int) SAMPLE_RATE * 0.055f;
+    maxx_delay = (int) sample_rate * 0.055f;
     ldelay = new float[maxx_delay];
     rdelay = new float[maxx_delay];
     zldelay = new float[maxx_delay];
     zrdelay = new float[maxx_delay];
 
-    ldelayline0  = new delayline(0.055f, 2);
-    rdelayline0  = new delayline(0.055f, 2);
-    ldelayline1  = new delayline(0.055f, 2);
-    rdelayline1  = new delayline(0.055f, 2);
+    ldelayline0  = new delayline(0.055f, 2, sample_rate);
+    rdelayline0  = new delayline(0.055f, 2, sample_rate);
+    ldelayline1  = new delayline(0.055f, 2, sample_rate);
+    rdelayline1  = new delayline(0.055f, 2, sample_rate);
     ldelayline0 -> set_averaging(0.05f);
     rdelayline0 -> set_averaging(0.05f);
     ldelayline0->set_mix( 0.5f );
@@ -80,12 +79,24 @@ Dflange::Dflange (float * efxoutl_, float * efxoutr_)
     lsA  = 0.0f;
     lsB = 0.0f;
     logmax = logf(1000.0f)/logf(2.0f);
+
+    lfo = new EffectLFO(sample_rate);
+    PERIOD = 255;//best guess for init
     setpreset (Ppreset);
     cleanup ();
 };
 
 Dflange::~Dflange ()
 {
+    delete ldelay;
+    delete rdelay;
+    delete zldelay;
+    delete zrdelay;
+    delete ldelayline0;
+    delete rdelayline0;
+    delete ldelayline1;
+    delete rdelayline1;
+	delete lfo;
 };
 
 /*
@@ -119,17 +130,19 @@ Dflange::cleanup ()
  * Effect output
  */
 void
-Dflange::out (float * smpsl, float * smpsr)
+Dflange::out (float * smpsl, float * smpsr, uint32_t period)
 {
-    int i;
+    unsigned int i;
     //deal with LFO's
     int tmp0, tmp1;
+    period_const = 1.0f/(float)period;
+    PERIOD = period;
 
     float lfol, lfor, lmod, rmod, lmodfreq, rmodfreq, rx0, rx1, lx0, lx1;
     float ldif0, ldif1, rdif0, rdif1;  //Difference between fractional delay and floor(fractional delay)
     float drA, drB, dlA, dlB;	//LFO inside the loop.
 
-    lfo.effectlfoout (&lfol, &lfor);
+    lfo->effectlfoout (&lfol, &lfor);
     lmod = lfol;
     if(Pzero && Pintense) rmod = 1.0f - lfol;  //using lfol is intentional
     else rmod = lfor;
@@ -448,20 +461,20 @@ Dflange::changepar (int npar, int value)
         if (Pzero) fzero = 1.0f;
         break;
     case 10:
-        lfo.Pfreq = value;
-        lfo.updateparams ();
+        lfo->Pfreq = value;
+        lfo->updateparams (PERIOD);
         break;
     case 11:
-        lfo.Pstereo = value;
-        lfo.updateparams ();
+        lfo->Pstereo = value;
+        lfo->updateparams (PERIOD);
         break;
     case 12:
-        lfo.PLFOtype = value;
-        lfo.updateparams ();
+        lfo->PLFOtype = value;
+        lfo->updateparams (PERIOD);
         break;
     case 13:
-        lfo.Prandomness = value;
-        lfo.updateparams ();
+        lfo->Prandomness = value;
+        lfo->updateparams (PERIOD);
         break;
     case 14:
         Pintense = value;
@@ -504,16 +517,16 @@ Dflange::getpar (int npar)
         return (Pzero);
         break;
     case 10:
-        return (lfo.Pfreq);
+        return (lfo->Pfreq);
         break;
     case 11:
-        return (lfo.Pstereo);
+        return (lfo->Pstereo);
         break;
     case 12:
-        return (lfo.PLFOtype);
+        return (lfo->PLFOtype);
         break;
     case 13:
-        return (lfo.Prandomness);
+        return (lfo->Prandomness);
         break;
     case 14:
         return Pintense;
@@ -528,6 +541,7 @@ Dflange::setpreset (int npreset)
 {
     const int PRESET_SIZE = 15;
     const int NUM_PRESETS = 9;
+    int pdata[PRESET_SIZE];
     int presets[NUM_PRESETS][PRESET_SIZE] = {
         //Preset 1
         {-32, 0, 0, 110, 800, 10, -27, 16000, 1, 0, 24, 64, 1, 10, 0},
@@ -550,7 +564,7 @@ Dflange::setpreset (int npreset)
     };
 
     if(npreset>NUM_PRESETS-1) {
-        Fpre->ReadPreset(20,npreset-NUM_PRESETS+1);
+        Fpre->ReadPreset(20,npreset-NUM_PRESETS+1, pdata);
         for (int n = 0; n < PRESET_SIZE; n++)
             changepar (n, pdata[n]);
     } else {

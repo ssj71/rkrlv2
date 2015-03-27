@@ -29,6 +29,7 @@
 #include"DynamicFilter.h"
 #include"NewDist.h"
 #include"Valve.h"
+#include"Dual_Flange.h"
 
 //#include"global.h"
 
@@ -112,6 +113,7 @@ typedef struct _RKRLV2
     DynamicFilter* wah; //14
     NewDist* dere; 		//15
     Valve* valve;		//16
+    Dflange* dflange;   //17
 }RKRLV2;
 
 
@@ -1346,6 +1348,63 @@ void run_valvelv2(LV2_Handle handle, uint32_t nframes)
     return;
 }
 
+///// dual flange /////////
+LV2_Handle init_dflangelv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 15;
+    plug->effectindex = 17;
+
+    plug->dflange = new Dflange(0,0, sample_freq);
+
+    return plug;
+}
+
+void run_dflangelv2(LV2_Handle handle, uint32_t nframes)
+{
+    int i;
+    int val;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    //lfo effects must set period before params
+    plug->dflange->PERIOD = nframes;
+
+    //check and set changed parameters
+    i=0;
+    val = (int)*plug->param_p[i]-64;//0 Wet/dry
+    if(plug->dflange->getpar(i) != val)
+    {
+        plug->dflange->changepar(i,val);
+    }
+    for(i++;i<plug->nparams;i++)//1-14
+    {
+        val = (int)*plug->param_p[i];
+       if(plug->dflange->getpar(i) != val)
+       {
+           plug->dflange->changepar(i,val);
+       }
+    }
+
+    //now set out ports and global period size
+    plug->dflange->efxoutl = plug->output_l_p;
+    plug->dflange->efxoutr = plug->output_r_p;
+
+    //dflange does it inline?
+    memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+    memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+
+    //now set out ports
+    plug->dflange->efxoutl = plug->output_l_p;
+    plug->dflange->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->dflange->out(plug->output_l_p,plug->output_r_p,nframes);
+
+    return;
+}
+
 /////////////////////////////////
 ///////// END OF FX ///////////// 
 /////////////////////////////////
@@ -1437,6 +1496,9 @@ void cleanup_rkrlv2(LV2_Handle handle)
             break;
         case 16:
             delete plug->valve;
+            break;
+        case 17:
+            delete plug->dflange;
             break;
     }
     free(plug);
@@ -1629,6 +1691,17 @@ static const LV2_Descriptor valvelv2_descriptor={
     0//extension
 };
 
+static const LV2_Descriptor dflangelv2_descriptor={
+    DFLANGELV2_URI,
+    init_dflangelv2,
+    connect_rkrlv2_ports,
+    0,//activate
+    run_dflangelv2,
+    0,//deactivate
+    cleanup_rkrlv2,
+    0//extension
+};
+
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor* lv2_descriptor(uint32_t index)
 {
@@ -1667,6 +1740,8 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
     	return &derelv2_descriptor ;
     case 16:
     	return &valvelv2_descriptor ;
+    case 17:
+    	return &dflangelv2_descriptor ;
     default:
         return 0;
     }

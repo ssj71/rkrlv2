@@ -37,9 +37,9 @@
 class Dflange
 {
 public:
-    Dflange (float * efxoutl_, float * efxoutr_);
+    Dflange (float * efxoutl_, float * efxoutr_, double sample_rate);
     ~Dflange ();
-    void out (float * smpsl, float * smpr);
+    void out (float * smpsl, float * smpr, uint32_t period);
     void setpreset (int npreset);
     void changepar (int npar, int value);
     int getpar (int npar);
@@ -50,6 +50,7 @@ public:
     float *efxoutl;
     float *efxoutr;
 
+    uint32_t PERIOD;
 
 private:
     //Parameters
@@ -80,7 +81,7 @@ private:
     float fsubtract;		//Subtract wet/dry instead of add.  Nonzero is true
     float fzero;		//Enable through-zero flanging
     float logmax;
-    EffectLFO lfo;		//lfo Flanger
+    EffectLFO *lfo;		//lfo Flanger
 
     //Internally used variables
     int maxx_delay;
@@ -96,6 +97,8 @@ private:
 
     delayline *ldelayline0, *rdelayline0, *ldelayline1, *rdelayline1;
     class FPreset *Fpre;
+
+    float fSAMPLE_RATE;
 
 
 };

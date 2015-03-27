@@ -56,7 +56,7 @@
                 lv2:index 4 ;
                 lv2:symbol "WETDRY" ;
                 lv2:name "Wet/Dry" ;
-                lv2:default 64 ;
+                lv2:default 32 ;
                 lv2:minimum 0 ;
                 lv2:maximum 127 ;
                 lv2:portProperty lv2:integer ;
@@ -102,14 +102,54 @@
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 9 ;
                 lv2:symbol "OFFS" ;
-                lv2:name "Offset Delay";
+                lv2:name "Offset Delays";
                 lv2:default 4 ;
                 lv2:minimum 0 ;
                 lv2:maximum 100 ;
                 lv2:portProperty lv2:integer ;
+                units:unit units:pc ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 6 ;
+                lv2:index 10 ;
+                lv2:symbol "FB" ;
+                lv2:name "Feedback";
+                lv2:default 0 ;
+                lv2:minimum -64 ;
+                lv2:maximum 64 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 11 ;
+                lv2:symbol "LPF" ;
+                lv2:name "Lowpass Filter";
+                lv2:default 2000 ;
+                lv2:minimum 20 ;
+                lv2:maximum 20000 ;
+                lv2:portProperty lv2:integer ;
+                units:unit units:hz ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 12 ;
+                lv2:symbol "SUB" ;
+                lv2:name "Subtract" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 1 ;
+                lv2:portProperty lv2:integer ;
+                lv2:portProperty lv2:toggled ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 13 ;
+                lv2:symbol "THZ" ;
+                lv2:name "Sweep Through Zero" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 1 ;
+                lv2:portProperty lv2:integer ;
+                lv2:portProperty lv2:toggled ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 14 ;
                 lv2:symbol "TEMPO" ;
                 lv2:name "Tempo" ;
                 lv2:default 14 ;
@@ -119,16 +159,16 @@
                 units:unit units:bpm ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 7 ;
-                lv2:symbol "RND" ;
-                lv2:name "Randomness" ;
-                lv2:default 0 ;
+                lv2:index 15 ;
+                lv2:symbol "STDL" ;
+                lv2:name "LFO L/R Delay" ;
+                lv2:default 64 ;
                 lv2:minimum 0 ;
                 lv2:maximum 127 ;
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 8 ;
+                lv2:index 16 ;
                 lv2:symbol "TYPE" ;
                 lv2:name "LFO Type" ;
                 lv2:default 1 ;
@@ -150,64 +190,18 @@
                 lv2:scalePoint [ rdfs:label "Triangle Bottomed Sine"; rdf:value 11 ] ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 9 ;
-                lv2:symbol "STDL" ;
-                lv2:name "LFO L/R Delay" ;
-                lv2:default 64 ;
-                lv2:minimum 0 ;
-                lv2:maximum 127 ;
-                lv2:portProperty lv2:integer ;
-        ], [
-                a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 10 ;
-                lv2:symbol "WIDTH" ;
-                lv2:name "Width" ;
-                lv2:default 110 ;
-                lv2:minimum 0 ;
-                lv2:maximum 127 ;
-                lv2:portProperty lv2:integer ;
-        ], [
-                a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 11 ;
-                lv2:symbol "FB" ;
-                lv2:name "Feedback" ;
-                lv2:default 40 ;
-                lv2:minimum -64 ;
-                lv2:maximum 64 ;
-                lv2:portProperty lv2:integer ;
-        ], [
-                a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 13 ;
-                lv2:symbol "MISMATCH" ;
-                lv2:name "Mismatch" ;
-                lv2:default 10 ;
-                lv2:minimum 0 ;
-                lv2:maximum 100 ;
-                lv2:portProperty lv2:integer ;
-        ], [
-                a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 14 ;
-                lv2:symbol "SUB" ;
-                lv2:name "Subtract" ;
+                lv2:index 17 ;
+                lv2:symbol "RND" ;
+                lv2:name "Randomness" ;
                 lv2:default 0 ;
                 lv2:minimum 0 ;
-                lv2:maximum 1 ;
-                lv2:portProperty lv2:integer ;
-                lv2:portProperty lv2:toggled ;
-        ], [
-                a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 15 ;
-                lv2:symbol "DEPTH" ;
-                lv2:name "Phase Depth" ;
-                lv2:default 64 ;
-                lv2:minimum 0 ;
                 lv2:maximum 127 ;
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 16 ;
-                lv2:symbol "HYPER" ;
-                lv2:name "Hyper" ;
+                lv2:index 18 ;
+                lv2:symbol "INTENSE" ;
+                lv2:name "Intense" ;
                 lv2:default 1 ;
                 lv2:minimum 0 ;
                 lv2:maximum 1 ;
@@ -216,33 +210,38 @@
         ] ;
 	.
 
-<http://rakarrack.sourceforge.net/effects.html#aphas:preset:phaser_1>
+<http://rakarrack.sourceforge.net/effects.html#Dual_Flange:preset:preset1>
         a pset:Preset ;
-        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#aphas> ;
-        rdfs:seeAlso <aphas_presets.ttl> .
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Dual_Flange> ;
+        rdfs:seeAlso <dual_flange_presets.ttl> .
 
-<http://rakarrack.sourceforge.net/effects.html#aphas:preset:phaser_2>
+<http://rakarrack.sourceforge.net/effects.html#Dual_Flange:preset:flangewah>
         a pset:Preset ;
-        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#aphas> ;
-        rdfs:seeAlso <aphas_presets.ttl> .
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Dual_Flange> ;
+        rdfs:seeAlso <dual_flange_presets.ttl> .
 
-<http://rakarrack.sourceforge.net/effects.html#aphas:preset:phaser_3>
+<http://rakarrack.sourceforge.net/effects.html#Dual_Flange:preset:fbflange>
         a pset:Preset ;
-        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#aphas> ;
-        rdfs:seeAlso <aphas_presets.ttl> .
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Dual_Flange> ;
+        rdfs:seeAlso <dual_flange_presets.ttl> .
 
-<http://rakarrack.sourceforge.net/effects.html#aphas:preset:phaser_4>
+<http://rakarrack.sourceforge.net/effects.html#Dual_Flange:preset:softflange>
         a pset:Preset ;
-        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#aphas> ;
-        rdfs:seeAlso <aphas_presets.ttl> .
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Dual_Flange> ;
+        rdfs:seeAlso <dual_flange_presets.ttl> .
 
-<http://rakarrack.sourceforge.net/effects.html#aphas:preset:phaser_5>
+<http://rakarrack.sourceforge.net/effects.html#Dual_Flange:preset:flanger>
         a pset:Preset ;
-        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#aphas> ;
-        rdfs:seeAlso <aphas_presets.ttl> .
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Dual_Flange> ;
+        rdfs:seeAlso <dual_flange_presets.ttl> .
 
-<http://rakarrack.sourceforge.net/effects.html#aphas:preset:phaser_6>
+<http://rakarrack.sourceforge.net/effects.html#Dual_Flange:preset:chorus1>
         a pset:Preset ;
-        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#aphas> ;
-        rdfs:seeAlso <aphas_presets.ttl> .
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Dual_Flange> ;
+        rdfs:seeAlso <dual_flange_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#Dual_Flange:preset:chorus2>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Dual_Flange> ;
+        rdfs:seeAlso <dual_flange_presets.ttl> .
 
