@@ -71,6 +71,7 @@ Recognize::Recognize (float *efxoutl_, float *efxoutr_, float trig, double sampl
 Recognize::~Recognize ()
 
 {
+	free(schmittBuffer);
 	delete Sus;
 	delete lpfl;
 	delete lpfr;

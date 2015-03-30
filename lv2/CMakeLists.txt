@@ -53,6 +53,7 @@ add_library(rkrlv2 SHARED
   ../src/NewDist.C
   ../src/Valve.C
   ../src/Dual_Flange.C
+  ../src/Ring.C
 )
 
 set_target_properties(rkrlv2 PROPERTIES PREFIX "")
