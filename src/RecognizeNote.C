@@ -138,13 +138,6 @@ Recognize::schmittS16LE (signed short int *indata, uint32_t period)
 
 
 void
-Recognize::schmittFree ()
-{
-    free (schmittBuffer);
-};
-
-
-void
 Recognize::setlpf (int value)
 {
     float fr = (float)value;
@@ -164,12 +157,11 @@ Recognize::sethpf (int value)
 }
 
 
-
 void
 Recognize::schmittFloat (float *indatal, float *indatar, uint32_t period)
 {
     unsigned int i;
-    signed short int buf[period];
+    signed short int buf[period];//TODO: buf should probably be a member of this class
 
     lpfl->filterout (indatal, period);
     hpfl->filterout (indatal, period);

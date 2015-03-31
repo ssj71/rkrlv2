@@ -1459,7 +1459,10 @@ void run_ringlv2(LV2_Handle handle, uint32_t nframes)
     //TODO may need to make sure input is over some threshold
     if(plug->ring->Pafreq)
     {
-    	plug->noteID->schmittFloat(plug->input_l_p,plug->input_r_p,nframes);
+    	//copy over the data so that noteID doesn't tamper with it
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+    	plug->noteID->schmittFloat(plug->output_l_p,plug->output_r_p,nframes);
     	if(plug->noteID->reconota != -1 && plug->noteID->reconota != plug->noteID->last)
     	{
     		if(plug->noteID->afreq > 0.0)
@@ -1581,8 +1584,8 @@ void cleanup_rkrlv2(LV2_Handle handle)
             delete plug->dflange;
             break;
         case 18:
-        	//delete plug->noteID; //causes double free error
-            //delete plug->ring;
+        	delete plug->noteID; //causes double free error
+            delete plug->ring;
             break;
     }
     free(plug);
