@@ -1,0 +1,285 @@
+@prefix atom: <http://lv2plug.in/ns/ext/atom#> .
+@prefix lv2: <http://lv2plug.in/ns/lv2core#> .
+@prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix state: <http://lv2plug.in/ns/ext/state#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://rakarrack.sourceforge.net/effects.html#Ring:preset:sawsin>
+    a pset:Preset ;
+    lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Ring> ;
+    rdfs:label "SawSin" ;
+    lv2:port [
+        lv2:symbol "WETDRY" ;
+		pset:value 0.0
+    ], [
+        lv2:symbol "PAN" ;
+		pset:value 0.0
+    ], [
+        lv2:symbol "LRCr" ;
+		pset:value 0.0
+    ], [
+        lv2:symbol "LEVEL" ;
+		pset:value 64.0
+    ], [
+        lv2:symbol "DEPTH" ;
+		pset:value 35.0
+    ], [
+        lv2:symbol "FREQ" ;
+		pset:value 1.0
+    ], [
+        lv2:symbol "STEREO" ;
+		pset:value 0.0
+    ], [
+        lv2:symbol "SIN" ;
+		pset:value 20.0
+    ], [
+        lv2:symbol "TRI" ;
+		pset:value 0.0
+    ], [
+        lv2:symbol "SAW" ;
+		pset:value 40.0
+    ], [
+        lv2:symbol "SQUARE" ;
+		pset:value 0.0
+    ], [
+        lv2:symbol "INPUT" ;
+		pset:value 64.0
+    ], [
+        lv2:symbol "AFREQ" ;
+		pset:value 1.0
+    ] ;
+	.
+
+
+<http://rakarrack.sourceforge.net/effects.html#Ring:preset:e_string>
+    a pset:Preset ;
+    lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Ring> ;
+    rdfs:label "E String" ;
+    lv2:port [
+        lv2:symbol "WETDRY" ;
+		pset:value 64.0
+    ], [
+        lv2:symbol "PAN" ;
+		pset:value 0.0
+    ], [
+        lv2:symbol "LRCr" ;
+		pset:value 64.0
+    ], [
+        lv2:symbol "LEVEL" ;
+		pset:value 64.0
+    ], [
+        lv2:symbol "DEPTH" ;
+		pset:value 100.0
+    ], [
+        lv2:symbol "FREQ" ;
+		pset:value 82.0
+    ], [
+        lv2:symbol "STEREO" ;
+		pset:value 0.0
+    ], [
+        lv2:symbol "SIN" ;
+		pset:value 100.0
+    ], [
+        lv2:symbol "TRI" ;
+		pset:value 0.0
+    ], [
+        lv2:symbol "SAW" ;
+		pset:value 0.0
+    ], [
+        lv2:symbol "SQUARE" ;
+		pset:value 0.0
+    ], [
+        lv2:symbol "INPUT" ;
+		pset:value 64.0
+    ], [
+        lv2:symbol "AFREQ" ;
+		pset:value 0.0
+    ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Ring:preset:a_string>
+    a pset:Preset ;
+    lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Ring> ;
+    rdfs:label "A String" ;
+    lv2:port [
+        lv2:symbol "WETDRY" ;
+		pset:value 64.0
+    ], [
+        lv2:symbol "PAN" ;
+		pset:value 0.0
+    ], [
+        lv2:symbol "LRCr" ;
+		pset:value 64.0
+    ], [
+        lv2:symbol "LEVEL" ;
+		pset:value 64.0
+    ], [
+        lv2:symbol "DEPTH" ;
+		pset:value 100.0
+    ], [
+        lv2:symbol "FREQ" ;
+		pset:value 110.0
+    ], [
+        lv2:symbol "STEREO" ;
+		pset:value 0.0
+    ], [
+        lv2:symbol "SIN" ;
+		pset:value 0.0
+    ], [
+        lv2:symbol "TRI" ;
+		pset:value 100.0
+    ], [
+        lv2:symbol "SAW" ;
+		pset:value 50.0
+    ], [
+        lv2:symbol "SQUARE" ;
+		pset:value 0.0
+    ], [
+        lv2:symbol "INPUT" ;
+		pset:value 64.0
+    ], [
+        lv2:symbol "AFREQ" ;
+		pset:value 0.0
+    ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Ring:preset:dissonance>
+    a pset:Preset ;
+    lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Ring> ;
+    rdfs:label "Dissonance" ;
+    lv2:port [
+        lv2:symbol "WETDRY" ;
+		pset:value 64.0
+    ], [
+        lv2:symbol "PAN" ;
+		pset:value 0.0
+    ], [
+        lv2:symbol "LRCr" ;
+		pset:value 64.0
+    ], [
+        lv2:symbol "LEVEL" ;
+		pset:value 64.0
+    ], [
+        lv2:symbol "DEPTH" ;
+		pset:value 100.0
+    ], [
+        lv2:symbol "FREQ" ;
+		pset:value 817.0
+    ], [
+        lv2:symbol "STEREO" ;
+		pset:value 0.0
+    ], [
+        lv2:symbol "SIN" ;
+		pset:value 20.0
+    ], [
+        lv2:symbol "TRI" ;
+		pset:value 0.0
+    ], [
+        lv2:symbol "SAW" ;
+		pset:value 100.0
+    ], [
+        lv2:symbol "SQUARE" ;
+		pset:value 0.0
+    ], [
+        lv2:symbol "INPUT" ;
+		pset:value 64.0
+    ], [
+        lv2:symbol "AFREQ" ;
+		pset:value 0.0
+    ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Ring:preset:fast_beat>
+    a pset:Preset ;
+    lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Ring> ;
+    rdfs:label "Fast Beat" ;
+    lv2:port [
+        lv2:symbol "WETDRY" ;
+		pset:value 64.0
+    ], [
+        lv2:symbol "PAN" ;
+		pset:value 0.0
+    ], [
+        lv2:symbol "LRCr" ;
+		pset:value 64.0
+    ], [
+        lv2:symbol "LEVEL" ;
+		pset:value 64.0
+    ], [
+        lv2:symbol "DEPTH" ;
+		pset:value 100.0
+    ], [
+        lv2:symbol "FREQ" ;
+		pset:value 15.0
+    ], [
+        lv2:symbol "STEREO" ;
+		pset:value 0.0
+    ], [
+        lv2:symbol "SIN" ;
+		pset:value 20.0
+    ], [
+        lv2:symbol "TRI" ;
+		pset:value 0.0
+    ], [
+        lv2:symbol "SAW" ;
+		pset:value 100.0
+    ], [
+        lv2:symbol "SQUARE" ;
+		pset:value 0.0
+    ], [
+        lv2:symbol "INPUT" ;
+		pset:value 64.0
+    ], [
+        lv2:symbol "AFREQ" ;
+		pset:value 0.0
+    ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Ring:preset:ring_amp>
+    a pset:Preset ;
+    lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Ring> ;
+    rdfs:label "Ring Amp" ;
+    lv2:port [
+        lv2:symbol "WETDRY" ;
+		pset:value 64.0
+    ], [
+        lv2:symbol "PAN" ;
+		pset:value 0.0
+    ], [
+        lv2:symbol "LRCr" ;
+		pset:value 64.0
+    ], [
+        lv2:symbol "LEVEL" ;
+		pset:value 64.0
+    ], [
+        lv2:symbol "DEPTH" ;
+		pset:value 100.0
+    ], [
+        lv2:symbol "FREQ" ;
+		pset:value 1.0
+    ], [
+        lv2:symbol "STEREO" ;
+		pset:value 0.0
+    ], [
+        lv2:symbol "SIN" ;
+		pset:value 20.0
+    ], [
+        lv2:symbol "TRI" ;
+		pset:value 0.0
+    ], [
+        lv2:symbol "SAW" ;
+		pset:value 100.0
+    ], [
+        lv2:symbol "SQUARE" ;
+		pset:value 0.0
+    ], [
+        lv2:symbol "INPUT" ;
+		pset:value 64.0
+    ], [
+        lv2:symbol "AFREQ" ;
+		pset:value 0.0
+    ] ;
+	.
+

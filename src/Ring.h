@@ -30,15 +30,15 @@
 class Ring
 {
 public:
-    Ring (float * efxoutl_, float * efxoutr_);
+    Ring (float * efxoutl_, float * efxoutr_, double sample_rate);
     ~Ring ();
-    void out (float * smpsl, float * smpr);
+    void out (float * smpsl, float * smpr, uint32_t period);
     void setpreset (int npreset);
     void changepar (int npar, int value);
     int getpar (int npar);
     void setscale();
     void cleanup ();
-    void Create_Tables();
+    void Create_Tables(float sample_rate);
 
     int Ppreset;
     int Pafreq;
@@ -77,6 +77,8 @@ private:
     float sin,tri,saw,squ,scale,depth, idepth;
 
     class FPreset *Fpre;
+
+    unsigned int SAMPLE_RATE;
 };
 
 
