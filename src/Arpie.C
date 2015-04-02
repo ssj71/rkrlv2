@@ -26,10 +26,12 @@
 #include <math.h>
 #include "Arpie.h"
 
-Arpie::Arpie (float * efxoutl_, float * efxoutr_)
+Arpie::Arpie (float * efxoutl_, float * efxoutr_, double sample_rate)
 {
     efxoutl = efxoutl_;
     efxoutr = efxoutr_;
+    uint32_t SAMPLE_RATE = sample_rate;
+    fSAMPLE_RATE = sample_rate;
 
     //default values
     Ppreset = 0;
@@ -120,9 +122,9 @@ Arpie::initdelays ()
  * Effect output
  */
 void
-Arpie::out (float * smpsl, float * smpsr)
+Arpie::out (float * smpsl, float * smpsr, uint32_t period)
 {
-    int i;
+    unsigned int i;
     float l, r, ldl, rdl, rswell, lswell;
 
     for (i = 0; i < period; i++) {
@@ -299,6 +301,7 @@ Arpie::setpreset (int npreset)
 {
     const int PRESET_SIZE = 9;
     const int NUM_PRESETS = 9;
+    int pdata[PRESET_SIZE];
     int presets[NUM_PRESETS][PRESET_SIZE] = {
         //Arpie 1
         {67, 64, 35, 64, 30, 59, 0, 127, 4},
@@ -321,7 +324,7 @@ Arpie::setpreset (int npreset)
     };
 
     if(npreset>NUM_PRESETS-1) {
-        Fpre->ReadPreset(24,npreset-NUM_PRESETS+1);
+        Fpre->ReadPreset(24,npreset-NUM_PRESETS+1, pdata);
         for (int n = 0; n < PRESET_SIZE; n++)
             changepar (n, pdata[n]);
     } else {

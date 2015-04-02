@@ -32,6 +32,7 @@
 #include"Dual_Flange.h"
 #include"Ring.h"
 #include"MBDist.h"
+#include"Arpie.h"
 
 //#include"global.h"
 
@@ -118,6 +119,7 @@ typedef struct _RKRLV2
     Dflange* dflange;   //17
     Ring* ring;			//18
     MBDist* mbdist;
+    Arpie* arp;
 }RKRLV2;
 
 
@@ -400,7 +402,7 @@ void run_echolv2(LV2_Handle handle, uint32_t nframes)
 
     //check and set changed parameters
     i=0;
-    val = (int)*plug->param_p[i];
+    val = (int)*plug->param_p[i];//wet/dry
     if(plug->echo->getpar(i) != val)
     {
         plug->echo->changepar(i,val);
@@ -423,7 +425,7 @@ void run_echolv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->echo->changepar(i,val);
     }
-    for(i++;i<plug->nparams-1;i++)
+    for(i++;i<plug->nparams;i++)
     {
         val = (int)*plug->param_p[i];
        if(plug->echo->getpar(i) != val)
@@ -1548,6 +1550,72 @@ void run_mbdistlv2(LV2_Handle handle, uint32_t nframes)
     return;
 }
 
+///// arp /////////
+LV2_Handle init_arplv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+    
+    plug->nparams = 11;
+    plug->effectindex = 20;
+
+    plug->arp = new Arpie(0,0,sample_freq);
+
+    return plug;
+}
+
+void run_arplv2(LV2_Handle handle, uint32_t nframes)
+{
+    int i;
+    int val;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    //check and set changed parameters
+    i=0;
+    val = (int)*plug->param_p[i];//w/d
+    if(plug->arp->getpar(i) != val)
+    {
+        plug->arp->changepar(i,val);
+    }
+    i++;//panning is offset
+    val = (int)*plug->param_p[i]+64;
+    if(plug->arp->getpar(i) != val)
+    {
+        plug->arp->changepar(i,val);
+    }
+    i++;//delay is not offset
+    val = (int)*plug->param_p[i];
+    if(plug->arp->getpar(i) != val)
+    {
+        plug->arp->changepar(i,val);
+    }
+    i++;//LR delay is offset
+    val = (int)*plug->param_p[i]+64;
+    if(plug->arp->getpar(i) != val)
+    {
+        plug->arp->changepar(i,val);
+    }
+    for(i++;i<plug->nparams;i++)//rest are not offset
+    {
+        val = (int)*plug->param_p[i];
+       if(plug->arp->getpar(i) != val)
+       {
+           plug->arp->changepar(i,val);
+       }
+    }
+
+    //now set out ports and global period size
+    plug->arp->efxoutl = plug->output_l_p;
+    plug->arp->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->arp->out(plug->input_l_p,plug->input_r_p,nframes);
+    
+    //and for whatever reason we have to do the wet/dry mix ourselves
+    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->arp->outvolume, nframes);
+    
+    return;
+}
 /////////////////////////////////
 ///////// END OF FX ///////////// 
 /////////////////////////////////
@@ -1610,7 +1678,7 @@ void cleanup_rkrlv2(LV2_Handle handle)
         	break;
         case 6:
         	delete plug->harm;
-        	delete plug->noteID; //causes double free error
+        	delete plug->noteID;
         	delete plug->chordID;
         	break;
         case 7:
@@ -1644,8 +1712,14 @@ void cleanup_rkrlv2(LV2_Handle handle)
             delete plug->dflange;
             break;
         case 18:
-        	delete plug->noteID; //causes double free error
+        	delete plug->noteID;
             delete plug->ring;
+            break;
+        case 19:
+        	delete plug->mbdist; 
+            break;
+        case 20:
+        	delete plug->arp; 
             break;
     }
     free(plug);
@@ -1871,6 +1945,17 @@ static const LV2_Descriptor mbdistlv2_descriptor={
     0//extension
 };
 
+static const LV2_Descriptor arplv2_descriptor={
+    ARPIELV2_URI,
+    init_arplv2,
+    connect_rkrlv2_ports,
+    0,//activate
+    run_arplv2,
+    0,//deactivate
+    cleanup_rkrlv2,
+    0//extension
+};
+
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor* lv2_descriptor(uint32_t index)
 {
@@ -1915,6 +2000,8 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
     	return &ringlv2_descriptor ;
     case 19:
     	return &mbdistlv2_descriptor ;
+    case 20:
+    	return &arplv2_descriptor ;
     default:
         return 0;
     }

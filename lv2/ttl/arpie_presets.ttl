@@ -1,0 +1,367 @@
+@prefix atom: <http://lv2plug.in/ns/ext/atom#> .
+@prefix lv2: <http://lv2plug.in/ns/lv2core#> .
+@prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix state: <http://lv2plug.in/ns/ext/state#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://rakarrack.sourceforge.net/effects.html#Arpie:preset:arpie_1>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Arpie> ;
+        rdfs:label "Arpie 1" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 67.0
+        ], [
+                lv2:symbol "PAN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 35.0
+        ], [
+                lv2:symbol "LR_DELAY" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LRCr" ;
+                pset:value 30.0
+        ], [
+                lv2:symbol "FEEDBACK" ;
+                pset:value 59.0
+        ], [
+                lv2:symbol "DAMP" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "ARP" ;
+                pset:value 127.0
+        ], [
+                lv2:symbol "HARM" ;
+                pset:value 4.0
+        ], [
+                lv2:symbol "PATTERN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "SUBD" ;
+                pset:value 0.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Arpie:preset:arpie_2>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Arpie> ;
+        rdfs:label "Arpie 2" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 67.0
+        ], [
+                lv2:symbol "PAN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 21.0
+        ], [
+                lv2:symbol "LR_DELAY" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LRCr" ;
+                pset:value 30.0
+        ], [
+                lv2:symbol "FEEDBACK" ;
+                pset:value 59.0
+        ], [
+                lv2:symbol "DAMP" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "ARP" ;
+                pset:value 64.0
+        ], [
+                lv2:symbol "HARM" ;
+                pset:value 4.0
+        ], [
+                lv2:symbol "PATTERN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "SUBD" ;
+                pset:value 0.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Arpie:preset:arpie_3>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Arpie> ;
+        rdfs:label "Arpie 3" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 67.0
+        ], [
+                lv2:symbol "PAN" ;
+                pset:value 11.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 60.0
+        ], [
+                lv2:symbol "LR_DELAY" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LRCr" ;
+                pset:value 30.0
+        ], [
+                lv2:symbol "FEEDBACK" ;
+                pset:value 59.0
+        ], [
+                lv2:symbol "DAMP" ;
+                pset:value 10.0
+        ], [
+                lv2:symbol "ARP" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "HARM" ;
+                pset:value 4.0
+        ], [
+                lv2:symbol "PATTERN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "SUBD" ;
+                pset:value 0.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Arpie:preset:simple_arpie>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Arpie> ;
+        rdfs:label "Simple Arpie" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 67.0
+        ], [
+                lv2:symbol "PAN" ;
+                pset:value -4.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 44.0
+        ], [
+                lv2:symbol "LR_DELAY" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LRCr" ;
+                pset:value 30.0
+        ], [
+                lv2:symbol "FEEDBACK" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "DAMP" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "ARP" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "HARM" ;
+                pset:value 4.0
+        ], [
+                lv2:symbol "PATTERN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "SUBD" ;
+                pset:value 0.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Arpie:preset:canyon>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Arpie> ;
+        rdfs:label "Canyon" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 67.0
+        ], [
+                lv2:symbol "PAN" ;
+                pset:value -4.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 102.0
+        ], [
+                lv2:symbol "LR_DELAY" ;
+                pset:value -14.0
+        ], [
+                lv2:symbol "LRCr" ;
+                pset:value 30.0
+        ], [
+                lv2:symbol "FEEDBACK" ;
+                pset:value 82.0
+        ], [
+                lv2:symbol "DAMP" ;
+                pset:value 48.0
+        ], [
+                lv2:symbol "ARP" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "HARM" ;
+                pset:value 4.0
+        ], [
+                lv2:symbol "PATTERN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "SUBD" ;
+                pset:value 0.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Arpie:preset:panning_arpie_1>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Arpie> ;
+        rdfs:label "Panning Arp 1" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 67.0
+        ], [
+                lv2:symbol "PAN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 44.0
+        ], [
+                lv2:symbol "LR_DELAY" ;
+                pset:value -47.0
+        ], [
+                lv2:symbol "LRCr" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "FEEDBACK" ;
+                pset:value 82.0
+        ], [
+                lv2:symbol "DAMP" ;
+                pset:value 24.0
+        ], [
+                lv2:symbol "ARP" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "HARM" ;
+                pset:value 4.0
+        ], [
+                lv2:symbol "PATTERN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "SUBD" ;
+                pset:value 0.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Arpie:preset:panning_arpie_2>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Arpie> ;
+        rdfs:label "Panning Arp 2" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 81.0
+        ], [
+                lv2:symbol "PAN" ;
+                pset:value -4.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 46.0
+        ], [
+                lv2:symbol "LR_DELAY" ;
+                pset:value 55.0
+        ], [
+                lv2:symbol "LRCr" ;
+                pset:value 100.0
+        ], [
+                lv2:symbol "FEEDBACK" ;
+                pset:value 68.0
+        ], [
+                lv2:symbol "DAMP" ;
+                pset:value 18.0
+        ], [
+                lv2:symbol "ARP" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "HARM" ;
+                pset:value 4.0
+        ], [
+                lv2:symbol "PATTERN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "SUBD" ;
+                pset:value 0.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Arpie:preset:panning_arpie_3>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Arpie> ;
+        rdfs:label "Panning Arp 3" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 81.0
+        ], [
+                lv2:symbol "PAN" ;
+                pset:value -4.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 26.0
+        ], [
+                lv2:symbol "LR_DELAY" ;
+                pset:value 36.0
+        ], [
+                lv2:symbol "LRCr" ;
+                pset:value 127.0
+        ], [
+                lv2:symbol "FEEDBACK" ;
+                pset:value 67.0
+        ], [
+                lv2:symbol "DAMP" ;
+                pset:value 36.0
+        ], [
+                lv2:symbol "ARP" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "HARM" ;
+                pset:value 4.0
+        ], [
+                lv2:symbol "PATTERN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "SUBD" ;
+                pset:value 0.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Arpie:preset:feedback_arpie>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Arpie> ;
+        rdfs:label "Feedback Arpie" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 62.0
+        ], [
+                lv2:symbol "PAN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 28.0
+        ], [
+                lv2:symbol "LR_DELAY" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LRCr" ;
+                pset:value 100.0
+        ], [
+                lv2:symbol "FEEDBACK" ;
+                pset:value 90.0
+        ], [
+                lv2:symbol "DAMP" ;
+                pset:value 55.0
+        ], [
+                lv2:symbol "ARP" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "HARM" ;
+                pset:value 4.0
+        ], [
+                lv2:symbol "PATTERN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "SUBD" ;
+                pset:value 0.0
+        ] ;
+	.
