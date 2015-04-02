@@ -8,7 +8,7 @@
 
 <http://rakarrack.sourceforge.net/effects.html#Expander:preset:noise_gate>
 	a pset:Preset ;
-	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Expander> .
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Expander> ;
 	rdfs:label "Noise Gate" ;
         lv2:port [
                 lv2:symbol "THRESHOLD" ;
@@ -37,7 +37,7 @@
 
 <http://rakarrack.sourceforge.net/effects.html#Expander:preset:boost_gate>
 	a pset:Preset ;
-	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Expander> .
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Expander> ;
 	rdfs:label "Boost Gate" ;
         lv2:port [
                 lv2:symbol "THRESHOLD" ;
@@ -65,7 +65,7 @@
 
 <http://rakarrack.sourceforge.net/effects.html#Expander:preset:treble_swell>
 	a pset:Preset ;
-	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Expander> .
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Expander> ;
 	rdfs:label "Treble Swell" ;
         lv2:port [
                 lv2:symbol "THRESHOLD" ;

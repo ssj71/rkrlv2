@@ -182,7 +182,7 @@ Expander::Expander_Change_Preset (int npreset)
     };
 
     if(npreset>NUM_PRESETS-1) {
-        Fpre->ReadPreset(25,npreset-NUM_PRESETS+1.pdata);
+        Fpre->ReadPreset(25,npreset-NUM_PRESETS+1,pdata);
         for (int n = 0; n < PRESET_SIZE; n++)
             Expander_Change (n+1, pdata[n]);
     } else {
@@ -199,7 +199,7 @@ Expander::out (float *efxoutl, float *efxoutr, uint32_t period)
 {
 
 
-    int i;
+    unsigned int i;
     float delta = 0.0f;
     float expenv = 0.0f;
 
