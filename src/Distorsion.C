@@ -29,7 +29,7 @@
 #include "FPreset.h"
 
 Distorsion::Distorsion (float * efxoutl_, float * efxoutr_, double samplerate,
-		uint16_t intermediate_bufsize,
+		uint32_t intermediate_bufsize,
 		int wave_res, int wave_upq, int wave_dnq)
 {
     efxoutl = efxoutl_;

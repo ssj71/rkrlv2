@@ -33,7 +33,7 @@ class Distorsion
 {
 public:
     Distorsion (float * efxoutl_, float * efxoutr_, double samplerate,
-    		uint16_t intermediate_bufsize, int wave_res, int wave_upq, int wave_dnq);
+    		uint32_t intermediate_bufsize, int wave_res, int wave_upq, int wave_dnq);
     ~Distorsion ();
     void out (float * smpsl, float * smpr, uint32_t period);
     void setpreset (int dgui, int npreset);
