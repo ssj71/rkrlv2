@@ -101,3 +101,13 @@
         a lv2:Plugin, lv2:DistortionPlugin ;
         lv2:binary <rkrlv2.so> ;
         rdfs:seeAlso <distband.ttl> .
+# 20 
+<http://rakarrack.sourceforge.net/effects.html#Arpie>
+        a lv2:Plugin, lv2:DelayPlugin ;
+        lv2:binary <rkrlv2.so> ;
+        rdfs:seeAlso <arpie.ttl> .
+# 20 
+<http://rakarrack.sourceforge.net/effects.html#Expander>
+        a lv2:Plugin, lv2:ExpanderPlugin ;
+        lv2:binary <rkrlv2.so> ;
+        rdfs:seeAlso <expander.ttl> .

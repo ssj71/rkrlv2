@@ -30,9 +30,9 @@
 class Arpie
 {
 public:
-    Arpie (float * efxoutl_, float * efxoutr_);
+    Arpie (float * efxoutl_, float * efxoutr_, double sample_rate);
     ~Arpie ();
-    void out (float * smpsl, float * smpr);
+    void out (float * smpsl, float * smpr, uint32_t period);
     void setpreset (int npreset);
     void changepar (int npar, int value);
     int getpar (int npar);
@@ -83,6 +83,8 @@ private:
     float  Srate_Attack_Coeff, envattack, envswell;
 
     class FPreset *Fpre;
+
+    float fSAMPLE_RATE;
 };
 
 

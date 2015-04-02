@@ -1,0 +1,92 @@
+@prefix atom: <http://lv2plug.in/ns/ext/atom#> .
+@prefix lv2: <http://lv2plug.in/ns/lv2core#> .
+@prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix state: <http://lv2plug.in/ns/ext/state#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://rakarrack.sourceforge.net/effects.html#Expander:preset:noise_gate>
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Expander> ;
+	rdfs:label "Noise Gate" ;
+        lv2:port [
+                lv2:symbol "THRESHOLD" ;
+		pset:value -50.0
+        ], [
+                lv2:symbol "SHAPE" ;
+		pset:value 20.0
+        ], [
+                lv2:symbol "ATTACK" ;
+		pset:value 50.0
+        ], [
+                lv2:symbol "RELEASE" ;
+		pset:value 50.0
+        ], [
+                lv2:symbol "LPF" ;
+		pset:value 3134.0
+        ], [
+                lv2:symbol "HPF" ;
+		pset:value 76.0
+        ], [
+                lv2:symbol "OUTPUT" ;
+		pset:value 0.0
+        ] ;
+	.
+
+
+<http://rakarrack.sourceforge.net/effects.html#Expander:preset:boost_gate>
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Expander> ;
+	rdfs:label "Boost Gate" ;
+        lv2:port [
+                lv2:symbol "THRESHOLD" ;
+		pset:value -50.0
+        ], [
+                lv2:symbol "SHAPE" ;
+		pset:value 30.0
+        ], [
+                lv2:symbol "ATTACK" ;
+		pset:value 50.0
+        ], [
+                lv2:symbol "RELEASE" ;
+		pset:value 50.0
+        ], [
+                lv2:symbol "LPF" ;
+		pset:value 1441.0
+        ], [
+                lv2:symbol "HPF" ;
+		pset:value 157.0
+        ], [
+                lv2:symbol "OUTPUT" ;
+		pset:value 50.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Expander:preset:treble_swell>
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Expander> ;
+	rdfs:label "Treble Swell" ;
+        lv2:port [
+                lv2:symbol "THRESHOLD" ;
+		pset:value -30.0
+        ], [
+                lv2:symbol "SHAPE" ;
+		pset:value 9.0
+        ], [
+                lv2:symbol "ATTACK" ;
+		pset:value 950.0
+        ], [
+                lv2:symbol "RELEASE" ;
+		pset:value 25.0
+        ], [
+                lv2:symbol "LPF" ;
+		pset:value 6703.0
+        ], [
+                lv2:symbol "HPF" ;
+		pset:value 526.0
+        ], [
+                lv2:symbol "OUTPUT" ;
+		pset:value 90.0
+        ] ;
+	.
