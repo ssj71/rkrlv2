@@ -1500,7 +1500,7 @@ LV2_Handle init_mbdistlv2(const LV2_Descriptor *descriptor,double sample_freq, c
 
     getFeatures(plug,host_features);
 
-    plug->MBdist = new MBDist(0,0, sample_freq, plug->period_max, /*oversampling*/2,
+    plug->mbdist = new MBDist(0,0, sample_freq, plug->period_max, /*oversampling*/2,
                                 /*up interpolation method*/0, /*down interpolation method*/2);
 
     return plug;

@@ -37,7 +37,7 @@ EFFECTS (X - done, W - won't do, + - done with missing features)
 [X] Dual Flange 
 [X] Ring 
 [X] Exciter 
-[ ] DistBand 
+[X] DistBand 
 [.] Arpie 
 [.] Expander 
 [ ] Shuffle 
