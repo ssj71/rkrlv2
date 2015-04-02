@@ -39,10 +39,10 @@ class Expander
 
 public:
 
-    Expander (float * efxoutl_, float * efxoutr_);
+    Expander (float * efxoutl_, float * efxoutr_, double sample_rate);
     ~Expander ();
 
-    void out (float * smps_l, float * smps_r);
+    void out (float * smps_l, float * smps_r, uint32_t period);
 
     void Expander_Change (int np, int value);
     void Expander_Change_Preset (int npreset);

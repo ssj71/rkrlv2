@@ -28,22 +28,22 @@
 #include "Expander.h"
 
 
-Expander::Expander (float * efxoutl_, float * efxoutr_)
+Expander::Expander (float * efxoutl_, float * efxoutr_, double sample_rate)
 {
 
     efxoutl = efxoutl_;
     efxoutr = efxoutr_;
 
 
-    lpfl = new AnalogFilter (2, 22000, 1, 0);
-    lpfr = new AnalogFilter (2, 22000, 1, 0);
-    hpfl = new AnalogFilter (3, 20, 1, 0);
-    hpfr = new AnalogFilter (3, 20, 1, 0);
+    lpfl = new AnalogFilter (2, 22000, 1, 0, sample_rate);
+    lpfr = new AnalogFilter (2, 22000, 1, 0, sample_rate);
+    hpfl = new AnalogFilter (3, 20, 1, 0, sample_rate);
+    hpfr = new AnalogFilter (3, 20, 1, 0, sample_rate);
 
     env = 0.0;
     oldgain = 0.0;
     efollower = 0;
-    fs = fSAMPLE_RATE;
+    fs = sample_rate;
 
     Expander_Change_Preset(0);
 
@@ -170,6 +170,7 @@ Expander::Expander_Change_Preset (int npreset)
 
     const int PRESET_SIZE = 7;
     const int NUM_PRESETS = 3;
+    int pdata[PRESET_SIZE];
     int presets[NUM_PRESETS][PRESET_SIZE] = {
 
         //Noise Gate
@@ -181,7 +182,7 @@ Expander::Expander_Change_Preset (int npreset)
     };
 
     if(npreset>NUM_PRESETS-1) {
-        Fpre->ReadPreset(25,npreset-NUM_PRESETS+1);
+        Fpre->ReadPreset(25,npreset-NUM_PRESETS+1.pdata);
         for (int n = 0; n < PRESET_SIZE; n++)
             Expander_Change (n+1, pdata[n]);
     } else {
@@ -194,7 +195,7 @@ Expander::Expander_Change_Preset (int npreset)
 
 
 void
-Expander::out (float *efxoutl, float *efxoutr)
+Expander::out (float *efxoutl, float *efxoutr, uint32_t period)
 {
 
 
@@ -203,10 +204,10 @@ Expander::out (float *efxoutl, float *efxoutr)
     float expenv = 0.0f;
 
 
-    lpfl->filterout (efxoutl);
-    hpfl->filterout (efxoutl);
-    lpfr->filterout (efxoutr);
-    hpfr->filterout (efxoutr);
+    lpfl->filterout (efxoutl, period);
+    hpfl->filterout (efxoutl, period);
+    lpfr->filterout (efxoutr, period);
+    hpfr->filterout (efxoutr, period);
 
 
     for (i = 0; i < period; i++) {

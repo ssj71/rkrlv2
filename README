@@ -38,7 +38,7 @@ EFFECTS (X - done, W - won't do, + - done with missing features)
 [X] Ring 
 [X] Exciter 
 [X] DistBand 
-[.] Arpie 
+[X] Arpie 
 [.] Expander 
 [ ] Shuffle 
 [.] Synthfilter 

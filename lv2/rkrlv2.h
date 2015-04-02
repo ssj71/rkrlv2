@@ -22,6 +22,7 @@
 #define RINGLV2_URI "http://rakarrack.sourceforge.net/effects.html#Ring"
 #define MBDISTLV2_URI "http://rakarrack.sourceforge.net/effects.html#DistBand"
 #define ARPIELV2_URI "http://rakarrack.sourceforge.net/effects.html#Arpie"
+#define EXPANDLV2_URI "http://rakarrack.sourceforge.net/effects.html#Expander"
 
 enum RKRLV2_ports_
 {
