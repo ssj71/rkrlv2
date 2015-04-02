@@ -46,7 +46,6 @@ private:
     void displayFrequency (float freq);
     void schmittInit (int size, double sample_rate);
     void schmittS16LE (signed short int *indata, uint32_t period);
-    void schmittFree ();
     void update_freqs(float tune);
 
     int ultima;
@@ -57,8 +56,8 @@ private:
     class Sustainer *Sus;
 
     float fSAMPLE_RATE;
-    float freqs[POLY];
-    float lfreqs[POLY];
+    float freqs[12];
+    float lfreqs[12];
 
 };
 

@@ -30,6 +30,8 @@
 #include"NewDist.h"
 #include"Valve.h"
 #include"Dual_Flange.h"
+#include"Ring.h"
+#include"MBDist.h"
 
 //#include"global.h"
 
@@ -114,6 +116,8 @@ typedef struct _RKRLV2
     NewDist* dere; 		//15
     Valve* valve;		//16
     Dflange* dflange;   //17
+    Ring* ring;			//18
+    MBDist* mbdist;
 }RKRLV2;
 
 
@@ -966,7 +970,6 @@ void run_revelv2(LV2_Handle handle, uint32_t nframes)
     return;
 }
 
-
 ///// EQ Parametric /////////
 LV2_Handle init_eqplv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
 {
@@ -1088,7 +1091,6 @@ void run_cablv2(LV2_Handle handle, uint32_t nframes)
     
     return;
 }
-
 
 ///// Musical Delay /////////
 LV2_Handle init_mdellv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
@@ -1405,6 +1407,147 @@ void run_dflangelv2(LV2_Handle handle, uint32_t nframes)
     return;
 }
 
+//////// ring /////////
+LV2_Handle init_ringlv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 13;
+    plug->effectindex = 18;
+
+    //magic numbers: shift qual 4, downsample 5, up qual 4, down qual 2,
+    plug->ring = new Ring(0,0, sample_freq);
+    plug->noteID = new Recognize(0,0,.6, sample_freq, 440.0);//.6 is default trigger value
+
+    return plug;
+}
+
+void run_ringlv2(LV2_Handle handle, uint32_t nframes)
+{
+    int i;
+    int val;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    //check and set changed parameters
+    i = 0;
+    val = (int)*plug->param_p[i] - 64;// 0 wet/dry
+    if(plug->ring->getpar(i) != val)
+    {
+        plug->ring->changepar(i,val);
+    }
+    i++;
+    val = (int)*plug->param_p[i];// 1 pan
+    if(plug->ring->getpar(i) != val)
+    {
+        plug->ring->changepar(i,val);
+    }
+    i++;
+    val = (int)*plug->param_p[i] - 64;// 2 L/R cross
+    if(plug->ring->getpar(i) != val)
+    {
+        plug->ring->changepar(i,val);
+    }
+    for(i++;i<plug->nparams;i++)//3-12
+    {
+        val = (int)*plug->param_p[i];
+        if(plug->ring->getpar(i) != val)
+        {
+            plug->ring->changepar(i,val);
+        }
+    }
+//see process.C ln 1539
+
+    //TODO may need to make sure input is over some threshold
+    if(plug->ring->Pafreq)
+    {
+    	//copy over the data so that noteID doesn't tamper with it
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+    	plug->noteID->schmittFloat(plug->output_l_p,plug->output_r_p,nframes);
+    	if(plug->noteID->reconota != -1 && plug->noteID->reconota != plug->noteID->last)
+    	{
+    		if(plug->noteID->afreq > 0.0)
+    		{
+    			plug->ring->Pfreq = lrintf(plug->noteID->lafreq);//round
+    			plug->noteID->last = plug->noteID->reconota;
+    		}
+    	}
+    }
+
+    //now set out ports and global period size
+    plug->ring->efxoutl = plug->output_l_p;
+    plug->ring->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->ring->out(plug->input_l_p,plug->input_r_p,nframes);
+
+    //and for whatever reason we have to do the wet/dry mix ourselves
+    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p,
+    		plug->ring->outvolume, nframes);
+
+    return;
+}
+
+
+///// mbdist /////////
+LV2_Handle init_mbdistlv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 15;
+    plug->effectindex = 19;
+
+    getFeatures(plug,host_features);
+
+    plug->mbdist = new MBDist(0,0, sample_freq, plug->period_max, /*oversampling*/2,
+                                /*up interpolation method*/0, /*down interpolation method*/2);
+
+    return plug;
+}
+
+void run_mbdistlv2(LV2_Handle handle, uint32_t nframes)
+{
+    int i;
+    int val;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    //check and set changed parameters
+    i=0;
+    val = (int)*plug->param_p[i];//0 Wet/dry
+    if(plug->mbdist->getpar(i) != val)
+    {
+        plug->mbdist->changepar(i,val);
+    }
+    i++;
+    val = (int)*plug->param_p[i]+64;//1 pan
+    if(plug->mbdist->getpar(i) != val)
+    {
+        plug->mbdist->changepar(i,val);
+    }
+    for(i++;i<plug->nparams;i++)//2-12
+    {
+        val = (int)*plug->param_p[i];
+       if(plug->mbdist->getpar(i) != val)
+       {
+           plug->mbdist->changepar(i,val);
+       }
+    }
+
+    //now set out ports and global period size
+    plug->mbdist->efxoutl = plug->output_l_p;
+    plug->mbdist->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->mbdist->out(plug->input_l_p,plug->input_r_p,nframes);
+
+    //and for whatever reason we have to do the wet/dry mix ourselves
+    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->mbdist->outvolume, nframes);
+
+    return;
+}
+
 /////////////////////////////////
 ///////// END OF FX ///////////// 
 /////////////////////////////////
@@ -1467,7 +1610,7 @@ void cleanup_rkrlv2(LV2_Handle handle)
         	break;
         case 6:
         	delete plug->harm;
-        	//delete plug->noteID; //causes double free error
+        	delete plug->noteID; //causes double free error
         	delete plug->chordID;
         	break;
         case 7:
@@ -1499,6 +1642,10 @@ void cleanup_rkrlv2(LV2_Handle handle)
             break;
         case 17:
             delete plug->dflange;
+            break;
+        case 18:
+        	delete plug->noteID; //causes double free error
+            delete plug->ring;
             break;
     }
     free(plug);
@@ -1702,6 +1849,28 @@ static const LV2_Descriptor dflangelv2_descriptor={
     0//extension
 };
 
+static const LV2_Descriptor ringlv2_descriptor={
+    RINGLV2_URI,
+    init_ringlv2,
+    connect_rkrlv2_ports,
+    0,//activate
+    run_ringlv2,
+    0,//deactivate
+    cleanup_rkrlv2,
+    0//extension
+};
+
+static const LV2_Descriptor mbdistlv2_descriptor={
+    MBDISTLV2_URI,
+    init_mbdistlv2,
+    connect_rkrlv2_ports,
+    0,//activate
+    run_mbdistlv2,
+    0,//deactivate
+    cleanup_rkrlv2,
+    0//extension
+};
+
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor* lv2_descriptor(uint32_t index)
 {
@@ -1742,6 +1911,10 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
     	return &valvelv2_descriptor ;
     case 17:
     	return &dflangelv2_descriptor ;
+    case 18:
+    	return &ringlv2_descriptor ;
+    case 19:
+    	return &mbdistlv2_descriptor ;
     default:
         return 0;
     }

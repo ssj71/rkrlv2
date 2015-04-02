@@ -32,40 +32,41 @@
 
 
 
-MBDist::MBDist (float * efxoutl_, float * efxoutr_)
+MBDist::MBDist (float * efxoutl_, float * efxoutr_, double sample_rate, uint32_t intermediate_bufsize,
+		int wave_res, int wave_upq, int wave_dnq)
 {
     efxoutl = efxoutl_;
     efxoutr = efxoutr_;
 
-    lowl = (float *) malloc (sizeof (float) * period);
-    lowr = (float *) malloc (sizeof (float) * period);
-    midl = (float *) malloc (sizeof (float) * period);
-    midr = (float *) malloc (sizeof (float) * period);
-    highl = (float *) malloc (sizeof (float) * period);
-    highr = (float *) malloc (sizeof (float) * period);
+    lowl = (float *) malloc (sizeof (float) * intermediate_bufsize);
+    lowr = (float *) malloc (sizeof (float) * intermediate_bufsize);
+    midl = (float *) malloc (sizeof (float) * intermediate_bufsize);
+    midr = (float *) malloc (sizeof (float) * intermediate_bufsize);
+    highl = (float *) malloc (sizeof (float) * intermediate_bufsize);
+    highr = (float *) malloc (sizeof (float) * intermediate_bufsize);
 
 
-    lpf1l = new AnalogFilter (2, 500.0f, .7071f, 0);
-    lpf1r = new AnalogFilter (2, 500.0f, .7071f, 0);
-    hpf1l = new AnalogFilter (3, 500.0f, .7071f, 0);
-    hpf1r = new AnalogFilter (3, 500.0f, .7071f, 0);
-    lpf2l = new AnalogFilter (2, 2500.0f, .7071f, 0);
-    lpf2r = new AnalogFilter (2, 2500.0f, .7071f, 0);
-    hpf2l = new AnalogFilter (3, 2500.0f, .7071f, 0);
-    hpf2r = new AnalogFilter (3, 2500.0f, .7071f, 0);
-    DCl = new AnalogFilter (3, 30, 1, 0);
-    DCr = new AnalogFilter (3, 30, 1, 0);
+    lpf1l = new AnalogFilter (2, 500.0f, .7071f, 0, sample_rate);
+    lpf1r = new AnalogFilter (2, 500.0f, .7071f, 0, sample_rate);
+    hpf1l = new AnalogFilter (3, 500.0f, .7071f, 0, sample_rate);
+    hpf1r = new AnalogFilter (3, 500.0f, .7071f, 0, sample_rate);
+    lpf2l = new AnalogFilter (2, 2500.0f, .7071f, 0, sample_rate);
+    lpf2r = new AnalogFilter (2, 2500.0f, .7071f, 0, sample_rate);
+    hpf2l = new AnalogFilter (3, 2500.0f, .7071f, 0, sample_rate);
+    hpf2r = new AnalogFilter (3, 2500.0f, .7071f, 0, sample_rate);
+    DCl = new AnalogFilter (3, 30, 1, 0, sample_rate);
+    DCr = new AnalogFilter (3, 30, 1, 0, sample_rate);
     DCl->setfreq (30.0f);
     DCr->setfreq (30.0f);
 
 
-    mbwshape1l = new Waveshaper();
-    mbwshape2l = new Waveshaper();
-    mbwshape3l = new Waveshaper();
+    mbwshape1l = new Waveshaper(sample_rate, wave_res, wave_upq, wave_dnq, intermediate_bufsize);
+    mbwshape2l = new Waveshaper(sample_rate, wave_res, wave_upq, wave_dnq, intermediate_bufsize);
+    mbwshape3l = new Waveshaper(sample_rate, wave_res, wave_upq, wave_dnq, intermediate_bufsize);
 
-    mbwshape1r = new Waveshaper();
-    mbwshape2r = new Waveshaper();
-    mbwshape3r = new Waveshaper();
+    mbwshape1r = new Waveshaper(sample_rate, wave_res, wave_upq, wave_dnq, intermediate_bufsize);
+    mbwshape2r = new Waveshaper(sample_rate, wave_res, wave_upq, wave_dnq, intermediate_bufsize);
+    mbwshape3r = new Waveshaper(sample_rate, wave_res, wave_upq, wave_dnq, intermediate_bufsize);
 
     //default values
     Ppreset = 0;
@@ -112,9 +113,9 @@ MBDist::cleanup ()
  * Effect output
  */
 void
-MBDist::out (float * smpsl, float * smpsr)
+MBDist::out (float * smpsl, float * smpsr, uint32_t period)
 {
-    int i;
+    unsigned int i;
     float l, r, lout, rout;
 
     float inputvol = powf (5.0f, ((float)Pdrive - 32.0f) / 127.0f);
@@ -139,10 +140,10 @@ MBDist::out (float * smpsl, float * smpsr)
     memcpy(midl,efxoutl,sizeof(float) * period);
     memcpy(highl,efxoutl,sizeof(float) * period);
 
-    lpf1l->filterout(lowl);
-    hpf1l->filterout(midl);
-    lpf2l->filterout(midl);
-    hpf2l->filterout(highl);
+    lpf1l->filterout(lowl,period);
+    hpf1l->filterout(midl,period);
+    lpf2l->filterout(midl,period);
+    hpf2l->filterout(highl,period);
 
     if(volL> 0)  mbwshape1l->waveshapesmps (period, lowl, PtypeL, PdriveL, 1);
     if(volM> 0)  mbwshape2l->waveshapesmps (period, midl, PtypeM, PdriveM, 1);
@@ -154,10 +155,10 @@ MBDist::out (float * smpsl, float * smpsr)
         memcpy(midr,efxoutr,sizeof(float) * period);
         memcpy(highr,efxoutr,sizeof(float) * period);
 
-        lpf1r->filterout(lowr);
-        hpf1r->filterout(midr);
-        lpf2r->filterout(midr);
-        hpf2r->filterout(highr);
+        lpf1r->filterout(lowr,period);
+        hpf1r->filterout(midr,period);
+        lpf2r->filterout(midr,period);
+        hpf2r->filterout(highr,period);
 
         if(volL> 0)  mbwshape1r->waveshapesmps (period, lowr, PtypeL, PdriveL, 1);
         if(volM> 0)  mbwshape2r->waveshapesmps (period, midr, PtypeM, PdriveM, 1);
@@ -188,8 +189,8 @@ MBDist::out (float * smpsl, float * smpsr)
 
     };
 
-    DCr->filterout (efxoutr);
-    DCl->filterout (efxoutl);
+    DCr->filterout (efxoutr,period);
+    DCl->filterout (efxoutl,period);
 
 
 
@@ -251,6 +252,7 @@ MBDist::setpreset (int npreset)
 {
     const int PRESET_SIZE = 15;
     const int NUM_PRESETS = 8;
+    int pdata[PRESET_SIZE];
     int presets[NUM_PRESETS][PRESET_SIZE] = {
         //Saturation
         {0, 64, 0, 41, 64, 26, 19, 26, 41, 20, 35, 0, 400, 1200, 0},
@@ -271,7 +273,7 @@ MBDist::setpreset (int npreset)
 
     };
     if(npreset>NUM_PRESETS-1) {
-        Fpre->ReadPreset(23,npreset-NUM_PRESETS+1);
+        Fpre->ReadPreset(23,npreset-NUM_PRESETS+1,pdata);
         for (int n = 0; n < PRESET_SIZE; n++)
             changepar (n, pdata[n]);
     } else {

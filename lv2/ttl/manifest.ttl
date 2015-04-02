@@ -91,3 +91,13 @@
         a lv2:Plugin, lv2:FlangerPlugin ;
         lv2:binary <rkrlv2.so> ;
         rdfs:seeAlso <dual_flange.ttl> .
+# 18 
+<http://rakarrack.sourceforge.net/effects.html#Ring>
+        a lv2:Plugin, lv2:ModulatorPlugin ;
+        lv2:binary <rkrlv2.so> ;
+        rdfs:seeAlso <ring.ttl> .
+# 19 
+<http://rakarrack.sourceforge.net/effects.html#DistBand>
+        a lv2:Plugin, lv2:DistortionPlugin ;
+        lv2:binary <rkrlv2.so> ;
+        rdfs:seeAlso <distband.ttl> .
