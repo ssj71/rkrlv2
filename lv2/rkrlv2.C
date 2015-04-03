@@ -1174,9 +1174,8 @@ LV2_Handle init_wahlv2(const LV2_Descriptor *descriptor,double sample_freq, cons
     plug->nparams = 11;
     plug->effectindex = 14;
 
-    getFeatures(plug,host_features);
 
-    plug->wah = new DynamicFilter(0,0,sample_freq, plug->period_max);
+    plug->wah = new DynamicFilter(0,0,sample_freq);
 
     return plug;
 }

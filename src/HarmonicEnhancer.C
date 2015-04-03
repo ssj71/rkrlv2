@@ -33,6 +33,11 @@ HarmEnhancer::HarmEnhancer(float *Rmag, float hfreq, float lfreq, float gain, do
 
     inputl = (float *) malloc (sizeof (float) * intermediate_bufsize);
     inputr = (float *) malloc (sizeof (float) * intermediate_bufsize);
+    unsigned int i;
+    for(i=0;i<intermediate_bufsize;i++)
+    {
+    	inputl[i] = inputr[i] = 0;
+    }
 
     set_vol(0,gain);
     realvol = gain;

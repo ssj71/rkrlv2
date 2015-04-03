@@ -58,7 +58,13 @@ double csamplerate = 1/samplerate;
     }
 
 
+    //create and zero temp buffer
     temps = (float *) malloc (sizeof (float) * tempbufsize * period_coeff);
+    long i;
+    for(i=0; i<tempbufsize*period_coeff; i++)
+    {
+    	temps[i] = 0;
+    }
     u_up= (double)period_coeff;
     u_down = 1.0 / u_up;
 

@@ -44,6 +44,13 @@ MBDist::MBDist (float * efxoutl_, float * efxoutr_, double sample_rate, uint32_t
     midr = (float *) malloc (sizeof (float) * intermediate_bufsize);
     highl = (float *) malloc (sizeof (float) * intermediate_bufsize);
     highr = (float *) malloc (sizeof (float) * intermediate_bufsize);
+    unsigned int i;
+    for(i=0;i<intermediate_bufsize;i++)
+    {
+    	lowl[i] = lowr[i] = 0;
+    	midl[i] = midr[i] = 0;
+    	highl[i] = highr[i] = 0;
+    }
 
 
     lpf1l = new AnalogFilter (2, 500.0f, .7071f, 0, sample_rate);

@@ -7,13 +7,6 @@
 @prefix state: <http://lv2plug.in/ns/ext/state#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://rakarrack.sourceforge.net/effects.html#chor:preset:chorus_1> 
-	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#chor> ;
-	rdfs:label "Chorus 1" ;
-	lv2:port [
-		lv2:symbol "WETDRY" ;
-		pset:value 64.0
-	] , [
 <http://rakarrack.sourceforge.net/effects.html#wha:preset:wahwah>
 	a pset:Preset ;
 	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#wha> ;

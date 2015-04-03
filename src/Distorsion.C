@@ -37,6 +37,11 @@ Distorsion::Distorsion (float * efxoutl_, float * efxoutr_, double samplerate,
 
     octoutl = (float *) malloc (sizeof (float) * intermediate_bufsize);
     octoutr = (float *) malloc (sizeof (float) * intermediate_bufsize);
+    unsigned int i;
+    for(i=0;i<intermediate_bufsize;i++)
+    {
+    	octoutl[i] = octoutr[i] = 0;
+    }
 
     lpfl = new AnalogFilter (2, 22000, 1, 0, samplerate);
     lpfr = new AnalogFilter (2, 22000, 1, 0, samplerate);
