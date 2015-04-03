@@ -80,6 +80,8 @@ Arpie::cleanup ()
     oldr = 0.0;
     rvkl = 0;
     rvkr = 0;
+    rvfl = 0;
+    rvfr = 0;
     kl = 0;
     kr = 0;
     harmonic = 1;
@@ -103,6 +105,16 @@ Arpie::initdelays ()
     dr = delay + lrdelay;
     if (dr < 1)
         dr = 1;
+    if(dl > maxx_delay)
+    {
+    	dl = maxx_delay;
+    	dr = maxx_delay - 2*lrdelay;
+    }
+    if(dr > maxx_delay)
+    {
+    	dr = maxx_delay;
+    	dl = maxx_delay - 2*lrdelay;
+    }
 
     rvkl = 0;
     rvkr = 0;
@@ -228,7 +240,7 @@ void
 Arpie::setdelay (int Pdelay)
 {
     this->Pdelay = Pdelay;
-    if (Pdelay < 2) Pdelay = 2;
+    if (Pdelay < 30) Pdelay = 30;
     if (Pdelay > 600) Pdelay = 600;	//100ms .. 2 sec constraint
     delay = 1 + lrintf ( (60.0f/((float)(subdiv*Pdelay))) * fSAMPLE_RATE );	//quarter notes
     initdelays ();

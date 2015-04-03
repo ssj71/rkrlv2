@@ -26,7 +26,7 @@
 #include "DynamicFilter.h"
 #include <stdio.h>
 
-DynamicFilter::DynamicFilter (float * efxoutl_, float * efxoutr_, double sample_rate, uint32_t intermediate_bufsize)
+DynamicFilter::DynamicFilter (float * efxoutl_, float * efxoutr_, double sample_rate)
 {
     efxoutl = efxoutl_;
     efxoutr = efxoutr_;
@@ -37,7 +37,7 @@ DynamicFilter::DynamicFilter (float * efxoutl_, float * efxoutr_, double sample_
     filterl = NULL;
     filterr = NULL;
     filterpars = new FilterParams (0, 64, 64, sample_rate);
-    PERIOD = 256;
+    PERIOD = 256;//best guess of period size
     setpreset (Ppreset);
     cleanup ();
 };

@@ -31,7 +31,7 @@
  * Waveshape (this is called by OscilGen::waveshape and Distorsion::process)
  */
 
-// does anyone else see how funny this calss is? say it out loud. Perhaps this will become so popular they will start a new_dist colony ;)
+// does anyone else see how funny this class is? say it out loud. Perhaps this will become so popular they will start a new_dist colony ;)
 
 NewDist::NewDist (float * efxoutl_, float * efxoutr_, double sample_rate, uint32_t intermediate_bufsize,
 		int wave_res, int wave_upq, int wave_dnq)
@@ -42,7 +42,11 @@ NewDist::NewDist (float * efxoutl_, float * efxoutr_, double sample_rate, uint32
     octoutl = (float *) malloc (sizeof (float) * intermediate_bufsize);
     octoutr = (float *) malloc (sizeof (float) * intermediate_bufsize);
 
-
+    unsigned int i;
+    for(i=0;i<intermediate_bufsize;i++)
+    {
+    	octoutl[i] = octoutr[i] = 0;
+    }
 
     lpfl = new AnalogFilter (2, 22000, 1, 0, sample_rate);
     lpfr = new AnalogFilter (2, 22000, 1, 0, sample_rate);

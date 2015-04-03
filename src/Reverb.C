@@ -36,6 +36,11 @@ Reverb::Reverb (float * efxoutl_, float * efxoutr_, double samplerate, uint16_t 
     efxoutr = efxoutr_;
     inputbuf = new float[intermediate_bufsize];
     //filterpars=NULL;
+    unsigned int i;
+    for(i=0;i<intermediate_bufsize;i++)
+    {
+    	inputbuf[i] = 0;
+    }
 
 
     //defaults

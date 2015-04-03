@@ -48,8 +48,12 @@ Harmonizer::Harmonizer (float *efxoutl_, float *efxoutr_, long int Quality, int 
     outi = (float *) malloc (sizeof (float) * intermediate_bufsize);
     outo = (float *) malloc (sizeof (float) * intermediate_bufsize);
 
-    memset (outi, 0, sizeof (float) * intermediate_bufsize);
-    memset (outo, 0, sizeof (float) * intermediate_bufsize);
+    unsigned int i;
+    for(i=0; i<intermediate_bufsize;i++)
+    {
+    	templ[i] = tempr[i] = 0;
+    	outi[i] = outo[i] = 0;
+    }
 
     U_Resample = new Resample(dq);
     D_Resample = new Resample(uq);

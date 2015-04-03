@@ -39,7 +39,7 @@ EFFECTS (X - done, W - won't do, + - done with missing features)
 [X] Exciter 
 [X] DistBand 
 [X] Arpie 
-[.] Expander 
+[X] Expander 
 [ ] Shuffle 
 [.] Synthfilter 
 [ ] VaryBand 
