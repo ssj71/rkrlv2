@@ -34,6 +34,7 @@
 #include"MBDist.h"
 #include"Arpie.h"
 #include"Expander.h"
+#include"Shuffle.h"
 
 //#include"global.h"
 
@@ -122,6 +123,7 @@ typedef struct _RKRLV2
     MBDist* mbdist;
     Arpie* arp;
     Expander* expand;
+    Shuffle* shuf;
 }RKRLV2;
 
 
@@ -1662,6 +1664,51 @@ void run_expandlv2(LV2_Handle handle, uint32_t nframes)
     return;
 }
 
+///// shuffle /////////
+LV2_Handle init_shuflv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 11;
+    plug->effectindex = 22;
+
+    getFeatures(plug,host_features);
+
+    plug->shuf = new Shuffle(0,0,sample_freq,plug->period_max);
+
+    return plug;
+}
+
+void run_shuflv2(LV2_Handle handle, uint32_t nframes)
+{
+    int i;
+    int val;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    //check and set changed parameters
+    for(i=0;i<plug->nparams;i++)//rest are not offset
+    {
+        val = (int)*plug->param_p[i];
+       if(plug->shuf->getpar(i) != val)
+       {
+           plug->shuf->changepar(i,val);
+       }
+    }
+
+    //now set out ports and global period size
+    plug->shuf->efxoutl = plug->output_l_p;
+    plug->shuf->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->shuf->out(plug->input_l_p,plug->input_r_p,nframes);
+
+    //and for whatever reason we have to do the wet/dry mix ourselves
+    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->shuf->outvolume, nframes);
+
+    return;
+}
+
 
 /////////////////////////////////
 ///////// END OF FX ///////////// 
@@ -2017,6 +2064,17 @@ static const LV2_Descriptor expandlv2_descriptor={
     0//extension
 };
 
+static const LV2_Descriptor shuflv2_descriptor={
+    SHUFFLELV2_URI,
+    init_shuflv2,
+    connect_rkrlv2_ports,
+    0,//activate
+    run_shuflv2,
+    0,//deactivate
+    cleanup_rkrlv2,
+    0//extension
+};
+
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor* lv2_descriptor(uint32_t index)
 {
@@ -2065,6 +2123,8 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
     	return &arplv2_descriptor ;
     case 21:
     	return &expandlv2_descriptor ;
+    case 22:
+    	return &shuflv2_descriptor ;
     default:
         return 0;
     }

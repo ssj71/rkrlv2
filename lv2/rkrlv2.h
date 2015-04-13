@@ -23,6 +23,7 @@
 #define MBDISTLV2_URI "http://rakarrack.sourceforge.net/effects.html#DistBand"
 #define ARPIELV2_URI "http://rakarrack.sourceforge.net/effects.html#Arpie"
 #define EXPANDLV2_URI "http://rakarrack.sourceforge.net/effects.html#Expander"
+#define SHUFFLELV2_URI "http://rakarrack.sourceforge.net/effects.html#Shuffle"
 
 enum RKRLV2_ports_
 {

@@ -57,6 +57,7 @@ add_library(rkrlv2 SHARED
   ../src/MBDist.C
   ../src/Arpie.C
   ../src/Expander.C
+  ../src/Shuffle.C
 )
 
 set_target_properties(rkrlv2 PROPERTIES PREFIX "")

@@ -33,9 +33,9 @@
 class Shuffle
 {
 public:
-    Shuffle (float * efxoutl_, float * efxoutr_);
+    Shuffle (float * efxoutl_, float * efxoutr_, double sample_rate, uint32_t intermediate_bufsize);
     ~Shuffle ();
-    void out (float * smpsl, float * smpr);
+    void out (float * smpsl, float * smpr, uint32_t period);
     void setpreset (int npreset);
     void changepar (int npar, int value);
     int getpar (int npar);

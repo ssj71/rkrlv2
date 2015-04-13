@@ -33,19 +33,19 @@
 
 
 
-Shuffle::Shuffle (float * efxoutl_, float * efxoutr_)
+Shuffle::Shuffle (float * efxoutl_, float * efxoutr_, double sample_rate, uint32_t intermediate_bufsize)
 {
     efxoutl = efxoutl_;
     efxoutr = efxoutr_;
 
-    inputl = (float *) malloc (sizeof (float) * period);
-    inputr = (float *) malloc (sizeof (float) * period);
+    inputl = (float *) malloc (sizeof (float) * intermediate_bufsize);
+    inputr = (float *) malloc (sizeof (float) * intermediate_bufsize);
 
 
-    lr = new AnalogFilter (6, 300.0f, .3f, 0);
-    hr = new AnalogFilter (6, 8000.0f,.3f, 0);
-    mlr = new AnalogFilter (6, 1200.0f,.3f, 0);
-    mhr = new AnalogFilter (6, 2400.0f,.3f, 0);
+    lr = new AnalogFilter (6, 300.0f, .3f, 0, sample_rate);
+    hr = new AnalogFilter (6, 8000.0f,.3f, 0, sample_rate);
+    mlr = new AnalogFilter (6, 1200.0f,.3f, 0, sample_rate);
+    mhr = new AnalogFilter (6, 2400.0f,.3f, 0, sample_rate);
 
 
     //default values
@@ -62,6 +62,13 @@ Shuffle::Shuffle (float * efxoutl_, float * efxoutr_)
 
 Shuffle::~Shuffle ()
 {
+	free(inputl);
+	free(inputr);
+	delete lr;
+	delete hr;
+	delete mlr;
+	delete mhr;
+
 };
 
 /*
@@ -80,9 +87,9 @@ Shuffle::cleanup ()
  * Effect output
  */
 void
-Shuffle::out (float * smpsl, float * smpsr)
+Shuffle::out (float * smpsl, float * smpsr, uint32_t period)
 {
-    int i;
+    unsigned int i;
 
     for (i = 0; i < period; i++) {
 
@@ -92,15 +99,15 @@ Shuffle::out (float * smpsl, float * smpsr)
 
     if(E) {
 
-        lr->filterout(inputr);
-        mlr->filterout(inputr);
-        mhr->filterout(inputr);
-        hr->filterout(inputr);
+        lr->filterout(inputr, period);
+        mlr->filterout(inputr, period);
+        mhr->filterout(inputr, period);
+        hr->filterout(inputr, period);
     } else {
-        lr->filterout(inputl);
-        mlr->filterout(inputl);
-        mhr->filterout(inputl);
-        hr->filterout(inputl);
+        lr->filterout(inputl, period);
+        mlr->filterout(inputl, period);
+        mhr->filterout(inputl, period);
+        hr->filterout(inputl, period);
     }
 
 
@@ -195,6 +202,7 @@ Shuffle::setpreset (int npreset)
 {
     const int PRESET_SIZE = 11;
     const int NUM_PRESETS = 4;
+    int pdata[PRESET_SIZE];
     int presets[NUM_PRESETS][PRESET_SIZE] = {
         //Shuffle 1
         {64, 10, 0, 0, 0,600, 1200,2000, 6000,-14, 1},
@@ -206,7 +214,7 @@ Shuffle::setpreset (int npreset)
         {0, 17, 0, 7, 5, 600, 1200, 2000, 13865, -45, 1}
     };
     if(npreset>NUM_PRESETS-1) {
-        Fpre->ReadPreset(26,npreset-NUM_PRESETS+1);
+        Fpre->ReadPreset(26,npreset-NUM_PRESETS+1,pdata);
         for (int n = 0; n < PRESET_SIZE; n++)
             changepar (n, pdata[n]);
     } else {
