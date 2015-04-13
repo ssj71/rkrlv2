@@ -40,7 +40,7 @@ EFFECTS (X - done, W - won't do, + - done with missing features)
 [X] DistBand 
 [X] Arpie 
 [X] Expander 
-[ ] Shuffle 
+[X] Shuffle 
 [.] Synthfilter 
 [ ] VaryBand 
 [W] Convolotron - these require special input files, adding complexity. other excellent lv2 convolution engines already exist
