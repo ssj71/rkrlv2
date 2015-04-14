@@ -35,6 +35,7 @@
 #include"Arpie.h"
 #include"Expander.h"
 #include"Shuffle.h"
+#include"Synthfilter.h"
 
 //#include"global.h"
 
@@ -124,6 +125,7 @@ typedef struct _RKRLV2
     Arpie* arp;
     Expander* expand;
     Shuffle* shuf;
+    Synthfilter* synth;
 }RKRLV2;
 
 
@@ -1710,6 +1712,65 @@ void run_shuflv2(LV2_Handle handle, uint32_t nframes)
 }
 
 
+///// synth /////////
+LV2_Handle init_synthlv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 16;
+    plug->effectindex = 23;
+
+    plug->synth = new Synthfilter(0,0,sample_freq);
+
+    return plug;
+}
+
+void run_synthlv2(LV2_Handle handle, uint32_t nframes)
+{
+    unsigned int i;
+    int val;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    //LFO effects require period be set before setting other params
+    plug->synth->PERIOD = nframes;
+
+    //check and set changed parameters
+    for(i=0;i<5;i++)//0-4
+    {
+        val = (int)*plug->param_p[i];
+        if(plug->synth->getpar(i) != val)
+        {
+            plug->synth->changepar(i,val);
+        }
+    }
+    val = (int)*plug->param_p[i] +64;// 5 LR Del. offset
+    if(plug->synth->getpar(i) != val)
+    {
+        plug->synth->changepar(i,val);
+    }
+    for(i++;i<plug->nparams;i++)//6-10
+    {
+        val = (int)*plug->param_p[i];
+        if(plug->synth->getpar(i+1) != val)
+        {
+            plug->synth->changepar(i+1,val);
+        }
+    }
+
+    //now set out ports and global period size
+    plug->synth->efxoutl = plug->output_l_p;
+    plug->synth->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->synth->out(plug->input_l_p,plug->input_r_p,nframes);
+
+    //and for whatever reason we have to do the wet/dry mix ourselves
+    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->synth->outvolume, nframes);
+
+    return;
+}
+
 /////////////////////////////////
 ///////// END OF FX ///////////// 
 /////////////////////////////////
@@ -1817,6 +1878,12 @@ void cleanup_rkrlv2(LV2_Handle handle)
             break;
         case 21:
         	delete plug->expand;
+            break;
+        case 22:
+        	delete plug->shuf;
+            break;
+        case 23:
+        	delete plug->synth;
             break;
     }
     free(plug);
@@ -2075,6 +2142,17 @@ static const LV2_Descriptor shuflv2_descriptor={
     0//extension
 };
 
+static const LV2_Descriptor synthlv2_descriptor={
+    SYNTHLV2_URI,
+    init_synthlv2,
+    connect_rkrlv2_ports,
+    0,//activate
+    run_synthlv2,
+    0,//deactivate
+    cleanup_rkrlv2,
+    0//extension
+};
+
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor* lv2_descriptor(uint32_t index)
 {
@@ -2125,6 +2203,8 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
     	return &expandlv2_descriptor ;
     case 22:
     	return &shuflv2_descriptor ;
+    case 23:
+    	return &synthlv2_descriptor ;
     default:
         return 0;
     }

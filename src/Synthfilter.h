@@ -36,9 +36,9 @@
 class Synthfilter
 {
 public:
-    Synthfilter (float * efxoutl_, float * efxoutr_);
+    Synthfilter (float * efxoutl_, float * efxoutr_, double sample_rate);
     ~Synthfilter ();
-    void out (float * smpsl, float * smpsr);
+    void out (float * smpsl, float * smpsr, uint32_t period);
     void setpreset (int npreset);
     void changepar (int npar, int value);
     int getpar (int npar);
@@ -49,6 +49,8 @@ public:
 
     float *efxoutl;
     float *efxoutr;
+
+    uint32_t PERIOD;
 
 private:
 
@@ -88,7 +90,7 @@ private:
     float Rmin;	// 2N5457 typical on resistance at Vgs = 0
     float Rmax;	// Resistor parallel to FET
     float C, Clp, Chp;	        // Capacitor
-    EffectLFO lfo;	         //Filter modulator
+    EffectLFO* lfo;	         //Filter modulator
 
     class FPreset *Fpre;
 

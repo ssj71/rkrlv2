@@ -40,7 +40,7 @@
 #define ONE_  0.99999f        // To prevent LFO ever reaching 1.0 for filter stability purposes
 #define ZERO_ 0.00001f        // Same idea as above.
 
-Synthfilter::Synthfilter (float * efxoutl_, float * efxoutr_)
+Synthfilter::Synthfilter (float * efxoutl_, float * efxoutr_, double sample_rate)
 {
     efxoutl = efxoutl_;
     efxoutr = efxoutr_;
@@ -55,9 +55,7 @@ Synthfilter::Synthfilter (float * efxoutl_, float * efxoutr_)
     Plpstages = 4;
     Phpstages = 2;
 
-    inv_period = 1.0f/fPERIOD;
-
-    delta = cSAMPLE_RATE;
+    delta = 1.0/sample_rate;
     Rmin = 185.0f;		// 2N5457 typical on resistance at Vgs = 0
     Rmax = 22000.0f;		// Resistor
     C = 0.00000005f;		// 50 nF
@@ -65,6 +63,8 @@ Synthfilter::Synthfilter (float * efxoutl_, float * efxoutr_)
     Clp = 0.00000005f;
     att = delta * 5.0f;		//200ms
     rls = delta * 5.0f;		//200ms
+
+    lfo = new EffectLFO(sample_rate);
 
 
     Ppreset = 0;
@@ -74,6 +74,13 @@ Synthfilter::Synthfilter (float * efxoutl_, float * efxoutr_)
 
 Synthfilter::~Synthfilter ()
 {
+	delete[] lyn1;
+	delete[] ryn1;
+	delete[] lx1hp;
+	delete[] rx1hp;
+	delete[] ly1hp;
+	delete[] ry1hp;
+	delete lfo;
 };
 
 
@@ -81,14 +88,15 @@ Synthfilter::~Synthfilter ()
  * Effect output
  */
 void
-Synthfilter::out (float * smpsl, float * smpsr)
+Synthfilter::out (float * smpsl, float * smpsr, uint32_t period)
 {
     int i, j;
     float lfol, lfor, lgain, rgain,rmod, lmod, d;
+    inv_period = 1.f/(float)period;
     lgain = 0.0;
     rgain = 0.0;
 
-    lfo.effectlfoout (&lfol, &lfor);
+    lfo->effectlfoout (&lfol, &lfor);
     lmod = lfol*width + depth + env*sns;
     rmod = lfor*width + depth + env*sns;
 
@@ -279,6 +287,7 @@ Synthfilter::setpreset (int npreset)
 {
     const int PRESET_SIZE = 16;
     const int NUM_PRESETS = 7;
+    int pdata[PRESET_SIZE];
     int presets[NUM_PRESETS][PRESET_SIZE] = {
         //Low Pass
         {0, 20, 14, 0, 1, 64, 110, -40, 6, 0, 0, 32, -32, 500, 100, 0},
@@ -299,7 +308,7 @@ Synthfilter::setpreset (int npreset)
     };
 
     if(npreset>NUM_PRESETS-1) {
-        Fpre->ReadPreset(27,npreset-NUM_PRESETS+1);
+        Fpre->ReadPreset(27,npreset-NUM_PRESETS+1,pdata);
         for (int n = 0; n < PRESET_SIZE; n++)
             changepar (n, pdata[n]);
     } else {
@@ -322,20 +331,20 @@ Synthfilter::changepar (int npar, int value)
         setdistortion (value);
         break;
     case 2:
-        lfo.Pfreq = value;
-        lfo.updateparams ();
+        lfo->Pfreq = value;
+        lfo->updateparams (PERIOD);
         break;
     case 3:
-        lfo.Prandomness = value;
-        lfo.updateparams ();
+        lfo->Prandomness = value;
+        lfo->updateparams (PERIOD);
         break;
     case 4:
-        lfo.PLFOtype = value;
-        lfo.updateparams ();
+        lfo->PLFOtype = value;
+        lfo->updateparams (PERIOD);
         break;
     case 5:
-        lfo.Pstereo = value;
-        lfo.updateparams ();
+        lfo->Pstereo = value;
+        lfo->updateparams (PERIOD);
         break;
     case 6:
         setwidth (value);
@@ -402,16 +411,16 @@ Synthfilter::getpar (int npar)
         return (Pdistortion);
         break;
     case 2:
-        return (lfo.Pfreq);
+        return (lfo->Pfreq);
         break;
     case 3:
-        return (lfo.Prandomness);
+        return (lfo->Prandomness);
         break;
     case 4:
-        return (lfo.PLFOtype);
+        return (lfo->PLFOtype);
         break;
     case 5:
-        return (lfo.Pstereo);
+        return (lfo->Pstereo);
         break;
     case 6:
         return (Pwidth);

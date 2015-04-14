@@ -1,0 +1,392 @@
+@prefix atom: <http://lv2plug.in/ns/ext/atom#> .
+@prefix lv2: <http://lv2plug.in/ns/lv2core#> .
+@prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix state: <http://lv2plug.in/ns/ext/state#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://rakarrack.sourceforge.net/effects.html#Synthfilter:preset:lowpass>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Synthfilter> ;
+    	rdfs:label "Lowpass" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "DIST" ;
+                pset:value 20.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 14.0
+        ], [
+                lv2:symbol "RND" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "TYPE" ;
+                pset:value 1.0
+        ], [
+                lv2:symbol "STDL" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "WIDTH" ;
+                pset:value 110.0
+        ], [
+                lv2:symbol "FB" ;
+                pset:value -40.0
+        ], [
+                lv2:symbol "LSTAGES" ;
+                pset:value 6.0
+        ], [
+                lv2:symbol "HSTAGES" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "SUB" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "DEPTH" ;
+                pset:value 32.0
+        ], [
+                lv2:symbol "SENSE" ;
+                pset:value -32.0
+        ], [
+                lv2:symbol "ATIME" ;
+                pset:value 500.0
+        ], [
+                lv2:symbol "RTIME" ;
+                pset:value 100.0
+        ], [
+                lv2:symbol "OFFSET" ;
+                pset:value 0.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Synthfilter:preset:highpass>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Synthfilter> ;
+    	rdfs:label "Highpass" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "DIST" ;
+                pset:value 20.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 14.0
+        ], [
+                lv2:symbol "RND" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "TYPE" ;
+                pset:value 1.0
+        ], [
+                lv2:symbol "STDL" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "WIDTH" ;
+                pset:value 110.0
+        ], [
+                lv2:symbol "FB" ;
+                pset:value -40.0
+        ], [
+                lv2:symbol "LSTAGES" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "HSTAGES" ;
+                pset:value 6.0
+        ], [
+                lv2:symbol "SUB" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "DEPTH" ;
+                pset:value 32.0
+        ], [
+                lv2:symbol "SENSE" ;
+                pset:value -32.0
+        ], [
+                lv2:symbol "ATIME" ;
+                pset:value 500.0
+        ], [
+                lv2:symbol "RTIME" ;
+                pset:value 100.0
+        ], [
+                lv2:symbol "OFFSET" ;
+                pset:value 0.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Synthfilter:preset:bandpass>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Synthfilter> ;
+    	rdfs:label "Bandpass" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "DIST" ;
+                pset:value 20.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 14.0
+        ], [
+                lv2:symbol "RND" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "TYPE" ;
+                pset:value 1.0
+        ], [
+                lv2:symbol "STDL" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "WIDTH" ;
+                pset:value 110.0
+        ], [
+                lv2:symbol "FB" ;
+                pset:value -40.0
+        ], [
+                lv2:symbol "LSTAGES" ;
+                pset:value 4.0
+        ], [
+                lv2:symbol "HSTAGES" ;
+                pset:value 4.0
+        ], [
+                lv2:symbol "SUB" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "DEPTH" ;
+                pset:value 32.0
+        ], [
+                lv2:symbol "SENSE" ;
+                pset:value -32.0
+        ], [
+                lv2:symbol "ATIME" ;
+                pset:value 500.0
+        ], [
+                lv2:symbol "RTIME" ;
+                pset:value 100.0
+        ], [
+                lv2:symbol "OFFSET" ;
+                pset:value 0.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Synthfilter:preset:lead_synth>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Synthfilter> ;
+    	rdfs:label "Lead Synth" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "DIST" ;
+                pset:value 89.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 31.0
+        ], [
+                lv2:symbol "RND" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "TYPE" ;
+                pset:value 1.0
+        ], [
+                lv2:symbol "STDL" ;
+                pset:value 31.0
+        ], [
+                lv2:symbol "WIDTH" ;
+                pset:value 38.0
+        ], [
+                lv2:symbol "FB" ;
+                pset:value -16.0
+        ], [
+                lv2:symbol "LSTAGES" ;
+                pset:value 1.0
+        ], [
+                lv2:symbol "HSTAGES" ;
+                pset:value 2.0
+        ], [
+                lv2:symbol "SUB" ;
+                pset:value 1.0
+        ], [
+                lv2:symbol "DEPTH" ;
+                pset:value 114.0
+        ], [
+                lv2:symbol "SENSE" ;
+                pset:value -32.0
+        ], [
+                lv2:symbol "ATIME" ;
+                pset:value 92.0
+        ], [
+                lv2:symbol "RTIME" ;
+                pset:value 215.0
+        ], [
+                lv2:symbol "OFFSET" ;
+                pset:value 29.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Synthfilter:preset:water>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Synthfilter> ;
+    	rdfs:label "Water" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 20.0
+        ], [
+                lv2:symbol "DIST" ;
+                pset:value 69.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 88.0
+        ], [
+                lv2:symbol "RND" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "TYPE" ;
+                pset:value 6.0
+        ], [
+                lv2:symbol "STDL" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "WIDTH" ;
+                pset:value 76.0
+        ], [
+                lv2:symbol "FB" ;
+                pset:value -50.0
+        ], [
+                lv2:symbol "LSTAGES" ;
+                pset:value 6.0
+        ], [
+                lv2:symbol "HSTAGES" ;
+                pset:value 2.0
+        ], [
+                lv2:symbol "SUB" ;
+                pset:value 1.0
+        ], [
+                lv2:symbol "DEPTH" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "SENSE" ;
+                pset:value 19.0
+        ], [
+                lv2:symbol "ATIME" ;
+                pset:value 114.0
+        ], [
+                lv2:symbol "RTIME" ;
+                pset:value 221.0
+        ], [
+                lv2:symbol "OFFSET" ;
+                pset:value 127.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Synthfilter:preset:pan_filter>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Synthfilter> ;
+    	rdfs:label "Pan Filter" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "DIST" ;
+                pset:value 20.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 100.0
+        ], [
+                lv2:symbol "RND" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "TYPE" ;
+                pset:value 5.0
+        ], [
+                lv2:symbol "STDL" ;
+                pset:value 64.0
+        ], [
+                lv2:symbol "WIDTH" ;
+                pset:value 127.0
+        ], [
+                lv2:symbol "FB" ;
+                pset:value -64.0
+        ], [
+                lv2:symbol "LSTAGES" ;
+                pset:value 2.0
+        ], [
+                lv2:symbol "HSTAGES" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "SUB" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "DEPTH" ;
+                pset:value 57.0
+        ], [
+                lv2:symbol "SENSE" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "ATIME" ;
+                pset:value 340.0
+        ], [
+                lv2:symbol "RTIME" ;
+                pset:value 288.0
+        ], [
+                lv2:symbol "OFFSET" ;
+                pset:value 110.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Synthfilter:preset:multi>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Synthfilter> ;
+    	rdfs:label "Multi" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 64.0
+        ], [
+                lv2:symbol "DIST" ;
+                pset:value 45.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 88.0
+        ], [
+                lv2:symbol "RND" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "TYPE" ;
+                pset:value 1.0
+        ], [
+                lv2:symbol "STDL" ;
+                pset:value 64.0
+        ], [
+                lv2:symbol "WIDTH" ;
+                pset:value 81.0
+        ], [
+                lv2:symbol "FB" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LSTAGES" ;
+                pset:value 4.0
+        ], [
+                lv2:symbol "HSTAGES" ;
+                pset:value 2.0
+        ], [
+                lv2:symbol "SUB" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "DEPTH" ;
+                pset:value 67.0
+        ], [
+                lv2:symbol "SENSE" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "ATIME" ;
+                pset:value 394.0
+        ], [
+                lv2:symbol "RTIME" ;
+                pset:value 252.0
+        ], [
+                lv2:symbol "OFFSET" ;
+                pset:value 61.0
+        ] ;
+	.

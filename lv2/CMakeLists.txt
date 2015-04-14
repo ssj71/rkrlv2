@@ -58,6 +58,7 @@ add_library(rkrlv2 SHARED
   ../src/Arpie.C
   ../src/Expander.C
   ../src/Shuffle.C
+  ../src/Synthfilter.C
 )
 
 set_target_properties(rkrlv2 PROPERTIES PREFIX "")

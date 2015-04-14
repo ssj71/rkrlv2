@@ -116,3 +116,8 @@
         a lv2:Plugin, lv2:SpatializerPlugin ;
         lv2:binary <rkrlv2.so> ;
         rdfs:seeAlso <shuffle.ttl> .
+# 23 
+<http://rakarrack.sourceforge.net/effects.html#Synthfilter>
+        a lv2:Plugin, lv2:FilterPlugin ;
+        lv2:binary <rkrlv2.so> ;
+        rdfs:seeAlso <synthfilter.ttl> .
