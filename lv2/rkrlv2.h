@@ -25,6 +25,7 @@
 #define EXPANDLV2_URI "http://rakarrack.sourceforge.net/effects.html#Expander"
 #define SHUFFLELV2_URI "http://rakarrack.sourceforge.net/effects.html#Shuffle"
 #define SYNTHLV2_URI "http://rakarrack.sourceforge.net/effects.html#Synthfilter"
+#define MBVOLLV2_URI "http://rakarrack.sourceforge.net/effects.html#VaryBand"
 
 enum RKRLV2_ports_
 {

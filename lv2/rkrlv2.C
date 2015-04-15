@@ -36,6 +36,7 @@
 #include"Expander.h"
 #include"Shuffle.h"
 #include"Synthfilter.h"
+#include"MBVvol.h"
 
 //#include"global.h"
 
@@ -126,6 +127,7 @@ typedef struct _RKRLV2
     Expander* expand;
     Shuffle* shuf;
     Synthfilter* synth;
+    MBVvol* mbvol;
 }RKRLV2;
 
 
@@ -1771,6 +1773,81 @@ void run_synthlv2(LV2_Handle handle, uint32_t nframes)
     return;
 }
 
+///// mbvol /////////
+LV2_Handle init_mbvollv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 14;
+    plug->effectindex = 24;
+
+    getFeatures(plug,host_features);
+
+    plug->mbvol = new MBVvol(0,0,sample_freq,plug->period_max);
+
+    return plug;
+}
+
+void run_mbvollv2(LV2_Handle handle, uint32_t nframes)
+{
+    int i;
+    int val;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    plug->mbvol->PERIOD = nframes;
+
+    //check and set changed parameters
+    for(i=0;i<3;i++)
+    {
+        val = (int)*plug->param_p[i];
+       if(plug->mbvol->getpar(i) != val)
+       {
+           plug->mbvol->changepar(i,val);
+       }
+    }
+    i++;
+    val = (int)*plug->param_p[i] +64;//3 LR delay
+    if(plug->mbvol->getpar(i) != val)
+    {
+           plug->mbvol->changepar(i,val);
+    }
+    for(i++;i<6;i++)
+    {
+        val = (int)*plug->param_p[i];
+       if(plug->mbvol->getpar(i) != val)
+       {
+           plug->mbvol->changepar(i,val);
+       }
+    }
+    i++;
+    val = (int)*plug->param_p[i] +64;//6 LR delay
+    if(plug->mbvol->getpar(i) != val)
+    {
+           plug->mbvol->changepar(i,val);
+    }
+    for(i++;i<plug->nparams;i++)//skip legacy combi setting
+    {
+        val = (int)*plug->param_p[i];
+       if(plug->mbvol->getpar(i+1) != val)
+       {
+           plug->mbvol->changepar(i+1,val);
+       }
+    }
+
+    //now set out ports and global period size
+    plug->mbvol->efxoutl = plug->output_l_p;
+    plug->mbvol->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->mbvol->out(plug->input_l_p,plug->input_r_p,nframes);
+
+    //and for whatever reason we have to do the wet/dry mix ourselves
+    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->mbvol->outvolume, nframes);
+
+    return;
+}
+
 /////////////////////////////////
 ///////// END OF FX ///////////// 
 /////////////////////////////////
@@ -1884,6 +1961,9 @@ void cleanup_rkrlv2(LV2_Handle handle)
             break;
         case 23:
         	delete plug->synth;
+            break;
+        case 24:
+        	delete plug->mbvol;
             break;
     }
     free(plug);
@@ -2153,6 +2233,17 @@ static const LV2_Descriptor synthlv2_descriptor={
     0//extension
 };
 
+static const LV2_Descriptor mbvollv2_descriptor={
+    MBVOLLV2_URI,
+    init_mbvollv2,
+    connect_rkrlv2_ports,
+    0,//activate
+    run_mbvollv2,
+    0,//deactivate
+    cleanup_rkrlv2,
+    0//extension
+};
+
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor* lv2_descriptor(uint32_t index)
 {
@@ -2205,6 +2296,8 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
     	return &shuflv2_descriptor ;
     case 23:
     	return &synthlv2_descriptor ;
+    case 24:
+    	return &mbvollv2_descriptor ;
     default:
         return 0;
     }

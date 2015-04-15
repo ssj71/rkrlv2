@@ -90,7 +90,8 @@ Synthfilter::~Synthfilter ()
 void
 Synthfilter::out (float * smpsl, float * smpsr, uint32_t period)
 {
-    int i, j;
+    unsigned int i;
+	int j;
     float lfol, lfor, lgain, rgain,rmod, lmod, d;
     inv_period = 1.f/(float)period;
     lgain = 0.0;

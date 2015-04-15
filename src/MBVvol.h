@@ -28,14 +28,15 @@
 
 #include "global.h"
 #include "EffectLFO.h"
+#include "AnalogFilter.h"
 
 
 class MBVvol
 {
 public:
-    MBVvol (float * efxoutl_, float * efxoutr_);
+    MBVvol (float * efxoutl_, float * efxoutr_, double sample_rate, uint32_t intermediate_bufsize);
     ~MBVvol ();
-    void out (float * smpsl, float * smpr);
+    void out (float * smpsl, float * smpr, uint32_t period);
     void setpreset (int npreset);
     void changepar (int npar, int value);
     int getpar (int npar);
@@ -55,6 +56,7 @@ public:
     float *highl;
     float *highr;
 
+    uint32_t PERIOD;
 
 private:
 
@@ -64,6 +66,8 @@ private:
     void setCross2 (int value);
     void setCross3 (int value);
     void setCombi (int value);
+    void updateVols(void);
+    void setSource(float* ptr, float* ptrr, int val);
 
 
     //Parametrii
@@ -72,6 +76,7 @@ private:
     int Cross1;
     int Cross2;
     int Cross3;
+    int PsL, PsML, PsMH, PsH;//volume source per band
 
     //Parametrii reali
 
@@ -81,11 +86,14 @@ private:
     float d1,d2,d3,d4;
     float volL,volML,volMH,volH;
     float volLr,volMLr,volMHr,volHr;
+    float *sourceL,*sourceML,*sourceMH,*sourceH;
+    float *sourceLr,*sourceMLr,*sourceMHr,*sourceHr;
+    float one, zero;
     AnalogFilter *lpf1l, *lpf1r, *hpf1l, *hpf1r;
     AnalogFilter *lpf2l, *lpf2r, *hpf2l, *hpf2r;
     AnalogFilter *lpf3l, *lpf3r, *hpf3l, *hpf3r;
 
-    EffectLFO lfo1,lfo2;
+    EffectLFO* lfo1,*lfo2;
 
     class FPreset *Fpre;
 

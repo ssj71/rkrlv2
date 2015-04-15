@@ -42,7 +42,7 @@ EFFECTS (X - done, W - won't do, + - done with missing features)
 [X] Expander 
 [X] Shuffle 
 [X] Synthfilter 
-[ ] VaryBand 
+[X] VaryBand 
 [W] Convolotron - these require special input files, adding complexity. other excellent lv2 convolution engines already exist
 [W] Looper - other good lv2 loopers exist
 [.] MuTroMojo 
