@@ -203,16 +203,47 @@
                 lv2:minimum 5 ;
                 lv2:maximum 500 ;
                 lv2:portProperty lv2:integer ;
-                units:unit units:ms ;
+                units:unit units:hz ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 19 ;
-                lv2:symbol "MODE" ;
-                lv2:name "Filter Mode" ;
+                lv2:symbol "MINFREQ" ;
+                lv2:name "Starting Frequency" ;
+                lv2:default 300 ;
+                lv2:minimum 40 ;
+                lv2:maximum 800 ;
+                lv2:portProperty lv2:integer ;
+                units:unit units:hz ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 20 ;
+                lv2:symbol "VARIQ" ;
+                lv2:name "Dynamic Resonance" ;
+                lv2:default 1 ;
+                lv2:minimum 0 ;
+                lv2:maximum 1 ;
+                lv2:portProperty lv2:integer ;
+                lv2:portProperty lv2:toggled ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 21 ;
+                lv2:symbol "RESMODE" ;
+                lv2:name "Extra Resonance" ;
                 lv2:default 0 ;
                 lv2:minimum 0 ;
-                lv2:maximum 127 ;
+                lv2:maximum 1 ;
                 lv2:portProperty lv2:integer ;
+                lv2:portProperty lv2:toggled ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 22 ;
+                lv2:symbol "MODMODE" ;
+                lv2:name "Modulate Resonance?" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 1 ;
+                lv2:portProperty lv2:integer ;
+                lv2:portProperty lv2:toggled ;
         ] ;
 	.
 

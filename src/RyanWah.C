@@ -261,7 +261,7 @@ RyanWah::changepar (int npar, int value)
         lfo.updateparams ();
         break;
     case 3:
-        lfo.Prandomness = 0;//value;
+        lfo.Prandomness = value;
         lfo.updateparams ();
         break;
     case 4:
@@ -341,7 +341,19 @@ RyanWah::changepar (int npar, int value)
     case 18:
         Ppreset = value;
         break;
-
+    case 19:
+    	Pqm=value;
+        filterl->setmode(Pqm);
+        filterr->setmode(Pqm);
+    case 20:
+    	Pamode=value;
+        if(Pamode) {
+            minfreq = ((float) Pminfreq)/(fSAMPLE_RATE/6.0f);
+            maxfreq = ((float) Prange)/(fSAMPLE_RATE/6.0f);
+        } else {
+            minfreq = (float) Pminfreq;
+            maxfreq = (float) Prange;
+        }
     };
 };
 
@@ -406,6 +418,12 @@ RyanWah::getpar (int npar)
     case 18:
         return (Ppreset);
         break;
+    case 19:
+    	return (Pqm);
+    	break;
+    case 20:
+    	return (Pamode);
+    	break;
     default:
         return (0);
     };
