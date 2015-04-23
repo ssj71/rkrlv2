@@ -37,6 +37,7 @@
 #include"Shuffle.h"
 #include"Synthfilter.h"
 #include"MBVvol.h"
+#include"RyanWah.h"
 
 //#include"global.h"
 
@@ -128,6 +129,7 @@ typedef struct _RKRLV2
     Shuffle* shuf;
     Synthfilter* synth;
     MBVvol* mbvol;
+    RyanWah* mutro;
 }RKRLV2;
 
 
@@ -1848,6 +1850,76 @@ void run_mbvollv2(LV2_Handle handle, uint32_t nframes)
     return;
 }
 
+///// mutro /////////
+LV2_Handle init_mutrolv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 19;
+    plug->effectindex = 25;
+
+
+    plug->mutro = new RyanWah(0,0,sample_freq);
+
+    return plug;
+}
+
+void run_mutrolv2(LV2_Handle handle, uint32_t nframes)
+{
+    int i;
+    int val;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    plug->mutro->PERIOD = nframes;
+
+    //check and set changed parameters
+    for(i=0;i<5;i++)
+    {
+        val = (int)*plug->param_p[i];
+       if(plug->mutro->getpar(i) != val)
+       {
+           plug->mutro->changepar(i,val);
+       }
+    }
+    i++;
+    val = (int)*plug->param_p[i] +64;//3 LR delay
+    if(plug->mutro->getpar(i) != val)
+    {
+           plug->mutro->changepar(i,val);
+    }
+    for(i++;i<17;i++)
+    {
+        val = (int)*plug->param_p[i];
+       if(plug->mutro->getpar(i) != val)
+       {
+           plug->mutro->changepar(i,val);
+       }
+    }
+    for(i++;i<plug->nparams;i++)//skip legacy mode and preset setting
+    {
+        val = (int)*plug->param_p[i];
+       if(plug->mutro->getpar(i+2) != val)
+       {
+           plug->mutro->changepar(i+2,val);
+       }
+    }
+
+    //now set out ports and global period size
+    plug->mutro->efxoutl = plug->output_l_p;
+    plug->mutro->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->mutro->out(plug->input_l_p,plug->input_r_p,nframes);
+
+    //and for whatever reason we have to do the wet/dry mix ourselves
+    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->mutro->outvolume, nframes);
+
+    return;
+}
+
+
+
 /////////////////////////////////
 ///////// END OF FX ///////////// 
 /////////////////////////////////
@@ -1879,6 +1951,9 @@ void connect_rkrlv2_ports(LV2_Handle handle, uint32_t port, void *data)
     case PARAM13:     plug->param_p[13] = (float*)data;break;
     case PARAM14:     plug->param_p[14] = (float*)data;break;
     case PARAM15:     plug->param_p[15] = (float*)data;break;
+    case PARAM16:     plug->param_p[16] = (float*)data;break;
+    case PARAM17:     plug->param_p[17] = (float*)data;break;
+    case PARAM18:     plug->param_p[18] = (float*)data;break;
     case DBG:         plug->dbg_p = (float*)data;break; 
     default:         puts("UNKNOWN PORT YO!!");
     }
@@ -1964,6 +2039,9 @@ void cleanup_rkrlv2(LV2_Handle handle)
             break;
         case 24:
         	delete plug->mbvol;
+            break;
+        case 25:
+        	delete plug->mutro;
             break;
     }
     free(plug);
@@ -2244,16 +2322,27 @@ static const LV2_Descriptor mbvollv2_descriptor={
     0//extension
 };
 
+static const LV2_Descriptor mutrolv2_descriptor={
+    MUTROLV2_URI,
+    init_mutrolv2,
+    connect_rkrlv2_ports,
+    0,//activate
+    run_mutrolv2,
+    0,//deactivate
+    cleanup_rkrlv2,
+    0//extension
+};
+
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor* lv2_descriptor(uint32_t index)
 {
     switch (index) {
     case 0:
-        return &eqlv2_descriptor;
+        return &eqlv2_descriptor ;
     case 1:
-        return &complv2_descriptor;
+        return &complv2_descriptor ;
     case 2:
-        return &distlv2_descriptor;
+        return &distlv2_descriptor ;
     case 3:
         return &echolv2_descriptor ;
     case 4:
@@ -2298,6 +2387,8 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
     	return &synthlv2_descriptor ;
     case 24:
     	return &mbvollv2_descriptor ;
+    case 25:
+    	return &mutrolv2_descriptor ;
     default:
         return 0;
     }

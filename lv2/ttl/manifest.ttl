@@ -126,3 +126,8 @@
         a lv2:Plugin, lv2:ModulationPlugin ;
         lv2:binary <rkrlv2.so> ;
         rdfs:seeAlso <varyband.ttl> .
+# 25 
+<http://rakarrack.sourceforge.net/effects.html#MuTroMojo>
+        a lv2:Plugin, lv2:Filter ;
+        lv2:binary <rkrlv2.so> ;
+        rdfs:seeAlso <mutromojo.ttl> .

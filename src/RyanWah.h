@@ -32,9 +32,9 @@
 class RyanWah
 {
 public:
-    RyanWah (float * efxoutl_, float * efxoutr_);
+    RyanWah (float * efxoutl_, float * efxoutr_, double sample_rate);
     ~RyanWah ();
-    void out (float * smpsl, float * smpsr);
+    void out (float * smpsl, float * smpsr, uint32_t period);
 
     void setpreset (int npreset);
     void changepar (int npar, int value);
@@ -49,7 +49,7 @@ public:
     float *efxoutl;
     float *efxoutr;
 
-
+    unsigned int PERIOD;
 private:
 
     void setvolume (int Pvolume);
@@ -58,7 +58,6 @@ private:
     void reinitfilter ();
 
     int Pvolume;		//For wet/dry mix
-    int Ppanning;        //delete.
     int Pwidth;		//0/127// The width of the lfo of the RyanWah
     int Pampsns;	        //0/127//how the filter varies according to the input amplitude
     int Pampsnsinv;	//-64/64//bias of the filter
@@ -85,12 +84,13 @@ private:
     float rpanning, lpanning, depth, ampsns, ampsmooth, wahsmooth, fbias, oldfbias, oldfbias1, oldfbias2, q, frequency, maxfreq, base, ibase, minfreq;
     float ms1, lpmix, hpmix, bpmix;	//mean squares
     float centfreq; //testing
-    EffectLFO lfo;		//lfo-ul RyanWah
+    EffectLFO *lfo;		//lfo-ul RyanWah
     class RBFilter *filterl, *filterr;
     class AnalogFilter *sidechain_filter;
 
     class FPreset *Fpre;
 
+    float fSAMPLE_RATE;
 
 };
 

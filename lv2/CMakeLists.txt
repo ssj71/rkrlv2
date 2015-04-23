@@ -60,6 +60,8 @@ add_library(rkrlv2 SHARED
   ../src/Shuffle.C
   ../src/Synthfilter.C
   ../src/MBVvol.C
+  ../src/RBFilter.C
+  ../src/RyanWah.C
 )
 
 set_target_properties(rkrlv2 PROPERTIES PREFIX "")

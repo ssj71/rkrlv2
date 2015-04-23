@@ -27,10 +27,12 @@
 #include "AnalogFilter.h"
 #include <stdio.h>
 
-RyanWah::RyanWah (float * efxoutl_, float * efxoutr_)
+RyanWah::RyanWah (float * efxoutl_, float * efxoutr_, double sample_rate)
 {
     efxoutl = efxoutl_;
     efxoutr = efxoutr_;
+
+    fSAMPLE_RATE = sample_rate;
 
     Ppreset = 0;
 
@@ -53,14 +55,17 @@ RyanWah::RyanWah (float * efxoutl_, float * efxoutr_)
     lpmix = 0.5f;
     bpmix = 2.0f;
     Ppreset = 0;
-    wahsmooth = 1.0f - expf(-1.0f/(0.02f*fSAMPLE_RATE));  //0.02 seconds
+    wahsmooth = 1.0f - expf(-1.0f/(0.02f*sample_rate));  //0.02 seconds
+
+    lfo = new EffectLFO(sample_rate);
+    PERIOD = 256; //best guess until we know better
 
     Fstages = 1;
     Ftype = 1;
-    filterl = new RBFilter (0, 80.0f, 70.0f, 1);
-    filterr = new RBFilter (0, 80.0f, 70.0f, 1);
+    filterl = new RBFilter (0, 80.0f, 70.0f, 1, sample_rate);
+    filterr = new RBFilter (0, 80.0f, 70.0f, 1, sample_rate);
     
-    sidechain_filter = new AnalogFilter (1, 630.0, 1.0, 1);
+    sidechain_filter = new AnalogFilter (1, 630.0, 1.0, 1, sample_rate);
     setpreset (Ppreset);
 
     cleanup ();
@@ -68,6 +73,10 @@ RyanWah::RyanWah (float * efxoutl_, float * efxoutr_)
 
 RyanWah::~RyanWah ()
 {
+	delete lfo;
+	delete filterl;
+	delete filterr;
+	delete sidechain_filter;
 };
 
 
@@ -75,13 +84,14 @@ RyanWah::~RyanWah ()
  * Apply the effect
  */
 void
-RyanWah::out (float * smpsl, float * smpsr)
+RyanWah::out (float * smpsl, float * smpsr, uint32_t period)
 {
-    int i;
+    unsigned int i;
     float lmod, rmod;
     float lfol, lfor;
     float rms = 0.0f;
-    lfo.effectlfoout (&lfol, &lfor);
+
+    lfo->effectlfoout (&lfol, &lfor);
     if (Pamode) {
         lfol *= depth;
         lfor *= depth;
@@ -145,8 +155,8 @@ RyanWah::out (float * smpsl, float * smpsr)
         filterl->setfreq_and_q (frl, q);
         filterr->setfreq_and_q (frr, q);
 
-        filterl->filterout (efxoutl);
-        filterr->filterout (efxoutr);
+        filterl->filterout (efxoutl, period);
+        filterr->filterout (efxoutr, period);
     }
 
 };
@@ -213,6 +223,7 @@ RyanWah::setpreset (int npreset)
 {
     const int PRESET_SIZE = 19;
     const int NUM_PRESETS = 6;
+    int pdata[PRESET_SIZE];
     int presets[NUM_PRESETS][PRESET_SIZE] = {
         //Wah Pedal
         {16, 10, 60, 0, 0, 64, 0, 0, 10, 7, -16, 40, -3, 1, 2000, 450, 1, 1, 0},
@@ -230,7 +241,7 @@ RyanWah::setpreset (int npreset)
     };
 
     if(npreset>NUM_PRESETS-1) {
-        Fpre->ReadPreset(31,npreset-NUM_PRESETS+1);
+        Fpre->ReadPreset(31,npreset-NUM_PRESETS+1,pdata);
         for (int n = 0; n < PRESET_SIZE; n++)
             changepar (n, pdata[n]);
     } else {
@@ -257,20 +268,20 @@ RyanWah::changepar (int npar, int value)
         q = (float) Pq;
         break;
     case 2:
-        lfo.Pfreq = value;
-        lfo.updateparams ();
+        lfo->Pfreq = value;
+        lfo->updateparams (PERIOD);
         break;
     case 3:
-        lfo.Prandomness = value;
-        lfo.updateparams ();
+        lfo->Prandomness = value;
+        lfo->updateparams (PERIOD);
         break;
     case 4:
-        lfo.PLFOtype = value;
-        lfo.updateparams ();
+        lfo->PLFOtype = value;
+        lfo->updateparams (PERIOD);
         break;
     case 5:
-        lfo.Pstereo = value;
-        lfo.updateparams ();
+        lfo->Pstereo = value;
+        lfo->updateparams (PERIOD);
         break;
     case 6:
         setwidth (value);
@@ -321,6 +332,7 @@ RyanWah::changepar (int npar, int value)
         variq = value;
         break;
     case 17:
+    	//legacy method of changing Pqm and Pamode, presets use this
         Pmode=value;
         if((Pmode==1) || (Pmode==3)) Pqm = 1;
         else Pqm = 0;
@@ -345,6 +357,7 @@ RyanWah::changepar (int npar, int value)
     	Pqm=value;
         filterl->setmode(Pqm);
         filterr->setmode(Pqm);
+        break;
     case 20:
     	Pamode=value;
         if(Pamode) {
@@ -354,6 +367,7 @@ RyanWah::changepar (int npar, int value)
             minfreq = (float) Pminfreq;
             maxfreq = (float) Prange;
         }
+        break;
     };
 };
 
@@ -368,16 +382,16 @@ RyanWah::getpar (int npar)
         return (Pq);
         break;
     case 2:
-        return (lfo.Pfreq);
+        return (lfo->Pfreq);
         break;
     case 3:
-        return (lfo.Prandomness);
+        return (lfo->Prandomness);
         break;
     case 4:
-        return (lfo.PLFOtype);
+        return (lfo->PLFOtype);
         break;
     case 5:
-        return (lfo.Pstereo);
+        return (lfo->Pstereo);
         break;
     case 6:
         return (Pwidth);

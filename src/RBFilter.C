@@ -27,7 +27,7 @@
 #include "RBFilter.h"
 
 RBFilter::RBFilter (int Ftype, float Ffreq, float Fq,
-                    int Fstages)
+                    int Fstages, double sample_rate)
 {
     stages = Fstages;
     type = Ftype;
@@ -43,11 +43,12 @@ RBFilter::RBFilter (int Ftype, float Ffreq, float Fq,
     oldsq = 0.0f;
     oldf = 0.0f;
     hpg = lpg = bpg = 0.0f;
+    fSAMPLE_RATE = sample_rate;
     if (stages >= MAX_FILTER_STAGES)
         stages = MAX_FILTER_STAGES;
     cleanup ();
     setfreq_and_q (Ffreq, Fq);
-    iper = 1.0f/fPERIOD;
+    float cSAMPLE_RATE = 1/sample_rate;
     a_smooth_tc = cSAMPLE_RATE/(cSAMPLE_RATE + 0.01f);  //10ms time constant for averaging coefficients
     b_smooth_tc = 1.0f - a_smooth_tc;
 };
@@ -199,9 +200,10 @@ RBFilter::setmix (int mix, float lpmix, float bpmix, float hpmix)
 
 
 void
-RBFilter::singlefilterout (float * smp, fstage & x, parameters & par)
+RBFilter::singlefilterout (float * smp, fstage & x, parameters & par, uint32_t period)
 {
-    int i;
+    iper = 1.0f/(float)period;
+    unsigned int i;
     float *out = NULL;
     switch (type) {
     case 0:
@@ -252,9 +254,9 @@ RBFilter::singlefilterout (float * smp, fstage & x, parameters & par)
 };
 
 void
-RBFilter::filterout (float * smp)
+RBFilter::filterout (float * smp, uint32_t period)
 {
-    int i;
+    unsigned int i;
     float *ismp = NULL;
 
     if (needsinterpolation != 0) {
@@ -262,14 +264,14 @@ RBFilter::filterout (float * smp)
         for (i = 0; i < period; i++)
             ismp[i] = smp[i];
         for (i = 0; i < stages + 1; i++)
-            singlefilterout (ismp, st[i], ipar);
+            singlefilterout (ismp, st[i], ipar, period);
 
         delete (ismp);
         needsinterpolation = 0;
     };
 
     for (i = 0; i < stages + 1; i++)
-        singlefilterout (smp, st[i], par);
+        singlefilterout (smp, st[i], par, period);
 
 
     for (i = 0; i < period; i++)
@@ -280,7 +282,7 @@ RBFilter::filterout (float * smp)
 float
 RBFilter::filterout_s (float smp)
 {
-    int i;
+    unsigned int i;
 
     if (needsinterpolation != 0) {
         for (i = 0; i < stages + 1; i++)

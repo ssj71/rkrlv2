@@ -31,9 +31,9 @@ class RBFilter:public Filter_
 {
 public:
     RBFilter (int Ftype, float Ffreq, float Fq,
-              int Fstages);
+              int Fstages, double sample_rate);
     ~RBFilter ();
-    void filterout (float * smp);
+    void filterout (float * smp, uint32_t period);
     float filterout_s (float smp);
 
     void setfreq (float frequency);
@@ -58,13 +58,13 @@ private:
         float f, q, q_sqrt;
     } par, ipar;
 
-    void singlefilterout (float * smp, fstage & x, parameters & par);
+    void singlefilterout (float * smp, fstage & x, parameters & par, uint32_t period);
     float singlefilterout_s (float smp, fstage & x, parameters & par);
     void computefiltercoefs ();
     void computefiltercoefs_hiQ ();
 
     int type;			//The type of the filter (LPF1,HPF1,LPF2,HPF2...)
-    int stages;			//how many times the filter is applied (0->1,1->2,etc.)
+    unsigned int stages;			//how many times the filter is applied (0->1,1->2,etc.)
     int abovenq;			//this is 1 if the frequency is above the nyquist
     int oldabovenq;
     int needsinterpolation, firsttime, en_mix;
@@ -78,7 +78,7 @@ private:
     float a_smooth_tc, b_smooth_tc;
     float iper;			//inverse of PERIOD
 
-
+    float fSAMPLE_RATE;
 
 
 

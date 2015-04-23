@@ -26,6 +26,7 @@
 #define SHUFFLELV2_URI "http://rakarrack.sourceforge.net/effects.html#Shuffle"
 #define SYNTHLV2_URI "http://rakarrack.sourceforge.net/effects.html#Synthfilter"
 #define MBVOLLV2_URI "http://rakarrack.sourceforge.net/effects.html#VaryBand"
+#define MUTROLV2_URI "http://rakarrack.sourceforge.net/effects.html#MuTroMojo"
 
 enum RKRLV2_ports_
 {
@@ -50,6 +51,8 @@ enum RKRLV2_ports_
     PARAM14,
     PARAM15,
     PARAM16,
+	PARAM17,
+	PARAM18,
     DBG
 };
 
