@@ -38,45 +38,12 @@
 #include"Synthfilter.h"
 #include"MBVvol.h"
 #include"RyanWah.h"
+#include"RBEcho.h"
 
-//#include"global.h"
 
 //this is the default hopefully hosts don't use periods of more than this, or they will communicate the max bufsize
 #define INTERMEDIATE_BUFSIZE 1024
 
-
-///////globals/////////
-//int Pexitprogram, preset;
-//int commandline, gui;
-//int exitwithhelp, nojack;
-//int maxx_len;
-//int error_num;
-//int period;
-//int reconota;
-//int needtoloadstate;
-//int needtoloadbank;
-//int stecla;
-//int looper_lqua;
-//unsigned int SAMPLE_RATE;
-//int note_active[POLY];
-//int rnote[POLY];
-//int gate[POLY];
-//int pdata[50];
-//float val_sum;
-//float fPERIOD;
-//unsigned int SAMPLE_RATE;
-//float fSAMPLE_RATE;
-//float cSAMPLE_RATE;
-//float r__ratio[12];
-//int Wave_res_amount;
-//int Wave_up_q;
-//int Wave_down_q;
-//Pixmap p, mask;
-//XWMHints *hints;
-//float freqs[12];
-//float lfreqs[12];
-//float aFreq;
-//char *s_uuid;
 
 
 typedef struct _RKRLV2
@@ -130,6 +97,7 @@ typedef struct _RKRLV2
     Synthfilter* synth;
     MBVvol* mbvol;
     RyanWah* mutro;
+    RBEcho* echoverse;
 }RKRLV2;
 
 
@@ -1918,6 +1886,74 @@ void run_mutrolv2(LV2_Handle handle, uint32_t nframes)
     return;
 }
 
+///// echoverse /////////
+LV2_Handle init_echoverselv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 10;
+    plug->effectindex = 26;
+
+    plug->echoverse = new RBEcho(0,0,sample_freq);
+
+    return plug;
+}
+
+void run_echoverselv2(LV2_Handle handle, uint32_t nframes)
+{
+    int i;
+    int val;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    //check and set changed parameters
+    i=0;
+    val = (int)*plug->param_p[i];//wet/dry
+    if(plug->echoverse->getpar(i) != val)
+    {
+        plug->echoverse->changepar(i,val);
+    }
+    i++;//1 panning is offset
+    val = (int)*plug->param_p[i]+64;
+    if(plug->echoverse->getpar(i) != val)
+    {
+        plug->echoverse->changepar(i,val);
+    }
+    i++;//2 delay is not offset
+    val = (int)*plug->param_p[i];
+    if(plug->echoverse->getpar(i) != val)
+    {
+        plug->echoverse->changepar(i,val);
+    }
+    for(i++;i<5;i++)//3,4 LR delay and angle is offset
+    {
+        val = (int)*plug->param_p[i]+64;
+       if(plug->echoverse->getpar(i) != val)
+       {
+           plug->echoverse->changepar(i,val);
+       }
+    }
+    for(i++;i<plug->nparams;i++)
+    {
+        val = (int)*plug->param_p[i];
+       if(plug->echoverse->getpar(i) != val)
+       {
+           plug->echoverse->changepar(i,val);
+       }
+    }
+
+    //now set out ports and global period size
+    plug->echoverse->efxoutl = plug->output_l_p;
+    plug->echoverse->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->echoverse->out(plug->input_l_p,plug->input_r_p,nframes);
+
+    //and for whatever reason we have to do the wet/dry mix ourselves
+    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->echoverse->outvolume, nframes);
+
+    return;
+}
 
 
 /////////////////////////////////
@@ -2043,6 +2079,9 @@ void cleanup_rkrlv2(LV2_Handle handle)
         case 25:
         	delete plug->mutro;
             break;
+        case 26:
+        	delete plug->echoverse;
+        	break;
     }
     free(plug);
 }
@@ -2333,6 +2372,17 @@ static const LV2_Descriptor mutrolv2_descriptor={
     0//extension
 };
 
+static const LV2_Descriptor echoverselv2_descriptor={
+    ECHOVERSELV2_URI,
+    init_echoverselv2,
+    connect_rkrlv2_ports,
+    0,//activate
+    run_echoverselv2,
+    0,//deactivate
+    cleanup_rkrlv2,
+    0//extension
+};
+
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor* lv2_descriptor(uint32_t index)
 {
@@ -2389,6 +2439,8 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
     	return &mbvollv2_descriptor ;
     case 25:
     	return &mutrolv2_descriptor ;
+    case 26:
+    	return &echoverselv2_descriptor ;
     default:
         return 0;
     }

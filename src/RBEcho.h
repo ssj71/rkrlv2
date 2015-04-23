@@ -33,9 +33,9 @@
 class RBEcho
 {
 public:
-    RBEcho (float * efxoutl_, float * efxoutr_);
+    RBEcho (float * efxoutl_, float * efxoutr_, double sample_rate);
     ~RBEcho ();
-    void out (float * smpsl, float * smpr);
+    void out (float * smpsl, float * smpr, uint32_t period);
     void setpreset (int npreset);
     void changepar (int npar, int value);
     int getpar (int npar);
@@ -80,6 +80,7 @@ private:
     float rpanning, lpanning, lrcross, fb, hidamp, reverse, ireverse, lfeedback, rfeedback;
     float oldl, oldr;		//pt. lpf
     float  Srate_Attack_Coeff;
+    float fSAMPLE_RATE;
 
     class delayline *ldelay, *rdelay;
     class FPreset *Fpre;

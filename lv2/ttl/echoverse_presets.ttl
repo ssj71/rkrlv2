@@ -1,0 +1,120 @@
+@prefix doap:  <http://usefulinc.com/ns/doap#> .
+@prefix atom: <http://lv2plug.in/ns/ext/atom#> .
+@prefix lv2: <http://lv2plug.in/ns/lv2core#> .
+@prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix state: <http://lv2plug.in/ns/ext/state#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+<http://rakarrack.sourceforge.net/effects.html#Echoverse:preset:echo_1>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Echoverse> ;
+        rdfs:label "Echo 1" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 64.0 
+        ], [
+                lv2:symbol "PAN" ;
+                pset:value 0.0 
+        ], [
+                lv2:symbol "DELAY" ;
+                pset:value 90.0 
+        ], [
+                lv2:symbol "LR_DELAY" ;
+                pset:value 0.0 
+        ], [
+                lv2:symbol "ANGLE" ;
+                pset:value 0.0 
+        ], [
+                lv2:symbol "FEEDBACK" ;
+                pset:value 64.0 
+        ], [
+                lv2:symbol "DAMP" ;
+                pset:value 64.0 
+        ], [
+                lv2:symbol "REV" ;
+                pset:value 0.0 
+        ], [
+                lv2:symbol "SUBD" ;
+                pset:value 1.0 
+        ], [
+                lv2:symbol "ES" ;
+                pset:value 96.0 
+        ] ;
+        .
+
+<http://rakarrack.sourceforge.net/effects.html#Echoverse:preset:echo_2>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Echoverse> ;
+        rdfs:label "Echo 2" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 64.0 
+        ], [
+                lv2:symbol "PAN" ;
+                pset:value 0.0 
+        ], [
+                lv2:symbol "DELAY" ;
+                pset:value 90.0 
+        ], [
+                lv2:symbol "LR_DELAY" ;
+                pset:value 0.0 
+        ], [
+                lv2:symbol "ANGLE" ;
+                pset:value 0.0 
+        ], [
+                lv2:symbol "FEEDBACK" ;
+                pset:value 64.0 
+        ], [
+                lv2:symbol "DAMP" ;
+                pset:value 64.0 
+        ], [
+                lv2:symbol "REV" ;
+                pset:value 0.0 
+        ], [
+                lv2:symbol "SUBD" ;
+                pset:value 1.0 
+        ], [
+                lv2:symbol "ES" ;
+                pset:value 96.0 
+        ] ;
+        .
+
+<http://rakarrack.sourceforge.net/effects.html#Echoverse:preset:echo_3>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Echoverse> ;
+        rdfs:label "Echo 3" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 64.0 
+        ], [
+                lv2:symbol "PAN" ;
+                pset:value 0.0 
+        ], [
+                lv2:symbol "DELAY" ;
+                pset:value 90.0 
+        ], [
+                lv2:symbol "LR_DELAY" ;
+                pset:value 0.0 
+        ], [
+                lv2:symbol "ANGLE" ;
+                pset:value 0.0 
+        ], [
+                lv2:symbol "FEEDBACK" ;
+                pset:value 111.0 
+        ], [
+                lv2:symbol "DAMP" ;
+                pset:value 127.0 
+        ], [
+                lv2:symbol "REV" ;
+                pset:value 77.0 
+        ], [
+                lv2:symbol "SUBD" ;
+                pset:value 3.0 
+        ], [
+                lv2:symbol "ES" ;
+                pset:value 96.0 
+        ] ;
+        .

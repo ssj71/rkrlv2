@@ -45,8 +45,8 @@ EFFECTS (X - done, W - won't do, + - done with missing features)
 [X] VaryBand 
 [W] Convolotron - these require special input files, adding complexity. other excellent lv2 convolution engines already exist
 [W] Looper - other good lv2 loopers exist
-[.] MuTroMojo 
-[.] Echoverse 
+[X] MuTroMojo 
+[X] Echoverse 
 [ ] CoilCrafter 
 [ ] ShelfBoost 
 [ ] Vocoder 

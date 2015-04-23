@@ -62,6 +62,7 @@ add_library(rkrlv2 SHARED
   ../src/MBVvol.C
   ../src/RBFilter.C
   ../src/RyanWah.C
+  ../src/RBEcho.C
 )
 
 set_target_properties(rkrlv2 PROPERTIES PREFIX "")
