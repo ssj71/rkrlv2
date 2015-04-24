@@ -40,6 +40,7 @@
 #include"RyanWah.h"
 #include"RBEcho.h"
 #include"CoilCrafter.h"
+#include"ShelfBoost.h"
 
 
 //this is the default hopefully hosts don't use periods of more than this, or they will communicate the max bufsize
@@ -100,6 +101,7 @@ typedef struct _RKRLV2
     RyanWah* mutro; 	//25
     RBEcho* echoverse;	//26
     CoilCrafter* coil;	//27
+    ShelfBoost* shelf;	//28
 }RKRLV2;
 
 
@@ -2008,45 +2010,55 @@ void run_coillv2(LV2_Handle handle, uint32_t nframes)
     return;
 }
 
+///// shelfboost /////////
+LV2_Handle init_shelflv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 5;
+    plug->effectindex = 28;
+
+    plug->shelf = new ShelfBoost(0,0,sample_freq);
+
+    return plug;
+}
+
+void run_shelflv2(LV2_Handle handle, uint32_t nframes)
+{
+    int i;
+    int val;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    //check and set changed parameters
+    for(i=0;i<plug->nparams;i++)
+    {
+        val = (int)*plug->param_p[i];
+       if(plug->shelf->getpar(i) != val)
+       {
+           plug->shelf->changepar(i,val);
+       }
+    }
+     //coilcrafter does it inline
+    memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+    memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+
+    //now set out ports
+    plug->shelf->efxoutl = plug->output_l_p;
+    plug->shelf->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->shelf->out(plug->output_l_p,plug->output_r_p,nframes);
+
+    return;
+}
+
 
 /////////////////////////////////
 ///////// END OF FX ///////////// 
 /////////////////////////////////
 
 
-
-void connect_rkrlv2_ports(LV2_Handle handle, uint32_t port, void *data)
-{
-    RKRLV2* plug = (RKRLV2*)handle;
-    switch(port)
-    {
-    case INL:         plug->input_l_p = (float*)data;break;
-    case INR:         plug->input_r_p = (float*)data;break;
-    case OUTL:        plug->output_l_p = (float*)data;break;
-    case OUTR:        plug->output_r_p = (float*)data;break;
-    case PARAM0:      plug->param_p[0] = (float*)data;break;
-    case PARAM1:      plug->param_p[1] = (float*)data;break;
-    case PARAM2:      plug->param_p[2] = (float*)data;break;
-    case PARAM3:      plug->param_p[3] = (float*)data;break;
-    case PARAM4:      plug->param_p[4] = (float*)data;break;
-    case PARAM5:      plug->param_p[5] = (float*)data;break;
-    case PARAM6:      plug->param_p[6] = (float*)data;break;
-    case PARAM7:      plug->param_p[7] = (float*)data;break;
-    case PARAM8:      plug->param_p[8] = (float*)data;break;
-    case PARAM9:      plug->param_p[9] = (float*)data;break;
-    case PARAM10:     plug->param_p[10] = (float*)data;break;
-    case PARAM11:     plug->param_p[11] = (float*)data;break;
-    case PARAM12:     plug->param_p[12] = (float*)data;break;
-    case PARAM13:     plug->param_p[13] = (float*)data;break;
-    case PARAM14:     plug->param_p[14] = (float*)data;break;
-    case PARAM15:     plug->param_p[15] = (float*)data;break;
-    case PARAM16:     plug->param_p[16] = (float*)data;break;
-    case PARAM17:     plug->param_p[17] = (float*)data;break;
-    case PARAM18:     plug->param_p[18] = (float*)data;break;
-    case DBG:         plug->dbg_p = (float*)data;break; 
-    default:         puts("UNKNOWN PORT YO!!");
-    }
-}
 
 void cleanup_rkrlv2(LV2_Handle handle)
 {
@@ -2138,8 +2150,44 @@ void cleanup_rkrlv2(LV2_Handle handle)
         case 27:
         	delete plug->coil;
         	break;
+        case 28:
+        	delete plug->shelf;
+        	break;
     }
     free(plug);
+}
+
+void connect_rkrlv2_ports(LV2_Handle handle, uint32_t port, void *data)
+{
+    RKRLV2* plug = (RKRLV2*)handle;
+    switch(port)
+    {
+    case INL:         plug->input_l_p = (float*)data;break;
+    case INR:         plug->input_r_p = (float*)data;break;
+    case OUTL:        plug->output_l_p = (float*)data;break;
+    case OUTR:        plug->output_r_p = (float*)data;break;
+    case PARAM0:      plug->param_p[0] = (float*)data;break;
+    case PARAM1:      plug->param_p[1] = (float*)data;break;
+    case PARAM2:      plug->param_p[2] = (float*)data;break;
+    case PARAM3:      plug->param_p[3] = (float*)data;break;
+    case PARAM4:      plug->param_p[4] = (float*)data;break;
+    case PARAM5:      plug->param_p[5] = (float*)data;break;
+    case PARAM6:      plug->param_p[6] = (float*)data;break;
+    case PARAM7:      plug->param_p[7] = (float*)data;break;
+    case PARAM8:      plug->param_p[8] = (float*)data;break;
+    case PARAM9:      plug->param_p[9] = (float*)data;break;
+    case PARAM10:     plug->param_p[10] = (float*)data;break;
+    case PARAM11:     plug->param_p[11] = (float*)data;break;
+    case PARAM12:     plug->param_p[12] = (float*)data;break;
+    case PARAM13:     plug->param_p[13] = (float*)data;break;
+    case PARAM14:     plug->param_p[14] = (float*)data;break;
+    case PARAM15:     plug->param_p[15] = (float*)data;break;
+    case PARAM16:     plug->param_p[16] = (float*)data;break;
+    case PARAM17:     plug->param_p[17] = (float*)data;break;
+    case PARAM18:     plug->param_p[18] = (float*)data;break;
+    case DBG:         plug->dbg_p = (float*)data;break;
+    default:         puts("UNKNOWN PORT YO!!");
+    }
 }
 
 static const LV2_Descriptor eqlv2_descriptor={
@@ -2450,6 +2498,17 @@ static const LV2_Descriptor coillv2_descriptor={
     0//extension
 };
 
+static const LV2_Descriptor shelflv2_descriptor={
+    SHELFLV2_URI,
+    init_shelflv2,
+    connect_rkrlv2_ports,
+    0,//activate
+    run_shelflv2,
+    0,//deactivate
+    cleanup_rkrlv2,
+    0//extension
+};
+
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor* lv2_descriptor(uint32_t index)
 {
@@ -2510,6 +2569,8 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
     	return &echoverselv2_descriptor ;
     case 27:
     	return &coillv2_descriptor ;
+    case 28:
+    	return &shelflv2_descriptor ;
     default:
         return 0;
     }

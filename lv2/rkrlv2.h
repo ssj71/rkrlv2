@@ -29,6 +29,7 @@
 #define MUTROLV2_URI "http://rakarrack.sourceforge.net/effects.html#MuTroMojo"
 #define ECHOVERSELV2_URI "http://rakarrack.sourceforge.net/effects.html#Echoverse"
 #define COILLV2_URI "http://rakarrack.sourceforge.net/effects.html#CoilCrafter"
+#define SHELFLV2_URI "http://rakarrack.sourceforge.net/effects.html#ShelfBoost"
 
 enum RKRLV2_ports_
 {

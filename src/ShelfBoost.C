@@ -25,7 +25,7 @@
 
 
 
-ShelfBoost::ShelfBoost (float * efxoutl_, float * efxoutr_)
+ShelfBoost::ShelfBoost (float * efxoutl_, float * efxoutr_, double sample_rate)
 {
     efxoutl = efxoutl_;
     efxoutr = efxoutr_;
@@ -36,8 +36,8 @@ ShelfBoost::ShelfBoost (float * efxoutl_, float * efxoutr_)
     Pvolume = 50;
     Pstereo = 0;
 
-    RB1l =  new AnalogFilter(7,3200.0f,0.5f,0);
-    RB1r =  new AnalogFilter(7,3200.0f,0.5f,0);
+    RB1l =  new AnalogFilter(7,3200.0f,0.5f,0,sample_rate);
+    RB1r =  new AnalogFilter(7,3200.0f,0.5f,0,sample_rate);
 
 
     cleanup ();
@@ -47,6 +47,8 @@ ShelfBoost::ShelfBoost (float * efxoutl_, float * efxoutr_)
 
 ShelfBoost::~ShelfBoost ()
 {
+	delete RB1l;
+	delete RB1r;
 };
 
 /*
@@ -66,13 +68,13 @@ ShelfBoost::cleanup ()
  * Effect output
  */
 void
-ShelfBoost::out (float * smpsl, float * smpsr)
+ShelfBoost::out (float * smpsl, float * smpsr, uint32_t period)
 {
-    int i;
+    unsigned int i;
 
 
-    RB1l->filterout(smpsl);
-    if(Pstereo) RB1r->filterout(smpsr);
+    RB1l->filterout(smpsl,period);
+    if(Pstereo) RB1r->filterout(smpsr,period);
 
 
     for(i=0; i<period; i++) {
@@ -104,6 +106,7 @@ ShelfBoost::setpreset (int npreset)
 {
     const int PRESET_SIZE = 5;
     const int NUM_PRESETS = 4;
+    int pdata[PRESET_SIZE];
     int presets[NUM_PRESETS][PRESET_SIZE] = {
         //Trebble
         {127, 64, 16000, 1, 24},
@@ -117,7 +120,7 @@ ShelfBoost::setpreset (int npreset)
     };
 
     if(npreset>NUM_PRESETS-1) {
-        Fpre->ReadPreset(34,npreset-NUM_PRESETS+1);
+        Fpre->ReadPreset(34,npreset-NUM_PRESETS+1,pdata);
         for (int n = 0; n < PRESET_SIZE; n++)
             changepar (n, pdata[n]);
     } else {

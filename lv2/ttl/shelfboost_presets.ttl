@@ -1,0 +1,96 @@
+@prefix atom: <http://lv2plug.in/ns/ext/atom#> .
+@prefix lv2: <http://lv2plug.in/ns/lv2core#> .
+@prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix state: <http://lv2plug.in/ns/ext/state#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://rakarrack.sourceforge.net/effects.html#ShelfBoost:preset:trebble>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#ShelfBoost> ;
+        rdfs:label "Treble" ;
+        lv2:port [
+                lv2:symbol "GAIN" ;
+                pset:value 127;
+        ], [
+                lv2:symbol "PRES" ;
+                pset:value 64;
+        ], [
+                lv2:symbol "TONE" ;
+                pset:value 16000;
+        ], [
+                lv2:symbol "STEREO" ;
+                pset:value 1;
+        ], [
+                lv2:symbol "LEVEL" ;
+                pset:value 24;
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#ShelfBoost:preset:mid>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#ShelfBoost> ;
+        rdfs:label "Mid" ;
+        lv2:port [
+                lv2:symbol "GAIN" ;
+                pset:value 127;
+        ], [
+                lv2:symbol "PRES" ;
+                pset:value 64;
+        ], [
+                lv2:symbol "TONE" ;
+                pset:value 4400;
+        ], [
+                lv2:symbol "STEREO" ;
+                pset:value 1;
+        ], [
+                lv2:symbol "LEVEL" ;
+                pset:value 24;
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#ShelfBoost:preset:bass>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#ShelfBoost> ;
+        rdfs:label "Bass" ;
+        lv2:port [
+                lv2:symbol "GAIN" ;
+                pset:value 127;
+        ], [
+                lv2:symbol "PRES" ;
+                pset:value 64;
+        ], [
+                lv2:symbol "TONE" ;
+                pset:value 220;
+        ], [
+                lv2:symbol "STEREO" ;
+                pset:value 1;
+        ], [
+                lv2:symbol "LEVEL" ;
+                pset:value 24;
+        ] ;
+	.
+
+# I worry that this will not work since there is no default limiter
+# <http://rakarrack.sourceforge.net/effects.html#ShelfBoost:preset:distortion_1>
+#         a pset:Preset ;
+#         lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#ShelfBoost> ;
+#         rdfs:label "Treble" ;
+#         lv2:port [
+#                 lv2:symbol "GAIN" ;
+#                 pset:value 6;
+#         ], [
+#                 lv2:symbol "PRES" ;
+#                 pset:value 40;
+#         ], [
+#                 lv2:symbol "TONE" ;
+#                 pset:value 12600;
+#         ], [
+#                 lv2:symbol "STEREO" ;
+#                 pset:value 1;
+#         ], [
+#                 lv2:symbol "LEVEL" ;
+#                 pset:value 127;
+#         ] ;
+# 	.

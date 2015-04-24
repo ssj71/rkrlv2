@@ -141,3 +141,8 @@
         a lv2:Plugin, lv2:FilterPlugin ;
         lv2:binary <rkrlv2.so> ;
         rdfs:seeAlso <coilcrafter.ttl> .
+# 28 
+<http://rakarrack.sourceforge.net/effects.html#ShelfBoost>
+        a lv2:Plugin, lv2:FilterPlugin ;
+        lv2:binary <rkrlv2.so> ;
+        rdfs:seeAlso <shelfboost.ttl> .
