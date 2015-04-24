@@ -27,7 +27,7 @@
 
 
 
-CoilCrafter::CoilCrafter (float * efxoutl_, float * efxoutr_)
+CoilCrafter::CoilCrafter (float * efxoutl_, float * efxoutr_, double sample_rate, uint32_t intermediate_bufsize)
 {
     efxoutl = efxoutl_;
     efxoutr = efxoutr_;
@@ -37,7 +37,7 @@ CoilCrafter::CoilCrafter (float * efxoutl_, float * efxoutr_)
     Ppreset = 0;
     Pvolume = 50;
     Ptone = 20;
-    att = 16.0f*powf(PI,fSAMPLE_RATE/44100.0f);
+    att = 16.0f*powf(PI,sample_rate/44100.0f);
 
     tfreqs[0]=4000.0f;
     tfreqs[1]=4400.0f;
@@ -71,12 +71,12 @@ CoilCrafter::CoilCrafter (float * efxoutl_, float * efxoutr_)
     rm[8]=1.0;
 
 
-    harm = new HarmEnhancer (rm, 2500.0f,4400.0f,1.0f);
+    harm = new HarmEnhancer (rm, 2500.0f,4400.0f,1.0f,sample_rate,intermediate_bufsize);
 
-    RB1l =  new AnalogFilter(2,2000.0f,1.0f,0);
-    RB1r =  new AnalogFilter(2,2000.0f,1.0f,0);
-    RB2l =  new AnalogFilter(2,2000.0f,1.0f,0);
-    RB2r =  new AnalogFilter(2,2000.0f,1.0f,0);
+    RB1l =  new AnalogFilter(2,2000.0f,1.0f,0,sample_rate);
+    RB1r =  new AnalogFilter(2,2000.0f,1.0f,0,sample_rate);
+    RB2l =  new AnalogFilter(2,2000.0f,1.0f,0,sample_rate);
+    RB2r =  new AnalogFilter(2,2000.0f,1.0f,0,sample_rate);
 
 
     cleanup ();
@@ -86,6 +86,11 @@ CoilCrafter::CoilCrafter (float * efxoutl_, float * efxoutr_)
 
 CoilCrafter::~CoilCrafter ()
 {
+	delete harm;
+	delete RB1l;
+	delete RB1r;
+	delete RB2l;
+	delete RB2r;
 };
 
 /*
@@ -110,14 +115,14 @@ CoilCrafter::cleanup ()
  * Effect output
  */
 void
-CoilCrafter::out (float * smpsl, float * smpsr)
+CoilCrafter::out (float * smpsl, float * smpsr, uint32_t period)
 {
-    int i;
+    unsigned int i;
 
 
     if(Ppo>0) {
-        RB1l->filterout(smpsl);
-        RB1r->filterout(smpsr);
+        RB1l->filterout(smpsl, period);
+        RB1r->filterout(smpsr, period);
 
         for (i=0; i<period; i++) {
             smpsl[i]*=att;
@@ -126,11 +131,11 @@ CoilCrafter::out (float * smpsl, float * smpsr)
 
     }
     if(Ppd>0) {
-        RB2l->filterout(smpsl);
-        RB2r->filterout(smpsr);
+        RB2l->filterout(smpsl, period);
+        RB2r->filterout(smpsr, period);
     }
 
-    if(Pmode) harm->harm_out(smpsl,smpsr);
+    if(Pmode) harm->harm_out(smpsl,smpsr, period);
 
 
     for (i=0; i<period; i++) {
@@ -206,6 +211,7 @@ CoilCrafter::setpreset (int npreset)
 {
     const int PRESET_SIZE = 9;
     const int NUM_PRESETS = 2;
+    int pdata[PRESET_SIZE];
     int presets[NUM_PRESETS][PRESET_SIZE] = {
         //H to S
         {32, 6, 1, 3300, 16,  4400, 42, 20, 0},
@@ -216,7 +222,7 @@ CoilCrafter::setpreset (int npreset)
     };
 
     if(npreset>NUM_PRESETS-1) {
-        Fpre->ReadPreset(33,npreset-NUM_PRESETS+1);
+        Fpre->ReadPreset(33,npreset-NUM_PRESETS+1,pdata);
         for (int n = 0; n < PRESET_SIZE; n++)
             changepar (n, pdata[n]);
     } else {

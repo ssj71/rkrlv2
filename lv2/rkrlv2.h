@@ -28,6 +28,7 @@
 #define MBVOLLV2_URI "http://rakarrack.sourceforge.net/effects.html#VaryBand"
 #define MUTROLV2_URI "http://rakarrack.sourceforge.net/effects.html#MuTroMojo"
 #define ECHOVERSELV2_URI "http://rakarrack.sourceforge.net/effects.html#Echoverse"
+#define COILLV2_URI "http://rakarrack.sourceforge.net/effects.html#CoilCrafter"
 
 enum RKRLV2_ports_
 {

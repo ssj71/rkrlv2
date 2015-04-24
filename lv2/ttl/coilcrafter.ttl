@@ -1,0 +1,202 @@
+@prefix doap:  <http://usefulinc.com/ns/doap#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix units: <http://lv2plug.in/ns/extensions/units#> .
+@prefix pg: <http://lv2plug.in/ns/ext/port-groups#> .
+@prefix param: <http://lv2plug.in/ns/ext/parameters#> .
+@prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+
+@prefix lv2:   <http://lv2plug.in/ns/lv2core#> .
+@prefix ui:   <http://lv2plug.in/ns/extensions/ui#> .
+
+# <http://rakarrack.sourceforge.net/effects.html#CoilCrafter_ui>
+# 	a ui:X11UI ;
+# 	ui:binary <rkrlv2_ui.so> ;
+# 	lv2:extensionData ui:idle;
+# 	lv2:optionalFeature ui:noUserResize ;
+# 	.
+
+<http://rakarrack.sourceforge.net/effects.html#CoilCrafter>
+        a lv2:Plugin, lv2:FilterPlugin ;
+        doap:name "rkr Coil Crafter" ;
+        doap:maintainer [
+                foaf:name "Rakarrack Team" ;
+                foaf:homepage <http://rakarrack.sourceforge.net>;
+                foaf:mbox <ssjackson71@gmail.com> ;
+        ] ;
+        lv2:optionalFeature lv2:hardRTCapable ;
+#        ui:ui  <http://rakarrack.sourceforge.net/effects.html#CoilCrafter_ui> ;
+
+        lv2:port [
+                a lv2:InputPort, lv2:AudioPort ;
+                lv2:index 0 ;
+                lv2:symbol "INPUT_L" ;
+                lv2:name "Audio In L" ;
+        ] ;
+        lv2:port [
+                a lv2:InputPort, lv2:AudioPort ;
+                lv2:index 1 ;
+                lv2:symbol "INPUT_R" ;
+                lv2:name "Audio In R" ;
+        ] ;
+        lv2:port [
+                a lv2:OutputPort, lv2:AudioPort ;
+                lv2:index 2 ;
+                lv2:symbol "OUTPUT_L" ;
+                lv2:name "Audio Out L" ;
+        ] ;
+        lv2:port [
+                a lv2:OutputPort, lv2:AudioPort ;
+                lv2:index 3 ;
+                lv2:symbol "OUTPUT_R" ;
+                lv2:name "Audio Out R" ;
+        ] ;
+        lv2:port [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 4 ;
+                lv2:symbol "GAIN" ;
+                lv2:name "Gain" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 127 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 5 ;
+                lv2:symbol "F1" ;
+                lv2:name "Origin Pickup Frequency" ;
+                lv2:default 3000 ;
+                lv2:minimum 2600 ;
+                lv2:maximum 4500 ;
+                lv2:portProperty lv2:integer ;
+                lv2:units units:hz ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 6 ;
+                lv2:symbol "Q1" ;
+                lv2:name "Origin Pickup Resonance" ;
+                lv2:default 20 ;
+                lv2:minimum 10 ;
+                lv2:maximum 65 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 7 ;
+                lv2:symbol "F2" ;
+                lv2:name "Destination Pickup Frequency" ;
+                lv2:default 2600 ;
+                lv2:minimum 2600
+                lv2:maximum 4500 ;
+                lv2:portProperty lv2:integer ;
+                lv2:units units:hz ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 8 ;
+                lv2:symbol "Q2" ;
+                lv2:name "Destination Pickup Resonance" ;
+                lv2:default 20 ;
+                lv2:minimum 10 ;
+                lv2:maximum 65 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 9 ;
+                lv2:symbol "TONE" ;
+                lv2:name "Tone" ;
+                lv2:default 200 ;
+                lv2:minimum 20 ;
+                lv2:maximum 4400 ;
+                lv2:portProperty lv2:integer ;
+                lv2:units units:hz ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 10 ;
+                lv2:symbol "MODE" ;
+                lv2:name "Neck Pickup" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 1 ;
+                lv2:portProperty lv2:integer ;
+                lv2:portProperty lv2:toggled ;
+        ] ;
+	.
+
+
+<http://rakarrack.sourceforge.net/effects.html#CoilCrafter:preset:htos>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#CoilCrafter> ;
+        rdfs:seeAlso <coilcrafter_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#CoilCrafter:preset:stoh>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#CoilCrafter> ;
+        rdfs:seeAlso <coilcrafter_presets.ttl> .
+
+# presets for individual coils (origins)
+<http://rakarrack.sourceforge.net/effects.html#CoilCrafter:preset:ofso>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#CoilCrafter> ;
+        rdfs:seeAlso <coilcrafter_presets.ttl> .
+<http://rakarrack.sourceforge.net/effects.html#CoilCrafter:preset:ofsn>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#CoilCrafter> ;
+        rdfs:seeAlso <coilcrafter_presets.ttl> .
+<http://rakarrack.sourceforge.net/effects.html#CoilCrafter:preset:oss>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#CoilCrafter> ;
+        rdfs:seeAlso <coilcrafter_presets.ttl> .
+<http://rakarrack.sourceforge.net/effects.html#CoilCrafter:preset:ofh>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#CoilCrafter> ;
+        rdfs:seeAlso <coilcrafter_presets.ttl> .
+<http://rakarrack.sourceforge.net/effects.html#CoilCrafter:preset:ogp90>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#CoilCrafter> ;
+        rdfs:seeAlso <coilcrafter_presets.ttl> .
+<http://rakarrack.sourceforge.net/effects.html#CoilCrafter:preset:ogs>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#CoilCrafter> ;
+        rdfs:seeAlso <coilcrafter_presets.ttl> .
+<http://rakarrack.sourceforge.net/effects.html#CoilCrafter:preset:ogm>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#CoilCrafter> ;
+        rdfs:seeAlso <coilcrafter_presets.ttl> .
+<http://rakarrack.sourceforge.net/effects.html#CoilCrafter:preset:ogsl6s>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#CoilCrafter> ;
+        rdfs:seeAlso <coilcrafter_presets.ttl> .
+
+# presets for individual coils (destinations)
+<http://rakarrack.sourceforge.net/effects.html#CoilCrafter:preset:dfso>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#CoilCrafter> ;
+        rdfs:seeAlso <coilcrafter_presets.ttl> .
+<http://rakarrack.sourceforge.net/effects.html#CoilCrafter:preset:dfsn>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#CoilCrafter> ;
+        rdfs:seeAlso <coilcrafter_presets.ttl> .
+<http://rakarrack.sourceforge.net/effects.html#CoilCrafter:preset:dss>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#CoilCrafter> ;
+        rdfs:seeAlso <coilcrafter_presets.ttl> .
+<http://rakarrack.sourceforge.net/effects.html#CoilCrafter:preset:dfh>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#CoilCrafter> ;
+        rdfs:seeAlso <coilcrafter_presets.ttl> .
+<http://rakarrack.sourceforge.net/effects.html#CoilCrafter:preset:dgp90>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#CoilCrafter> ;
+        rdfs:seeAlso <coilcrafter_presets.ttl> .
+<http://rakarrack.sourceforge.net/effects.html#CoilCrafter:preset:dgs>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#CoilCrafter> ;
+        rdfs:seeAlso <coilcrafter_presets.ttl> .
+<http://rakarrack.sourceforge.net/effects.html#CoilCrafter:preset:dgm>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#CoilCrafter> ;
+        rdfs:seeAlso <coilcrafter_presets.ttl> .
+<http://rakarrack.sourceforge.net/effects.html#CoilCrafter:preset:dgsl6s>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#CoilCrafter> ;
+        rdfs:seeAlso <coilcrafter_presets.ttl> .

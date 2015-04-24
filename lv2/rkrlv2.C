@@ -39,6 +39,7 @@
 #include"MBVvol.h"
 #include"RyanWah.h"
 #include"RBEcho.h"
+#include"CoilCrafter.h"
 
 
 //this is the default hopefully hosts don't use periods of more than this, or they will communicate the max bufsize
@@ -90,14 +91,15 @@ typedef struct _RKRLV2
     Valve* valve;		//16
     Dflange* dflange;   //17
     Ring* ring;			//18
-    MBDist* mbdist;
-    Arpie* arp;
-    Expander* expand;
-    Shuffle* shuf;
-    Synthfilter* synth;
-    MBVvol* mbvol;
-    RyanWah* mutro;
-    RBEcho* echoverse;
+    MBDist* mbdist;		//19
+    Arpie* arp;			//20
+    Expander* expand;	//21
+    Shuffle* shuf;		//22
+    Synthfilter* synth; //23
+    MBVvol* mbvol;		//24
+    RyanWah* mutro; 	//25
+    RBEcho* echoverse;	//26
+    CoilCrafter* coil;	//27
 }RKRLV2;
 
 
@@ -1955,6 +1957,57 @@ void run_echoverselv2(LV2_Handle handle, uint32_t nframes)
     return;
 }
 
+///// coilcrafter /////////
+LV2_Handle init_coillv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 7;
+    plug->effectindex = 27;
+
+    getFeatures(plug,host_features);
+
+    plug->coil = new CoilCrafter(0,0,sample_freq,plug->period_max);
+
+    return plug;
+}
+
+void run_coillv2(LV2_Handle handle, uint32_t nframes)
+{
+    int i;
+    int val;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    //check and set changed parameters
+    i=0;
+    val = (int)*plug->param_p[i];//wet/dry
+    if(plug->coil->getpar(i) != val)
+    {
+        plug->coil->changepar(i,val);
+    }
+    for(i++;i<plug->nparams;i++)//skip origin and destinations
+    {
+        val = (int)*plug->param_p[i];
+       if(plug->coil->getpar(i+2) != val)
+       {
+           plug->coil->changepar(i+2,val);
+       }
+    }
+     //coilcrafter does it inline
+    memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+    memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+
+    //now set out ports
+    plug->coil->efxoutl = plug->output_l_p;
+    plug->coil->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->coil->out(plug->output_l_p,plug->output_r_p,nframes);
+
+    return;
+}
+
 
 /////////////////////////////////
 ///////// END OF FX ///////////// 
@@ -2081,6 +2134,9 @@ void cleanup_rkrlv2(LV2_Handle handle)
             break;
         case 26:
         	delete plug->echoverse;
+        	break;
+        case 27:
+        	delete plug->coil;
         	break;
     }
     free(plug);
@@ -2383,6 +2439,17 @@ static const LV2_Descriptor echoverselv2_descriptor={
     0//extension
 };
 
+static const LV2_Descriptor coillv2_descriptor={
+    COILLV2_URI,
+    init_coillv2,
+    connect_rkrlv2_ports,
+    0,//activate
+    run_coillv2,
+    0,//deactivate
+    cleanup_rkrlv2,
+    0//extension
+};
+
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor* lv2_descriptor(uint32_t index)
 {
@@ -2441,6 +2508,8 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
     	return &mutrolv2_descriptor ;
     case 26:
     	return &echoverselv2_descriptor ;
+    case 27:
+    	return &coillv2_descriptor ;
     default:
         return 0;
     }

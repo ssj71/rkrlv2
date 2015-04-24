@@ -63,6 +63,7 @@ add_library(rkrlv2 SHARED
   ../src/RBFilter.C
   ../src/RyanWah.C
   ../src/RBEcho.C
+  ../src/CoilCrafter.C
 )
 
 set_target_properties(rkrlv2 PROPERTIES PREFIX "")
