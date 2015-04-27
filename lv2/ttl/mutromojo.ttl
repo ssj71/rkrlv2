@@ -227,7 +227,7 @@
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 21 ;
                 lv2:symbol "QMODE" ;
-                lv2:name "Extra Resonance" ;
+                lv2:name "Analog Gain Mode" ;
                 lv2:default 0 ;
                 lv2:minimum 0 ;
                 lv2:maximum 1 ;
@@ -237,7 +237,7 @@
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 22 ;
                 lv2:symbol "AMODE" ;
-                lv2:name "Analog Gain Mode" ;
+                lv2:name "Exponential Wah" ;
                 lv2:default 0 ;
                 lv2:minimum 0 ;
                 lv2:maximum 1 ;

@@ -196,6 +196,7 @@
 	] , [
 		lv2:symbol "DIRECT" ;
 		pset:value 0.0
+    ] .
 
 <http://rakarrack.sourceforge.net/effects.html#eco:preset:panning_echo_2>
         a pset:Preset ;
@@ -228,7 +229,6 @@
             lv2:symbol "DIRECT" ;
             pset:value 0.0
         ] .
-	] .
 
 <http://rakarrack.sourceforge.net/effects.html#eco:preset:panning_echo_3>
         a pset:Preset ;
@@ -261,7 +261,6 @@
             lv2:symbol "DIRECT" ;
             pset:value 0.0
         ] .
-	] .
 
 <http://rakarrack.sourceforge.net/effects.html#eco:preset:feedback_echo>
         a pset:Preset ;
@@ -294,5 +293,4 @@
             lv2:symbol "DIRECT" ;
             pset:value 0.0
         ] .
-	] .
 
