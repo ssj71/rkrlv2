@@ -1,0 +1,121 @@
+@prefix atom: <http://lv2plug.in/ns/ext/atom#> .
+@prefix lv2: <http://lv2plug.in/ns/lv2core#> .
+@prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix state: <http://lv2plug.in/ns/ext/state#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+
+<http://rakarrack.sourceforge.net/effects.html#Vocoder:preset:vocoder_1>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Vocoder> ;
+        rdfs:label "Vocoder 1" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 0;
+        ], [
+                lv2:symbol "PAN" ;
+                pset:value 0;
+        ], [
+                lv2:symbol "MUF" ;
+                pset:value 10;
+        ], [
+                lv2:symbol "Q" ;
+                pset:value 70;
+        ], [
+                lv2:symbol "LEVEL" ;
+                pset:value 70;
+        ], [
+                lv2:symbol "INGAIN" ;
+                pset:value 40;
+        ], [
+                lv2:symbol "RING" ;
+                pset:value 0;
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Vocoder:preset:vocoder_2>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Vocoder> ;
+        rdfs:label "Vocoder 2" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 0;
+        ], [
+                lv2:symbol "PAN" ;
+                pset:value 0;
+        ], [
+                lv2:symbol "MUF" ;
+                pset:value 14;
+        ], [
+                lv2:symbol "Q" ;
+                pset:value 80;
+        ], [
+                lv2:symbol "LEVEL" ;
+                pset:value 70;
+        ], [
+                lv2:symbol "INGAIN" ;
+                pset:value 40;
+        ], [
+                lv2:symbol "RING" ;
+                pset:value 32;
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Vocoder:preset:vocoder_3>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Vocoder> ;
+        rdfs:label "Vocoder 3" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 0;
+        ], [
+                lv2:symbol "PAN" ;
+                pset:value 0;
+        ], [
+                lv2:symbol "MUF" ;
+                pset:value 20;
+        ], [
+                lv2:symbol "Q" ;
+                pset:value 90;
+        ], [
+                lv2:symbol "LEVEL" ;
+                pset:value 70;
+        ], [
+                lv2:symbol "INGAIN" ;
+                pset:value 40;
+        ], [
+                lv2:symbol "RING" ;
+                pset:value 64;
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Vocoder:preset:vocoder_4>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Vocoder> ;
+        rdfs:label "Vocoder 4" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 0;
+        ], [
+                lv2:symbol "PAN" ;
+                pset:value 0;
+        ], [
+                lv2:symbol "MUF" ;
+                pset:value 30;
+        ], [
+                lv2:symbol "Q" ;
+                pset:value 100;
+        ], [
+                lv2:symbol "LEVEL" ;
+                pset:value 70;
+        ], [
+                lv2:symbol "INGAIN" ;
+                pset:value 40;
+        ], [
+                lv2:symbol "RING" ;
+                pset:value 127;
+        ] ;
+	.

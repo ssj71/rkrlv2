@@ -65,6 +65,7 @@ add_library(rkrlv2 SHARED
   ../src/RBEcho.C
   ../src/CoilCrafter.C
   ../src/ShelfBoost.C
+  ../src/Vocoder.C
 )
 
 set_target_properties(rkrlv2 PROPERTIES PREFIX "")

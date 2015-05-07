@@ -41,6 +41,7 @@
 #include"RBEcho.h"
 #include"CoilCrafter.h"
 #include"ShelfBoost.h"
+#include"Vocoder.h"
 
 
 //this is the default hopefully hosts don't use periods of more than this, or they will communicate the max bufsize
@@ -102,8 +103,15 @@ typedef struct _RKRLV2
     RBEcho* echoverse;	//26
     CoilCrafter* coil;	//27
     ShelfBoost* shelf;	//28
+    Vocoder* voc;		//29
 }RKRLV2;
 
+enum other_ports
+{
+	HARMONIZER_MIDI,
+	VOCODER_AUX_IN = 7,
+	VOCODER_VU_LEVEL = 8
+};
 
 // A few helper functions taken from the RKR object
 void
@@ -2053,6 +2061,71 @@ void run_shelflv2(LV2_Handle handle, uint32_t nframes)
     return;
 }
 
+///// Vocoder /////////
+LV2_Handle init_voclv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 7;
+    plug->effectindex = 29;
+
+    getFeatures(plug,host_features);
+
+    plug->voc = new Vocoder(0,0,0,/*bands*/32,/*downsamplex2*/5,/*upsample quality*/4,
+    		/*downsample quality*/ 2,sample_freq,plug->period_max);
+
+    return plug;
+}
+
+void run_voclv2(LV2_Handle handle, uint32_t nframes)
+{
+    int i;
+    int val;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    //check and set changed parameters
+    i=0;
+    val = (int)*plug->param_p[i];//wet/dry
+    if(plug->voc->getpar(i) != val)
+    {
+        plug->voc->changepar(i,val);
+    }
+    i++;
+    val = (int)*plug->param_p[i]+64;//pan
+    if(plug->voc->getpar(i) != val)
+    {
+        plug->voc->changepar(i,val);
+    }
+    for(i++;i<plug->nparams;i++)
+    {
+        val = (int)*plug->param_p[i];
+       if(plug->voc->getpar(i) != val)
+       {
+           plug->voc->changepar(i,val);
+       }
+    }
+
+    //set aux input
+    plug->voc->auxresampled = plug->param_p[VOCODER_AUX_IN];
+
+     //coilcrafter does it inline
+    memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+    memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+
+    //now set out ports
+    plug->voc->efxoutl = plug->output_l_p;
+    plug->voc->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->voc->out(plug->output_l_p,plug->output_r_p,nframes);
+
+    //and set VU meter
+    *plug->param_p[VOCODER_VU_LEVEL] = plug->voc->vulevel;
+
+    return;
+}
+
 
 /////////////////////////////////
 ///////// END OF FX ///////////// 
@@ -2152,6 +2225,9 @@ void cleanup_rkrlv2(LV2_Handle handle)
         	break;
         case 28:
         	delete plug->shelf;
+        	break;
+        case 29:
+        	delete plug->voc;
         	break;
     }
     free(plug);
@@ -2509,6 +2585,17 @@ static const LV2_Descriptor shelflv2_descriptor={
     0//extension
 };
 
+static const LV2_Descriptor voclv2_descriptor={
+    VOCODERLV2_URI,
+    init_voclv2,
+    connect_rkrlv2_ports,
+    0,//activate
+    run_voclv2,
+    0,//deactivate
+    cleanup_rkrlv2,
+    0//extension
+};
+
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor* lv2_descriptor(uint32_t index)
 {
@@ -2571,6 +2658,8 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
     	return &coillv2_descriptor ;
     case 28:
     	return &shelflv2_descriptor ;
+    case 29:
+    	return &voclv2_descriptor ;
     default:
         return 0;
     }

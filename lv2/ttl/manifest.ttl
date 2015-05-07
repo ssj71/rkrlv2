@@ -146,3 +146,8 @@
         a lv2:Plugin, lv2:FilterPlugin ;
         lv2:binary <rkrlv2.so> ;
         rdfs:seeAlso <shelfboost.ttl> .
+# 29 
+<http://rakarrack.sourceforge.net/effects.html#Vocoder>
+        a lv2:Plugin, lv2:ModulationPlugin ;
+        lv2:binary <rkrlv2.so> ;
+        rdfs:seeAlso <vocoder.ttl> .

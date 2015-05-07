@@ -26,18 +26,20 @@
 
 #include "global.h"
 #include "AnalogFilter.h"
+#include "Resample.h"
 
 class Vocoder
 {
 public:
-    Vocoder (float * efxoutl_, float * efxoutr_, float *auxresampled_,int bands, int DS, int uq, int dq);
+    Vocoder (float * efxoutl_, float * efxoutr_, float *auxresampled_,int bands, int DS, int uq, int dq,
+    		double sample_rate, uint32_t intermediate_bufsize);
     ~Vocoder ();
-    void out (float * smpsl, float * smpr);
+    void out (float * smpsl, float * smpr, uint32_t period);
     void setpreset (int npreset);
     void changepar (int npar, int value);
     int getpar (int npar);
     void cleanup ();
-    void adjust(int DS);
+    void adjust(int DS, double sample_rate);
 
     int Ppreset;
     float outvolume;
@@ -69,6 +71,7 @@ private:
     int DS_state;
     int nPERIOD;
     int nSAMPLE_RATE;
+    float nRATIO;
 
     float ncSAMPLE_RATE;
     float nfSAMPLE_RATE;
