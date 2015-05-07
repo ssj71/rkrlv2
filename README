@@ -49,8 +49,8 @@ EFFECTS (X - done, W - won't do, + - done with missing features)
 [X] Echoverse 
 [X] CoilCrafter 
 [X] ShelfBoost 
-[ ] Vocoder 
-[.] Sustainer 
+[X] Vocoder 
+[X] Sustainer 
 [.] Sequence 
 [ ] Shifter 
 [.] StompBox - this will be broken up into the various stomps

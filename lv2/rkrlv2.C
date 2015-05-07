@@ -104,10 +104,12 @@ typedef struct _RKRLV2
     CoilCrafter* coil;	//27
     ShelfBoost* shelf;	//28
     Vocoder* voc;		//29
+    Sustainer* sus;		//30
 }RKRLV2;
 
 enum other_ports
 {
+	//be sure to account for index of array vs lv2 port index
 	HARMONIZER_MIDI,
 	VOCODER_AUX_IN = 7,
 	VOCODER_VU_LEVEL = 8
@@ -2106,22 +2108,64 @@ void run_voclv2(LV2_Handle handle, uint32_t nframes)
        }
     }
 
-    //set aux input
+    //set aux input and out ports
     plug->voc->auxresampled = plug->param_p[VOCODER_AUX_IN];
-
-     //coilcrafter does it inline
-    memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-    memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
-
-    //now set out ports
     plug->voc->efxoutl = plug->output_l_p;
     plug->voc->efxoutr = plug->output_r_p;
 
     //now run
-    plug->voc->out(plug->output_l_p,plug->output_r_p,nframes);
+    plug->voc->out(plug->input_l_p,plug->input_r_p,nframes);
+
+    //and for whatever reason we have to do the wet/dry mix ourselves
+    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->voc->outvolume, nframes);
 
     //and set VU meter
     *plug->param_p[VOCODER_VU_LEVEL] = plug->voc->vulevel;
+
+    return;
+}
+
+///// Sustainer /////////
+LV2_Handle init_suslv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 2;
+    plug->effectindex = 30;
+
+
+    plug->sus = new Sustainer(0,0,sample_freq);
+
+    return plug;
+}
+
+void run_suslv2(LV2_Handle handle, uint32_t nframes)
+{
+    int i;
+    int val;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    //check and set changed parameters
+    for(i=0;i<plug->nparams;i++)
+    {
+        val = (int)*plug->param_p[i];
+       if(plug->sus->getpar(i) != val)
+       {
+           plug->sus->changepar(i,val);
+       }
+    }
+
+     //sustainer does it inline
+    memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+    memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+
+    //now set out ports
+    plug->sus->efxoutl = plug->output_l_p;
+    plug->sus->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->sus->out(plug->output_l_p,plug->output_r_p,nframes);
 
     return;
 }
@@ -2228,6 +2272,9 @@ void cleanup_rkrlv2(LV2_Handle handle)
         	break;
         case 29:
         	delete plug->voc;
+        	break;
+        case 30:
+        	delete plug->sus;
         	break;
     }
     free(plug);
@@ -2596,6 +2643,17 @@ static const LV2_Descriptor voclv2_descriptor={
     0//extension
 };
 
+static const LV2_Descriptor suslv2_descriptor={
+    SUSTAINLV2_URI,
+    init_suslv2,
+    connect_rkrlv2_ports,
+    0,//activate
+    run_suslv2,
+    0,//deactivate
+    cleanup_rkrlv2,
+    0//extension
+};
+
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor* lv2_descriptor(uint32_t index)
 {
@@ -2660,6 +2718,8 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
     	return &shelflv2_descriptor ;
     case 29:
     	return &voclv2_descriptor ;
+    case 30:
+    	return &suslv2_descriptor ;
     default:
         return 0;
     }

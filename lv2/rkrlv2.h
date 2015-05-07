@@ -31,6 +31,7 @@
 #define COILLV2_URI "http://rakarrack.sourceforge.net/effects.html#CoilCrafter"
 #define SHELFLV2_URI "http://rakarrack.sourceforge.net/effects.html#ShelfBoost"
 #define VOCODERLV2_URI "http://rakarrack.sourceforge.net/effects.html#Vocoder"
+#define SUSTAINLV2_URI "http://rakarrack.sourceforge.net/effects.html#Sustainer"
 
 enum RKRLV2_ports_
 {
