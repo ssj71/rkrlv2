@@ -42,6 +42,7 @@
 #include"CoilCrafter.h"
 #include"ShelfBoost.h"
 #include"Vocoder.h"
+#include"Sequence.h"
 
 
 //this is the default hopefully hosts don't use periods of more than this, or they will communicate the max bufsize
@@ -105,6 +106,7 @@ typedef struct _RKRLV2
     ShelfBoost* shelf;	//28
     Vocoder* voc;		//29
     Sustainer* sus;		//30
+    Sequence* seq;		//31
 }RKRLV2;
 
 enum other_ports
@@ -662,7 +664,7 @@ void run_harmnomidlv2(LV2_Handle handle, uint32_t nframes)
             plug->chordID->cc = 1;//mark chord has changed
         }
     }
-    for(i++;i<10;i++)// 8-9
+    for(;i<10;i++)// 8-9
     {
         val = (int)*plug->param_p[i] + 64;
         if(plug->harm->getpar(i+1) != val)
@@ -1790,7 +1792,6 @@ void run_mbvollv2(LV2_Handle handle, uint32_t nframes)
            plug->mbvol->changepar(i,val);
        }
     }
-    i++;
     val = (int)*plug->param_p[i] +64;//3 LR delay
     if(plug->mbvol->getpar(i) != val)
     {
@@ -1804,7 +1805,6 @@ void run_mbvollv2(LV2_Handle handle, uint32_t nframes)
            plug->mbvol->changepar(i,val);
        }
     }
-    i++;
     val = (int)*plug->param_p[i] +64;//6 LR delay
     if(plug->mbvol->getpar(i) != val)
     {
@@ -1864,8 +1864,7 @@ void run_mutrolv2(LV2_Handle handle, uint32_t nframes)
            plug->mutro->changepar(i,val);
        }
     }
-    i++;
-    val = (int)*plug->param_p[i] +64;//3 LR delay
+    val = (int)*plug->param_p[i] +64;//5 LR delay
     if(plug->mutro->getpar(i) != val)
     {
            plug->mutro->changepar(i,val);
@@ -1878,7 +1877,7 @@ void run_mutrolv2(LV2_Handle handle, uint32_t nframes)
            plug->mutro->changepar(i,val);
        }
     }
-    for(i++;i<plug->nparams;i++)//skip legacy mode and preset setting
+    for(;i<plug->nparams;i++)//skip legacy mode and preset setting
     {
         val = (int)*plug->param_p[i];
        if(plug->mutro->getpar(i+2) != val)
@@ -1947,7 +1946,7 @@ void run_echoverselv2(LV2_Handle handle, uint32_t nframes)
            plug->echoverse->changepar(i,val);
        }
     }
-    for(i++;i<plug->nparams;i++)
+    for( ;i<plug->nparams;i++)
     {
         val = (int)*plug->param_p[i];
        if(plug->echoverse->getpar(i) != val)
@@ -2170,6 +2169,64 @@ void run_suslv2(LV2_Handle handle, uint32_t nframes)
     return;
 }
 
+///// Sequence /////////
+LV2_Handle init_seqlv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 15;
+    plug->effectindex = 31;
+
+    getFeatures(plug,host_features);
+
+    plug->seq = new Sequence(0,0,/*shifter quality*/4,/*downsamplex2*/5,/*upsample quality*/4,
+    		/*downsample quality*/ 2,sample_freq,plug->period_max);
+
+    return plug;
+}
+
+void run_seqlv2(LV2_Handle handle, uint32_t nframes)
+{
+    int i;
+    int val;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    //check and set changed parameters
+    for(i=0;i<10;i++)
+    {
+        val = (int)*plug->param_p[i];
+       if(plug->seq->getpar(i) != val)
+       {
+           plug->seq->changepar(i,val);
+       }
+    }
+    val = (int)*plug->param_p[i]+64;//Q or panning
+    if(plug->seq->getpar(i) != val)
+    {
+        plug->seq->changepar(i,val);
+    }
+    for(i++;i<plug->nparams;i++)
+    {
+        val = (int)*plug->param_p[i];
+       if(plug->seq->getpar(i) != val)
+       {
+           plug->seq->changepar(i,val);
+       }
+    }
+
+    //set out ports
+    plug->seq->efxoutl = plug->output_l_p;
+    plug->seq->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->seq->out(plug->input_l_p,plug->input_r_p,nframes);
+
+    //and for whatever reason we have to do the wet/dry mix ourselves
+    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->seq->outvolume, nframes);
+
+    return;
+}
 
 /////////////////////////////////
 ///////// END OF FX ///////////// 
@@ -2275,6 +2332,9 @@ void cleanup_rkrlv2(LV2_Handle handle)
         	break;
         case 30:
         	delete plug->sus;
+        	break;
+        case 31:
+        	delete plug->seq;
         	break;
     }
     free(plug);
@@ -2654,6 +2714,17 @@ static const LV2_Descriptor suslv2_descriptor={
     0//extension
 };
 
+static const LV2_Descriptor seqlv2_descriptor={
+    SEQUENCELV2_URI,
+    init_seqlv2,
+    connect_rkrlv2_ports,
+    0,//activate
+    run_seqlv2,
+    0,//deactivate
+    cleanup_rkrlv2,
+    0//extension
+};
+
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor* lv2_descriptor(uint32_t index)
 {
@@ -2720,6 +2791,8 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
     	return &voclv2_descriptor ;
     case 30:
     	return &suslv2_descriptor ;
+    case 31:
+    	return &seqlv2_descriptor ;
     default:
         return 0;
     }

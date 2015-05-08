@@ -1,0 +1,267 @@
+@prefix doap:  <http://usefulinc.com/ns/doap#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix units: <http://lv2plug.in/ns/extensions/units#> .
+@prefix pprops: <http://lv2plug.in/ns/ext/port-props#> .
+@prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+
+@prefix lv2:   <http://lv2plug.in/ns/lv2core#> .
+@prefix ui:   <http://lv2plug.in/ns/extensions/ui#> .
+
+# <http://rakarrack.sourceforge.net/effects.html#Sequence_ui>
+# 	a ui:X11UI ;
+# 	ui:binary <rkrlv2_ui.so> ;
+# 	lv2:extensionData ui:idle;
+# 	lv2:optionalFeature ui:noUserResize ;
+# 	.
+
+<http://rakarrack.sourceforge.net/effects.html#Sequence>
+        a lv2:Plugin, lv2:FilterPlugin ;
+        doap:name "rkr Sequence" ;
+        doap:maintainer [
+                foaf:name "Rakarrack Team" ;
+                foaf:homepage <http://rakarrack.sourceforge.net>;
+                foaf:mbox <ssjackson71@gmail.com> ;
+        ] ;
+        lv2:optionalFeature lv2:hardRTCapable ;
+#        ui:ui  <http://rakarrack.sourceforge.net/effects.html#Sequence_ui> ;
+
+        lv2:port [
+                a lv2:InputPort, lv2:AudioPort ;
+                lv2:index 0 ;
+                lv2:symbol "INPUT_L" ;
+                lv2:name "Audio In L" ;
+        ] ;
+        lv2:port [
+                a lv2:InputPort, lv2:AudioPort ;
+                lv2:index 1 ;
+                lv2:symbol "INPUT_R" ;
+                lv2:name "Audio In R" ;
+        ] ;
+        lv2:port [
+                a lv2:OutputPort, lv2:AudioPort ;
+                lv2:index 2 ;
+                lv2:symbol "OUTPUT_L" ;
+                lv2:name "Audio Out L" ;
+        ] ;
+        lv2:port [
+                a lv2:OutputPort, lv2:AudioPort ;
+                lv2:index 3 ;
+                lv2:symbol "OUTPUT_R" ;
+                lv2:name "Audio Out R" ;
+        ] ;
+        lv2:port [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 4 ;
+                lv2:symbol "S0" ;
+                lv2:name "Step 1" ;
+                lv2:default 64 ;
+                lv2:minimum 0 ;
+                lv2:maximum 127 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 5 ;
+                lv2:symbol "S2" ;
+                lv2:name "Step 2" ;
+                lv2:default 64 ;
+                lv2:minimum 0 ;
+                lv2:maximum 127 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 6 ;
+                lv2:symbol "S3" ;
+                lv2:name "Step 3" ;
+                lv2:default 84 ;
+                lv2:minimum 0 ;
+                lv2:maximum 127 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 7 ;
+                lv2:symbol "S4" ;
+                lv2:name "Step 4" ;
+                lv2:default 64 ;
+                lv2:minimum 0 ;
+                lv2:maximum 127 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 8 ;
+                lv2:symbol "S5" ;
+                lv2:name "Step 5" ;
+                lv2:default 24 ;
+                lv2:minimum 0 ;
+                lv2:maximum 127 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 9 ;
+                lv2:symbol "S6" ;
+                lv2:name "Step 6" ;
+                lv2:default 64 ;
+                lv2:minimum 0 ;
+                lv2:maximum 127 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 10 ;
+                lv2:symbol "S7" ;
+                lv2:name "Step 7" ;
+                lv2:default 84 ;
+                lv2:minimum 0 ;
+                lv2:maximum 127 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 11 ;
+                lv2:symbol "S8" ;
+                lv2:name "Step 8" ;
+                lv2:default 64 ;
+                lv2:minimum 0 ;
+                lv2:maximum 127 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 12 ;
+                lv2:symbol "WETDRY" ;
+                lv2:name "Wet/Dry" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 1 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 13 ;
+                lv2:symbol "TEMPO" ;
+                lv2:name "Tempo" ;
+                lv2:default 120 ;
+                lv2:minimum 1 ;
+                lv2:maximum 600 ;
+                units:unit units:bpm ;
+         ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 14 ;
+                lv2:symbol "Q" ;
+                lv2:name "Q" ;
+                lv2:default 0 ;
+                lv2:minimum -64 ;
+                lv2:maximum 64 ;
+                lv2:portProperty lv2:integer ;
+         ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 15 ;
+                lv2:symbol "AMP" ;
+                lv2:name "Modulate Filter Amplitude/Pitch-Shift Down" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 1 ;
+                lv2:portProperty lv2:integer ;
+                lv2:portProperty lv2:toggled ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 16 ;
+                lv2:symbol "LAG" ;
+                lv2:name "Right Channel Step Lag" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 7 ;
+                lv2:portProperty lv2:integer ;
+         ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 17 ;
+                lv2:symbol "MODE" ;
+                lv2:name "Modulation Mode" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 7 ;
+                lv2:portProperty lv2:integer ;
+                lv2:portProperty lv2:enumeration;
+                lv2:scalePoint [ rdfs:label "Lineal (Filter)"; rdf:value 0 ] ;
+                lv2:scalePoint [ rdfs:label "UpDown (Filter)"; rdf:value 1 ] ;
+                lv2:scalePoint [ rdfs:label "Stepper (Filter)"; rdf:value 2 ] ;
+                lv2:scalePoint [ rdfs:label "Shifter (Pitch)"; rdf:value 3 ] ;
+                lv2:scalePoint [ rdfs:label "Tremor (Gain)"; rdf:value 4 ] ;
+                lv2:scalePoint [ rdfs:label "Arpeggiator (Pitch)"; rdf:value 5 ] ;
+                lv2:scalePoint [ rdfs:label "Chorus (Pitch)"; rdf:value 6 ] ;
+                lv2:scalePoint [ rdfs:label "TrigStepper (Filter)"; rdf:value 7 ] ;
+                lv2:scalePoint [ rdfs:label "Sequenced Delay"; rdf:value 8 ] ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 18 ;
+                lv2:symbol "RANGE" ;
+                lv2:name "Step Adjustment Range" ;
+                lv2:default 1 ;
+                lv2:minimum 1 ;
+                lv2:maximum 8 ;
+                lv2:portProperty lv2:integer ;
+                lv2:portProperty lv2:enumeration;
+                lv2:scalePoint [ rdfs:label "450-2.5k"; rdf:value 0 ] ;
+                lv2:scalePoint [ rdfs:label "150-4k"; rdf:value 1 ] ;
+                lv2:scalePoint [ rdfs:label "40-800"; rdf:value 2 ] ;
+                lv2:scalePoint [ rdfs:label "100-1.6k"; rdf:value 3 ] ;
+                lv2:scalePoint [ rdfs:label "80-16k"; rdf:value 4 ] ;
+                lv2:scalePoint [ rdfs:label "60-18k"; rdf:value 5 ] ;
+                lv2:scalePoint [ rdfs:label "40-2.2k"; rdf:value 6 ] ;
+                lv2:scalePoint [ rdfs:label "20-6k"; rdf:value 7 ] ;
+                units:unit units:hz ;
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Sequence:preset:jumpy>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Sequence> ;
+        rdfs:seeAlso <sequence_presets.ttl> .
+
+
+<http://rakarrack.sourceforge.net/effects.html#Sequence:preset:stair_step>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Sequence> ;
+        rdfs:seeAlso <sequence_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#Sequence:preset:mild>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Sequence> ;
+        rdfs:seeAlso <sequence_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#Sequence:preset:wahwah>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Sequence> ;
+        rdfs:seeAlso <sequence_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#Sequence:preset:filter_pan>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Sequence> ;
+        rdfs:seeAlso <sequence_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#Sequence:preset:stepper>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Sequence> ;
+        rdfs:seeAlso <sequence_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#Sequence:preset:shifter>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Sequence> ;
+        rdfs:seeAlso <sequence_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#Sequence:preset:tremor>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Sequence> ;
+        rdfs:seeAlso <sequence_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#Sequence:preset:boogie>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Sequence> ;
+        rdfs:seeAlso <sequence_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#Sequence:preset:chorus>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Sequence> ;
+        rdfs:seeAlso <sequence_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#Sequence:preset:random_mode>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Sequence> ;
+        rdfs:seeAlso <sequence_presets.ttl> .

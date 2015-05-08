@@ -156,3 +156,8 @@
         a lv2:Plugin, lv2:CompressorPlugin ;
         lv2:binary <rkrlv2.so> ;
         rdfs:seeAlso <sustain.ttl> .
+# 31 
+<http://rakarrack.sourceforge.net/effects.html#Sequence>
+        a lv2:Plugin, lv2:FilterPlugin ;
+        lv2:binary <rkrlv2.so> ;
+        rdfs:seeAlso <sequence.ttl> .

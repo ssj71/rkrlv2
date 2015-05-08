@@ -28,20 +28,21 @@
 #include "smbPitchShift.h"
 #include "beattracker.h"
 #include "delayline.h"
+#include "Resample.h"
 
 class Sequence
 {
 public:
-    Sequence (float * efxoutl_, float * efxoutr_, long int Quality, int DS, int uq, int dq);
+    Sequence (float * efxoutl_, float * efxoutr_, long int Quality, int DS, int uq, int dq, double sample_rate, uint32_t intermediate_bufsze);
     ~Sequence ();
     void cleanup ();
-    void out (float * smpsl, float * smpr);
+    void out (float * smpsl, float * smpr, uint32_t period);
     void changepar (int npar, int value);
     int getpar (int npar);
     void setpreset (int npreset);
     void setranges(int value);
     void settempo(int value);
-    void adjust(int DS);
+    void adjust(int DS, double sample_rate);
 
     int Ppreset;
 
@@ -64,8 +65,10 @@ private:
     int subdiv;
     int rndflag;
     int DS_state;
-    int nPERIOD;
+    unsigned int nPERIOD;
     int nSAMPLE_RATE;
+    float nRATIO;
+    float fSAMPLE_RATE;
 
     double u_up;
     double u_down;

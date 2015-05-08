@@ -20,7 +20,7 @@ EFFECTS (X - done, W - won't do, + - done with missing features)
 [W] Overdrive - exact same engine as distortion, but has fewer controls, presets were added to dist.
 [X] Echo 
 [X] Chorus 
-[W] Phaser - I'm not planning to do this, but it's nogotiable. I'm only interested in the analog phaser version
+[W] Phaser - I'm not planning to do this, but it's negotiable. I'm only interested in the analog phaser version
 [X] Analog Phaser 
 [W] Flanger - this is identical to the chorus, presets from this will be included there
 [X] Reverb 
@@ -51,7 +51,7 @@ EFFECTS (X - done, W - won't do, + - done with missing features)
 [X] ShelfBoost 
 [X] Vocoder 
 [X] Sustainer 
-[.] Sequence 
+[X] Sequence 
 [ ] Shifter 
 [.] StompBox - this will be broken up into the various stomps
 [.] Reverbtron 

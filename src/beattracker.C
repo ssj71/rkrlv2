@@ -1,22 +1,23 @@
 #include <math.h>
 #include "beattracker.h"
 
-beattracker:: beattracker ()
+beattracker:: beattracker (double sample_rate, uint32_t intermediate_bufsize)
 {
 
-    rmsfilter = new RBFilter (0, 15.0f, 0.15f, 1);
-    peaklpfilter = new RBFilter (0, 25.0f, 0.5f, 0);
-    peaklpfilter2 = new RBFilter (0, 25.0f, 0.5f, 0);
-    peakhpfilter = new RBFilter (1, 45.0f, 0.5f, 0);
+    rmsfilter = new RBFilter (0, 15.0f, 0.15f, 1, sample_rate);
+    peaklpfilter = new RBFilter (0, 25.0f, 0.5f, 0, sample_rate);
+    peaklpfilter2 = new RBFilter (0, 25.0f, 0.5f, 0, sample_rate);
+    peakhpfilter = new RBFilter (1, 45.0f, 0.5f, 0, sample_rate);
 
-    index = (int *) malloc (sizeof (int) * period);
+    index = (int *) malloc (sizeof (int) * intermediate_bufsize);
 
 //Trigger Filter Settings
+    fSAMPLE_RATE = sample_rate;
     peakpulse = peak = envrms = 0.0f;
     peakdecay = 10.0f/fSAMPLE_RATE;
     targatk = 12.0f/fSAMPLE_RATE;   ///for smoothing filter transition
     atk = 200.0f/fSAMPLE_RATE;
-    trigtime = SAMPLE_RATE/12; //time to take next peak
+    trigtime = sample_rate/12; //time to take next peak
     onset = 0;
     trigthresh = 0.15f;
 
@@ -32,7 +33,11 @@ beattracker:: beattracker ()
 
 beattracker::~beattracker ()
 {
-
+	delete rmsfilter;
+	delete peaklpfilter;
+	delete peaklpfilter2;
+	delete peakhpfilter;
+	free(index);
 };
 
 void
@@ -43,7 +48,7 @@ beattracker::cleanup ()
     peakdecay = 10.0f/fSAMPLE_RATE;
     targatk = 12.0f/fSAMPLE_RATE;   ///for smoothing filter transition
     atk = 200.0f/fSAMPLE_RATE;
-    trigtime = SAMPLE_RATE/20; //time to take next peak
+    trigtime = fSAMPLE_RATE/20; //time to take next peak
     onset = 0;
     trigthresh = 0.15f;
     oldbpm = 0.0f;
@@ -61,11 +66,11 @@ beattracker::cleanup ()
 };
 
 void
-beattracker::detect (float * smpsl, float * smpsr)
+beattracker::detect (float * smpsl, float * smpsr, uint32_t period)
 {
     float tmp;
     int idx = 0;
-    int i = 0;
+    unsigned int i = 0;
 
     for ( i = 0; i < period; i++) { //Detect dynamics onset
         index[i] = 0; //initializes all elements to zero

@@ -51,10 +51,10 @@ call get_tempo() whenever you want the most current tempo calculation.
 class beattracker
 {
 public:
-    beattracker ();
+    beattracker (double sample_rate, uint32_t intermediate_bufsize);
     ~beattracker ();
     void cleanup ();
-    void detect (float * smpsl, float * smpsr);
+    void detect (float * smpsl, float * smpsr, uint32_t period);
     float get_tempo();  //returns tempo in float beats per minute
     int *index;
 
@@ -74,6 +74,8 @@ private:
     float avbpm[17], statsbin[17];
     int maxptr;
     int bpm_change_cntr;
+
+    float fSAMPLE_RATE;
 
     void calc_tempo();   //called by detect() on every beat detected
 };
