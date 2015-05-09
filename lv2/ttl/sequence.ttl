@@ -154,7 +154,7 @@
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 15 ;
                 lv2:symbol "AMP" ;
-                lv2:name "Modulate Filter Amplitude/Pitch-Shift Down" ;
+                lv2:name "Amplitude/Alt. Mode" ;
                 lv2:default 0 ;
                 lv2:minimum 0 ;
                 lv2:maximum 1 ;
