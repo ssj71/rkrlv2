@@ -1,0 +1,579 @@
+@prefix atom: <http://lv2plug.in/ns/ext/atom#> .
+@prefix lv2: <http://lv2plug.in/ns/lv2core#> .
+@prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix state: <http://lv2plug.in/ns/ext/state#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://rakarrack.sourceforge.net/effects.html#Sequence:preset:jumpy>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Sequence> ;
+        rdfs:label "Jumpy" ;
+        lv2:port [
+                lv2:symbol "S0" ;
+                pset:value 20.0
+        ], [
+                lv2:symbol "S2" ;
+                pset:value 100.0
+        ], [
+                lv2:symbol "S3" ;
+                pset:value 10.0
+        ], [
+                lv2:symbol "S4" ;
+                pset:value 50.0
+        ], [
+                lv2:symbol "S5" ;
+                pset:value 25.0
+        ], [
+                lv2:symbol "S6" ;
+                pset:value 120.0
+        ], [
+                lv2:symbol "S7" ;
+                pset:value 60.0
+        ], [
+                lv2:symbol "S8" ;
+                pset:value 127.0
+        ], [
+                lv2:symbol "WETDRY" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 90.0
+        ], [
+                lv2:symbol "Q" ;
+                pset:value -24.0
+        ], [
+                lv2:symbol "AMP" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LAG" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "MODE" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "RANGE" ;
+                pset:value 3.0
+        ] ;
+	.  
+
+<http://rakarrack.sourceforge.net/effects.html#Sequence:preset:stair_step>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Sequence> ;
+        rdfs:label "Stair Step" ;
+        lv2:port [
+                lv2:symbol "S0" ;
+                pset:value 10.0
+        ], [
+                lv2:symbol "S2" ;
+                pset:value 20.0
+        ], [
+                lv2:symbol "S3" ;
+                pset:value 30.0
+        ], [
+                lv2:symbol "S4" ;
+                pset:value 50.0
+        ], [
+                lv2:symbol "S5" ;
+                pset:value 75.0
+        ], [
+                lv2:symbol "S6" ;
+                pset:value 90.0
+        ], [
+                lv2:symbol "S7" ;
+                pset:value 100.0
+        ], [
+                lv2:symbol "S8" ;
+                pset:value 127.0
+        ], [
+                lv2:symbol "WETDRY" ;
+                pset:value 64.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 90.0
+        ], [
+                lv2:symbol "Q" ;
+                pset:value 32.0
+        ], [
+                lv2:symbol "AMP" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LAG" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "MODE" ;
+                pset:value 2.0
+        ], [
+                lv2:symbol "RANGE" ;
+                pset:value 5.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Sequence:preset:mild>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Sequence> ;
+        rdfs:label "Mild" ;
+        lv2:port [
+                lv2:symbol "S0" ;
+                pset:value 20.0
+        ], [
+                lv2:symbol "S2" ;
+                pset:value 30.0
+        ], [
+                lv2:symbol "S3" ;
+                pset:value 10.0
+        ], [
+                lv2:symbol "S4" ;
+                pset:value 40.0
+        ], [
+                lv2:symbol "S5" ;
+                pset:value 25.0
+        ], [
+                lv2:symbol "S6" ;
+                pset:value 60.0
+        ], [
+                lv2:symbol "S7" ;
+                pset:value 100.0
+        ], [
+                lv2:symbol "S8" ;
+                pset:value 50.0
+        ], [
+                lv2:symbol "WETDRY" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 90.0
+        ], [
+                lv2:symbol "Q" ;
+                pset:value -24.0
+        ], [
+                lv2:symbol "AMP" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LAG" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "MODE" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "RANGE" ;
+                pset:value 4.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Sequence:preset:wahwah>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Sequence> ;
+        rdfs:label "WahWah" ;
+        lv2:port [
+                lv2:symbol "S0" ;
+                pset:value 11.0
+        ], [
+                lv2:symbol "S2" ;
+                pset:value 55.0
+        ], [
+                lv2:symbol "S3" ;
+                pset:value 15.0
+        ], [
+                lv2:symbol "S4" ;
+                pset:value 95.0
+        ], [
+                lv2:symbol "S5" ;
+                pset:value 12.0
+        ], [
+                lv2:symbol "S6" ;
+                pset:value 76.0
+        ], [
+                lv2:symbol "S7" ;
+                pset:value 11.0
+        ], [
+                lv2:symbol "S8" ;
+                pset:value 36.0
+        ], [
+                lv2:symbol "WETDRY" ;
+                pset:value 30.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 80.0
+        ], [
+                lv2:symbol "Q" ;
+                pset:value 46.0
+        ], [
+                lv2:symbol "AMP" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LAG" ;
+                pset:value 4.0
+        ], [
+                lv2:symbol "MODE" ;
+                pset:value 1.0
+        ], [
+                lv2:symbol "RANGE" ;
+                pset:value 2.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Sequence:preset:filter_pan>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Sequence> ;
+        rdfs:label "Filter Pan" ;
+        lv2:port [
+                lv2:symbol "S0" ;
+                pset:value 28.0
+        ], [
+                lv2:symbol "S2" ;
+                pset:value 59.0
+        ], [
+                lv2:symbol "S3" ;
+                pset:value 94.0
+        ], [
+                lv2:symbol "S4" ;
+                pset:value 127.0
+        ], [
+                lv2:symbol "S5" ;
+                pset:value 120.0
+        ], [
+                lv2:symbol "S6" ;
+                pset:value 80.0
+        ], [
+                lv2:symbol "S7" ;
+                pset:value 50.0
+        ], [
+                lv2:symbol "S8" ;
+                pset:value 24.0
+        ], [
+                lv2:symbol "WETDRY" ;
+                pset:value 64.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 180.0
+        ], [
+                lv2:symbol "Q" ;
+                pset:value 43.0
+        ], [
+                lv2:symbol "AMP" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LAG" ;
+                pset:value 3.0
+        ], [
+                lv2:symbol "MODE" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "RANGE" ;
+                pset:value 8.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Sequence:preset:stepper>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Sequence> ;
+        rdfs:label "Stepper" ;
+        lv2:port [
+                lv2:symbol "S0" ;
+                pset:value 30.0
+        ], [
+                lv2:symbol "S2" ;
+                pset:value 127.0
+        ], [
+                lv2:symbol "S3" ;
+                pset:value 30.0
+        ], [
+                lv2:symbol "S4" ;
+                pset:value 50.0
+        ], [
+                lv2:symbol "S5" ;
+                pset:value 80.0
+        ], [
+                lv2:symbol "S6" ;
+                pset:value 40.0
+        ], [
+                lv2:symbol "S7" ;
+                pset:value 110.0
+        ], [
+                lv2:symbol "S8" ;
+                pset:value 80.0
+        ], [
+                lv2:symbol "WETDRY" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 240.0
+        ], [
+                lv2:symbol "Q" ;
+                pset:value 32.0
+        ], [
+                lv2:symbol "AMP" ;
+                pset:value 1.0
+        ], [
+                lv2:symbol "LAG" ;
+                pset:value 1.0
+        ], [
+                lv2:symbol "MODE" ;
+                pset:value 2.0
+        ], [
+                lv2:symbol "RANGE" ;
+                pset:value 2.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Sequence:preset:shifter>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Sequence> ;
+        rdfs:label "Shifter" ;
+        lv2:port [
+                lv2:symbol "S0" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "S2" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "S3" ;
+                pset:value 127.0
+        ], [
+                lv2:symbol "S4" ;
+                pset:value 127.0
+        ], [
+                lv2:symbol "S5" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "S6" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "S7" ;
+                pset:value 127.0
+        ], [
+                lv2:symbol "S8" ;
+                pset:value 127.0
+        ], [
+                lv2:symbol "WETDRY" ;
+                pset:value 64.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 114.0
+        ], [
+                lv2:symbol "Q" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "AMP" ;
+                pset:value 1.0
+        ], [
+                lv2:symbol "LAG" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "MODE" ;
+                pset:value 3.0
+        ], [
+                lv2:symbol "RANGE" ;
+                pset:value 0.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Sequence:preset:tremor>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Sequence> ;
+        rdfs:label "Tremor" ;
+        lv2:port [
+                lv2:symbol "S0" ;
+                pset:value 30.0
+        ], [
+                lv2:symbol "S2" ;
+                pset:value 127.0
+        ], [
+                lv2:symbol "S3" ;
+                pset:value 30.0
+        ], [
+                lv2:symbol "S4" ;
+                pset:value 50.0
+        ], [
+                lv2:symbol "S5" ;
+                pset:value 80.0
+        ], [
+                lv2:symbol "S6" ;
+                pset:value 40.0
+        ], [
+                lv2:symbol "S7" ;
+                pset:value 110.0
+        ], [
+                lv2:symbol "S8" ;
+                pset:value 80.0
+        ], [
+                lv2:symbol "WETDRY" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 240.0
+        ], [
+                lv2:symbol "Q" ;
+                pset:value 32.0
+        ], [
+                lv2:symbol "AMP" ;
+                pset:value 1.0
+        ], [
+                lv2:symbol "LAG" ;
+                pset:value 1.0
+        ], [
+                lv2:symbol "MODE" ;
+                pset:value 4.0
+        ], [
+                lv2:symbol "RANGE" ;
+                pset:value 2.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Sequence:preset:boogie>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Sequence> ;
+        rdfs:label "Boogie" ;
+        lv2:port [
+                lv2:symbol "S0" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "S2" ;
+                pset:value 40.0
+        ], [
+                lv2:symbol "S3" ;
+                pset:value 50.0
+        ], [
+                lv2:symbol "S4" ;
+                pset:value 60.0
+        ], [
+                lv2:symbol "S5" ;
+                pset:value 70.0
+        ], [
+                lv2:symbol "S6" ;
+                pset:value 60.0
+        ], [
+                lv2:symbol "S7" ;
+                pset:value 40.0
+        ], [
+                lv2:symbol "S8" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "WETDRY" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 220.0
+        ], [
+                lv2:symbol "Q" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "AMP" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LAG" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "MODE" ;
+                pset:value 5.0
+        ], [
+                lv2:symbol "RANGE" ;
+                pset:value 0.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Sequence:preset:chorus>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Sequence> ;
+        rdfs:label "Chorus" ;
+        lv2:port [
+                lv2:symbol "S0" ;
+                pset:value 64.0
+        ], [
+                lv2:symbol "S2" ;
+                pset:value 30.0
+        ], [
+                lv2:symbol "S3" ;
+                pset:value 45.0
+        ], [
+                lv2:symbol "S4" ;
+                pset:value 20.0
+        ], [
+                lv2:symbol "S5" ;
+                pset:value 60.0
+        ], [
+                lv2:symbol "S6" ;
+                pset:value 25.0
+        ], [
+                lv2:symbol "S7" ;
+                pset:value 42.0
+        ], [
+                lv2:symbol "S8" ;
+                pset:value 15.0
+        ], [
+                lv2:symbol "WETDRY" ;
+                pset:value 64.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 120.0
+        ], [
+                lv2:symbol "Q" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "AMP" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LAG" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "MODE" ;
+                pset:value 6.0
+        ], [
+                lv2:symbol "RANGE" ;
+                pset:value 0.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Sequence:preset:random_mode>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Sequence> ;
+        rdfs:label "Random Mode" ;
+        lv2:port [
+                lv2:symbol "S0" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "S2" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "S3" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "S4" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "S5" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "S6" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "S7" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "S8" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "WETDRY" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "TEMPO" ;
+                pset:value 120.0
+        ], [
+                lv2:symbol "Q" ;
+                pset:value 45.0
+        ], [
+                lv2:symbol "AMP" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LAG" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "MODE" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "RANGE" ;
+                pset:value 0.0
+        ] ;
+	.
