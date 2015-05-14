@@ -43,6 +43,7 @@
 #include"ShelfBoost.h"
 #include"Vocoder.h"
 #include"Sequence.h"
+#include"Shifter.h"
 
 
 //this is the default hopefully hosts don't use periods of more than this, or they will communicate the max bufsize
@@ -107,6 +108,7 @@ typedef struct _RKRLV2
     Vocoder* voc;		//29
     Sustainer* sus;		//30
     Sequence* seq;		//31
+    Shifter* shift;		//32
 }RKRLV2;
 
 enum other_ports
@@ -2228,6 +2230,66 @@ void run_seqlv2(LV2_Handle handle, uint32_t nframes)
     return;
 }
 
+///// Shifter /////////
+LV2_Handle init_shiftlv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 10;
+    plug->effectindex = 32;
+
+    getFeatures(plug,host_features);
+
+    plug->shift = new Shifter(0,0,/*shifter quality*/4,/*downsamplex2*/5,/*upsample quality*/4,
+    		/*downsample quality*/ 2,sample_freq,plug->period_max);
+
+    return plug;
+}
+
+void run_shiftlv2(LV2_Handle handle, uint32_t nframes)
+{
+    int i;
+    int val;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    //check and set changed parameters
+    i=0;
+    val = (int)*plug->param_p[i];//wet/dry
+    if(plug->shift->getpar(i) != val)
+    {
+        plug->shift->changepar(i,val);
+    }
+    for(i++;i<3;i++)//pan, gain
+    {
+       val = (int)*plug->param_p[i]+64;
+       if(plug->shift->getpar(i) != val)
+       {
+           plug->shift->changepar(i,val);
+       }
+    }
+    for(;i<plug->nparams;i++)
+    {
+       val = (int)*plug->param_p[i];
+       if(plug->shift->getpar(i) != val)
+       {
+           plug->shift->changepar(i,val);
+       }
+    }
+
+    //set out ports
+    plug->shift->efxoutl = plug->output_l_p;
+    plug->shift->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->shift->out(plug->input_l_p,plug->input_r_p,nframes);
+
+    //and for whatever reason we have to do the wet/dry mix ourselves
+    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->shift->outvolume, nframes);
+
+    return;
+}
+
 /////////////////////////////////
 ///////// END OF FX ///////////// 
 /////////////////////////////////
@@ -2335,6 +2397,9 @@ void cleanup_rkrlv2(LV2_Handle handle)
         	break;
         case 31:
         	delete plug->seq;
+        	break;
+        case 32:
+        	delete plug->shift;
         	break;
     }
     free(plug);
@@ -2725,6 +2790,17 @@ static const LV2_Descriptor seqlv2_descriptor={
     0//extension
 };
 
+static const LV2_Descriptor shiftlv2_descriptor={
+    SHIFTERLV2_URI,
+    init_shiftlv2,
+    connect_rkrlv2_ports,
+    0,//activate
+    run_shiftlv2,
+    0,//deactivate
+    cleanup_rkrlv2,
+    0//extension
+};
+
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor* lv2_descriptor(uint32_t index)
 {
@@ -2793,6 +2869,8 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
     	return &suslv2_descriptor ;
     case 31:
     	return &seqlv2_descriptor ;
+    case 32:
+    	return &shiftlv2_descriptor ;
     default:
         return 0;
     }

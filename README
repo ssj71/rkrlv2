@@ -52,7 +52,7 @@ EFFECTS (X - done, W - won't do, + - done with missing features)
 [X] Vocoder 
 [X] Sustainer 
 [X] Sequence 
-[ ] Shifter 
+[X] Shifter 
 [.] StompBox - this will be broken up into the various stomps
 [.] Reverbtron 
 [.] Echotron - this has been requested, considering
@@ -66,8 +66,6 @@ __fx in preset bank 1__
 stompbox
 echotron
 reverbtron
-sustainer
-sequence
 
 
 Here is the original rakarrack README:

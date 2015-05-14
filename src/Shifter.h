@@ -26,6 +26,7 @@
 
 #include "global.h"
 #include "smbPitchShift.h"
+#include "Resample.h"
 
 
 #define IDLE 0
@@ -39,15 +40,15 @@ class Shifter
 {
 
 public:
-    Shifter (float *efxoutl_, float *efxoutr_, long int Quality, int DS, int uq, int dq);
+    Shifter (float *efxoutl_, float *efxoutr_, long int Quality, int DS, int uq, int dq, double sample_rate, uint32_t intermediate_bufsize);
     ~Shifter ();
-    void out (float *smpsl, float *smpsr);
+    void out (float *smpsl, float *smpsr, uint32_t period);
     void setpreset (int npreset);
     void changepar (int npar, int value);
     int getpar (int npar);
     void cleanup ();
     void applyfilters (float * efxoutl);
-    void adjust(int DS);
+    void adjust(int DS, double sample_rate);
 
     int Ppreset;
     long int hq;
@@ -57,8 +58,6 @@ public:
     float *efxoutr;
     float *outi;
     float *outo;
-
-
 
 
 private:
@@ -82,6 +81,7 @@ private:
     int DS_state;
     int nPERIOD;
     int nSAMPLE_RATE;
+    float nRATIO;
     long window;
 
     double u_up;

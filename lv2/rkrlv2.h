@@ -33,6 +33,7 @@
 #define VOCODERLV2_URI "http://rakarrack.sourceforge.net/effects.html#Vocoder"
 #define SUSTAINLV2_URI "http://rakarrack.sourceforge.net/effects.html#Sustainer"
 #define SEQUENCELV2_URI "http://rakarrack.sourceforge.net/effects.html#Sequence"
+#define SHIFTERLV2_URI "http://rakarrack.sourceforge.net/effects.html#Shifter"
 
 enum RKRLV2_ports_
 {

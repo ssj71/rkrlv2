@@ -1,0 +1,193 @@
+@prefix atom: <http://lv2plug.in/ns/ext/atom#> .
+@prefix lv2: <http://lv2plug.in/ns/lv2core#> .
+@prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix state: <http://lv2plug.in/ns/ext/state#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+<http://rakarrack.sourceforge.net/effects.html#Shifter:preset:fast>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Shifter> ;
+        rdfs:label "Fast" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "PAN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "GAIN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "ATACK" ;
+                pset:value 200.0
+        ], [
+                lv2:symbol "DECAY" ;
+                pset:value 200.0
+        ], [
+                lv2:symbol "THRESH" ;
+                pset:value -20.0
+        ], [
+                lv2:symbol "INT" ;
+                pset:value 2.0
+        ], [
+                lv2:symbol "DN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "MODE" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "WHAMMY" ;
+                pset:value 0.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Shifter:preset:slow_up>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Shifter> ;
+        rdfs:label "Slow Up" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "PAN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "GAIN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "ATACK" ;
+                pset:value 900.0
+        ], [
+                lv2:symbol "DECAY" ;
+                pset:value 200.0
+        ], [
+                lv2:symbol "THRESH" ;
+                pset:value -20.0
+        ], [
+                lv2:symbol "INT" ;
+                pset:value 2.0
+        ], [
+                lv2:symbol "DN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "MODE" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "WHAMMY" ;
+                pset:value 0.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Shifter:preset:slow_down>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Shifter> ;
+        rdfs:label "Slow Down" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "PAN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "GAIN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "ATACK" ;
+                pset:value 900.0
+        ], [
+                lv2:symbol "DECAY" ;
+                pset:value 200.0
+        ], [
+                lv2:symbol "THRESH" ;
+                pset:value -20.0
+        ], [
+                lv2:symbol "INT" ;
+                pset:value 3.0
+        ], [
+                lv2:symbol "DN" ;
+                pset:value 1.0
+        ], [
+                lv2:symbol "MODE" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "WHAMMY" ;
+                pset:value 0.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Shifter:preset:chorus>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Shifter> ;
+        rdfs:label "Chorus" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 64.0
+        ], [
+                lv2:symbol "PAN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "GAIN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "ATACK" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "DECAY" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "THRESH" ;
+                pset:value -20.0
+        ], [
+                lv2:symbol "INT" ;
+                pset:value 1.0
+        ], [
+                lv2:symbol "DN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "MODE" ;
+                pset:value 1.0
+        ], [
+                lv2:symbol "WHAMMY" ;
+                pset:value 22.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Shifter:preset:trig_chorus>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Shifter> ;
+        rdfs:label "Trigger Chorus" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 64.0
+        ], [
+                lv2:symbol "PAN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "GAIN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "ATACK" ;
+                pset:value 250.0
+        ], [
+                lv2:symbol "DECAY" ;
+                pset:value 100.0
+        ], [
+                lv2:symbol "THRESH" ;
+                pset:value -10.0
+        ], [
+                lv2:symbol "INT" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "DN" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "MODE" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "WHAMMY" ;
+                pset:value 25.0
+        ] ;
+	.

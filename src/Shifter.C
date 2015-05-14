@@ -28,7 +28,8 @@
 
 
 
-Shifter::Shifter (float *efxoutl_, float *efxoutr_, long int Quality, int DS, int uq, int dq)
+Shifter::Shifter (float *efxoutl_, float *efxoutr_, long int Quality, int DS, int uq, int dq,
+				  double sample_rate, uint32_t intermediate_bufsize)
 {
 
 
@@ -36,10 +37,13 @@ Shifter::Shifter (float *efxoutl_, float *efxoutr_, long int Quality, int DS, in
     efxoutl = efxoutl_;
     efxoutr = efxoutr_;
     hq = Quality;
-    adjust(DS);
+    adjust(DS,sample_rate);
 
-    templ = (float *) malloc (sizeof (float) * period);
-    tempr = (float *) malloc (sizeof (float) * period);
+    //temp value till period actually known
+    nPERIOD = intermediate_bufsize*nRATIO;
+
+    templ = (float *) malloc (sizeof (float) * intermediate_bufsize);
+    tempr = (float *) malloc (sizeof (float) * intermediate_bufsize);
 
     outi = (float *) malloc (sizeof (float) * nPERIOD);
     outo = (float *) malloc (sizeof (float) * nPERIOD);
@@ -65,6 +69,11 @@ Shifter::Shifter (float *efxoutl_, float *efxoutr_, long int Quality, int DS, in
 
 Shifter::~Shifter ()
 {
+	free(templ);
+	free(tempr);
+	free(outi);
+	free(outo);
+	delete PS;
 };
 
 void
@@ -75,25 +84,23 @@ Shifter::cleanup ()
     memset(outo, 0, sizeof(float)*nPERIOD);
 };
 
-
 void
-Shifter::adjust(int DS)
+Shifter::adjust(int DS, double SAMPLE_RATE)
 {
 
     DS_state=DS;
 
-
     switch(DS) {
 
     case 0:
-        nPERIOD = period;
+        nRATIO = 1;
         nSAMPLE_RATE = SAMPLE_RATE;
-        nfSAMPLE_RATE = fSAMPLE_RATE;
+        nfSAMPLE_RATE = SAMPLE_RATE;
         window = 2048;
         break;
 
     case 1:
-        nPERIOD = lrintf(fPERIOD*96000.0f/fSAMPLE_RATE);
+        nRATIO = 96000.0f/SAMPLE_RATE;
         nSAMPLE_RATE = 96000;
         nfSAMPLE_RATE = 96000.0f;
         window = 2048;
@@ -101,77 +108,76 @@ Shifter::adjust(int DS)
 
 
     case 2:
-        nPERIOD = lrintf(fPERIOD*48000.0f/fSAMPLE_RATE);
+        nRATIO = 48000.0f/SAMPLE_RATE;
         nSAMPLE_RATE = 48000;
         nfSAMPLE_RATE = 48000.0f;
         window = 2048;
         break;
 
     case 3:
-        nPERIOD = lrintf(fPERIOD*44100.0f/fSAMPLE_RATE);
+        nRATIO = 44100.0f/SAMPLE_RATE;
         nSAMPLE_RATE = 44100;
         nfSAMPLE_RATE = 44100.0f;
         window = 2048;
         break;
 
     case 4:
-        nPERIOD = lrintf(fPERIOD*32000.0f/fSAMPLE_RATE);
+        nRATIO = 32000.0f/SAMPLE_RATE;
         nSAMPLE_RATE = 32000;
         nfSAMPLE_RATE = 32000.0f;
         window = 2048;
         break;
 
     case 5:
-        nPERIOD = lrintf(fPERIOD*22050.0f/fSAMPLE_RATE);
+        nRATIO = 22050.0f/SAMPLE_RATE;
         nSAMPLE_RATE = 22050;
         nfSAMPLE_RATE = 22050.0f;
         window = 1024;
         break;
 
     case 6:
-        nPERIOD = lrintf(fPERIOD*16000.0f/fSAMPLE_RATE);
+        nRATIO = 16000.0f/SAMPLE_RATE;
         nSAMPLE_RATE = 16000;
         nfSAMPLE_RATE = 16000.0f;
         window = 1024;
         break;
 
     case 7:
-        nPERIOD = lrintf(fPERIOD*12000.0f/fSAMPLE_RATE);
+        nRATIO = 12000.0f/SAMPLE_RATE;
         nSAMPLE_RATE = 12000;
         nfSAMPLE_RATE = 12000.0f;
         window = 512;
         break;
 
     case 8:
-        nPERIOD = lrintf(fPERIOD*8000.0f/fSAMPLE_RATE);
+        nRATIO = 8000.0f/SAMPLE_RATE;
         nSAMPLE_RATE = 8000;
         nfSAMPLE_RATE = 8000.0f;
         window = 512;
         break;
 
     case 9:
-        nPERIOD = lrintf(fPERIOD*4000.0f/fSAMPLE_RATE);
+        nRATIO = 4000.0f/SAMPLE_RATE;
         nSAMPLE_RATE = 4000;
         nfSAMPLE_RATE = 4000.0f;
         window = 256;
         break;
     }
-    u_up= (double)nPERIOD / (double)period;
-    u_down= (double)period / (double)nPERIOD;
 }
 
 
-
-
-
 void
-Shifter::out (float *smpsl, float *smpsr)
+Shifter::out (float *smpsl, float *smpsr, uint32_t period)
 {
 
     int i;
     float sum;
     float use;
 
+    //This should probably be moved to a separate function so it doesn't need to recalculate every time
+    nPERIOD = lrintf((float)period*nRATIO);
+    u_up= (double)nPERIOD / (double)period;
+    u_down= (double)period / (double)nPERIOD;
 
     if(DS_state != 0) {
         memcpy(templ, smpsl,sizeof(float)*period);
@@ -247,10 +253,6 @@ Shifter::out (float *smpsl, float *smpsr)
         memcpy(efxoutr, tempr,sizeof(float)*period);
     }
 
-
-
-
-
 };
 
 
@@ -299,6 +301,7 @@ Shifter::setpreset (int npreset)
 {
     const int PRESET_SIZE = 10;
     const int NUM_PRESETS = 5;
+    int pdata[PRESET_SIZE];
     int presets[NUM_PRESETS][PRESET_SIZE] = {
         //Fast
         {0, 64, 64, 200, 200, -20, 2, 0, 0, 0},
@@ -313,7 +316,7 @@ Shifter::setpreset (int npreset)
     };
 
     if(npreset>NUM_PRESETS-1) {
-        Fpre->ReadPreset(38,npreset-NUM_PRESETS+1);
+        Fpre->ReadPreset(38,npreset-NUM_PRESETS+1, pdata);
         for (int n = 0; n < PRESET_SIZE; n++)
             changepar (n, pdata[n]);
     } else {
