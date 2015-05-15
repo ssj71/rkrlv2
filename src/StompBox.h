@@ -29,9 +29,10 @@
 class StompBox
 {
 public:
-    StompBox (float * efxoutl_, float * efxoutr_);
+    StompBox (float * efxoutl_, float * efxoutr_, double sample_rate, uint32_t intermediate_bufsize,
+    		int wave_res, int wave_upq, int wave_dnq);
     ~StompBox ();
-    void out (float * smpsl, float * smpr);
+    void out (float * smpsl, float * smpr, uint32_t period);
     void setpreset (int npreset);
     void changepar (int npar, int value);
     int getpar (int npar);

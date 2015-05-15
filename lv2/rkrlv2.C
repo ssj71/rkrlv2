@@ -44,6 +44,7 @@
 #include"Vocoder.h"
 #include"Sequence.h"
 #include"Shifter.h"
+#include"StompBox.h"
 
 
 //this is the default hopefully hosts don't use periods of more than this, or they will communicate the max bufsize
@@ -109,6 +110,7 @@ typedef struct _RKRLV2
     Sustainer* sus;		//30
     Sequence* seq;		//31
     Shifter* shift;		//32
+    StompBox* stomp;	//33,34
 }RKRLV2;
 
 enum other_ports
@@ -2290,6 +2292,70 @@ void run_shiftlv2(LV2_Handle handle, uint32_t nframes)
     return;
 }
 
+///// StompBox /////////
+LV2_Handle init_stomplv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 6;
+    plug->effectindex = 33;
+
+    getFeatures(plug,host_features);
+
+    plug->stomp = new StompBox(0,0, sample_freq, plug->period_max, /*oversampling*/2,
+                                /*up interpolation method*/0, /*down interpolation method*/2);
+
+    return plug;
+}
+
+void run_stomplv2(LV2_Handle handle, uint32_t nframes)
+{
+    int i;
+    int val;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    //check and set changed parameters
+    for(i=0;i<plug->nparams;i++)
+    {
+       val = (int)*plug->param_p[i];
+       if(plug->stomp->getpar(i) != val)
+       {
+           plug->stomp->changepar(i,val);
+       }
+    }
+
+     //stompbox does it inline
+    memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+    memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+
+    //now set out ports
+    plug->stomp->efxoutl = plug->output_l_p;
+    plug->stomp->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->stomp->out(plug->output_l_p,plug->output_r_p,nframes);
+
+    return;
+}
+///// StompBox Fuzz /////////
+LV2_Handle init_stomp_fuzzlv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+	//this is the same but has better labeling as controls act differently
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 5;
+    plug->effectindex = 34;
+
+    getFeatures(plug,host_features);
+
+    plug->stomp = new StompBox(0,0, sample_freq, plug->period_max, /*oversampling*/2,
+                                /*up interpolation method*/0, /*down interpolation method*/2);
+    plug->stomp->changepar(5,7);//set to fuzz
+
+    return plug;
+}
+
 /////////////////////////////////
 ///////// END OF FX ///////////// 
 /////////////////////////////////
@@ -2400,6 +2466,10 @@ void cleanup_rkrlv2(LV2_Handle handle)
         	break;
         case 32:
         	delete plug->shift;
+        	break;
+        case 33:
+        case 34:
+        	delete plug->stomp;
         	break;
     }
     free(plug);
@@ -2801,6 +2871,28 @@ static const LV2_Descriptor shiftlv2_descriptor={
     0//extension
 };
 
+static const LV2_Descriptor stomplv2_descriptor={
+    STOMPLV2_URI,
+    init_stomplv2,
+    connect_rkrlv2_ports,
+    0,//activate
+    run_stomplv2,
+    0,//deactivate
+    cleanup_rkrlv2,
+    0//extension
+};
+
+static const LV2_Descriptor stompfuzzlv2_descriptor={
+    STOMPFUZZLV2_URI,
+    init_stomp_fuzzlv2,
+    connect_rkrlv2_ports,
+    0,//activate
+    run_stomplv2,
+    0,//deactivate
+    cleanup_rkrlv2,
+    0//extension
+};
+
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor* lv2_descriptor(uint32_t index)
 {
@@ -2871,6 +2963,10 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
     	return &seqlv2_descriptor ;
     case 32:
     	return &shiftlv2_descriptor ;
+    case 33:
+    	return &stomplv2_descriptor ;
+    case 34:
+    	return &stompfuzzlv2_descriptor ;
     default:
         return 0;
     }

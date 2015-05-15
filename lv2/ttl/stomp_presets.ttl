@@ -1,0 +1,254 @@
+@prefix atom: <http://lv2plug.in/ns/ext/atom#> .
+@prefix lv2: <http://lv2plug.in/ns/lv2core#> .
+@prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix state: <http://lv2plug.in/ns/ext/state#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://rakarrack.sourceforge.net/effects.html#StompBox:preset:odie>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#StompBox> ;
+    	rdfs:label "Odie" ;
+        lv2:port [
+                lv2:symbol "LEVEL" ;
+                pset:value 80.0
+        ], [
+                lv2:symbol "HI" ;
+                pset:value 32.0
+        ], [
+                lv2:symbol "MID" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LO" ;
+                pset:value 32.0
+        ], [
+                lv2:symbol "GAIN" ;
+                pset:value 10.0
+        ], [
+                lv2:symbol "MODE" ;
+                pset:value 0.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#StompBox:preset:grunger>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#StompBox> ;
+    	rdfs:label "Grunger" ;
+        lv2:port [
+                lv2:symbol "LEVEL" ;
+                pset:value 48.0
+        ], [
+                lv2:symbol "HI" ;
+                pset:value 10.0
+        ], [
+                lv2:symbol "MID" ;
+                pset:value -6.0
+        ], [
+                lv2:symbol "LO" ;
+                pset:value 55.0
+        ], [
+                lv2:symbol "GAIN" ;
+                pset:value 85.0
+        ], [
+                lv2:symbol "MODE" ;
+                pset:value 1.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#StompBox:preset:hard_dist>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#StompBox> ;
+    	rdfs:label "Hard Dist." ;
+        lv2:port [
+                lv2:symbol "LEVEL" ;
+                pset:value 48.0
+        ], [
+                lv2:symbol "HI" ;
+                pset:value -22.0
+        ], [
+                lv2:symbol "MID" ;
+                pset:value -6.0
+        ], [
+                lv2:symbol "LO" ;
+                pset:value 38.0
+        ], [
+                lv2:symbol "GAIN" ;
+                pset:value 12.0
+        ], [
+                lv2:symbol "MODE" ;
+                pset:value 1.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#StompBox:preset:ratula>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#StompBox> ;
+    	rdfs:label "Ratula" ;
+        lv2:port [
+                lv2:symbol "LEVEL" ;
+                pset:value 48.0
+        ], [
+                lv2:symbol "HI" ;
+                pset:value -20.0
+        ], [
+                lv2:symbol "MID" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LO" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "GAIN" ;
+                pset:value 70.0
+        ], [
+                lv2:symbol "MODE" ;
+                pset:value 2.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#StompBox:preset:classic_dist>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#StompBox> ;
+    	rdfs:label "Classic Dist." ;
+        lv2:port [
+                lv2:symbol "LEVEL" ;
+                pset:value 50.0
+        ], [
+                lv2:symbol "HI" ;
+                pset:value 64.0
+        ], [
+                lv2:symbol "MID" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LO" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "GAIN" ;
+                pset:value 110.0
+        ], [
+                lv2:symbol "MODE" ;
+                pset:value 4.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#StompBox:preset:mobid_impalement>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#StompBox> ;
+    	rdfs:label "Morbid Impalement" ;
+        lv2:port [
+                lv2:symbol "LEVEL" ;
+                pset:value 38.0
+        ], [
+                lv2:symbol "HI" ;
+                pset:value 6.0
+        ], [
+                lv2:symbol "MID" ;
+                pset:value 6.0
+        ], [
+                lv2:symbol "LO" ;
+                pset:value 6.0
+        ], [
+                lv2:symbol "GAIN" ;
+                pset:value 105.0
+        ], [
+                lv2:symbol "MODE" ;
+                pset:value 5.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#StompBox:preset:sharp_metal>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#StompBox> ;
+    	rdfs:label "Sharp Metal" ;
+        lv2:port [
+                lv2:symbol "LEVEL" ;
+                pset:value 48.0
+        ], [
+                lv2:symbol "HI" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "MID" ;
+                pset:value -12.0
+        ], [
+                lv2:symbol "LO" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "GAIN" ;
+                pset:value 127.0
+        ], [
+                lv2:symbol "MODE" ;
+                pset:value 6.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#StompBox:preset:classic_fuzz>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#StompBox> ;
+    	rdfs:label "Classic Fuzz" ;
+        lv2:port [
+                lv2:symbol "LEVEL" ;
+                pset:value 48.0
+        ], [
+                lv2:symbol "HI" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "MID" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LO" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "GAIN" ;
+                pset:value 127.0
+        ], [
+                lv2:symbol "MODE" ;
+                pset:value 7.0
+        ] ;
+	.
+
+
+<http://rakarrack.sourceforge.net/effects.html#StompBox_fuzz:preset:classic_fuzz>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#StompBox_fuzz> ;
+    	rdfs:label "Classic Fuzz" ;
+        lv2:port [
+                lv2:symbol "LEVEL" ;
+                pset:value 48.0
+        ], [
+                lv2:symbol "HI" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "MID" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LO" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "GAIN" ;
+                pset:value 127.0
+        ] ;
+	.
+
+
+<http://rakarrack.sourceforge.net/effects.html#StompBox_fuzz:preset:gnasty>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#StompBox_fuzz> ;
+    	rdfs:label "Gnasty" ;
+        lv2:port [
+                lv2:symbol "LEVEL" ;
+                pset:value 48.0
+        ], [
+                lv2:symbol "HI" ;
+                pset:value 20.0
+        ], [
+                lv2:symbol "MID" ;
+                pset:value -13.0
+        ], [
+                lv2:symbol "LO" ;
+                pset:value 64.0
+        ], [
+                lv2:symbol "GAIN" ;
+                pset:value 127.0
+        ] ;
+	.
+

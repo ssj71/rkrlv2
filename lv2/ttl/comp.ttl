@@ -11,8 +11,7 @@
 # <http://rakarrack.sourceforge.net/effects.html#comp_ui>
 # 	a ui:X11UI ;
 # 	ui:binary <rkrlv2_ui.so> ;
-# 	lv2:extensionData ui:idle;
-# 	lv2:optionalFeature ui:noUserResize ;
+# 	lv2:extensionData ui:idleInterface;
 # 	.
 
 <http://rakarrack.sourceforge.net/effects.html#comp>

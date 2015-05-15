@@ -34,6 +34,8 @@
 #define SUSTAINLV2_URI "http://rakarrack.sourceforge.net/effects.html#Sustainer"
 #define SEQUENCELV2_URI "http://rakarrack.sourceforge.net/effects.html#Sequence"
 #define SHIFTERLV2_URI "http://rakarrack.sourceforge.net/effects.html#Shifter"
+#define STOMPLV2_URI "http://rakarrack.sourceforge.net/effects.html#StompBox"
+#define STOMPFUZZLV2_URI "http://rakarrack.sourceforge.net/effects.html#StompBox_fuzz"
 
 enum RKRLV2_ports_
 {

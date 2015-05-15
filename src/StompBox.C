@@ -25,7 +25,8 @@
 
 
 
-StompBox::StompBox (float * efxoutl_, float * efxoutr_)
+StompBox::StompBox (float * efxoutl_, float * efxoutr_, double sample_rate, uint32_t intermediate_bufsize,
+		int wave_res, int wave_upq, int wave_dnq)
 {
     efxoutl = efxoutl_;
     efxoutr = efxoutr_;
@@ -36,31 +37,31 @@ StompBox::StompBox (float * efxoutl_, float * efxoutr_)
     Pvolume = 50;
 
     //left channel filters
-    linput = new AnalogFilter (1, 80.0f, 1.0f, 0);  //  AnalogFilter (unsigned char Ftype, float Ffreq, float Fq,unsigned char Fstages);
-    lpre1 = new AnalogFilter (1, 630.0f, 1.0f, 0);   // LPF = 0, HPF = 1
-    lpre2 = new AnalogFilter (1, 220.0f, 1.0f, 0);
-    lpost = new AnalogFilter (0, 720.0f, 1.0f, 0);
-    ltonehg = new AnalogFilter (1, 1500.0f, 1.0f, 0);
-    ltonemd = new AnalogFilter (4, 1000.0f, 1.0f, 0);
-    ltonelw = new AnalogFilter (0, 500.0f, 1.0, 0);
+    linput = new AnalogFilter (1, 80.0f, 1.0f, 0, sample_rate);  //  AnalogFilter (unsigned char Ftype, float Ffreq, float Fq,unsigned char Fstages);
+    lpre1 = new AnalogFilter (1, 630.0f, 1.0f, 0, sample_rate);   // LPF = 0, HPF = 1
+    lpre2 = new AnalogFilter (1, 220.0f, 1.0f, 0, sample_rate);
+    lpost = new AnalogFilter (0, 720.0f, 1.0f, 0, sample_rate);
+    ltonehg = new AnalogFilter (1, 1500.0f, 1.0f, 0, sample_rate);
+    ltonemd = new AnalogFilter (4, 1000.0f, 1.0f, 0, sample_rate);
+    ltonelw = new AnalogFilter (0, 500.0f, 1.0, 0, sample_rate);
 
     //Right channel filters
-    rinput = new AnalogFilter (1, 80.0f, 1.0f, 0);  //  AnalogFilter (unsigned char Ftype, float Ffreq, float Fq,unsigned char Fstages);
-    rpre1 = new AnalogFilter (1, 630.0f, 1.0f, 0);   // LPF = 0, HPF = 1
-    rpre2 = new AnalogFilter (1, 220.0f, 1.0f, 0);
-    rpost = new AnalogFilter (0, 720.0f, 1.0f, 0);
-    rtonehg = new AnalogFilter (1, 1500.0f, 1.0f, 0);
-    rtonemd = new AnalogFilter (4, 1000.0f, 1.0f, 0);
-    rtonelw = new AnalogFilter (0, 500.0f, 1.0f, 0);
+    rinput = new AnalogFilter (1, 80.0f, 1.0f, 0, sample_rate);  //  AnalogFilter (unsigned char Ftype, float Ffreq, float Fq,unsigned char Fstages);
+    rpre1 = new AnalogFilter (1, 630.0f, 1.0f, 0, sample_rate);   // , sample_rateLPF = 0, HPF = 1
+    rpre2 = new AnalogFilter (1, 220.0f, 1.0f, 0, sample_rate);
+    rpost = new AnalogFilter (0, 720.0f, 1.0f, 0, sample_rate);
+    rtonehg = new AnalogFilter (1, 1500.0f, 1.0f, 0, sample_rate);
+    rtonemd = new AnalogFilter (4, 1000.0f, 1.0f, 0, sample_rate);
+    rtonelw = new AnalogFilter (0, 500.0f, 1.0f, 0, sample_rate);
 
     //Anti-aliasing for between stages
-    ranti = new AnalogFilter (0, 6000.0f, 0.707f, 1);
-    lanti = new AnalogFilter (0, 6000.0f, 0.707f, 1);
+    ranti = new AnalogFilter (0, 6000.0f, 0.707f, 1, sample_rate);
+    lanti = new AnalogFilter (0, 6000.0f, 0.707f, 1, sample_rate);
 
-    rwshape = new Waveshaper();
-    lwshape = new Waveshaper();
-    rwshape2 = new Waveshaper();
-    lwshape2 = new Waveshaper();
+    rwshape = new Waveshaper(sample_rate,wave_res,wave_upq,wave_dnq,intermediate_bufsize);
+    lwshape = new Waveshaper(sample_rate,wave_res,wave_upq,wave_dnq,intermediate_bufsize);
+    rwshape2 = new Waveshaper(sample_rate,wave_res,wave_upq,wave_dnq,intermediate_bufsize);
+    lwshape2 = new Waveshaper(sample_rate,wave_res,wave_upq,wave_dnq,intermediate_bufsize);
 
     cleanup ();
 
@@ -69,6 +70,31 @@ StompBox::StompBox (float * efxoutl_, float * efxoutr_)
 
 StompBox::~StompBox ()
 {
+    delete linput;
+    delete lpre1;
+    delete lpre2;
+    delete lpost;
+    delete ltonehg;
+    delete ltonemd;
+    delete ltonelw;
+
+    //Right channel filters
+    delete rinput;
+    delete rpre1;
+    delete rpre2;
+    delete rpost;
+    delete rtonehg;
+    delete rtonemd;
+    delete rtonelw;
+
+    //Anti-aliasing for between stages
+    delete ranti;
+    delete lanti;
+
+    delete rwshape;
+    delete lwshape;
+    delete rwshape2;
+    delete lwshape2;
 };
 
 /*
@@ -109,9 +135,9 @@ StompBox::cleanup ()
  * Effect output
  */
 void
-StompBox::out (float * smpsl, float * smpsr)
+StompBox::out (float * smpsl, float * smpsr, uint32_t period)
 {
-    int i;
+    unsigned int i;
 
     float hfilter;  //temporary variables
     float mfilter;
@@ -122,19 +148,19 @@ StompBox::out (float * smpsl, float * smpsr)
     switch (Pmode) {
     case 0:          //Odie
 
-        lpre2->filterout(smpsl);
-        rpre2->filterout(smpsr);
+        lpre2->filterout(smpsl, period);
+        rpre2->filterout(smpsr, period);
         rwshape->waveshapesmps (period, smpsl, 28, 20, 1);  //Valve2
         lwshape->waveshapesmps (period, smpsr, 28, 20, 1);
-        ranti->filterout(smpsr);
-        lanti->filterout(smpsl);
-        lpre1->filterout(smpsl);
-        rpre1->filterout(smpsr);
+        ranti->filterout(smpsr, period);
+        lanti->filterout(smpsl, period);
+        lpre1->filterout(smpsl, period);
+        rpre1->filterout(smpsr, period);
         rwshape2->waveshapesmps (period, smpsl, 28, Pgain, 1);  //Valve2
         lwshape2->waveshapesmps (period, smpsr, 28, Pgain, 1);
 
-        lpost->filterout(smpsl);
-        rpost->filterout(smpsr);
+        lpost->filterout(smpsl, period);
+        rpost->filterout(smpsr, period);
 
         for (i = 0; i<period; i++) {
             //left channel
@@ -158,8 +184,8 @@ StompBox::out (float * smpsl, float * smpsr)
     case 1:  //Grunge
     case 5:  //Death Metal
     case 6:  //Metal Zone
-        linput->filterout(smpsl);
-        rinput->filterout(smpsr);
+        linput->filterout(smpsl, period);
+        rinput->filterout(smpsr, period);
 
         for (i = 0; i<period; i++) {
             templ = smpsl[i] * (gain * pgain + 0.01f);
@@ -170,8 +196,8 @@ StompBox::out (float * smpsl, float * smpsr)
         rwshape->waveshapesmps (period, smpsl, 24, 1, 1);  // Op amp limiting
         lwshape->waveshapesmps (period, smpsr, 24, 1, 1);
 
-        ranti->filterout(smpsr);
-        lanti->filterout(smpsl);
+        ranti->filterout(smpsr, period);
+        lanti->filterout(smpsl, period);
 
         rwshape2->waveshapesmps (period, smpsl, 23, Pgain, 1);  // hard comp
         lwshape2->waveshapesmps (period, smpsr, 23, Pgain, 1);
@@ -205,8 +231,8 @@ StompBox::out (float * smpsl, float * smpsr)
     case 2:  //Rat
     case 3:  //Fat Cat  //Pre gain & filter freqs the only difference
 
-        linput->filterout(smpsl);
-        rinput->filterout(smpsr);
+        linput->filterout(smpsl, period);
+        rinput->filterout(smpsr, period);
 
         for (i = 0; i<period; i++) {
             templ = smpsl[i];
@@ -222,8 +248,8 @@ StompBox::out (float * smpsl, float * smpsr)
         rwshape->waveshapesmps (period, smpsl, 24, 1, 1);  // Op amp limiting
         lwshape->waveshapesmps (period, smpsr, 24, 1, 1);
 
-        ranti->filterout(smpsr);
-        lanti->filterout(smpsl);
+        ranti->filterout(smpsr, period);
+        lanti->filterout(smpsl, period);
 
         rwshape2->waveshapesmps (period, smpsl, 23, 1, 0);  // hard comp
         lwshape2->waveshapesmps (period, smpsr, 23, 1, 0);
@@ -247,8 +273,8 @@ StompBox::out (float * smpsl, float * smpsr)
         break;
     case 4:  //Dist+
 
-        linput->filterout(smpsl);
-        rinput->filterout(smpsr);
+        linput->filterout(smpsl, period);
+        rinput->filterout(smpsr, period);
 
         for (i = 0; i<period; i++) {
             templ = smpsl[i];
@@ -261,8 +287,8 @@ StompBox::out (float * smpsl, float * smpsr)
         rwshape->waveshapesmps (period, smpsl, 24, 1, 1);  // Op amp limiting
         lwshape->waveshapesmps (period, smpsr, 24, 1, 1);
 
-        ranti->filterout(smpsr);
-        lanti->filterout(smpsl);
+        ranti->filterout(smpsr, period);
+        lanti->filterout(smpsl, period);
 
         rwshape2->waveshapesmps (period, smpsl, 29, 1, 0);  // diode limit
         lwshape2->waveshapesmps (period, smpsr, 29, 1, 0);
@@ -287,10 +313,10 @@ StompBox::out (float * smpsl, float * smpsr)
 
     case 7:          //Classic Fuzz
 
-        lpre1->filterout(smpsl);
-        rpre1->filterout(smpsr);
-        linput->filterout(smpsl);
-        rinput->filterout(smpsr);
+        lpre1->filterout(smpsl, period);
+        rpre1->filterout(smpsr, period);
+        linput->filterout(smpsl, period);
+        rinput->filterout(smpsr, period);
         rwshape->waveshapesmps (period, smpsr, 19, 25, 1);  //compress
         lwshape->waveshapesmps (period, smpsl, 19, 25, 1);
 
@@ -310,12 +336,12 @@ StompBox::out (float * smpsl, float * smpsr)
 
         }
 
-        ranti->filterout(smpsr);
-        lanti->filterout(smpsl);
+        ranti->filterout(smpsr, period);
+        lanti->filterout(smpsl, period);
         rwshape2->waveshapesmps (period, smpsr, 25, Pgain, 1);  //JFET
         lwshape2->waveshapesmps (period, smpsl, 25, Pgain, 1);
-        lpre2->filterout(smpsl);
-        rpre2->filterout(smpsr);
+        lpre2->filterout(smpsl, period);
+        rpre2->filterout(smpsr, period);
 
         for (i = 0; i<period; i++) {
             //left channel
@@ -821,6 +847,7 @@ StompBox::setpreset (int npreset)
 {
     const int PRESET_SIZE = 6;
     const int NUM_PRESETS = 8;
+    int pdata[PRESET_SIZE];
     int presets[NUM_PRESETS][PRESET_SIZE] = {
         //Odie
         {80, 32, 0, 32, 10, 0},
@@ -841,7 +868,7 @@ StompBox::setpreset (int npreset)
     };
 
     if(npreset>NUM_PRESETS-1) {
-        Fpre->ReadPreset(39,npreset-NUM_PRESETS+1);
+        Fpre->ReadPreset(39,npreset-NUM_PRESETS+1,pdata);
         for (int n = 0; n < PRESET_SIZE; n++)
             changepar (n, pdata[n]);
     } else {

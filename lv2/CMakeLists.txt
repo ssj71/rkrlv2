@@ -69,6 +69,7 @@ add_library(rkrlv2 SHARED
   ../src/Sequence.C
   ../src/beattracker.C
   ../src/Shifter.C
+  ../src/StompBox.C
 )
 
 set_target_properties(rkrlv2 PROPERTIES PREFIX "")

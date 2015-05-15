@@ -166,3 +166,13 @@
         a lv2:Plugin, lv2:PitchPlugin ;
         lv2:binary <rkrlv2.so> ;
         rdfs:seeAlso <shifter.ttl> .
+# 33 
+<http://rakarrack.sourceforge.net/effects.html#StompBox>
+        a lv2:Plugin, lv2:DistortionPlugin ;
+        lv2:binary <rkrlv2.so> ;
+        rdfs:seeAlso <stomp.ttl> .
+# 34 
+<http://rakarrack.sourceforge.net/effects.html#StompBox_fuzz>
+        a lv2:Plugin, lv2:DistortionPlugin ;
+        lv2:binary <rkrlv2.so> ;
+        rdfs:seeAlso <stompfuzz.ttl> .
