@@ -7,6 +7,8 @@
 @prefix pprops: <http://lv2plug.in/ns/ext/port-props#> .
 @prefix pset: <http://lv2plug.in/ns/ext/presets#> .
 @prefix atom:  <http://lv2plug.in/ns/ext/atom#> .
+@prefix mediatype: <https://tools.ietf.org/html/rfc2046> .
+@prefix mime:   <http://www.iana.org/assignments/media-types/media-types.xhtml#> .
 
 
 @prefix lv2:   <http://lv2plug.in/ns/lv2core#> .
@@ -22,7 +24,9 @@
 <http://rakarrack.sourceforge.net/effects.html#Reverbtron:rvbfile>
     a lv2:Parameter ;
     rdfs:label "rvb file" ;
-    rdfs:range atom:Path .
+    rdfs:range atom:Path ;
+    mediatype: mime:text ;
+    .
 
 <http://rakarrack.sourceforge.net/effects.html#Reverbtron>
     a lv2:Plugin, lv2:ReverbPlugin ;
