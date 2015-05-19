@@ -45,11 +45,11 @@
 #include"Sequence.h"
 #include"Shifter.h"
 #include"StompBox.h"
+#include"Reverbtron.h"
 
 
 //this is the default hopefully hosts don't use periods of more than this, or they will communicate the max bufsize
 #define INTERMEDIATE_BUFSIZE 1024
-
 
 
 typedef struct _RKRLV2
@@ -64,6 +64,8 @@ typedef struct _RKRLV2
     float *input_r_p;
     float *output_l_p;
     float *output_r_p;
+    const LV2_Atom_Sequence* atom_in_p;
+    LV2_Atom_Sequence* atom_out_p;
     float *param_p[16];
     float *dbg_p; 
 
@@ -111,6 +113,7 @@ typedef struct _RKRLV2
     Sequence* seq;		//31
     Shifter* shift;		//32
     StompBox* stomp;	//33,34
+    Reverbtron* revtron;//35
 }RKRLV2;
 
 enum other_ports
@@ -2356,6 +2359,54 @@ LV2_Handle init_stomp_fuzzlv2(const LV2_Descriptor *descriptor,double sample_fre
     return plug;
 }
 
+///// Reverbtron /////////
+LV2_Handle init_revtronlv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 6;
+    plug->effectindex = 33;
+
+    getFeatures(plug,host_features);
+
+    plug->revtron = new Reverbtron(0,0, sample_freq, plug->period_max, /*downsample*/2,
+                                /*up interpolation method*/0, /*down interpolation method*/2);
+
+    return plug;
+}
+
+void run_revtronlv2(LV2_Handle handle, uint32_t nframes)
+{
+    int i;
+    int val;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    //check and set changed parameters
+    for(i=0;i<plug->nparams;i++)
+    {
+       val = (int)*plug->param_p[i];
+       if(plug->revtron->getpar(i) != val)
+       {
+           plug->revtron->changepar(i,val);
+       }
+    }
+
+     //stompbox does it inline
+    memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+    memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+
+    //now set out ports
+    plug->revtron->efxoutl = plug->output_l_p;
+    plug->revtron->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->revtron->out(plug->output_l_p,plug->output_r_p,nframes);
+
+    return;
+}
+
+
 /////////////////////////////////
 ///////// END OF FX ///////////// 
 /////////////////////////////////
@@ -2471,8 +2522,45 @@ void cleanup_rkrlv2(LV2_Handle handle)
         case 34:
         	delete plug->stomp;
         	break;
+        case 35:
+        	delete plug->revtron;
+        	break;
     }
     free(plug);
+}
+
+void connect_rkrlv2_ports_w_atom(LV2_Handle handle, uint32_t port, void *data)
+{
+    RKRLV2* plug = (RKRLV2*)handle;
+    switch(port)
+    {
+    case INL:         plug->input_l_p = (float*)data;break;
+    case INR:         plug->input_r_p = (float*)data;break;
+    case OUTL:        plug->output_l_p = (float*)data;break;
+    case OUTR:        plug->output_r_p = (float*)data;break;
+    case PARAM0:      plug->atom_in_p = (const LV2_Atom_Sequence*)data;break;
+    case PARAM1:      plug->atom_out_p = (LV2_Atom_Sequence*)data;break;
+    case PARAM2:      plug->param_p[0] = (float*)data;break;
+    case PARAM3:      plug->param_p[1] = (float*)data;break;
+    case PARAM4:      plug->param_p[2] = (float*)data;break;
+    case PARAM5:      plug->param_p[3] = (float*)data;break;
+    case PARAM6:      plug->param_p[4] = (float*)data;break;
+    case PARAM7:      plug->param_p[5] = (float*)data;break;
+    case PARAM8:      plug->param_p[6] = (float*)data;break;
+    case PARAM9:      plug->param_p[7] = (float*)data;break;
+    case PARAM10:     plug->param_p[8] = (float*)data;break;
+    case PARAM11:     plug->param_p[9] = (float*)data;break;
+    case PARAM12:     plug->param_p[10] = (float*)data;break;
+    case PARAM13:     plug->param_p[11] = (float*)data;break;
+    case PARAM14:     plug->param_p[12] = (float*)data;break;
+    case PARAM15:     plug->param_p[13] = (float*)data;break;
+    case PARAM16:     plug->param_p[14] = (float*)data;break;
+    case PARAM17:     plug->param_p[15] = (float*)data;break;
+    case PARAM18:     plug->param_p[16] = (float*)data;break;
+    case DBG:     	  plug->param_p[17] = (float*)data;break;
+    case EXTRA:       plug->param_p[18] = (float*)data;break;
+    default:         puts("UNKNOWN PORT YO!!");
+    }
 }
 
 void connect_rkrlv2_ports(LV2_Handle handle, uint32_t port, void *data)
@@ -2893,6 +2981,17 @@ static const LV2_Descriptor stompfuzzlv2_descriptor={
     0//extension
 };
 
+static const LV2_Descriptor revtronlv2_descriptor={
+    REVTRONLV2_URI,
+    init_revtronlv2,
+    connect_rkrlv2_ports_w_atom,
+    0,//activate
+    run_revtronlv2,
+    0,//deactivate
+    cleanup_rkrlv2,
+    0//extension
+};
+
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor* lv2_descriptor(uint32_t index)
 {
@@ -2967,6 +3066,8 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
     	return &stomplv2_descriptor ;
     case 34:
     	return &stompfuzzlv2_descriptor ;
+    case 35:
+    	return &revtronlv2_descriptor ;
     default:
         return 0;
     }

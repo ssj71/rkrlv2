@@ -36,6 +36,7 @@
 #define SHIFTERLV2_URI "http://rakarrack.sourceforge.net/effects.html#Shifter"
 #define STOMPLV2_URI "http://rakarrack.sourceforge.net/effects.html#StompBox"
 #define STOMPFUZZLV2_URI "http://rakarrack.sourceforge.net/effects.html#StompBox_fuzz"
+#define REVTRONLV2_URI "http://rakarrack.sourceforge.net/effects.html#Reverbtron"
 
 enum RKRLV2_ports_
 {
@@ -62,7 +63,8 @@ enum RKRLV2_ports_
     PARAM16,
 	PARAM17,
 	PARAM18,
-    DBG
+    DBG,
+	EXTRA
 };
 
 #endif

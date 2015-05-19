@@ -26,7 +26,13 @@
 #include <math.h>
 #include "Reverbtron.h"
 
-Reverbtron::Reverbtron (float * efxoutl_, float * efxoutr_,int DS, int uq, int dq)
+//TODO: make LV2 plugins deal with this correctly
+#ifndef DATADIR
+#define DATADIR "/usr/local/share/rakarrack"
+#endif
+
+Reverbtron::Reverbtron (float * efxoutl_, float * efxoutr_, double sample_rate,
+		uint32_t intermediate_bufsize, int DS, int uq, int dq)
 {
     efxoutl = efxoutl_;
     efxoutr = efxoutr_;
@@ -45,9 +51,9 @@ Reverbtron::Reverbtron (float * efxoutl_, float * efxoutr_,int DS, int uq, int d
     fb = 0.0f;
     feedback = 0.0f;
     maxtime = 0.0f;
-    adjust(DS);
-    templ = (float *) malloc (sizeof (float) * period);
-    tempr = (float *) malloc (sizeof (float) * period);
+    adjust(DS, sample_rate);
+    templ = (float *) malloc (sizeof (float) * intermediate_bufsize);
+    tempr = (float *) malloc (sizeof (float) * intermediate_bufsize);
 
     hrtf_size = nSAMPLE_RATE/2;
     maxx_size = (int) (nfSAMPLE_RATE * convlength);  //just to get the max memory allocated
@@ -69,8 +75,8 @@ Reverbtron::Reverbtron (float * efxoutl_, float * efxoutr_,int DS, int uq, int d
     idelay = 0.0f;
     decay = f_exp(-1.0f/(0.2f*nfSAMPLE_RATE));  //0.2 seconds
 
-    lpfl =  new AnalogFilter (0, 800, 1, 0);;
-    lpfr =  new AnalogFilter (0, 800, 1, 0);;
+    lpfl =  new AnalogFilter (0, 800, 1, 0, sample_rate);;
+    lpfr =  new AnalogFilter (0, 800, 1, 0, sample_rate);;
 
     lpfl->setSR(nSAMPLE_RATE);
     lpfr->setSR(nSAMPLE_RATE);
@@ -85,6 +91,24 @@ Reverbtron::Reverbtron (float * efxoutl_, float * efxoutr_,int DS, int uq, int d
 
 Reverbtron::~Reverbtron ()
 {
+    free(templ);
+    free(tempr);
+
+    free(time);
+    free(rndtime);
+    free(ftime);
+    free(data);
+    free(rnddata);
+    free(tdata);
+    free(lxn);
+    free(hrtf);
+    free(imdelay);
+
+    delete lpfl;
+    delete lpfr;
+
+    delete U_Resample;
+    delete D_Resample;
 };
 
 /*
@@ -107,18 +131,21 @@ Reverbtron::cleanup ()
  * Effect output
  */
 void
-Reverbtron::out (float * smpsl, float * smpsr)
+Reverbtron::out (float * smpsl, float * smpsr, uint32_t period)
 {
-    int i, j, xindex, hindex;
+    int  i, j, xindex, hindex;
     float l,lyn, hyn;
     float ldiff,rdiff;
     int length = Plength;
     hlength = Pdiff;
     int doffset;
 
+    nPERIOD = lrintf((float)period*nRATIO);
     if(DS_state != 0) {
         memcpy(templ, smpsl,sizeof(float)*period);
         memcpy(tempr, smpsr,sizeof(float)*period);
+        u_up= (double)nPERIOD / (double)period;
+        u_down= (double)period / (double)nPERIOD;
         U_Resample->out(templ,tempr,smpsl,smpsr,period,u_up);
     }
 
@@ -253,7 +280,7 @@ Reverbtron::setfile(int value)
     if(!Puser) {
         Filenum = value;
         memset(Filename,0, sizeof(Filename));
-        sprintf(Filename, "%s/%d.rvb",DATADIR,Filenum+1);
+        sprintf(Filename, "%s/%d.rvb",DATADIR,Filenum+1);//DATADIR comes from  config.h (autotools)
     }
 
     if ((fs = fopen (Filename, "r")) == NULL) {
@@ -305,6 +332,7 @@ Reverbtron::setfile(int value)
     convert_time();
     return(1);
 };
+
 void Reverbtron::loaddefault()
 {
     data_length = Plength = 2;
@@ -444,7 +472,7 @@ Reverbtron::setfb(int value)
 
 
 void
-Reverbtron::adjust(int DS)
+Reverbtron::adjust(int DS, double fSAMPLE_RATE)
 {
 
     DS_state=DS;
@@ -453,68 +481,66 @@ Reverbtron::adjust(int DS)
     switch(DS) {
 
     case 0:
-        nPERIOD = period;
-        nSAMPLE_RATE = SAMPLE_RATE;
+        nRATIO = 1;
+        nSAMPLE_RATE = fSAMPLE_RATE;
         nfSAMPLE_RATE = fSAMPLE_RATE;
         break;
 
     case 1:
-        nPERIOD = lrintf(fPERIOD*96000.0f/fSAMPLE_RATE);
+        nRATIO = 96000.0/fSAMPLE_RATE;
         nSAMPLE_RATE = 96000;
         nfSAMPLE_RATE = 96000.0f;
         break;
 
 
     case 2:
-        nPERIOD = lrintf(fPERIOD*48000.0f/fSAMPLE_RATE);
+        nRATIO = 48000.0/fSAMPLE_RATE;
         nSAMPLE_RATE = 48000;
         nfSAMPLE_RATE = 48000.0f;
         break;
 
     case 3:
-        nPERIOD = lrintf(fPERIOD*44100.0f/fSAMPLE_RATE);
+        nRATIO = 44100.0/fSAMPLE_RATE;
         nSAMPLE_RATE = 44100;
         nfSAMPLE_RATE = 44100.0f;
         break;
 
     case 4:
-        nPERIOD = lrintf(fPERIOD*32000.0f/fSAMPLE_RATE);
+        nRATIO = 32000.0/fSAMPLE_RATE;
         nSAMPLE_RATE = 32000;
         nfSAMPLE_RATE = 32000.0f;
         break;
 
     case 5:
-        nPERIOD = lrintf(fPERIOD*22050.0f/fSAMPLE_RATE);
+        nRATIO = 22050.0/fSAMPLE_RATE;
         nSAMPLE_RATE = 22050;
         nfSAMPLE_RATE = 22050.0f;
         break;
 
     case 6:
-        nPERIOD = lrintf(fPERIOD*16000.0f/fSAMPLE_RATE);
+        nRATIO = 16000.0/fSAMPLE_RATE;
         nSAMPLE_RATE = 16000;
         nfSAMPLE_RATE = 16000.0f;
         break;
 
     case 7:
-        nPERIOD = lrintf(fPERIOD*12000.0f/fSAMPLE_RATE);
+        nRATIO = 12000.0/fSAMPLE_RATE;
         nSAMPLE_RATE = 12000;
         nfSAMPLE_RATE = 12000.0f;
         break;
 
     case 8:
-        nPERIOD = lrintf(fPERIOD*8000.0f/fSAMPLE_RATE);
+        nRATIO = 8000.0/fSAMPLE_RATE;
         nSAMPLE_RATE = 8000;
         nfSAMPLE_RATE = 8000.0f;
         break;
 
     case 9:
-        nPERIOD = lrintf(fPERIOD*4000.0f/fSAMPLE_RATE);
+        nRATIO = 4000.0/fSAMPLE_RATE;
         nSAMPLE_RATE = 4000;
         nfSAMPLE_RATE = 4000.0f;
         break;
     }
-    u_up= (double)nPERIOD / (double)period;
-    u_down= (double)period / (double)nPERIOD;
 }
 
 
@@ -525,6 +551,7 @@ Reverbtron::setpreset (int npreset)
 {
     const int PRESET_SIZE = 16;
     const int NUM_PRESETS = 9;
+    int pdata[PRESET_SIZE];
     int presets[NUM_PRESETS][PRESET_SIZE] = {
         //Spring
         {64, 0, 1, 500, 0, 0, 99, 70, 0, 0, 0, 64, 0, 0, 20000, 0},
@@ -548,7 +575,7 @@ Reverbtron::setpreset (int npreset)
     };
 
     if(npreset>NUM_PRESETS-1) {
-        Fpre->ReadPreset(40,npreset-NUM_PRESETS+1);
+        Fpre->ReadPreset(40,npreset-NUM_PRESETS+1, pdata);
         for (int n = 0; n < PRESET_SIZE; n++)
             changepar (n, pdata[n]);
     } else {
@@ -597,7 +624,7 @@ Reverbtron::changepar (int npar, int value)
         levpanr=level*rpanning;
         break;
     case 8:
-        if(!setfile(value)) error_num=2;
+        if(!setfile(value)) ;//error_num=2;//TODO: how to handle error
         break;
     case 9:
         Pstretch = value;

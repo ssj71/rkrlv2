@@ -26,20 +26,32 @@
 
 #include "global.h"
 #include "AnalogFilter.h"
+#include "Resample.h"
 
+class RvbFile
+{
+public:
+	char Filename[128];
+	float tdata[2000];
+	float ftime[2000];
+	int data_length;
+	int maxtime;
+	int maxdata;
+};
 
 class Reverbtron
 {
 public:
-    Reverbtron (float * efxoutl_, float * efxoutr_,int DS, int uq, int dq);
+    Reverbtron (float * efxoutl_, float * efxoutr_, double sample_rate, uint32_t intermediate_bufsize,
+    		int DS, int uq, int dq);
     ~Reverbtron ();
-    void out (float * smpsl, float * smpr);
+    void out (float * smpsl, float * smpr, uint32_t period);
     void setpreset (int npreset);
     void changepar (int npar, int value);
     int getpar (int npar);
     void cleanup ();
     int setfile (int value);
-    void adjust(int DS);
+    void adjust(int DS, double sample_rate);
 
     int Ppreset;
 
@@ -92,6 +104,7 @@ private:
     int DS_state;
     int nPERIOD;
     int nSAMPLE_RATE;
+    float nRATIO;
 
 
     int *time, *rndtime;

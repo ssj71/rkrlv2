@@ -70,6 +70,7 @@ add_library(rkrlv2 SHARED
   ../src/beattracker.C
   ../src/Shifter.C
   ../src/StompBox.C
+  ../src/Reverbtron.C
 )
 
 set_target_properties(rkrlv2 PROPERTIES PREFIX "")

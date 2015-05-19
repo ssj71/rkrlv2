@@ -13,8 +13,7 @@ change nparams and effect index
 lfo switch to reference, add PERIOD member and set before setparam()
 Fpre add pdata arg
 add destructor deletes
-lets make generic stompbox and then a sb_mid elves own and sb_fuzz with better labels
-if I do individual, leave off any controls that don't belong in the original hardware version
+lets make generic stompbox and then a sb_fuzz with better labels
 
 
 * added a cabinet class and presets are managed there.
