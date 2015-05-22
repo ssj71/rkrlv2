@@ -6,7 +6,9 @@
 @prefix patch: <http://lv2plug.in/ns/ext/patch#> .
 @prefix pprops: <http://lv2plug.in/ns/ext/port-props#> .
 @prefix pset: <http://lv2plug.in/ns/ext/presets#> .
-@prefix atom:  <http://lv2plug.in/ns/ext/atom#> .
+@prefix atom:  <http://lv2plug.in/ns/ext/atom#> .  
+@prefix urid:  <http://lv2plug.in/ns/ext/urid#> .
+@prefix worker:  <http://lv2plug.in/ns/ext/worker#> .
 @prefix mediatype: <https://tools.ietf.org/html/rfc2046> .
 @prefix mime:   <http://www.iana.org/assignments/media-types/media-types.xhtml#> .
 
@@ -36,7 +38,9 @@
             foaf:homepage <http://rakarrack.sourceforge.net>;
             foaf:mbox <ssjackson71@gmail.com> ;
     ] ;
+    lv2:requiredFeature urid:map, worker:schedule ;
     lv2:optionalFeature lv2:hardRTCapable ;
+    lv2:extensionData worker:Interface ;
 #    ui:ui  <http://rakarrack.sourceforge.net/effects.html#Reverbtron_ui> ;
     patch:writable <http://rakarrack.sourceforge.net/effects.html#Reverbtron:rvbfile> ;
 
@@ -65,7 +69,7 @@
             lv2:name "Audio Out R" ;
     ] ;
     lv2:port [
-            a lv2:InputPort, lv2:AtomPort ;
+            a lv2:InputPort, atom:AtomPort ;
             lv2:index 4 ;
             lv2:symbol "CONTROL" ;
             lv2:name "Control" ;
@@ -74,7 +78,7 @@
             lv2:designation lv2:control ;
     ] ;
     lv2:port [
-            a lv2:InputPort, lv2:AtomPort ;
+            a lv2:OutputPort, atom:AtomPort ;
             lv2:index 5 ;
             lv2:symbol "NOTIFY" ;
             lv2:name "Notify" ;

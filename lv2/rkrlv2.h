@@ -37,6 +37,10 @@
 #define STOMPLV2_URI "http://rakarrack.sourceforge.net/effects.html#StompBox"
 #define STOMPFUZZLV2_URI "http://rakarrack.sourceforge.net/effects.html#StompBox_fuzz"
 #define REVTRONLV2_URI "http://rakarrack.sourceforge.net/effects.html#Reverbtron"
+#define ECHOTRONLV2_URI "http://rakarrack.sourceforge.net/effects.html#Echotron"
+
+#define RVBFILE_URI "http://rakarrack.sourceforge.net/effects.html#Reverbtron:rvbfile"
+#define DLYFILE_URI "http://rakarrack.sourceforge.net/effects.html#Echotron:dlyfile"
 
 enum RKRLV2_ports_
 {
@@ -61,10 +65,10 @@ enum RKRLV2_ports_
     PARAM14,
     PARAM15,
     PARAM16,
-	PARAM17,
-	PARAM18,
+    PARAM17,
+    PARAM18,
     DBG,
-	EXTRA
+    EXTRA
 };
 
 #endif

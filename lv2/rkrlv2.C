@@ -6,6 +6,9 @@
 #include<lv2/lv2plug.in/ns/ext/time/time.h>
 #include<lv2/lv2plug.in/ns/ext/buf-size/buf-size.h>
 #include<lv2/lv2plug.in/ns/ext/options/options.h>
+#include<lv2/lv2plug.in/ns/ext/atom/atom.h>
+#include<lv2/lv2plug.in/ns/ext/patch/patch.h>
+#include<lv2/lv2plug.in/ns/ext/worker/worker.h>
 #include<stdlib.h>
 #include<stdio.h>
 #include<string.h>
@@ -57,8 +60,6 @@ typedef struct _RKRLV2
     uint8_t nparams;
     uint8_t effectindex;//index of effect
     uint16_t period_max;
-//    float* tempbuf_l;
-//    float* tempbuf_r;
 
     float *input_l_p;
     float *input_r_p;
@@ -67,14 +68,24 @@ typedef struct _RKRLV2
     const LV2_Atom_Sequence* atom_in_p;
     LV2_Atom_Sequence* atom_out_p;
     float *param_p[16];
-    float *dbg_p; 
+    float *dbg_p;
+
+    LV2_Worker_Schedule* scheduler;
 
     struct urids
     {
         LV2_URID    midi_MidiEvent;
         LV2_URID    atom_Float;
         LV2_URID    atom_Int;
+        LV2_URID    atom_Object;
+        LV2_URID    atom_URID;
         LV2_URID    bufsz_max;
+        LV2_URID    patch_Set;
+        LV2_URID    patch_Get;
+        LV2_URID	patch_property;
+        LV2_URID 	patch_value;
+        LV2_URID 	filetype_rvb;
+        LV2_URID 	filetype_dly;
 
     } URIDs;
 
@@ -85,8 +96,8 @@ typedef struct _RKRLV2
     Chorus* chorus;     //4
     Analog_Phaser* aphase;//5
     Harmonizer* harm;	//6
-     RecChord* chordID;
-     Recognize* noteID;
+    RecChord* chordID;
+    Recognize* noteID;
     Exciter* exciter;	//7
     Pan* pan;			//8
     Alienwah* alien;    //9
@@ -114,14 +125,14 @@ typedef struct _RKRLV2
     Shifter* shift;		//32
     StompBox* stomp;	//33,34
     Reverbtron* revtron;//35
-}RKRLV2;
+} RKRLV2;
 
 enum other_ports
 {
-	//be sure to account for index of array vs lv2 port index
-	HARMONIZER_MIDI,
-	VOCODER_AUX_IN = 7,
-	VOCODER_VU_LEVEL = 8
+    //be sure to account for index of array vs lv2 port index
+    HARMONIZER_MIDI,
+    VOCODER_AUX_IN = 7,
+    VOCODER_VU_LEVEL = 8
 };
 
 // A few helper functions taken from the RKR object
@@ -131,10 +142,13 @@ wetdry_mix (float inl[], float inr[], float outl[], float outr[], float mix, uin
     unsigned int i;
     float v1, v2;
 
-    if (mix < 0.5f) {
+    if (mix < 0.5f)
+    {
         v1 = 1.0f;
         v2 = mix * 2.0f;
-    } else {
+    }
+    else
+    {
         v1 = (1.0f - mix) * 2.0f;
         v2 = 1.0f;
     };
@@ -144,7 +158,8 @@ wetdry_mix (float inl[], float inr[], float outl[], float outr[], float mix, uin
 //    if ((NumEffect == 8) || (NumEffect == 15))
 //        v2 *= v2;
 
-    for (i = 0; i < period; i++) {
+    for (i = 0; i < period; i++)
+    {
         outl[i] = inl[i] * v2 + outl[i] * v1;
         outr[i] = inr[i] * v2 + outr[i] * v1;
     };
@@ -173,17 +188,29 @@ void getFeatures(RKRLV2* plug, const LV2_Feature * const* host_features)
                     }
                     //other types?
                 }
-            } 
+            }
+        }
+        else if(!strcmp(host_features[i]->URI),LV2_WORKER__schedule)
+        {
+            plug->scheduler = (LV2_Worker_Schedule*)host_features[i]->data;
         }
         else if(!strcmp(host_features[i]->URI,LV2_URID__map))
         {
             urid_map = (LV2_URID_Map *) host_features[i]->data;
             if(urid_map)
             {
-                plug->URIDs.atom_Int = urid_map->map(urid_map->handle,LV2_ATOM__Int);
-                plug->URIDs.atom_Float = urid_map->map(urid_map->handle,LV2_ATOM__Float);
                 plug->URIDs.midi_MidiEvent = urid_map->map(urid_map->handle,LV2_MIDI__MidiEvent);
+                plug->URIDs.atom_Float = urid_map->map(urid_map->handle,LV2_ATOM__Float);
+                plug->URIDs.atom_Int = urid_map->map(urid_map->handle,LV2_ATOM__Int);
+                plug->URIDs.atom_Object = urid_map->map(urid_map->handle,LV2_ATOM__Object);
+                plug->URIDs.atom_URID = urid_map->map(urid_map->handle,LV2_ATOM__URI);
                 plug->URIDs.bufsz_max = urid_map->map(urid_map->handle,LV2_BUF_SIZE__maxBlockLength);
+                plug->URIDs.patch_Set = urid_map->map(urid_map->handle,LV2_PATCH__Set);
+                plug->URIDs.patch_Get = urid_map->map(urid_map->handle,LV2_PATCH__Get);
+                plug->URIDs.patch_property = urid_map->map(urid_map->handle,LV2_PATCH__property);
+                plug->URIDs.patch_value = urid_map->map(urid_map->handle,LV2_PATCH__value);
+                plug->URIDs.filetype_rvb = urid_map->map(urid_map->handle,RVBFILE_URI);
+                plug->URIDs.filetype_rvb = urid_map->map(urid_map->handle,DLYFILE_URI);
             }
         }
     }
@@ -191,7 +218,7 @@ void getFeatures(RKRLV2* plug, const LV2_Feature * const* host_features)
 
 
 /////////////////////////////////////////
-//      EFFECTS            
+//      EFFECTS
 ////////////////////////////////////////
 
 ///// EQ /////////
@@ -205,8 +232,9 @@ LV2_Handle init_eqlv2(const LV2_Descriptor *descriptor,double sample_freq, const
     plug->eq = new EQ(0,0,sample_freq);
 
     //eq has a bunch of setup stuff. Why isn't this in the EQ initalizer?
-    for (int i = 0; i <= 45; i += 5) {
-       plug->eq->changepar (i + 10, 7);
+    for (int i = 0; i <= 45; i += 5)
+    {
+        plug->eq->changepar (i + 10, 7);
         plug->eq->changepar (i + 14, 0);
     }
 
@@ -240,18 +268,18 @@ void run_eqlv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->eq->changepar(0,val);
     }
-    
+
     val = (int)*plug->param_p[1]+64;//q
     if(plug->eq->getpar(13) != val)
     {
         int j;
-        for(j=0;j<10;j++)
+        for(j=0; j<10; j++)
         {
             plug->eq->changepar(j*5+13,val);
         }
     }
-    
-    for(i=2;i<plug->nparams;i++)
+
+    for(i=2; i<plug->nparams; i++)
     {
         val = (int)*plug->param_p[i]+64;//various freq. bands
         if(plug->eq->getpar(5*i + 2) != val)
@@ -270,7 +298,7 @@ void run_eqlv2(LV2_Handle handle, uint32_t nframes)
 
     //now run
     plug->eq->out(plug->output_l_p,plug->output_r_p,nframes);
-    
+
     return;
 }
 
@@ -295,26 +323,26 @@ void run_complv2(LV2_Handle handle, uint32_t nframes)
     RKRLV2* plug = (RKRLV2*)handle;
 
     //check and set changed parameters
-    for(i=0;i<plug->nparams;i++)
+    for(i=0; i<plug->nparams; i++)
     {
         val = (int)*plug->param_p[i];
-       if(plug->comp->getpar(i+1) != val)//this effect is 1 indexed
-       {
-           plug->comp->Compressor_Change(i+1,val);
-       }
+        if(plug->comp->getpar(i+1) != val)//this effect is 1 indexed
+        {
+            plug->comp->Compressor_Change(i+1,val);
+        }
     }
-    
+
     //comp does in inline
     memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
     memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
-    
+
     //now set out ports
     plug->comp->efxoutl = plug->output_l_p;
     plug->comp->efxoutr = plug->output_r_p;
 
     //now run
     plug->comp->out(plug->output_l_p,plug->output_r_p,nframes);
-    
+
     return;
 }
 
@@ -322,13 +350,13 @@ void run_complv2(LV2_Handle handle, uint32_t nframes)
 LV2_Handle init_distlv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
 {
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
-    
+
     plug->nparams = 12;
     plug->effectindex = 2;
 
     getFeatures(plug,host_features);
 
-    plug->dist = new Distorsion(0,0, sample_freq, plug->period_max, /*oversampling*/2, 
+    plug->dist = new Distorsion(0,0, sample_freq, plug->period_max, /*oversampling*/2,
                                 /*up interpolation method*/0, /*down interpolation method*/2);
 
     return plug;
@@ -354,18 +382,18 @@ void run_distlv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->dist->changepar(i,val);
     }
-    for(i++;i<plug->nparams-1;i++)//2-10
+    for(i++; i<plug->nparams-1; i++) //2-10
     {
         val = (int)*plug->param_p[i];
-       if(plug->dist->getpar(i) != val)
-       {
-           plug->dist->changepar(i,val);
-       }
+        if(plug->dist->getpar(i) != val)
+        {
+            plug->dist->changepar(i,val);
+        }
     }
     val = (int)*plug->param_p[i++];//skip one index, 12 octave
     if(plug->dist->getpar(i) != val)
     {
-       plug->dist->changepar(i,val);
+        plug->dist->changepar(i,val);
     }
 
     //now set out ports and global period size
@@ -377,7 +405,7 @@ void run_distlv2(LV2_Handle handle, uint32_t nframes)
 
     //and for whatever reason we have to do the wet/dry mix ourselves
     wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->dist->outvolume, nframes);
-    
+
     return;
 }
 
@@ -385,7 +413,7 @@ void run_distlv2(LV2_Handle handle, uint32_t nframes)
 LV2_Handle init_echolv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
 {
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
-    
+
     plug->nparams = 9;
     plug->effectindex = 3;
 
@@ -426,13 +454,13 @@ void run_echolv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->echo->changepar(i,val);
     }
-    for(i++;i<plug->nparams;i++)
+    for(i++; i<plug->nparams; i++)
     {
         val = (int)*plug->param_p[i];
-       if(plug->echo->getpar(i) != val)
-       {
-           plug->echo->changepar(i,val);
-       }
+        if(plug->echo->getpar(i) != val)
+        {
+            plug->echo->changepar(i,val);
+        }
     }
 
     //now set out ports and global period size
@@ -441,10 +469,10 @@ void run_echolv2(LV2_Handle handle, uint32_t nframes)
 
     //now run
     plug->echo->out(plug->input_l_p,plug->input_r_p,nframes);
-    
+
     //and for whatever reason we have to do the wet/dry mix ourselves
     wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->echo->outvolume, nframes);
-    
+
     return;
 }
 
@@ -452,7 +480,7 @@ void run_echolv2(LV2_Handle handle, uint32_t nframes)
 LV2_Handle init_choruslv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
 {
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
-    
+
     plug->nparams = 12;
     plug->effectindex = 4;
 
@@ -484,7 +512,7 @@ void run_choruslv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->chorus->changepar(i,val);
     }
-    for(i++;i<5;i++)//2-4
+    for(i++; i<5; i++) //2-4
     {
         val = (int)*plug->param_p[i];
         if(plug->chorus->getpar(i) != val)
@@ -497,7 +525,7 @@ void run_choruslv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->chorus->changepar(i,val);
     }
-    for(i++;i<10;i++) // 6-9
+    for(i++; i<10; i++) // 6-9
     {
         val = (int)*plug->param_p[i];
         if(plug->chorus->getpar(i) != val)
@@ -506,7 +534,7 @@ void run_choruslv2(LV2_Handle handle, uint32_t nframes)
         }
     }
     //skip param 10
-    for(;i<plug->nparams;i++)
+    for(; i<plug->nparams; i++)
     {
         val = (int)*plug->param_p[i];
         if(plug->chorus->getpar(i+1) != val)
@@ -521,10 +549,10 @@ void run_choruslv2(LV2_Handle handle, uint32_t nframes)
 
     //now run
     plug->chorus->out(plug->input_l_p,plug->input_r_p,nframes);
-    
+
     //and for whatever reason we have to do the wet/dry mix ourselves
     wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->chorus->outvolume, nframes);
-    
+
     return;
 }
 
@@ -532,7 +560,7 @@ void run_choruslv2(LV2_Handle handle, uint32_t nframes)
 LV2_Handle init_aphaselv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
 {
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
-    
+
     plug->nparams = 13;
     plug->effectindex = 5;
 
@@ -552,7 +580,7 @@ void run_aphaselv2(LV2_Handle handle, uint32_t nframes)
     plug->aphase->PERIOD = nframes;
 
     //check and set changed parameters
-    for(i=0;i<5;i++)//0-4
+    for(i=0; i<5; i++) //0-4
     {
         val = (int)*plug->param_p[i];
         if(plug->aphase->getpar(i) != val)
@@ -566,7 +594,7 @@ void run_aphaselv2(LV2_Handle handle, uint32_t nframes)
         plug->aphase->changepar(i,val);
     }
     i++;
-    val = (int)*plug->param_p[i];// 6 
+    val = (int)*plug->param_p[i];// 6
     if(plug->aphase->getpar(i) != val)
     {
         plug->aphase->changepar(i,val);
@@ -577,7 +605,7 @@ void run_aphaselv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->aphase->changepar(i,val);
     }
-    for(i++;i<plug->nparams;i++)
+    for(i++; i<plug->nparams; i++)
     {
         val = (int)*plug->param_p[i];
         if(plug->aphase->getpar(i+1) != val)
@@ -592,10 +620,10 @@ void run_aphaselv2(LV2_Handle handle, uint32_t nframes)
 
     //now run
     plug->aphase->out(plug->input_l_p,plug->input_r_p,nframes);
-    
+
     //and for whatever reason we have to do the wet/dry mix ourselves
     wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->aphase->outvolume, nframes);
-    
+
     return;
 }
 
@@ -603,7 +631,7 @@ void run_aphaselv2(LV2_Handle handle, uint32_t nframes)
 LV2_Handle init_harmnomidlv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
 {
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
-    
+
     plug->nparams = 10;
     plug->effectindex = 6;
 
@@ -633,7 +661,7 @@ void run_harmnomidlv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->harm->changepar(i,val);
     }
-    for(i++;i<3;i++)//1-2
+    for(i++; i<3; i++) //1-2
     {
         val = (int)*plug->param_p[i] + 64;
         if(plug->harm->getpar(i+1) != val)
@@ -650,17 +678,17 @@ void run_harmnomidlv2(LV2_Handle handle, uint32_t nframes)
     val = (int)*plug->param_p[i];//4 filter freq
     if(plug->harm->getpar(i) != val)
     {
-    	plug->harm->changepar(i,val);
+        plug->harm->changepar(i,val);
     }
     i++;
     val = (int)*plug->param_p[i];//5 select mode
     if(plug->harm->getpar(i) != val)
     {
-    	plug->harm->changepar(i,val);
-    	plug->chordID->cleanup();
-    	if(!val) plug->harm->changepar(3,plug->harm->getpar(3));
+        plug->harm->changepar(i,val);
+        plug->chordID->cleanup();
+        if(!val) plug->harm->changepar(3,plug->harm->getpar(3));
     }
-    for(i++;i<8;i++)//6-7
+    for(i++; i<8; i++) //6-7
     {
         val = (int)*plug->param_p[i];
         if(plug->harm->getpar(i) != val)
@@ -671,7 +699,7 @@ void run_harmnomidlv2(LV2_Handle handle, uint32_t nframes)
             plug->chordID->cc = 1;//mark chord has changed
         }
     }
-    for(;i<10;i++)// 8-9
+    for(; i<10; i++) // 8-9
     {
         val = (int)*plug->param_p[i] + 64;
         if(plug->harm->getpar(i+1) != val)
@@ -686,24 +714,24 @@ void run_harmnomidlv2(LV2_Handle handle, uint32_t nframes)
 //        plug->aphase->changepar(i,val);
 //        if(!val) plug->harm->changepar(3,plug->harm->getpar(3));
 //    }
-/*
-see Chord() in rkr.fl
-harmonizer, need recChord and recNote.
-see process.C ln 1507
-*/
+    /*
+    see Chord() in rkr.fl
+    harmonizer, need recChord and recNote.
+    see process.C ln 1507
+    */
 
     //TODO may need to make sure input is over some threshold
     if(plug->harm->mira && plug->harm->PSELECT)
     {
-    	plug->noteID->schmittFloat(plug->input_l_p,plug->input_r_p,nframes);
-    	if(plug->noteID->reconota != -1 && plug->noteID->reconota != plug->noteID->last)
-    	{
-    		if(plug->noteID->afreq > 0.0)
-    		{
-    			plug->chordID->Vamos(0,plug->harm->Pinterval - 12,plug->noteID->reconota);
-    			plug->harm->r_ratio = plug->chordID->r__ratio[0];//pass the found ratio
-    		}
-    	}
+        plug->noteID->schmittFloat(plug->input_l_p,plug->input_r_p,nframes);
+        if(plug->noteID->reconota != -1 && plug->noteID->reconota != plug->noteID->last)
+        {
+            if(plug->noteID->afreq > 0.0)
+            {
+                plug->chordID->Vamos(0,plug->harm->Pinterval - 12,plug->noteID->reconota);
+                plug->harm->r_ratio = plug->chordID->r__ratio[0];//pass the found ratio
+            }
+        }
     }
     //now set out ports and global period size
     plug->harm->efxoutl = plug->output_l_p;
@@ -711,11 +739,11 @@ see process.C ln 1507
 
     //now run
     plug->harm->out(plug->input_l_p,plug->input_r_p,nframes);
-    
+
     //and for whatever reason we have to do the wet/dry mix ourselves
     wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p,
-    		plug->harm->outvolume, nframes);
-    
+               plug->harm->outvolume, nframes);
+
     return;
 }
 
@@ -743,13 +771,13 @@ void run_exciterlv2(LV2_Handle handle, uint32_t nframes)
     RKRLV2* plug = (RKRLV2*)handle;
 
     //check and set changed parameters
-    for(i=0;i<plug->nparams;i++)
+    for(i=0; i<plug->nparams; i++)
     {
         val = (int)*plug->param_p[i];
-       if(plug->exciter->getpar(i) != val)//this effect is 1 indexed
-       {
-           plug->exciter->changepar(i,val);
-       }
+        if(plug->exciter->getpar(i) != val)//this effect is 1 indexed
+        {
+            plug->exciter->changepar(i,val);
+        }
     }
 
     //comp does in inline
@@ -802,7 +830,7 @@ void run_panlv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->pan->changepar(i,val);
     }
-    for(i++;i<5;i++)//2-4
+    for(i++; i<5; i++) //2-4
     {
         val = (int)*plug->param_p[i];
         if(plug->pan->getpar(i) != val)
@@ -815,7 +843,7 @@ void run_panlv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->pan->changepar(i,val);
     }
-    for(i++;i<plug->nparams;i++)//6-8
+    for(i++; i<plug->nparams; i++) //6-8
     {
         val = (int)*plug->param_p[i];
         if(plug->pan->getpar(i+1) != val)
@@ -873,7 +901,7 @@ void run_alienlv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->alien->changepar(i,val);
     }
-    for(i++;i<5;i++)//2-4
+    for(i++; i<5; i++) //2-4
     {
         val = (int)*plug->param_p[i];
         if(plug->alien->getpar(i) != val)
@@ -886,7 +914,7 @@ void run_alienlv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->alien->changepar(i,val);
     }
-    for(i++;i<plug->nparams;i++)//6-10
+    for(i++; i<plug->nparams; i++) //6-10
     {
         val = (int)*plug->param_p[i];
         if(plug->alien->getpar(i+1) != val)
@@ -943,7 +971,7 @@ void run_revelv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->reve->changepar(i,val);
     }
-    for(i++;i<5;i++)//2-4
+    for(i++; i<5; i++) //2-4
     {
         val = (int)*plug->param_p[i];
         if(plug->reve->getpar(i) != val)
@@ -951,7 +979,7 @@ void run_revelv2(LV2_Handle handle, uint32_t nframes)
             plug->reve->changepar(i,val);
         }
     }
-    for(;i<plug->nparams;i++)//7-11 (5 and 6 are skipped
+    for(; i<plug->nparams; i++) //7-11 (5 and 6 are skipped
     {
         val = (int)*plug->param_p[i];
         if(plug->reve->getpar(i+2) != val)
@@ -984,7 +1012,7 @@ LV2_Handle init_eqplv2(const LV2_Descriptor *descriptor,double sample_freq, cons
     plug->eq = new EQ(0,0,sample_freq);
 
     //eq has a bunch of setup stuff. Why isn't this in the EQ initalizer?
-    for (int i = 0; i <= 10; i += 5) 
+    for (int i = 0; i <= 10; i += 5)
     {
         plug->eq->changepar (i + 10, 7);
         plug->eq->changepar (i + 13, 64);
@@ -1009,8 +1037,8 @@ void run_eqplv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->eq->changepar(0,val);
     }
-    
-    for(i=1;i<4;i++)//1-3 low band
+
+    for(i=1; i<4; i++) //1-3 low band
     {
         val = (int)*plug->param_p[i]+64;
         if(plug->eq->getpar(i + 10) != val)
@@ -1018,7 +1046,7 @@ void run_eqplv2(LV2_Handle handle, uint32_t nframes)
             plug->eq->changepar(i+10,val);
         }
     }
-    for(;i<7;i++)//4-6 mid band
+    for(; i<7; i++) //4-6 mid band
     {
         val = (int)*plug->param_p[i]+64;
         if(plug->eq->getpar(i + 12) != val)
@@ -1026,7 +1054,7 @@ void run_eqplv2(LV2_Handle handle, uint32_t nframes)
             plug->eq->changepar(i+12,val);
         }
     }
-    for(;i<plug->nparams;i++)//7-9 high band
+    for(; i<plug->nparams; i++) //7-9 high band
     {
         val = (int)*plug->param_p[i]+64;
         if(plug->eq->getpar(i + 14) != val)
@@ -1045,7 +1073,7 @@ void run_eqplv2(LV2_Handle handle, uint32_t nframes)
 
     //now run
     plug->eq->out(plug->output_l_p,plug->output_r_p,nframes);
-    
+
     return;
 }
 
@@ -1068,13 +1096,13 @@ void run_cablv2(LV2_Handle handle, uint32_t nframes)
 
     RKRLV2* plug = (RKRLV2*)handle;
 
-    //check and set changed parameters 
+    //check and set changed parameters
     val = (int)*plug->param_p[0]+64;//gain
     if(plug->cab->getpar(0) != val)
     {
         plug->cab->changepar(0,val);
     }
-    
+
     val = (int)*plug->param_p[1];
     if(plug->cab->Cabinet_Preset != val)
     {
@@ -1091,7 +1119,7 @@ void run_cablv2(LV2_Handle handle, uint32_t nframes)
 
     //now run
     plug->cab->out(plug->output_l_p,plug->output_r_p,nframes);
-    
+
     return;
 }
 
@@ -1128,8 +1156,8 @@ void run_mdellv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->mdel->changepar(1,val);
     }
-    
-    for(i=2;i<7;i++)//2-6 
+
+    for(i=2; i<7; i++) //2-6
     {
         val = (int)*plug->param_p[i];
         if(plug->mdel->getpar(i) != val)
@@ -1142,7 +1170,7 @@ void run_mdellv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->mdel->changepar(i,val);
     }
-    for(i++;i<plug->nparams;i++)//8-12
+    for(i++; i<plug->nparams; i++) //8-12
     {
         val = (int)*plug->param_p[i];
         if(plug->mdel->getpar(i) != val)
@@ -1169,7 +1197,7 @@ void run_mdellv2(LV2_Handle handle, uint32_t nframes)
 LV2_Handle init_wahlv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
 {
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
-    
+
     plug->nparams = 11;
     plug->effectindex = 14;
 
@@ -1202,7 +1230,7 @@ void run_wahlv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->wah->changepar(i,val);
     }
-    for(i++;i<5;i++)//2-4
+    for(i++; i<5; i++) //2-4
     {
         val = (int)*plug->param_p[i];
         if(plug->wah->getpar(i) != val)
@@ -1215,7 +1243,7 @@ void run_wahlv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->wah->changepar(i,val);
     }
-    for(i++;i<plug->nparams;i++) // 6-11
+    for(i++; i<plug->nparams; i++) // 6-11
     {
         val = (int)*plug->param_p[i];
         if(plug->wah->getpar(i) != val)
@@ -1230,10 +1258,10 @@ void run_wahlv2(LV2_Handle handle, uint32_t nframes)
 
     //now run
     plug->wah->out(plug->input_l_p,plug->input_r_p,nframes);
-    
+
     //and for whatever reason we have to do the wet/dry mix ourselves
     wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->wah->outvolume, nframes);
-    
+
     return;
 }
 
@@ -1248,7 +1276,7 @@ LV2_Handle init_derelv2(const LV2_Descriptor *descriptor,double sample_freq, con
     getFeatures(plug,host_features);
 
     plug->dere = new NewDist(0,0, sample_freq, plug->period_max, /*oversampling*/2,
-                                /*up interpolation method*/0, /*down interpolation method*/2);
+                             /*up interpolation method*/0, /*down interpolation method*/2);
 
     return plug;
 }
@@ -1273,13 +1301,13 @@ void run_derelv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->dere->changepar(i,val);
     }
-    for(i++;i<plug->nparams;i++)//2-11
+    for(i++; i<plug->nparams; i++) //2-11
     {
         val = (int)*plug->param_p[i];
-       if(plug->dere->getpar(i) != val)
-       {
-           plug->dere->changepar(i,val);
-       }
+        if(plug->dere->getpar(i) != val)
+        {
+            plug->dere->changepar(i,val);
+        }
     }
 
     //now set out ports and global period size
@@ -1330,13 +1358,13 @@ void run_valvelv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->valve->changepar(i,val);
     }
-    for(i++;i<plug->nparams;i++)//2-12
+    for(i++; i<plug->nparams; i++) //2-12
     {
         val = (int)*plug->param_p[i];
-       if(plug->valve->getpar(i) != val)
-       {
-           plug->valve->changepar(i,val);
-       }
+        if(plug->valve->getpar(i) != val)
+        {
+            plug->valve->changepar(i,val);
+        }
     }
 
     //now set out ports and global period size
@@ -1382,13 +1410,13 @@ void run_dflangelv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->dflange->changepar(i,val);
     }
-    for(i++;i<plug->nparams;i++)//1-14
+    for(i++; i<plug->nparams; i++) //1-14
     {
         val = (int)*plug->param_p[i];
-       if(plug->dflange->getpar(i) != val)
-       {
-           plug->dflange->changepar(i,val);
-       }
+        if(plug->dflange->getpar(i) != val)
+        {
+            plug->dflange->changepar(i,val);
+        }
     }
 
     //now set out ports and global period size
@@ -1450,7 +1478,7 @@ void run_ringlv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->ring->changepar(i,val);
     }
-    for(i++;i<plug->nparams;i++)//3-12
+    for(i++; i<plug->nparams; i++) //3-12
     {
         val = (int)*plug->param_p[i];
         if(plug->ring->getpar(i) != val)
@@ -1463,18 +1491,18 @@ void run_ringlv2(LV2_Handle handle, uint32_t nframes)
     //TODO may need to make sure input is over some threshold
     if(plug->ring->Pafreq)
     {
-    	//copy over the data so that noteID doesn't tamper with it
+        //copy over the data so that noteID doesn't tamper with it
         memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
         memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
-    	plug->noteID->schmittFloat(plug->output_l_p,plug->output_r_p,nframes);
-    	if(plug->noteID->reconota != -1 && plug->noteID->reconota != plug->noteID->last)
-    	{
-    		if(plug->noteID->afreq > 0.0)
-    		{
-    			plug->ring->Pfreq = lrintf(plug->noteID->lafreq);//round
-    			plug->noteID->last = plug->noteID->reconota;
-    		}
-    	}
+        plug->noteID->schmittFloat(plug->output_l_p,plug->output_r_p,nframes);
+        if(plug->noteID->reconota != -1 && plug->noteID->reconota != plug->noteID->last)
+        {
+            if(plug->noteID->afreq > 0.0)
+            {
+                plug->ring->Pfreq = lrintf(plug->noteID->lafreq);//round
+                plug->noteID->last = plug->noteID->reconota;
+            }
+        }
     }
 
     //now set out ports and global period size
@@ -1486,7 +1514,7 @@ void run_ringlv2(LV2_Handle handle, uint32_t nframes)
 
     //and for whatever reason we have to do the wet/dry mix ourselves
     wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p,
-    		plug->ring->outvolume, nframes);
+               plug->ring->outvolume, nframes);
 
     return;
 }
@@ -1503,7 +1531,7 @@ LV2_Handle init_mbdistlv2(const LV2_Descriptor *descriptor,double sample_freq, c
     getFeatures(plug,host_features);
 
     plug->mbdist = new MBDist(0,0, sample_freq, plug->period_max, /*oversampling*/2,
-                                /*up interpolation method*/0, /*down interpolation method*/2);
+                              /*up interpolation method*/0, /*down interpolation method*/2);
 
     return plug;
 }
@@ -1528,13 +1556,13 @@ void run_mbdistlv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->mbdist->changepar(i,val);
     }
-    for(i++;i<plug->nparams;i++)//2-12
+    for(i++; i<plug->nparams; i++) //2-12
     {
         val = (int)*plug->param_p[i];
-       if(plug->mbdist->getpar(i) != val)
-       {
-           plug->mbdist->changepar(i,val);
-       }
+        if(plug->mbdist->getpar(i) != val)
+        {
+            plug->mbdist->changepar(i,val);
+        }
     }
 
     //now set out ports and global period size
@@ -1554,7 +1582,7 @@ void run_mbdistlv2(LV2_Handle handle, uint32_t nframes)
 LV2_Handle init_arplv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
 {
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
-    
+
     plug->nparams = 11;
     plug->effectindex = 20;
 
@@ -1595,13 +1623,13 @@ void run_arplv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->arp->changepar(i,val);
     }
-    for(i++;i<plug->nparams;i++)//rest are not offset
+    for(i++; i<plug->nparams; i++) //rest are not offset
     {
         val = (int)*plug->param_p[i];
-       if(plug->arp->getpar(i) != val)
-       {
-           plug->arp->changepar(i,val);
-       }
+        if(plug->arp->getpar(i) != val)
+        {
+            plug->arp->changepar(i,val);
+        }
     }
 
     //now set out ports and global period size
@@ -1610,10 +1638,10 @@ void run_arplv2(LV2_Handle handle, uint32_t nframes)
 
     //now run
     plug->arp->out(plug->input_l_p,plug->input_r_p,nframes);
-    
+
     //and for whatever reason we have to do the wet/dry mix ourselves
     wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->arp->outvolume, nframes);
-    
+
     return;
 }
 
@@ -1638,13 +1666,13 @@ void run_expandlv2(LV2_Handle handle, uint32_t nframes)
     RKRLV2* plug = (RKRLV2*)handle;
 
     //check and set changed parameters
-    for(i=0;i<plug->nparams;i++)
+    for(i=0; i<plug->nparams; i++)
     {
         val = (int)*plug->param_p[i];
-       if(plug->expand->getpar(i+1) != val)//this effect is 1 indexed
-       {
-           plug->expand->Expander_Change(i+1,val);
-       }
+        if(plug->expand->getpar(i+1) != val)//this effect is 1 indexed
+        {
+            plug->expand->Expander_Change(i+1,val);
+        }
     }
 
     //comp does in inline
@@ -1684,13 +1712,13 @@ void run_shuflv2(LV2_Handle handle, uint32_t nframes)
     RKRLV2* plug = (RKRLV2*)handle;
 
     //check and set changed parameters
-    for(i=0;i<plug->nparams;i++)//rest are not offset
+    for(i=0; i<plug->nparams; i++) //rest are not offset
     {
         val = (int)*plug->param_p[i];
-       if(plug->shuf->getpar(i) != val)
-       {
-           plug->shuf->changepar(i,val);
-       }
+        if(plug->shuf->getpar(i) != val)
+        {
+            plug->shuf->changepar(i,val);
+        }
     }
 
     //now set out ports and global period size
@@ -1731,7 +1759,7 @@ void run_synthlv2(LV2_Handle handle, uint32_t nframes)
     plug->synth->PERIOD = nframes;
 
     //check and set changed parameters
-    for(i=0;i<5;i++)//0-4
+    for(i=0; i<5; i++) //0-4
     {
         val = (int)*plug->param_p[i];
         if(plug->synth->getpar(i) != val)
@@ -1744,7 +1772,7 @@ void run_synthlv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->synth->changepar(i,val);
     }
-    for(i++;i<plug->nparams;i++)//6-10
+    for(i++; i<plug->nparams; i++) //6-10
     {
         val = (int)*plug->param_p[i];
         if(plug->synth->getpar(i+1) != val)
@@ -1791,39 +1819,39 @@ void run_mbvollv2(LV2_Handle handle, uint32_t nframes)
     plug->mbvol->PERIOD = nframes;
 
     //check and set changed parameters
-    for(i=0;i<3;i++)
+    for(i=0; i<3; i++)
     {
         val = (int)*plug->param_p[i];
-       if(plug->mbvol->getpar(i) != val)
-       {
-           plug->mbvol->changepar(i,val);
-       }
+        if(plug->mbvol->getpar(i) != val)
+        {
+            plug->mbvol->changepar(i,val);
+        }
     }
     val = (int)*plug->param_p[i] +64;//3 LR delay
     if(plug->mbvol->getpar(i) != val)
     {
-           plug->mbvol->changepar(i,val);
+        plug->mbvol->changepar(i,val);
     }
-    for(i++;i<6;i++)
+    for(i++; i<6; i++)
     {
         val = (int)*plug->param_p[i];
-       if(plug->mbvol->getpar(i) != val)
-       {
-           plug->mbvol->changepar(i,val);
-       }
+        if(plug->mbvol->getpar(i) != val)
+        {
+            plug->mbvol->changepar(i,val);
+        }
     }
     val = (int)*plug->param_p[i] +64;//6 LR delay
     if(plug->mbvol->getpar(i) != val)
     {
-           plug->mbvol->changepar(i,val);
+        plug->mbvol->changepar(i,val);
     }
-    for(i++;i<plug->nparams;i++)//skip legacy combi setting
+    for(i++; i<plug->nparams; i++) //skip legacy combi setting
     {
         val = (int)*plug->param_p[i];
-       if(plug->mbvol->getpar(i+1) != val)
-       {
-           plug->mbvol->changepar(i+1,val);
-       }
+        if(plug->mbvol->getpar(i+1) != val)
+        {
+            plug->mbvol->changepar(i+1,val);
+        }
     }
 
     //now set out ports and global period size
@@ -1863,34 +1891,34 @@ void run_mutrolv2(LV2_Handle handle, uint32_t nframes)
     plug->mutro->PERIOD = nframes;
 
     //check and set changed parameters
-    for(i=0;i<5;i++)
+    for(i=0; i<5; i++)
     {
         val = (int)*plug->param_p[i];
-       if(plug->mutro->getpar(i) != val)
-       {
-           plug->mutro->changepar(i,val);
-       }
+        if(plug->mutro->getpar(i) != val)
+        {
+            plug->mutro->changepar(i,val);
+        }
     }
     val = (int)*plug->param_p[i] +64;//5 LR delay
     if(plug->mutro->getpar(i) != val)
     {
-           plug->mutro->changepar(i,val);
+        plug->mutro->changepar(i,val);
     }
-    for(i++;i<17;i++)
+    for(i++; i<17; i++)
     {
         val = (int)*plug->param_p[i];
-       if(plug->mutro->getpar(i) != val)
-       {
-           plug->mutro->changepar(i,val);
-       }
+        if(plug->mutro->getpar(i) != val)
+        {
+            plug->mutro->changepar(i,val);
+        }
     }
-    for(;i<plug->nparams;i++)//skip legacy mode and preset setting
+    for(; i<plug->nparams; i++) //skip legacy mode and preset setting
     {
         val = (int)*plug->param_p[i];
-       if(plug->mutro->getpar(i+2) != val)
-       {
-           plug->mutro->changepar(i+2,val);
-       }
+        if(plug->mutro->getpar(i+2) != val)
+        {
+            plug->mutro->changepar(i+2,val);
+        }
     }
 
     //now set out ports and global period size
@@ -1945,21 +1973,21 @@ void run_echoverselv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->echoverse->changepar(i,val);
     }
-    for(i++;i<5;i++)//3,4 LR delay and angle is offset
+    for(i++; i<5; i++) //3,4 LR delay and angle is offset
     {
         val = (int)*plug->param_p[i]+64;
-       if(plug->echoverse->getpar(i) != val)
-       {
-           plug->echoverse->changepar(i,val);
-       }
+        if(plug->echoverse->getpar(i) != val)
+        {
+            plug->echoverse->changepar(i,val);
+        }
     }
-    for( ;i<plug->nparams;i++)
+    for( ; i<plug->nparams; i++)
     {
         val = (int)*plug->param_p[i];
-       if(plug->echoverse->getpar(i) != val)
-       {
-           plug->echoverse->changepar(i,val);
-       }
+        if(plug->echoverse->getpar(i) != val)
+        {
+            plug->echoverse->changepar(i,val);
+        }
     }
 
     //now set out ports and global period size
@@ -2004,15 +2032,15 @@ void run_coillv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->coil->changepar(i,val);
     }
-    for(i++;i<plug->nparams;i++)//skip origin and destinations
+    for(i++; i<plug->nparams; i++) //skip origin and destinations
     {
         val = (int)*plug->param_p[i];
-       if(plug->coil->getpar(i+2) != val)
-       {
-           plug->coil->changepar(i+2,val);
-       }
+        if(plug->coil->getpar(i+2) != val)
+        {
+            plug->coil->changepar(i+2,val);
+        }
     }
-     //coilcrafter does it inline
+    //coilcrafter does it inline
     memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
     memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
 
@@ -2047,15 +2075,15 @@ void run_shelflv2(LV2_Handle handle, uint32_t nframes)
     RKRLV2* plug = (RKRLV2*)handle;
 
     //check and set changed parameters
-    for(i=0;i<plug->nparams;i++)
+    for(i=0; i<plug->nparams; i++)
     {
         val = (int)*plug->param_p[i];
-       if(plug->shelf->getpar(i) != val)
-       {
-           plug->shelf->changepar(i,val);
-       }
+        if(plug->shelf->getpar(i) != val)
+        {
+            plug->shelf->changepar(i,val);
+        }
     }
-     //coilcrafter does it inline
+    //coilcrafter does it inline
     memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
     memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
 
@@ -2080,7 +2108,7 @@ LV2_Handle init_voclv2(const LV2_Descriptor *descriptor,double sample_freq, cons
     getFeatures(plug,host_features);
 
     plug->voc = new Vocoder(0,0,0,/*bands*/32,/*downsamplex2*/5,/*upsample quality*/4,
-    		/*downsample quality*/ 2,sample_freq,plug->period_max);
+                            /*downsample quality*/ 2,sample_freq,plug->period_max);
 
     return plug;
 }
@@ -2105,13 +2133,13 @@ void run_voclv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->voc->changepar(i,val);
     }
-    for(i++;i<plug->nparams;i++)
+    for(i++; i<plug->nparams; i++)
     {
         val = (int)*plug->param_p[i];
-       if(plug->voc->getpar(i) != val)
-       {
-           plug->voc->changepar(i,val);
-       }
+        if(plug->voc->getpar(i) != val)
+        {
+            plug->voc->changepar(i,val);
+        }
     }
 
     //set aux input and out ports
@@ -2153,16 +2181,16 @@ void run_suslv2(LV2_Handle handle, uint32_t nframes)
     RKRLV2* plug = (RKRLV2*)handle;
 
     //check and set changed parameters
-    for(i=0;i<plug->nparams;i++)
+    for(i=0; i<plug->nparams; i++)
     {
         val = (int)*plug->param_p[i];
-       if(plug->sus->getpar(i) != val)
-       {
-           plug->sus->changepar(i,val);
-       }
+        if(plug->sus->getpar(i) != val)
+        {
+            plug->sus->changepar(i,val);
+        }
     }
 
-     //sustainer does it inline
+    //sustainer does it inline
     memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
     memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
 
@@ -2187,7 +2215,7 @@ LV2_Handle init_seqlv2(const LV2_Descriptor *descriptor,double sample_freq, cons
     getFeatures(plug,host_features);
 
     plug->seq = new Sequence(0,0,/*shifter quality*/4,/*downsamplex2*/5,/*upsample quality*/4,
-    		/*downsample quality*/ 2,sample_freq,plug->period_max);
+                             /*downsample quality*/ 2,sample_freq,plug->period_max);
 
     return plug;
 }
@@ -2200,26 +2228,26 @@ void run_seqlv2(LV2_Handle handle, uint32_t nframes)
     RKRLV2* plug = (RKRLV2*)handle;
 
     //check and set changed parameters
-    for(i=0;i<10;i++)
+    for(i=0; i<10; i++)
     {
         val = (int)*plug->param_p[i];
-       if(plug->seq->getpar(i) != val)
-       {
-           plug->seq->changepar(i,val);
-       }
+        if(plug->seq->getpar(i) != val)
+        {
+            plug->seq->changepar(i,val);
+        }
     }
     val = (int)*plug->param_p[i]+64;//Q or panning
     if(plug->seq->getpar(i) != val)
     {
         plug->seq->changepar(i,val);
     }
-    for(i++;i<plug->nparams;i++)
+    for(i++; i<plug->nparams; i++)
     {
         val = (int)*plug->param_p[i];
-       if(plug->seq->getpar(i) != val)
-       {
-           plug->seq->changepar(i,val);
-       }
+        if(plug->seq->getpar(i) != val)
+        {
+            plug->seq->changepar(i,val);
+        }
     }
 
     //set out ports
@@ -2246,7 +2274,7 @@ LV2_Handle init_shiftlv2(const LV2_Descriptor *descriptor,double sample_freq, co
     getFeatures(plug,host_features);
 
     plug->shift = new Shifter(0,0,/*shifter quality*/4,/*downsamplex2*/5,/*upsample quality*/4,
-    		/*downsample quality*/ 2,sample_freq,plug->period_max);
+                              /*downsample quality*/ 2,sample_freq,plug->period_max);
 
     return plug;
 }
@@ -2265,21 +2293,21 @@ void run_shiftlv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->shift->changepar(i,val);
     }
-    for(i++;i<3;i++)//pan, gain
+    for(i++; i<3; i++) //pan, gain
     {
-       val = (int)*plug->param_p[i]+64;
-       if(plug->shift->getpar(i) != val)
-       {
-           plug->shift->changepar(i,val);
-       }
+        val = (int)*plug->param_p[i]+64;
+        if(plug->shift->getpar(i) != val)
+        {
+            plug->shift->changepar(i,val);
+        }
     }
-    for(;i<plug->nparams;i++)
+    for(; i<plug->nparams; i++)
     {
-       val = (int)*plug->param_p[i];
-       if(plug->shift->getpar(i) != val)
-       {
-           plug->shift->changepar(i,val);
-       }
+        val = (int)*plug->param_p[i];
+        if(plug->shift->getpar(i) != val)
+        {
+            plug->shift->changepar(i,val);
+        }
     }
 
     //set out ports
@@ -2306,7 +2334,7 @@ LV2_Handle init_stomplv2(const LV2_Descriptor *descriptor,double sample_freq, co
     getFeatures(plug,host_features);
 
     plug->stomp = new StompBox(0,0, sample_freq, plug->period_max, /*oversampling*/2,
-                                /*up interpolation method*/0, /*down interpolation method*/2);
+                               /*up interpolation method*/0, /*down interpolation method*/2);
 
     return plug;
 }
@@ -2319,16 +2347,16 @@ void run_stomplv2(LV2_Handle handle, uint32_t nframes)
     RKRLV2* plug = (RKRLV2*)handle;
 
     //check and set changed parameters
-    for(i=0;i<plug->nparams;i++)
+    for(i=0; i<plug->nparams; i++)
     {
-       val = (int)*plug->param_p[i];
-       if(plug->stomp->getpar(i) != val)
-       {
-           plug->stomp->changepar(i,val);
-       }
+        val = (int)*plug->param_p[i];
+        if(plug->stomp->getpar(i) != val)
+        {
+            plug->stomp->changepar(i,val);
+        }
     }
 
-     //stompbox does it inline
+    //stompbox does it inline
     memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
     memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
 
@@ -2344,7 +2372,7 @@ void run_stomplv2(LV2_Handle handle, uint32_t nframes)
 ///// StompBox Fuzz /////////
 LV2_Handle init_stomp_fuzzlv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
 {
-	//this is the same but has better labeling as controls act differently
+    //this is the same but has better labeling as controls act differently
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 5;
@@ -2353,7 +2381,7 @@ LV2_Handle init_stomp_fuzzlv2(const LV2_Descriptor *descriptor,double sample_fre
     getFeatures(plug,host_features);
 
     plug->stomp = new StompBox(0,0, sample_freq, plug->period_max, /*oversampling*/2,
-                                /*up interpolation method*/0, /*down interpolation method*/2);
+                               /*up interpolation method*/0, /*down interpolation method*/2);
     plug->stomp->changepar(5,7);//set to fuzz
 
     return plug;
@@ -2369,8 +2397,8 @@ LV2_Handle init_revtronlv2(const LV2_Descriptor *descriptor,double sample_freq, 
 
     getFeatures(plug,host_features);
 
-    plug->revtron = new Reverbtron(0,0, sample_freq, plug->period_max, /*downsample*/2,
-                                /*up interpolation method*/0, /*down interpolation method*/2);
+    plug->revtron = new Reverbtron(0,0, sample_freq, plug->period_max, /*downsample*/5, /*up interpolation method*/4, /*down interpolation method*/2);
+    plug->revtron->changepar(4,1);//set to user selected files
 
     return plug;
 }
@@ -2383,16 +2411,47 @@ void run_revtronlv2(LV2_Handle handle, uint32_t nframes)
     RKRLV2* plug = (RKRLV2*)handle;
 
     //check and set changed parameters
-    for(i=0;i<plug->nparams;i++)
+    for(i=0; i<plug->nparams; i++)
     {
-       val = (int)*plug->param_p[i];
-       if(plug->revtron->getpar(i) != val)
-       {
-           plug->revtron->changepar(i,val);
-       }
-    }
+        val = (int)*plug->param_p[i];
+        if(plug->revtron->getpar(i) != val)
+        {
+            plug->revtron->changepar(i,val);
+        }
 
-     //stompbox does it inline
+
+        LV2_ATOM_SEQUENCE_FOREACH( plug->atom_in_p, ev)
+        {
+            if (ev->body.type == plug->URIDs.atom_Object)
+            {
+                const LV2_Atom_Object* obj = (const LV2_Atom_Object*)&ev->body;
+                if (obj->body.otype == plug->URIDs.patch_Set)
+                {
+                    // Get the property the set message is setting
+                    const LV2_Atom* property = NULL;
+                    lv2_atom_object_get(obj, plug->URIDs.patch_property, &property, plug->URIDs.patch_value);
+                    if (property && property->type == plug->URIDs.atom_URID)
+                    {
+
+                        const uint32_t key = ((const LV2_Atom_URID*)property)->body;
+                        if (key == plug->URIDs.filetype_rvb)
+                        {
+                            // a new file! pass the atom to the worker thread to load it
+                            plug->scheduler->schedule_work(plug->scheduler->handle, lv2_atom_total_size(&ev->body), &ev->body);)
+                        }//property is rvb file
+                    }//property is URID
+                }
+                else if (obj->body.otype == plug->URIDs.patch_Get)
+                {
+                    // Received a get message, emit our state (probably to UI)
+                    //lv2_atom_forge_frame_time(&plug->forge, plug->frame_offset);
+                    //write_set_file(&plug->forge, &plug->URIDs, plug->sample->path, plug->sample->path_len);
+                }
+            }//object is a patch set
+        }//atom is object
+    }//each atom in sequence
+
+    //stompbox does it inline
     memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
     memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
 
@@ -2406,9 +2465,44 @@ void run_revtronlv2(LV2_Handle handle, uint32_t nframes)
     return;
 }
 
+static LV2_Worker_Status revwork(LV2_Handle handle, LV2_Worker_Respond_Function respond, LV2_Worker_Respond_Handle rhandle, uint32_t size, const void* data)
+{
+
+    RKRLV2* plug = (RKRLV2*)handle;
+    LV2_Atom_Object* obj = (LV2_Atom_Object*)data;
+    const LV2_Atom* file_path;
+    if(plug->revtron->oldfile)
+    {
+    	delete plug->revtron->oldfile;
+    	plug->revtron->oldfile = NULL;
+    }
+    if(size)
+    {
+            lv2_atom_object_get(obj, plug->URIDs.patch_value, &file_path, 0);
+            if (file_path)
+            {
+                    // Load file.
+                    RvbFile* file = plug->revtron->loadfile((char*)LV2_ATOM_BODY_CONST(file_path));
+                    if(file)
+                    respond(rhandle,sizeof(RvbFile),(void*)file);
+            }//got file
+            else
+                    return LV2_WORKER_ERR_UNKNOWN;
+    }
+    return LV2_WORKER_SUCCESS;
+}
+
+static LV2_Worker_Status revwork_response(LV2_Handle handle, uint32_t size, const void* data)
+{
+    RKRLV2* plug = (RKRLV2*)handle;
+    plug->revtron->applyfile((RvbFile*)data);
+    //schedule worker to delete old file
+    plug->scheduler->schedule_work(plug->scheduler->handle;0,0);
+}
+
 
 /////////////////////////////////
-///////// END OF FX ///////////// 
+///////// END OF FX /////////////
 /////////////////////////////////
 
 
@@ -2418,113 +2512,113 @@ void cleanup_rkrlv2(LV2_Handle handle)
     RKRLV2* plug = (RKRLV2*)handle;
     switch(plug->effectindex)
     {
-        case 0:
-        case 11:
-            delete plug->eq;//eql, eqp, cabinet
-            break;
-        case 1:
-        	delete plug->comp;
-        	break;
-        case 2:
-        	delete plug->dist;
-        	break;
-        case 3:
-        	delete plug->echo;
-        	break;
-        case 4:
-        	delete plug->chorus;
-        	break;
-        case 5:
-        	delete plug->aphase;
-        	break;
-        case 6:
-        	delete plug->harm;
-        	delete plug->noteID;
-        	delete plug->chordID;
-        	break;
-        case 7:
-            delete plug->exciter;
-            break;
-        case 8:
-        	delete plug->pan;
-        	break;
-        case 9:
-        	delete plug->alien;
-        	break;
-        case 10:
-            delete plug->reve;
-            break;
-        case 12:
-            delete plug->cab;
-            break;
-        case 13:
-            delete plug->mdel;
-            break;
-        case 14:
-            delete plug->wah;
-            break;
-        case 15:
-            delete plug->dere;
-            break;
-        case 16:
-            delete plug->valve;
-            break;
-        case 17:
-            delete plug->dflange;
-            break;
-        case 18:
-        	delete plug->noteID;
-            delete plug->ring;
-            break;
-        case 19:
-        	delete plug->mbdist; 
-            break;
-        case 20:
-        	delete plug->arp; 
-            break;
-        case 21:
-        	delete plug->expand;
-            break;
-        case 22:
-        	delete plug->shuf;
-            break;
-        case 23:
-        	delete plug->synth;
-            break;
-        case 24:
-        	delete plug->mbvol;
-            break;
-        case 25:
-        	delete plug->mutro;
-            break;
-        case 26:
-        	delete plug->echoverse;
-        	break;
-        case 27:
-        	delete plug->coil;
-        	break;
-        case 28:
-        	delete plug->shelf;
-        	break;
-        case 29:
-        	delete plug->voc;
-        	break;
-        case 30:
-        	delete plug->sus;
-        	break;
-        case 31:
-        	delete plug->seq;
-        	break;
-        case 32:
-        	delete plug->shift;
-        	break;
-        case 33:
-        case 34:
-        	delete plug->stomp;
-        	break;
-        case 35:
-        	delete plug->revtron;
-        	break;
+    case 0:
+    case 11:
+        delete plug->eq;//eql, eqp, cabinet
+        break;
+    case 1:
+        delete plug->comp;
+        break;
+    case 2:
+        delete plug->dist;
+        break;
+    case 3:
+        delete plug->echo;
+        break;
+    case 4:
+        delete plug->chorus;
+        break;
+    case 5:
+        delete plug->aphase;
+        break;
+    case 6:
+        delete plug->harm;
+        delete plug->noteID;
+        delete plug->chordID;
+        break;
+    case 7:
+        delete plug->exciter;
+        break;
+    case 8:
+        delete plug->pan;
+        break;
+    case 9:
+        delete plug->alien;
+        break;
+    case 10:
+        delete plug->reve;
+        break;
+    case 12:
+        delete plug->cab;
+        break;
+    case 13:
+        delete plug->mdel;
+        break;
+    case 14:
+        delete plug->wah;
+        break;
+    case 15:
+        delete plug->dere;
+        break;
+    case 16:
+        delete plug->valve;
+        break;
+    case 17:
+        delete plug->dflange;
+        break;
+    case 18:
+        delete plug->noteID;
+        delete plug->ring;
+        break;
+    case 19:
+        delete plug->mbdist;
+        break;
+    case 20:
+        delete plug->arp;
+        break;
+    case 21:
+        delete plug->expand;
+        break;
+    case 22:
+        delete plug->shuf;
+        break;
+    case 23:
+        delete plug->synth;
+        break;
+    case 24:
+        delete plug->mbvol;
+        break;
+    case 25:
+        delete plug->mutro;
+        break;
+    case 26:
+        delete plug->echoverse;
+        break;
+    case 27:
+        delete plug->coil;
+        break;
+    case 28:
+        delete plug->shelf;
+        break;
+    case 29:
+        delete plug->voc;
+        break;
+    case 30:
+        delete plug->sus;
+        break;
+    case 31:
+        delete plug->seq;
+        break;
+    case 32:
+        delete plug->shift;
+        break;
+    case 33:
+    case 34:
+        delete plug->stomp;
+        break;
+    case 35:
+        delete plug->revtron;
+        break;
     }
     free(plug);
 }
@@ -2534,32 +2628,83 @@ void connect_rkrlv2_ports_w_atom(LV2_Handle handle, uint32_t port, void *data)
     RKRLV2* plug = (RKRLV2*)handle;
     switch(port)
     {
-    case INL:         plug->input_l_p = (float*)data;break;
-    case INR:         plug->input_r_p = (float*)data;break;
-    case OUTL:        plug->output_l_p = (float*)data;break;
-    case OUTR:        plug->output_r_p = (float*)data;break;
-    case PARAM0:      plug->atom_in_p = (const LV2_Atom_Sequence*)data;break;
-    case PARAM1:      plug->atom_out_p = (LV2_Atom_Sequence*)data;break;
-    case PARAM2:      plug->param_p[0] = (float*)data;break;
-    case PARAM3:      plug->param_p[1] = (float*)data;break;
-    case PARAM4:      plug->param_p[2] = (float*)data;break;
-    case PARAM5:      plug->param_p[3] = (float*)data;break;
-    case PARAM6:      plug->param_p[4] = (float*)data;break;
-    case PARAM7:      plug->param_p[5] = (float*)data;break;
-    case PARAM8:      plug->param_p[6] = (float*)data;break;
-    case PARAM9:      plug->param_p[7] = (float*)data;break;
-    case PARAM10:     plug->param_p[8] = (float*)data;break;
-    case PARAM11:     plug->param_p[9] = (float*)data;break;
-    case PARAM12:     plug->param_p[10] = (float*)data;break;
-    case PARAM13:     plug->param_p[11] = (float*)data;break;
-    case PARAM14:     plug->param_p[12] = (float*)data;break;
-    case PARAM15:     plug->param_p[13] = (float*)data;break;
-    case PARAM16:     plug->param_p[14] = (float*)data;break;
-    case PARAM17:     plug->param_p[15] = (float*)data;break;
-    case PARAM18:     plug->param_p[16] = (float*)data;break;
-    case DBG:     	  plug->param_p[17] = (float*)data;break;
-    case EXTRA:       plug->param_p[18] = (float*)data;break;
-    default:         puts("UNKNOWN PORT YO!!");
+    case INL:
+        plug->input_l_p = (float*)data;
+        break;
+    case INR:
+        plug->input_r_p = (float*)data;
+        break;
+    case OUTL:
+        plug->output_l_p = (float*)data;
+        break;
+    case OUTR:
+        plug->output_r_p = (float*)data;
+        break;
+    case PARAM0:
+        plug->atom_in_p = (const LV2_Atom_Sequence*)data;
+        break;
+    case PARAM1:
+        plug->atom_out_p = (LV2_Atom_Sequence*)data;
+        break;
+    case PARAM2:
+        plug->param_p[0] = (float*)data;
+        break;
+    case PARAM3:
+        plug->param_p[1] = (float*)data;
+        break;
+    case PARAM4:
+        plug->param_p[2] = (float*)data;
+        break;
+    case PARAM5:
+        plug->param_p[3] = (float*)data;
+        break;
+    case PARAM6:
+        plug->param_p[4] = (float*)data;
+        break;
+    case PARAM7:
+        plug->param_p[5] = (float*)data;
+        break;
+    case PARAM8:
+        plug->param_p[6] = (float*)data;
+        break;
+    case PARAM9:
+        plug->param_p[7] = (float*)data;
+        break;
+    case PARAM10:
+        plug->param_p[8] = (float*)data;
+        break;
+    case PARAM11:
+        plug->param_p[9] = (float*)data;
+        break;
+    case PARAM12:
+        plug->param_p[10] = (float*)data;
+        break;
+    case PARAM13:
+        plug->param_p[11] = (float*)data;
+        break;
+    case PARAM14:
+        plug->param_p[12] = (float*)data;
+        break;
+    case PARAM15:
+        plug->param_p[13] = (float*)data;
+        break;
+    case PARAM16:
+        plug->param_p[14] = (float*)data;
+        break;
+    case PARAM17:
+        plug->param_p[15] = (float*)data;
+        break;
+    case PARAM18:
+        plug->param_p[16] = (float*)data;
+        break;
+    case DBG:
+        plug->param_p[17] = (float*)data;
+        break;
+    case EXTRA:
+        plug->param_p[18] = (float*)data;
+        break;
+    default:
+        puts("UNKNOWN PORT YO!!");
     }
 }
 
@@ -2568,35 +2713,85 @@ void connect_rkrlv2_ports(LV2_Handle handle, uint32_t port, void *data)
     RKRLV2* plug = (RKRLV2*)handle;
     switch(port)
     {
-    case INL:         plug->input_l_p = (float*)data;break;
-    case INR:         plug->input_r_p = (float*)data;break;
-    case OUTL:        plug->output_l_p = (float*)data;break;
-    case OUTR:        plug->output_r_p = (float*)data;break;
-    case PARAM0:      plug->param_p[0] = (float*)data;break;
-    case PARAM1:      plug->param_p[1] = (float*)data;break;
-    case PARAM2:      plug->param_p[2] = (float*)data;break;
-    case PARAM3:      plug->param_p[3] = (float*)data;break;
-    case PARAM4:      plug->param_p[4] = (float*)data;break;
-    case PARAM5:      plug->param_p[5] = (float*)data;break;
-    case PARAM6:      plug->param_p[6] = (float*)data;break;
-    case PARAM7:      plug->param_p[7] = (float*)data;break;
-    case PARAM8:      plug->param_p[8] = (float*)data;break;
-    case PARAM9:      plug->param_p[9] = (float*)data;break;
-    case PARAM10:     plug->param_p[10] = (float*)data;break;
-    case PARAM11:     plug->param_p[11] = (float*)data;break;
-    case PARAM12:     plug->param_p[12] = (float*)data;break;
-    case PARAM13:     plug->param_p[13] = (float*)data;break;
-    case PARAM14:     plug->param_p[14] = (float*)data;break;
-    case PARAM15:     plug->param_p[15] = (float*)data;break;
-    case PARAM16:     plug->param_p[16] = (float*)data;break;
-    case PARAM17:     plug->param_p[17] = (float*)data;break;
-    case PARAM18:     plug->param_p[18] = (float*)data;break;
-    case DBG:         plug->dbg_p = (float*)data;break;
-    default:         puts("UNKNOWN PORT YO!!");
+    case INL:
+        plug->input_l_p = (float*)data;
+        break;
+    case INR:
+        plug->input_r_p = (float*)data;
+        break;
+    case OUTL:
+        plug->output_l_p = (float*)data;
+        break;
+    case OUTR:
+        plug->output_r_p = (float*)data;
+        break;
+    case PARAM0:
+        plug->param_p[0] = (float*)data;
+        break;
+    case PARAM1:
+        plug->param_p[1] = (float*)data;
+        break;
+    case PARAM2:
+        plug->param_p[2] = (float*)data;
+        break;
+    case PARAM3:
+        plug->param_p[3] = (float*)data;
+        break;
+    case PARAM4:
+        plug->param_p[4] = (float*)data;
+        break;
+    case PARAM5:
+        plug->param_p[5] = (float*)data;
+        break;
+    case PARAM6:
+        plug->param_p[6] = (float*)data;
+        break;
+    case PARAM7:
+        plug->param_p[7] = (float*)data;
+        break;
+    case PARAM8:
+        plug->param_p[8] = (float*)data;
+        break;
+    case PARAM9:
+        plug->param_p[9] = (float*)data;
+        break;
+    case PARAM10:
+        plug->param_p[10] = (float*)data;
+        break;
+    case PARAM11:
+        plug->param_p[11] = (float*)data;
+        break;
+    case PARAM12:
+        plug->param_p[12] = (float*)data;
+        break;
+    case PARAM13:
+        plug->param_p[13] = (float*)data;
+        break;
+    case PARAM14:
+        plug->param_p[14] = (float*)data;
+        break;
+    case PARAM15:
+        plug->param_p[15] = (float*)data;
+        break;
+    case PARAM16:
+        plug->param_p[16] = (float*)data;
+        break;
+    case PARAM17:
+        plug->param_p[17] = (float*)data;
+        break;
+    case PARAM18:
+        plug->param_p[18] = (float*)data;
+        break;
+    case DBG:
+        plug->dbg_p = (float*)data;
+        break;
+    default:
+        puts("UNKNOWN PORT YO!!");
     }
 }
 
-static const LV2_Descriptor eqlv2_descriptor={
+static const LV2_Descriptor eqlv2_descriptor=
+{
     EQLV2_URI,
     init_eqlv2,
     connect_rkrlv2_ports,
@@ -2607,7 +2802,8 @@ static const LV2_Descriptor eqlv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor complv2_descriptor={
+static const LV2_Descriptor complv2_descriptor=
+{
     COMPLV2_URI,
     init_complv2,
     connect_rkrlv2_ports,
@@ -2618,7 +2814,8 @@ static const LV2_Descriptor complv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor distlv2_descriptor={
+static const LV2_Descriptor distlv2_descriptor=
+{
     DISTLV2_URI,
     init_distlv2,
     connect_rkrlv2_ports,
@@ -2629,7 +2826,8 @@ static const LV2_Descriptor distlv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor echolv2_descriptor={
+static const LV2_Descriptor echolv2_descriptor=
+{
     ECHOLV2_URI,
     init_echolv2,
     connect_rkrlv2_ports,
@@ -2640,7 +2838,8 @@ static const LV2_Descriptor echolv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor choruslv2_descriptor={
+static const LV2_Descriptor choruslv2_descriptor=
+{
     CHORUSLV2_URI,
     init_choruslv2,
     connect_rkrlv2_ports,
@@ -2651,7 +2850,8 @@ static const LV2_Descriptor choruslv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor aphaselv2_descriptor={
+static const LV2_Descriptor aphaselv2_descriptor=
+{
     APHASELV2_URI,
     init_aphaselv2,
     connect_rkrlv2_ports,
@@ -2662,7 +2862,8 @@ static const LV2_Descriptor aphaselv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor harmnomidlv2_descriptor={
+static const LV2_Descriptor harmnomidlv2_descriptor=
+{
     HARMNOMIDLV2_URI,
     init_harmnomidlv2,
     connect_rkrlv2_ports,
@@ -2673,7 +2874,8 @@ static const LV2_Descriptor harmnomidlv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor exciterlv2_descriptor={
+static const LV2_Descriptor exciterlv2_descriptor=
+{
     EXCITERLV2_URI,
     init_exciterlv2,
     connect_rkrlv2_ports,
@@ -2684,7 +2886,8 @@ static const LV2_Descriptor exciterlv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor panlv2_descriptor={
+static const LV2_Descriptor panlv2_descriptor=
+{
     PANLV2_URI,
     init_panlv2,
     connect_rkrlv2_ports,
@@ -2695,7 +2898,8 @@ static const LV2_Descriptor panlv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor alienlv2_descriptor={
+static const LV2_Descriptor alienlv2_descriptor=
+{
     ALIENLV2_URI,
     init_alienlv2,
     connect_rkrlv2_ports,
@@ -2706,7 +2910,8 @@ static const LV2_Descriptor alienlv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor revelv2_descriptor={
+static const LV2_Descriptor revelv2_descriptor=
+{
     REVELV2_URI,
     init_revelv2,
     connect_rkrlv2_ports,
@@ -2717,7 +2922,8 @@ static const LV2_Descriptor revelv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor eqplv2_descriptor={
+static const LV2_Descriptor eqplv2_descriptor=
+{
     EQPLV2_URI,
     init_eqplv2,
     connect_rkrlv2_ports,
@@ -2728,7 +2934,8 @@ static const LV2_Descriptor eqplv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor cablv2_descriptor={
+static const LV2_Descriptor cablv2_descriptor=
+{
     CABLV2_URI,
     init_cablv2,
     connect_rkrlv2_ports,
@@ -2739,7 +2946,8 @@ static const LV2_Descriptor cablv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor mdellv2_descriptor={
+static const LV2_Descriptor mdellv2_descriptor=
+{
     MDELLV2_URI,
     init_mdellv2,
     connect_rkrlv2_ports,
@@ -2750,7 +2958,8 @@ static const LV2_Descriptor mdellv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor wahlv2_descriptor={
+static const LV2_Descriptor wahlv2_descriptor=
+{
     WAHLV2_URI,
     init_wahlv2,
     connect_rkrlv2_ports,
@@ -2761,7 +2970,8 @@ static const LV2_Descriptor wahlv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor derelv2_descriptor={
+static const LV2_Descriptor derelv2_descriptor=
+{
     DERELV2_URI,
     init_derelv2,
     connect_rkrlv2_ports,
@@ -2772,7 +2982,8 @@ static const LV2_Descriptor derelv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor valvelv2_descriptor={
+static const LV2_Descriptor valvelv2_descriptor=
+{
     VALVELV2_URI,
     init_valvelv2,
     connect_rkrlv2_ports,
@@ -2783,7 +2994,8 @@ static const LV2_Descriptor valvelv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor dflangelv2_descriptor={
+static const LV2_Descriptor dflangelv2_descriptor=
+{
     DFLANGELV2_URI,
     init_dflangelv2,
     connect_rkrlv2_ports,
@@ -2794,7 +3006,8 @@ static const LV2_Descriptor dflangelv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor ringlv2_descriptor={
+static const LV2_Descriptor ringlv2_descriptor=
+{
     RINGLV2_URI,
     init_ringlv2,
     connect_rkrlv2_ports,
@@ -2805,7 +3018,8 @@ static const LV2_Descriptor ringlv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor mbdistlv2_descriptor={
+static const LV2_Descriptor mbdistlv2_descriptor=
+{
     MBDISTLV2_URI,
     init_mbdistlv2,
     connect_rkrlv2_ports,
@@ -2816,7 +3030,8 @@ static const LV2_Descriptor mbdistlv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor arplv2_descriptor={
+static const LV2_Descriptor arplv2_descriptor=
+{
     ARPIELV2_URI,
     init_arplv2,
     connect_rkrlv2_ports,
@@ -2827,7 +3042,8 @@ static const LV2_Descriptor arplv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor expandlv2_descriptor={
+static const LV2_Descriptor expandlv2_descriptor=
+{
     EXPANDLV2_URI,
     init_expandlv2,
     connect_rkrlv2_ports,
@@ -2838,7 +3054,8 @@ static const LV2_Descriptor expandlv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor shuflv2_descriptor={
+static const LV2_Descriptor shuflv2_descriptor=
+{
     SHUFFLELV2_URI,
     init_shuflv2,
     connect_rkrlv2_ports,
@@ -2849,7 +3066,8 @@ static const LV2_Descriptor shuflv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor synthlv2_descriptor={
+static const LV2_Descriptor synthlv2_descriptor=
+{
     SYNTHLV2_URI,
     init_synthlv2,
     connect_rkrlv2_ports,
@@ -2860,7 +3078,8 @@ static const LV2_Descriptor synthlv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor mbvollv2_descriptor={
+static const LV2_Descriptor mbvollv2_descriptor=
+{
     MBVOLLV2_URI,
     init_mbvollv2,
     connect_rkrlv2_ports,
@@ -2871,7 +3090,8 @@ static const LV2_Descriptor mbvollv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor mutrolv2_descriptor={
+static const LV2_Descriptor mutrolv2_descriptor=
+{
     MUTROLV2_URI,
     init_mutrolv2,
     connect_rkrlv2_ports,
@@ -2882,7 +3102,8 @@ static const LV2_Descriptor mutrolv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor echoverselv2_descriptor={
+static const LV2_Descriptor echoverselv2_descriptor=
+{
     ECHOVERSELV2_URI,
     init_echoverselv2,
     connect_rkrlv2_ports,
@@ -2893,7 +3114,8 @@ static const LV2_Descriptor echoverselv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor coillv2_descriptor={
+static const LV2_Descriptor coillv2_descriptor=
+{
     COILLV2_URI,
     init_coillv2,
     connect_rkrlv2_ports,
@@ -2904,7 +3126,8 @@ static const LV2_Descriptor coillv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor shelflv2_descriptor={
+static const LV2_Descriptor shelflv2_descriptor=
+{
     SHELFLV2_URI,
     init_shelflv2,
     connect_rkrlv2_ports,
@@ -2915,7 +3138,8 @@ static const LV2_Descriptor shelflv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor voclv2_descriptor={
+static const LV2_Descriptor voclv2_descriptor=
+{
     VOCODERLV2_URI,
     init_voclv2,
     connect_rkrlv2_ports,
@@ -2926,7 +3150,8 @@ static const LV2_Descriptor voclv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor suslv2_descriptor={
+static const LV2_Descriptor suslv2_descriptor=
+{
     SUSTAINLV2_URI,
     init_suslv2,
     connect_rkrlv2_ports,
@@ -2937,7 +3162,8 @@ static const LV2_Descriptor suslv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor seqlv2_descriptor={
+static const LV2_Descriptor seqlv2_descriptor=
+{
     SEQUENCELV2_URI,
     init_seqlv2,
     connect_rkrlv2_ports,
@@ -2948,7 +3174,8 @@ static const LV2_Descriptor seqlv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor shiftlv2_descriptor={
+static const LV2_Descriptor shiftlv2_descriptor=
+{
     SHIFTERLV2_URI,
     init_shiftlv2,
     connect_rkrlv2_ports,
@@ -2959,7 +3186,8 @@ static const LV2_Descriptor shiftlv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor stomplv2_descriptor={
+static const LV2_Descriptor stomplv2_descriptor=
+{
     STOMPLV2_URI,
     init_stomplv2,
     connect_rkrlv2_ports,
@@ -2970,7 +3198,8 @@ static const LV2_Descriptor stomplv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor stompfuzzlv2_descriptor={
+static const LV2_Descriptor stompfuzzlv2_descriptor=
+{
     STOMPFUZZLV2_URI,
     init_stomp_fuzzlv2,
     connect_rkrlv2_ports,
@@ -2981,7 +3210,18 @@ static const LV2_Descriptor stompfuzzlv2_descriptor={
     0//extension
 };
 
-static const LV2_Descriptor revtronlv2_descriptor={
+static const void* revtron_extension_data(const char* uri)
+{
+    static const LV2_Worker_Interface worker = { revwork, revwork_response, NULL };
+    if (!strcmp(uri, LV2_WORKER__interface))
+    {
+        return &worker;
+    }
+    return NULL;
+}
+
+static const LV2_Descriptor revtronlv2_descriptor=
+{
     REVTRONLV2_URI,
     init_revtronlv2,
     connect_rkrlv2_ports_w_atom,
@@ -2989,13 +3229,14 @@ static const LV2_Descriptor revtronlv2_descriptor={
     run_revtronlv2,
     0,//deactivate
     cleanup_rkrlv2,
-    0//extension
+    revtron_extension_data
 };
 
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor* lv2_descriptor(uint32_t index)
 {
-    switch (index) {
+    switch (index)
+    {
     case 0:
         return &eqlv2_descriptor ;
     case 1:
@@ -3011,63 +3252,63 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
     case 6:
         return &harmnomidlv2_descriptor ;
     case 7:
-    	return &exciterlv2_descriptor ;
+        return &exciterlv2_descriptor ;
     case 8:
-    	return &panlv2_descriptor ;
+        return &panlv2_descriptor ;
     case 9:
-    	return &alienlv2_descriptor ;
+        return &alienlv2_descriptor ;
     case 10:
-    	return &revelv2_descriptor ;
+        return &revelv2_descriptor ;
     case 11:
-    	return &eqplv2_descriptor ;
+        return &eqplv2_descriptor ;
     case 12:
-    	return &cablv2_descriptor ;
+        return &cablv2_descriptor ;
     case 13:
-    	return &mdellv2_descriptor ;
+        return &mdellv2_descriptor ;
     case 14:
-    	return &wahlv2_descriptor ;
+        return &wahlv2_descriptor ;
     case 15:
-    	return &derelv2_descriptor ;
+        return &derelv2_descriptor ;
     case 16:
-    	return &valvelv2_descriptor ;
+        return &valvelv2_descriptor ;
     case 17:
-    	return &dflangelv2_descriptor ;
+        return &dflangelv2_descriptor ;
     case 18:
-    	return &ringlv2_descriptor ;
+        return &ringlv2_descriptor ;
     case 19:
-    	return &mbdistlv2_descriptor ;
+        return &mbdistlv2_descriptor ;
     case 20:
-    	return &arplv2_descriptor ;
+        return &arplv2_descriptor ;
     case 21:
-    	return &expandlv2_descriptor ;
+        return &expandlv2_descriptor ;
     case 22:
-    	return &shuflv2_descriptor ;
+        return &shuflv2_descriptor ;
     case 23:
-    	return &synthlv2_descriptor ;
+        return &synthlv2_descriptor ;
     case 24:
-    	return &mbvollv2_descriptor ;
+        return &mbvollv2_descriptor ;
     case 25:
-    	return &mutrolv2_descriptor ;
+        return &mutrolv2_descriptor ;
     case 26:
-    	return &echoverselv2_descriptor ;
+        return &echoverselv2_descriptor ;
     case 27:
-    	return &coillv2_descriptor ;
+        return &coillv2_descriptor ;
     case 28:
-    	return &shelflv2_descriptor ;
+        return &shelflv2_descriptor ;
     case 29:
-    	return &voclv2_descriptor ;
+        return &voclv2_descriptor ;
     case 30:
-    	return &suslv2_descriptor ;
+        return &suslv2_descriptor ;
     case 31:
-    	return &seqlv2_descriptor ;
+        return &seqlv2_descriptor ;
     case 32:
-    	return &shiftlv2_descriptor ;
+        return &shiftlv2_descriptor ;
     case 33:
-    	return &stomplv2_descriptor ;
+        return &stomplv2_descriptor ;
     case 34:
-    	return &stompfuzzlv2_descriptor ;
+        return &stompfuzzlv2_descriptor ;
     case 35:
-    	return &revtronlv2_descriptor ;
+        return &revtronlv2_descriptor ;
     default:
         return 0;
     }
