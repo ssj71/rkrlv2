@@ -62,8 +62,7 @@ public:
     float outvolume;
 
     char Filename[128];
-    RvbFile *file;
-    RvbFile *oldfile;
+    RvbFile *File;
 
 private:
 
@@ -73,7 +72,7 @@ private:
     void setlpf (int Plpf);
     void setfb(int value);
     void convert_time();
-    void loaddefault();
+    void loaddefault(RvbFile* file);
 
 
     //Parametrii
@@ -100,7 +99,7 @@ private:
     int offset;
     int hoffset;
     int maxx_size;
-    int data_length;
+    //int data_length;
     int avgtime;
     int hrtf_size;
     int hlength;
@@ -115,9 +114,11 @@ private:
     double u_down;
     float nfSAMPLE_RATE;
 
-    float fstretch, idelay, ffade, maxtime, maxdata, decay, diffusion;
+    //float fstretch, idelay, ffade, maxtime, maxdata, decay, diffusion;
+    float fstretch, idelay, ffade, decay, diffusion;
     float lpanning, rpanning, hidamp, alpha_hidamp, convlength, oldl;
-    float *data, *lxn, *imdelay, *ftime, *tdata, *rnddata, *hrtf;
+    //float *data, *lxn, *imdelay, *ftime, *tdata, *rnddata, *hrtf;
+    float *data, *lxn, *imdelay, *rnddata, *hrtf;
     float *templ, *tempr;
     float level,fb, feedback,levpanl,levpanr;
     float roomsize;

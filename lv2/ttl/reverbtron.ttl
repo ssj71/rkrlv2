@@ -9,6 +9,7 @@
 @prefix atom:  <http://lv2plug.in/ns/ext/atom#> .  
 @prefix urid:  <http://lv2plug.in/ns/ext/urid#> .
 @prefix worker:  <http://lv2plug.in/ns/ext/worker#> .
+@prefix state:  <http://lv2plug.in/ns/ext/state#> .
 @prefix mediatype: <https://tools.ietf.org/html/rfc2046> .
 @prefix mime:   <http://www.iana.org/assignments/media-types/media-types.xhtml#> .
 
@@ -39,8 +40,8 @@
             foaf:mbox <ssjackson71@gmail.com> ;
     ] ;
     lv2:requiredFeature urid:map, worker:schedule ;
-    lv2:optionalFeature lv2:hardRTCapable ;
-    lv2:extensionData worker:Interface ;
+    lv2:optionalFeature lv2:hardRTCapable, state:loadDefaultState ;
+    lv2:extensionData worker:interface, state:interface ;
 #    ui:ui  <http://rakarrack.sourceforge.net/effects.html#Reverbtron_ui> ;
     patch:writable <http://rakarrack.sourceforge.net/effects.html#Reverbtron:rvbfile> ;
 

@@ -9,6 +9,7 @@
 #include<lv2/lv2plug.in/ns/ext/atom/atom.h>
 #include<lv2/lv2plug.in/ns/ext/patch/patch.h>
 #include<lv2/lv2plug.in/ns/ext/worker/worker.h>
+#include<lv2/lv2plug.in/ns/ext/state/state.h>
 #include<stdlib.h>
 #include<stdio.h>
 #include<string.h>
@@ -78,6 +79,7 @@ typedef struct _RKRLV2
         LV2_URID    atom_Float;
         LV2_URID    atom_Int;
         LV2_URID    atom_Object;
+        LV2_URID    atom_Path;
         LV2_URID    atom_URID;
         LV2_URID    bufsz_max;
         LV2_URID    patch_Set;
@@ -190,7 +192,7 @@ void getFeatures(RKRLV2* plug, const LV2_Feature * const* host_features)
                 }
             }
         }
-        else if(!strcmp(host_features[i]->URI),LV2_WORKER__schedule)
+        else if(!strcmp(host_features[i]->URI,LV2_WORKER__schedule))
         {
             plug->scheduler = (LV2_Worker_Schedule*)host_features[i]->data;
         }
@@ -203,7 +205,8 @@ void getFeatures(RKRLV2* plug, const LV2_Feature * const* host_features)
                 plug->URIDs.atom_Float = urid_map->map(urid_map->handle,LV2_ATOM__Float);
                 plug->URIDs.atom_Int = urid_map->map(urid_map->handle,LV2_ATOM__Int);
                 plug->URIDs.atom_Object = urid_map->map(urid_map->handle,LV2_ATOM__Object);
-                plug->URIDs.atom_URID = urid_map->map(urid_map->handle,LV2_ATOM__URI);
+                plug->URIDs.atom_Path = urid_map->map(urid_map->handle,LV2_ATOM__Path);
+                plug->URIDs.atom_URID = urid_map->map(urid_map->handle,LV2_ATOM__URID);
                 plug->URIDs.bufsz_max = urid_map->map(urid_map->handle,LV2_BUF_SIZE__maxBlockLength);
                 plug->URIDs.patch_Set = urid_map->map(urid_map->handle,LV2_PATCH__Set);
                 plug->URIDs.patch_Get = urid_map->map(urid_map->handle,LV2_PATCH__Get);
@@ -2429,15 +2432,14 @@ void run_revtronlv2(LV2_Handle handle, uint32_t nframes)
                 {
                     // Get the property the set message is setting
                     const LV2_Atom* property = NULL;
-                    lv2_atom_object_get(obj, plug->URIDs.patch_property, &property, plug->URIDs.patch_value);
+                    lv2_atom_object_get(obj, plug->URIDs.patch_property, &property, 0);
                     if (property && property->type == plug->URIDs.atom_URID)
                     {
-
                         const uint32_t key = ((const LV2_Atom_URID*)property)->body;
                         if (key == plug->URIDs.filetype_rvb)
                         {
                             // a new file! pass the atom to the worker thread to load it
-                            plug->scheduler->schedule_work(plug->scheduler->handle, lv2_atom_total_size(&ev->body), &ev->body);)
+                            plug->scheduler->schedule_work(plug->scheduler->handle, lv2_atom_total_size(&ev->body), &ev->body);
                         }//property is rvb file
                     }//property is URID
                 }
@@ -2451,7 +2453,7 @@ void run_revtronlv2(LV2_Handle handle, uint32_t nframes)
         }//atom is object
     }//each atom in sequence
 
-    //stompbox does it inline
+    //revtron does it inline
     memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
     memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
 
@@ -2471,23 +2473,25 @@ static LV2_Worker_Status revwork(LV2_Handle handle, LV2_Worker_Respond_Function 
     RKRLV2* plug = (RKRLV2*)handle;
     LV2_Atom_Object* obj = (LV2_Atom_Object*)data;
     const LV2_Atom* file_path;
-    if(plug->revtron->oldfile)
+    if(size == sizeof(RvbFile*))
     {
-    	delete plug->revtron->oldfile;
-    	plug->revtron->oldfile = NULL;
+    	//work was scheduled to delete the old file.
+    	RvbFile* tmp = (RvbFile*)data;
+    	delete tmp;
     }
-    if(size)
+    else
     {
-            lv2_atom_object_get(obj, plug->URIDs.patch_value, &file_path, 0);
-            if (file_path)
-            {
-                    // Load file.
-                    RvbFile* file = plug->revtron->loadfile((char*)LV2_ATOM_BODY_CONST(file_path));
-                    if(file)
-                    respond(rhandle,sizeof(RvbFile),(void*)file);
-            }//got file
-            else
-                    return LV2_WORKER_ERR_UNKNOWN;
+    	//work was scheduled to load a new file
+    	lv2_atom_object_get(obj, plug->URIDs.patch_value, &file_path, 0);
+        if (file_path)
+        {
+            // Load file.
+            RvbFile* file = plug->revtron->loadfile((char*)LV2_ATOM_BODY_CONST(file_path));
+            if(file)
+            respond(rhandle,sizeof(RvbFile*),(void*)file);
+        }//got file
+        else
+            return LV2_WORKER_ERR_UNKNOWN;
     }
     return LV2_WORKER_SUCCESS;
 }
@@ -2495,11 +2499,60 @@ static LV2_Worker_Status revwork(LV2_Handle handle, LV2_Worker_Respond_Function 
 static LV2_Worker_Status revwork_response(LV2_Handle handle, uint32_t size, const void* data)
 {
     RKRLV2* plug = (RKRLV2*)handle;
-    plug->revtron->applyfile((RvbFile*)data);
     //schedule worker to delete old file
-    plug->scheduler->schedule_work(plug->scheduler->handle;0,0);
+    plug->scheduler->schedule_work(plug->scheduler->handle,sizeof(RvbFile*),plug->revtron->File);
+    plug->revtron->applyfile((RvbFile*)data);
+    return LV2_WORKER_SUCCESS;
 }
 
+static LV2_State_Status revsave(LV2_Handle handle, LV2_State_Store_Function  store, LV2_State_Handle state_handle,
+		uint32_t flags, const LV2_Feature* const* features)
+{
+    RKRLV2* plug = (RKRLV2*)handle;
+    if (!plug->revtron->File) 
+    {
+        return LV2_STATE_SUCCESS;
+    }
+
+    LV2_State_Map_Path* map_path = NULL;
+    for (int i = 0; features[i]; ++i) 
+    {
+        if (!strcmp(features[i]->URI, LV2_STATE__mapPath)) 
+        {
+            map_path = (LV2_State_Map_Path*)features[i]->data;
+        }
+    }
+
+    char* abstractpath = map_path->abstract_path(map_path->handle, plug->revtron->File->Filename);
+
+    store(state_handle, plug->URIDs.filetype_rvb, abstractpath, strlen(plug->revtron->File->Filename) + 1, plug->URIDs.atom_Path, LV2_STATE_IS_POD | LV2_STATE_IS_PORTABLE);
+
+    free(abstractpath);
+
+    return LV2_STATE_SUCCESS;
+}
+
+static LV2_State_Status revrestore(LV2_Handle handle, LV2_State_Retrieve_Function retrieve,
+		LV2_State_Handle state_handle, uint32_t flags, const LV2_Feature* const* features)
+{
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    size_t   size;
+    uint32_t type;
+    uint32_t valflags;
+
+    const void* value = retrieve( state_handle, plug->URIDs.filetype_rvb, &size, &type, &valflags);
+
+    if (value) 
+    {
+            char* path = (char*)value;
+            delete plug->revtron->File;
+            RvbFile* f = plug->revtron->loadfile(path);
+            plug->revtron->applyfile(f);
+    }
+
+    return LV2_STATE_SUCCESS;
+}
 
 /////////////////////////////////
 ///////// END OF FX /////////////
@@ -3213,7 +3266,12 @@ static const LV2_Descriptor stompfuzzlv2_descriptor=
 static const void* revtron_extension_data(const char* uri)
 {
     static const LV2_Worker_Interface worker = { revwork, revwork_response, NULL };
-    if (!strcmp(uri, LV2_WORKER__interface))
+    static const LV2_State_Interface state_iface = { revsave, revrestore };
+    if (!strcmp(uri, LV2_STATE__interface))
+    {
+        return &state_iface;
+    }
+    else if (!strcmp(uri, LV2_WORKER__interface))
     {
         return &worker;
     }
