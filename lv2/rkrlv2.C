@@ -213,7 +213,7 @@ void getFeatures(RKRLV2* plug, const LV2_Feature * const* host_features)
                 plug->URIDs.patch_property = urid_map->map(urid_map->handle,LV2_PATCH__property);
                 plug->URIDs.patch_value = urid_map->map(urid_map->handle,LV2_PATCH__value);
                 plug->URIDs.filetype_rvb = urid_map->map(urid_map->handle,RVBFILE_URI);
-                plug->URIDs.filetype_rvb = urid_map->map(urid_map->handle,DLYFILE_URI);
+                plug->URIDs.filetype_dly = urid_map->map(urid_map->handle,DLYFILE_URI);
             }
         }
     }
