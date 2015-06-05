@@ -1,0 +1,198 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<!-- This file was originally generated from OpenOffice, but is now maintained 
+  by hand. It is used for both the in-application help and the online help.
+
+  When making updates to this file, make sure you also update the online 
+  version with:
+  
+   scp help.html raboofje,rakarrack@web.sourceforge.net:htdocs
+-->
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8"><title>Rakarrack Help
+  Tuner</title>
+  <meta name="AUTHOR" content="Josep Andreu">
+  <meta name="CREATED" content="0;0">
+  <meta name="CHANGED" content="20100112;22402500">
+  <meta name="DESCRIPTION" content="rakarrack help in html file"></head><body dir="ltr" style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" lang="en-US">
+
+<h2>Hardware Connections</h2>
+
+<p>It is not an uncommon situation where the only audio input interface to 
+a computer is a microphone or a line input on a standard consumer grade 
+sound card.  While the modern day consumer grade sound cards actually 
+have admirable performance specifications, the interfaces are designed 
+for certain types of inputs.  If the device plugged into the sound card 
+is not designed to work with the interface, then you will get results 
+that are characterized by noise, poor frequency response, or 
+distortion.  Most people will complain about how Rakarrack is noisy, or 
+the guitar sounds bad.  We have no software solution to defy the laws of 
+physics.</p>
+
+<p>However, we do have some recommendations to improve your hardware 
+connections to minimize the problems associated with your sound card.  
+Line in and Mic inputs will be discussed separately since they are 
+somewhat different in the ways they interact with the input devices.</p>
+
+<p>The shortened, non-technical advice about Line and Mic inputs is you can 
+reduce noise significantly by plugging a device designed to receive the 
+instrument and drive the Line or Mic input according to the way it is 
+designed.  For Line in, a preamp, a guitar with active electronics will 
+work, a keyboard with a line out, or something similar are devices that 
+act like the type of device the sound card expects.</p>
+
+<p>Something with a headphones out is probably a bad idea but sometimes 
+worth a try.  Often a headphone output uses a small switching 
+amplifier.  The high frequency switching noise is filtered by your 
+headphones, but may cause noise or a whine in your sound card. Headphone 
+outputs that may work are those using normal linear amplifiers and have 
+low output impedance.</p>
+
+<p>Here is some more worthwhile reading about the topic:</p>
+
+<p><a href="http://www.musiconmypc.co.uk/art_record_guitar_on_pc.php">http://www.musiconmypc.co.uk/art_record_guitar_on_pc.php</a></p>
+
+<p><b>Line Input</b>:</p>
+<p>A line input presents two problems for a mono instrument with high 
+output impedance (typical electric guitar).  The first problem is the 
+mono-to-stereo conversion.  This can be easily overcome with an adapter 
+that either shorts one of the unused channels (something like a 
+Y-splitter), or feeds the mono signal equally to both stereo inputs.  A 
+splitter may be desirable because you can still use the unused channel 
+for some other input such as a microphone.  This is not a difficult 
+challenge because most adapters will short the unused input by default.  
+Avoid cheap adapters that don't default ground unused inputs.</p>
+
+<p>The most notable problem presented by a Line Input is impedance 
+matching.  A typical Line Input has an input impedance of 10k-ohms.  A 
+guitar pickup typically has 5k-Ohms impedance, but with the volume pot, 
+this can be up to 250k to 500k series resistance, depending on the value 
+of the pot.  This means with the volume pot wide open, the guitar signal 
+received at the sound card will be 1/3 as loud.  Move the volume pot 
+only a small amount, and the sound will be almost inaudible.</p>
+
+<p>Not mentioning the noise and poor frequency response problems, this 
+presents an Analog/Digital conversion problem.  In cheap sound cards, 
+there is no analog programmable gain amplifier, so you have to do 
+software amplification.  Not using the audio card's full scale 
+resolution is tantamount to having a soundcard with lower resolution.</p>
+
+<p>Take a 16-bit sound card, for example.  First, the guitar only puts out 
+1V max peak for hot pickups, but the average guitar pickup gives perhaps 
+1/5 of that most of the time.  Take 16 bits = 96dB dynamic range.  Take 
+away 14 dB (~1/5) for guitar signal raw power compared to expected line 
+level input, then take away 9.54dB (~1/3) for loss on input impedance, 
+and now you have a dynamic range of 72dB.  This means you have reduced 
+your 16-bit sound card down to a 12-bit sound card simply by not using 
+the full input signal range.</p>
+
+<p>If you back your volume knob to 1/2 way, this creates a series 
+resistance of about 250k, and the division on the input is even worse.  
+Backing the volume knob to 1/2 reduces your sound card to the equivalent 
+of an 8-bit sound card, which is the grade of electronics you would find 
+in a cheap toy.</p>
+
+<p>Higher quality sound cards have a programmable gain analog amplifier to 
+boost the signal before it goes to the A/D converter.  In this case, the 
+built-in amplifier boosts the signal up where it can use the full 
+resolution, but it also amplifies the noise on the line by the same 
+amount.  In this case the signal/noise ratio is reduced by ~22dB (using 
+example above), and you still have a non-optimal condition.  (As a side 
+note, this is the same problem when plugging a guitar directly into a 
+mixer board without a preamp--fortunately pro-quality mixer boards 
+typically have less input amplification noise so you can often get away 
+with using a passive direct box).</p>
+
+<p>Not only do you have problems as indicated above, but the low impedance 
+loading on a guitar pickup is a problem.  Most guitar pickups have a 
+poor frequency response when loaded to less than 47k-Ohms impedance.  
+Even worse, because of the electro-mechanical properties governing how 
+guitar pickups work, a low impedance load performs the equivalent of an 
+electromechanical brake, similar to what train engines use to stop the 
+train.  The sound card input burns off the energy in your guitar strings 
+in the form of heat (not dangerous for the sound card since this is low 
+level energy).  More plainly, your sound card input is causing the 
+guitar pickup to act as a magnetic brake on the guitar strings.  You 
+will play a chord and it will appear to damp more quickly.  The singing 
+sustain you get from your guitar amp is gone--not because the guitar amp 
+is magical--but because the low impedance sound card electrical load is 
+burning the energy out of your guitar strings while the guitar amp input 
+impedance is designed to work well with most guitar pickups.</p>
+
+<p><b>The solution?</b></p> 
+
+<p>Here are a few:</p>
+<p>Get or make a preamplifier that has a high input impedance for your 
+guitar and a low impedance line-driver output.  Sometimes these are 
+marketed as "line driver" or "active direct box".</p>
+
+<p>Purchase a sound card with inputs designed for your instrument or 
+microphone type.  Behringer seems to be the low cost solution.  They 
+have such an audio interface for something near $40USD intended for use 
+with guitar:</p>
+
+<p><a
+href="http://www.behringer.com/EN/Products/UCG102.aspx">http://www.behringer.com/EN/Products/UCG102.aspx</a></p>
+
+<p>These are well supported under Linux.  If that cost is more than you can 
+spare, and you don't happen to have any other kind of preamp device 
+laying around, then you will simply have to plug direct to the line 
+input or mic input and understand it could be better.</p>
+
+<p></b>Microphone Input</b>:</p>
+<p>Many of the same issues apply to this interface as to Line In, but there 
+is one more caveat with the Mic inputs.  A typical PC microphone is a 
+device with an active amplifier built-in, and this device expects to be 
+powered by the computer.  The microphone input from a PC provides a bias 
+voltage, and it is designed to expect a certain electrical load to be 
+applied.  Most of the time the guitar loads this input enough to work, 
+but in some cheap sound cards, you get DC offset (which can wreck some 
+of your presets).   In all cases, the mic input is generally lower 
+quality and higher noise, no matter what you do.  Here is a page with 
+some good ideas for somebody with willingness to try a hand at simple 
+electronics:</p>
+
+<p>http://www.epanorama.net/circuits/line_to_mic.html</p>
+
+<p>Something similar could be achieved with a 50k volume pot turned most of 
+the way down so the one end has a low ~100-ohm impedance to ground, and 
+the guitar gets most of the 50k in series.</p>
+
+<p>The pickup loading and string braking as explained for Line Input is 
+generally not a problem because you usually have to turn the volume knob 
+back to attenuate the signal level to the low level expected by the mic 
+input.  The resistance of the volume pot in this case is put in series 
+with the pickup and thus loads the guitar adequately.</p>
+
+<p>Regarding DC-offset:  DC offset is a constant value other than zero when 
+the instrument is silent.  This will mess up some Rakarrack presets if 
+left active on the line going into Rakarrack.  We have provided a 
+solution to this problem.  In Settings->Preferences->Audio, put a check 
+next to Filter Input DC Offset, and Rakarrack will take this out of the 
+signal before doing normal processing.  It is an option you may 
+enable/disable as needed because it is a waste of CPU usage if you have 
+a good audio input that doesn't put DC into the system, and also is 
+somewhat bandlimiting (the cut-off is -3dB at 20Hz, but above the 
+cut-off a filter has some effect -- up to -3dB.  Above 50Hz, the 
+band-limiting effect is negligible for audio purposes).</p>
+
+<p><b>The Conclusion</b></p>
+<p>The hardware configurations are listed from best to worse below:</p>
+<p>1) Buy a high quality hardware digital audio interface that is designed 
+for your instrument.</p>
+<p>2) Use Line Input with a good quality preamp that is designed for your 
+instrument. Boost the input level to use full resolution (VU bars on 
+Rakarrack in the yellow).</p>
+<p>3) Use Microphone input with some impedance matching circuitry to reduce 
+noise and tame signal levels.</p>
+<p>4) Use Microphone input level direct with guitar and adjust volume knob 
+to get the optimal sound.  Use DC removal in Rakarrack. Understand that 
+noise and poor quality sound is due to your hardware configuration, and 
+it is probably not caused by Rakarrack.</p>
+<p>5) Use Line In directly, but understand noise and poor quality sound is 
+due to your hardware configuration, and it is probably not caused by 
+Rakarrack.</p>
+
+<p>If you have a guitar with a built-in preamp (active electronics), then 
+plug directly into the sound card Line Input and all is dandy.</p>
+<p><a href="help.html">Table of Contents</a> -  <a href="general.html">General</a></p>
+</body></html>

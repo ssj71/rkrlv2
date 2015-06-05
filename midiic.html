@@ -1,0 +1,837 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<!-- This file was originally generated from OpenOffice, but is now maintained 
+  by hand. It is used for both the in-application help and the online help.
+
+  When making updates to this file, make sure you also update the online 
+  version with:
+  
+   scp help.html raboofje,rakarrack@web.sourceforge.net:htdocs
+-->
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8"><title>Rakarrack Help
+  MIDI Implementation Chart</title>
+  <meta name="AUTHOR" content="Josep Andreu">
+  <meta name="CREATED" content="0;0">
+  <meta name="CHANGED" content="20100112;22402500">
+  <meta name="DESCRIPTION" content="rakarrack help in html file"></head>
+  <body dir="ltr" style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" lang="en-US">
+
+<h2>MIDI Implementation Chart</h2>
+
+<table style="background-color: rgb(251, 251, 251);" border="1" cellpadding="2">
+
+  <tbody>
+    <tr>
+      <td>Program Change</td>
+      <td>( x )</td>
+      <td><br>
+      </td>
+      <td>0~60<br>
+81  Previous Preset<br>
+82  Next Preset </td>
+    </tr>
+    <tr>
+      <td>Control Change</td>
+      <td>Volume 0x07 (x)</td>
+      <td>7</td>
+      <td>1~127</td>
+    </tr>
+    <tr>
+      <td><br>
+      </td>
+      <td>Modulation 0x01 (x)</td>
+      <td>1</td>
+      <td>1~127 (WahWah Depth)</td>
+    </tr>
+    <tr>
+      <td><br>
+      </td>
+      <td>Undefined 0x02 (x)</td>
+      <td>2</td>
+      <td>1~127 (Derelict Dist Drive)</td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x03 (x) </td>
+      <td> 3 </td>
+      <td> 1~127 (Derelict Dist Level) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x04 (x) </td>
+      <td> 4 </td>
+      <td> 1~127 (Derelict Dist LPF) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x05 (x) </td>
+      <td> 5 </td>
+      <td> 1~127 (Derelict Dist HPF) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x06 (x) </td>
+      <td> 6 </td>
+      <td> 1~127 (Derelict Dist Color) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x08 (x) </td>
+      <td> 8 </td>
+      <td> 1~127 (Derelict Sub Octave) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x09 (x) </td>
+      <td> 9 </td>
+      <td> 1~127 (Distortion Sub Octave) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td>Undefined 0x0C(x) </td>
+      <td>12 </td>
+      <td>1~127 (FX/%) Balance </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td>Undefined 0x0E(x) </td>
+      <td>14 </td>
+      <td>1~127 (Input Gain) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x14 (x) </td>
+      <td> 20 </td>
+      <td> 1~127 (Alienwah Depth) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x15 (x) </td>
+      <td> 21 </td>
+      <td> 1~127 (Phaser Depth) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x16 (x) </td>
+      <td> 22 </td>
+      <td> 1~127 (Flanger Depth) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x17 (x) </td>
+      <td> 23 </td>
+      <td> 1~127 (Chorus Depth) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x18 (x) </td>
+      <td> 24 </td>
+      <td> 1~127 (Musical Delay Gain 1) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x19 (x) </td>
+      <td> 25 </td>
+      <td> 1~127 (Musical Delay Gain 2) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x1A (x) </td>
+      <td> 26 </td>
+      <td> 1~127 (Harmonizer Freq) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x1B (x) </td>
+      <td> 27 </td>
+      <td> 1~127 (Harmonizer Interval) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x1C (x) </td>
+      <td> 28 </td>
+      <td> 1~127 (Wah Wah Wet/Dry) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x1D (x) </td>
+      <td> 29 </td>
+      <td> 1~127 (Overdrive Wet/Dry) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x1E (x) </td>
+      <td> 30 </td>
+      <td> 1~127 (Distortion Wet/Dry) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x1F (x) </td>
+      <td> 31 </td>
+      <td> 1~127 (Harmonizer Wet/Dry) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x2E (x) </td>
+      <td> 46 </td>
+      <td> 1~127 (Echo Pan) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x2F (x) </td>
+      <td> 47 </td>
+      <td> 1~127 (Overdrive Pan) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x30 (x) </td>
+      <td> 48 </td>
+      <td> 1~127 (Distortion Pan) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x31 (x) </td>
+      <td> 49 </td>
+      <td> 1~127 (Harmonizer Pan) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x32 (x) </td>
+      <td> 50 </td>
+      <td> 1~127 (Chorus Pan) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x33 (x) </td>
+      <td> 51 </td>
+      <td> 1~127 (Flanger Pan) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x34 (x) </td>
+      <td> 52 </td>
+      <td> 1~127 (Chorus Wet/Dry) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x35 (x) </td>
+      <td> 53 </td>
+      <td> 1~127 (Flanger Wet/Dry) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x36 (x) </td>
+      <td> 54 </td>
+      <td> 1~127 (Phaser Wet/Dry) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x37 (x) </td>
+      <td> 55 </td>
+      <td> 1~127 (Alienwah Wet/Dry) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x38 (x) </td>
+      <td> 56 </td>
+      <td> 1~127 (Musical Delay Wet/Dry) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x39 (x) </td>
+      <td> 57 </td>
+      <td> 1~127 (Reverb Wet/Dry) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x3A (x) </td>
+      <td> 58 </td>
+      <td> 1~127 (AutoPan/Extra Stereo Wet/Dry) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x3B (x) </td>
+      <td> 59 </td>
+      <td> 1~127 (Echo Wet/Dry) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x3C (x) </td>
+      <td> 60 </td>
+      <td> 1~127 (Phaser Pan) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x3D (x) </td>
+      <td> 61 </td>
+      <td> 1~127 (Alienwah Pan) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x3E (x) </td>
+      <td> 62 </td>
+      <td> 1~127 (Musical Delay Pan 1) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x3F (x) </td>
+      <td> 63 </td>
+      <td> 1~127 (Reverb Pan) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x41 (x) </td>
+      <td> 65 </td>
+      <td> 1~127 (Musical Delay Pan 2) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x42 (x) </td>
+      <td> 66 </td>
+      <td> 1~127 (WahWah Pan) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x43 (x) </td>
+      <td> 67 </td>
+      <td> 1~127 (AutoPan/Extra Stereo Pan) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x44 (x) </td>
+      <td> 68 </td>
+      <td> 1~127 (Overdrive Drive) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x45 (x) </td>
+      <td> 69 </td>
+      <td> 1~127 (Distortion Drive) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x46 (x) </td>
+      <td> 70 </td>
+      <td> 1~127 (Overdrive Level) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x47 (x) </td>
+      <td> 71 </td>
+      <td> 1~127 (Distortion Level) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x48 (x) </td>
+      <td> 72 </td>
+      <td> 1~127 (Chorus Freq.) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x49 (x) </td>
+      <td> 73 </td>
+      <td> 1~127 (Flanger Freq.) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x4A (x) </td>
+      <td> 74 </td>
+      <td> 1~127 (Phaser Freq.) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x4B (x) </td>
+      <td> 75 </td>
+      <td> 1~127 (WahWah Freq.) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x4C (x) </td>
+      <td> 76 </td>
+      <td> 1~127 (Alienwah Freq.) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x4D (x) </td>
+      <td> 77 </td>
+      <td> 1~127 (AutoPan/Extra Stereo Freq.) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x4E (x) </td>
+      <td> 78 </td>
+      <td> 1~127 (Echo Fb) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x4F (x) </td>
+      <td> 79 </td>
+      <td> 1~127 (Chorus Fb) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x50 (x) </td>
+      <td> 80 </td>
+      <td> 1~127 (Flanger Fb) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x51 (x) </td>
+      <td> 81 </td>
+      <td> 1~127 (Phaser Fb) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x52 (x) </td>
+      <td> 82 </td>
+      <td> 1~127 (Alienwah Fb) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x53 (x) </td>
+      <td> 83 </td>
+      <td> 1~127 (Musical Delay Fb 1) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x54 (x) </td>
+      <td> 84 </td>
+      <td> 1~127 (Musical Delay Fb 2) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x55 (x) </td>
+      <td> 85 </td>
+      <td> 1~127 (Overdrive LPF) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x56 (x) </td>
+      <td> 86 </td>
+      <td> 1~127 (Distortion LPF) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x57 (x) </td>
+      <td> 87 </td>
+      <td> 1~127 (Reverb LPF) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x58 (x) </td>
+      <td> 88 </td>
+      <td> 1~127 (Overdrive LPF) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x59 (x) </td>
+      <td> 89 </td>
+      <td> 1~127 (Distortion HPF) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x5A (x) </td>
+      <td> 90 </td>
+      <td> 1~127 (Reverb HPF) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x5B (x) </td>
+      <td> 91 </td>
+      <td> 1~127 (Chorus LR_Cr) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x5C (x) </td>
+      <td> 92 </td>
+      <td> 1~127 (Flanger LR_Cr) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x5D (x) </td>
+      <td> 93 </td>
+      <td> 1~127 (Phaser LR_Cr) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x5E (x) </td>
+      <td> 94 </td>
+      <td> 1~127 (Overdrive LR_Cr) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x5F (x) </td>
+      <td> 95 </td>
+      <td> 1~127 (Distortion LR_Cr) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x60 (x) </td>
+      <td> 96 </td>
+      <td> 1~127 (Alienwah LR_Cr) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x61 (x) </td>
+      <td> 97 </td>
+      <td> 1~127 (Echo LR_Cr) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x62 (x) </td>
+      <td> 98 </td>
+      <td> 1~127 (Musical Delay LR_Cr) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x63 (x) </td>
+      <td> 99 </td>
+      <td> 1~127 (Chorus St_df) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x64 (x) </td>
+      <td> 100 </td>
+      <td> 1~127 (Flanger St_df) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x65 (x) </td>
+      <td> 101 </td>
+      <td> 1~127 (Phaser St_df) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x66 (x) </td>
+      <td> 102 </td>
+      <td> 1~127 (WahWah St_df.) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x67 (x) </td>
+      <td> 103 </td>
+      <td> 1~127 (Alienwah St_df.) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x68 (x) </td>
+      <td> 104 </td>
+      <td> 1~127 (AutoPan/Extra Stereo St_df.) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x69 (x) </td>
+      <td> 105 </td>
+      <td> 1~127 (Chorus Rnd) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x6A (x) </td>
+      <td> 106 </td>
+      <td> 1~127 (Flanger Rnd) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x6B (x) </td>
+      <td> 107 </td>
+      <td> 1~127 (Phaser Rnd) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x6C (x) </td>
+      <td> 108 </td>
+      <td> 1~127 (WahWah Rnd.) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x6D (x) </td>
+      <td> 109 </td>
+      <td> 1~127 (Alienwah Rnd.) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x6E (x) </td>
+      <td> 110 </td>
+      <td> 1~127 (AutoPan/Extra Stereo Rnd) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x6F (x) </td>
+      <td> 111 </td>
+      <td> 1~127 (WahWah Amp S.) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x70 (x) </td>
+      <td> 112 </td>
+      <td> 1~127 (WahWah Amp S.I.) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x71 (x) </td>
+      <td> 113 </td>
+      <td> 1~127 (WahWah Smooth) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x72 (x) </td>
+      <td> 114 </td>
+      <td> 1~127 (Phaser Phase) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x73 (x) </td>
+      <td> 115 </td>
+      <td> 1~127 (Alienwah Phase) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x74 (x) </td>
+      <td> 116 </td>
+      <td> 0   = Efx 1 Toggle On/Off<br>
+1   = Efx 1 Toggle On/Off<br>
+2   = Efx 2 Toggle On/Off<br>
+3   = Efx 2 Toggle On/Off<br>
+4   = Efx 3 Toggle On/Off<br>
+5   = Efx 3 Toggle On/Off<br>
+6   = Efx 4 Toggle On/Off<br>
+7   = Efx 4 Toggle On/Off<br>
+8   = Efx 5 Toggle On/Off<br>
+9   = Efx 5 Toggle On/Off<br>
+10 = Efx 6 Toggle On/Off<br>
+11 = Efx 6 Toggle On/Off<br>
+12 = Efx 7 Toggle On/Off<br>
+13 = Efx 7 Toggle On/Off<br>
+14 = Efx 8 Toggle On/Off<br>
+15 = Efx 8 Toggle On/Off<br>
+16 = Efx 9 Toggle On/Off<br>
+17 = Efx 9 Toggle On/Off<br>
+18 = Efx 10 Toggle On/Off<br>
+19 = Efx 10 Toggle On/Off<br>
+20 = EQ On/Off<br>
+21 = Compressor On/Off<br>
+22 = Distortion On/Off<br>
+23 = Overdrive On/Off<br>
+24 = Echo On/Off<br>
+25 = Chorus On/Off<br>
+26 = Phaser On/Off<br>
+27 = Flanger On/Off<br>
+28 = Reverb On/Off<br>
+29 = Parametric EQ On/Off<br>
+30 = WahWah On/Off<br>
+31 = AlienWah On/Off<br>
+32 = Cabinet On/Off<br>
+33 = Pan On/Off<br>
+34 = Harmonizer On/Off<br>
+35 = MusicalDelay On/Off<br>
+36 = NoiseGate On/Off<br>
+37 = Derelict On/Off<br>
+38 = Analog Phaser On/Off<br>
+39 = Valve On/Off<br>
+40 = Dual Flange On/Off<br>
+41 = Ring On/Off<br>
+42 = Exciter On/Off<br>
+43 = DistBand On/Off<br>
+44 = Arpie On/Off<br>
+45 = Expander On/Off<br>
+46 = Shuffle On/Off<br>
+47 = Synthfilter On/Off<br>
+48 = VaryBand On/Off<br>
+49 = Convolotron On/Off<br>
+50 = Looper On/Off<br>
+51 = MuTroMojo On/Off<br>
+52 = Echoverse On/Off<br>
+53 = Coil Crafter On/Off<br>
+54 = ShelfBoost On/Off<br>
+55 = Vocoder On/Off<br> 
+56 = Sustainer On/Off<br>
+57 = Sequence On/Off<br>
+58 = Shifter On/Off<br>
+59 = StompBox On/Off<br>
+60 = Reverbtron On/Off<br>
+61 = Echotron On/Off<br>
+62 = StereoHarm On/Off<br>
+63 = CompBand On/Off<br>
+64 = Opticaltrem On/Off<br>
+65 = Vibe On/Off<br>
+66 = Infinity On/Off<br>
+121= Tap Tempo On/Off<br>
+122= MIDI Converter On/Off<br>
+123= Tuner On/Off<br>
+124= Fx On On/Off</td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x75 (x) </td>
+      <td> 117 </td>
+      <td> 1~127 (Analog Phaser Wet-Dry) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x76 (x) </td>
+      <td> 118 </td>
+      <td> 1~127 (Analog Phaser Distortion) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x77 (x) </td>
+      <td> 119 </td>
+      <td> 1~127 (Analog Phaser Freq) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x78 (x) </td>
+      <td> 120 </td>
+      <td> 1~127 (Analog Phaser Depth) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x79 (x) </td>
+      <td> 121 </td>
+      <td> 1~127 (Analog Phaser Width) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x7A (x) </td>
+      <td> 122 </td>
+      <td> 1~127 (Analog Phaser Feedback) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x7B (x) </td>
+      <td> 123 </td>
+      <td> 1~127 (Analog Phaser Mismatch) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x7C (x) </td>
+      <td> 124 </td>
+      <td> 1~127 (Analog Phaser St.df) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x7D (x) </td>
+      <td> 125 </td>
+      <td> 1~127 (Derelict Wet-Dry) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x7E (x) </td>
+      <td> 126 </td>
+      <td> 1~127 (Derelict Dist Pan) </td>
+    </tr>
+    <tr>
+      <td> <br>
+      </td>
+      <td> Undefined 0x7F (x) </td>
+      <td> 127 </td>
+      <td> 1~127 (Derelict Dist LR Cross) </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a href="help.html">Table of Contents</a> -  <a href="license.html">License</a></p>
+
+
+
+</body></html>

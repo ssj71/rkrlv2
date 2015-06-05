@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<!-- This file was originally generated from OpenOffice, but is now maintained 
+  by hand. It is used for both the in-application help and the online help.
+
+  When making updates to this file, make sure you also update the online 
+  version with:
+  
+   scp help.html raboofje,rakarrack@web.sourceforge.net:htdocs
+-->
+
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8"><title>Rakarrack Help
+  Tap Tempo</title>
+  <meta name="AUTHOR" content="Josep Andreu">
+  <meta name="CREATED" content="0;0">
+  <meta name="CHANGED" content="20100112;22402500">
+  <meta name="DESCRIPTION" content="rakarrack help in html file"></head><body dir="ltr" style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" lang="en-US">
+
+
+<h2>Tap Tempo</h2>
+
+<p><img alt="Tap Tempo" src="imagenes/tap.jpg"></p>
+
+<p>When Tap Tempo is On:</p>
+
+
+<p> You can enter the desired tempo in the Tempo Display box, draging or
+with the keyboard. </p>
+
+<p>The input choice widget select the incoming signal:</p>
+
+<p>GUI can be the computer keyboard key "G" or the mouse clicking on
+the "Tap" button.</p>
+
+<p>MIDI signal is triggered each MIDI Note On message is incoming.</p>
+<p>Jack Transport read the beats per minute at the jack start
+transport. (Note for jack maniacs: we don't synchronize nothing, we only
+read this value).</p>
+
+<p>Successive tempo signals are displayed each time a signal is received
+and
+the Tempo parameter is updated on all the effects that has the "On"
+state. Tap Tempo has an automatic reset timeout, 8 seconds after the
+last
+signal. This need to be enabled in the window settings. Tap Tempo set
+all the effect Tempo parameters that has the state in "On" to the value
+read or generated.</p>
+<p>The "Set" choice select how the Delay and LFO effect parameters will be
+updated, according to the preset and the Tempo.</p>
+<p> TapTempo update the effects that has the "On" state but we have added the
+apply button that also update the Tempo in the effects, useful for example when
+you add a new effect, or you change the internal effect preset or you change
+the "Set" parameter.</p>
+<p><a href="help.html">Table of Contents</a> -  <a href="aci.html">Analog Control Interface</a></p>
+</body></html>

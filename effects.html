@@ -1,0 +1,2576 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><!-- This file was originally generated from OpenOffice, but is now maintained 
+  by hand. It is used for both the in-application help and the online help.
+
+  When making updates to this file, make sure you also update the online 
+  version with:
+  
+   scp help.html raboofje,rakarrack@web.sourceforge.net:htdocs
+-->
+
+
+
+
+
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8"><title>Rakarrack Help Effects</title>
+  <meta name="AUTHOR" content="Josep Andreu">
+  <meta name="CREATED" content="0;0">
+  <meta name="CHANGED" content="20100112;22402500">
+  <meta name="DESCRIPTION" content="rakarrack help in html file"></head><body dir="ltr" style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" lang="en-US">
+
+  <h2>EFFECTS</h2>
+      <p><a href="#eql">Lineal EQ</a> <a href="#comp">Compressor</a> <a href="#dist">Distortion</a> 
+      <a href="#ovrd">Overdrive</a> <a href="#eco">Echo</a> <a href="#chor">Chorus</a> <a href="#phas">Phaser</a> 
+      <a href="#aphas">Analog Phaser</a> <a href="#flan">Flanger</a> <a href="#reve">Reverb</a> 
+      <a href="#eqp">Parametric EQ</a> <a href="#cabe">Cabinet Emulation</a> 
+      <a href="#pan">AutoPan/Stereo Expander</a> <a href="#har">Harmonizer</a> <a href="#delm">Musical Delay</a> 
+      <a href="#gate">Noise Gate</a> <a href="#wha">WahWah</a> <a href="#awha">AlienWah</a> 
+      <a href="#dere">Derelict</a> <a href="#Valve">Valve</a> <a href="#Dual_Flange">Dual Flange</a> 
+      <a href="#Ring">Ring</a> <a href="#Exciter">Exciter</a> <a href="#DistBand">DistBand</a> 
+      <a href="#Arpie">Arpie</a> <a href="#Expander">Expander</a> <a href="#Shuffle">Shuffle</a> 
+      <a href="#Synthfilter">Synthfilter</a> <a href="#VaryBand">VaryBand</a> <a href="#Convolotron">Convolotron</a> 
+      <a href="#Looper">Looper</a> <a href="#MuTroMojo">MuTroMojo</a> <a href="#Echoverse">Echoverse</a> 
+      <a href="#CoilCrafter">CoilCrafter</a> <a href="#ShelfBoost">ShelfBoost</a> <a href="#Vocoder">Vocoder</a> 
+      <a href="#Sustainer">Sustainer</a> <a href="#Sequence">Sequence</a> <a href="#Shifter">Shifter</a> 
+      <a href="#StompBox">StompBox</a> <a href="#Reverbtron">Reverbtron</a> <a href="#Echotron">Echotron</a> <a href="#StereoHarm">StereoHarm</a> <a href="#CompBand">CompBand</a> <a href="#Otrem">Opticaltrem</a> <a href="#Vibe">Vibe</a> <a
+      href="#Infinity">Infinity</a><br></p>
+
+<p>The program has many effects, you can select any
+of the available effects. Ten can be used simultaneously. It
+cascading process, following the order that appears on the screen,
+from left to right and top to bottom. The order is configurable by
+the user via the button "Put in your order Rack" giving
+access to this screen. The effect selected moves up or down using the
+arrows. The double arrow button interchange the selected effects
+between the two browsers. Effects can be selected by type clicking the type
+buttons</p>
+
+<p>The effects displayed in the main windown can be switchd draging their
+label to another one, is a fast way to change the order.</p>
+
+<p> The Hide/Show button, hide the unused effects or show all of the
+chain.</p>
+
+<p> We don't want to cut the user creativity doing effects, but they are
+some good rules positioning effects, almost for the Noise Gate and the
+Expander if it's used to this purpose, as we say on the FAQ, rakarrack don't
+generate any noise, or not should :-), what rakarrack does is amplify the
+external noises, then for better control parameters to reduce this noises is a good
+rule put the Noise Gate or the Expander at the first position on the chain.
+
+</p><p> More info about effects is available in our <a href="http://sourceforge.net/apps/mediawiki/rakarrack/index.php?title=Main_Page">wiki</a></p><p>
+
+
+</p><p><img src="imagenes/order.jpg" alt="rakarrack Order Window" align="middle" border="1" height="284" width="400"></p>
+
+<p>The effects have two common elements. The "On"
+button and "Preset" input choice. These individual effect
+presets are not modified by the user and in most cases are those that
+Octavian Paul Nasca defined for the purposes of ZynAddSubFX. The
+value of preset individual is not stored in presets general and can
+not relate to the parameters in effect.</p>
+
+<h3>Parameter Adjustment</h3>
+
+<p> All the parameters managed with a slider widget
+can be adjusted fine with the mouse wheel or the Up/Down - Left/Right
+arrows in the keyboard decrease/increase value by "1",
+Shift+(Left/Right Arrow) decrease/increase value by "10", Ctrl+(Left/Right
+Arrow) decrease/increase value by "100" also you can navigate and adjust trough the
+parameters with you computer keyboard with the Tab, Up/Down arrow and
+space bar keys.</p>
+
+<h3>MIDI Control</h3>
+
+<p>    For control the parameter values via MIDI see
+the <a href="#MIDI_Implementation_Chart">MIDI Implementation Chart</a> 
+for the complete list of MIDI message commands recognized, to easy
+control rakarrack with MIDI messages use the MIDI Learn way.</p>
+
+<h3>Saving preset considerations</h3>
+
+<p> All the presets can be saved as single text file but, recently we added
+Convolotron, Echotron and Reverbtron, this effects can use "User" files, the
+program save the paths of this "User" files, if you want to share please be
+sure that this paths can also be shared and of course you will need to bring 
+this user files too.
+
+</p><h3><a name="eql"></a>EQ Lineal</h3>
+<table border="0" cellpadding="5" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td>
+      <p><img src="imagenes/eq.jpg" alt="rakarrack Lineal EQ" align="bottom" border="1" height="250" width="185"></p>
+      </td>
+      <td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      <p>Adapted from the ZynAddSubFX Equalizer.</p>
+      <p>Gain: Overall output level</p>
+      <p><b>Q</b>: Resonance of individual filters. Generally helps smooth
+extreme settings...or make extreme settings yet more extreme.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="#top">Contents</a></p>
+<h3><a name="comp"></a>Compressor</h3>
+
+
+<table border="0" cellpadding="5" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;">
+      <p><img src="imagenes/compresor.jpg" alt="rakarrack Compressor" align="bottom" border="1" height="250" width="185"></p>
+      </td>
+      <td bgcolor="#fbfbfb">
+      <p>Originally adapted from ArtsCompressor. DSP routine has been
+rewritten entirely as the code had been adapted at a stage in
+ArtsCompressor development prior to many bug fixes that occurred later
+in its evolution which unfortunately removed calculation of a
+soft-knee compression characteristic. This is mentioned to give hope to
+those who were aware of the bugs in compressor in Rakarrack 0.3.0.
+These bugs have been fixed, and this compressor has been traced using
+test signals to confirm it does what we think it does. </p>
+      <p><b>A. Time</b>: Attack Time. Time in milliseconds for attack to
+settle to 64% of final amount of compression.</p>
+      <p><b>R. Time</b>: Release Time. Time in milliseconds for gain to return
+to 64% of it's initial setting.</p>
+      <p>Note: For the curious, the strange number, 64%, relates to the
+RC time constant (RC means Resistor-Capacitor), which follows a natural
+exponential curve. The use of this behavior will make this compressor
+feel more natural to one who is most familiar with rack-mounted analog
+compressors.</p>
+      <p><b>Ratio</b>: For every Ratio (dB) that the input exceeds the
+Threshold, the output will be allowed to increase by 1 dB. For example,
+using compression ratio of 2, if the signal gets 2dB above the
+threshold, the output will only go 1dB above the threshold.</p>
+      <p><b>Knee</b>: Percentage of the region in dB of space between
+Threshold and 0dB (basically is Knee X -Threshold). Within this region,
+the ratio increases from 1 to log2(ratio). Threshold + Knee marks the
+point of full compression onset. For example, if knee is set to 100%, a
+very gradual compression characteristic will be obtained, but the
+maximum compression available is log2(ratio). A ratio of 32 will result
+in a real ratio ranging from 1 to 5. This is useful for processing
+cymbals as it does not crunch the dynamic attack quite so badly, but
+helps sustain the trailing resonance.</p>
+      <p><b>Thrhold</b>: Threshold. Defines the onset of compression. </p>
+      <p><b>Output</b>: How much gain to remove from the final stage of the
+compressor.</p>
+      <p><b>Peek</b>: Enable/Disable peek compression.</p>
+      <p><b>Auto Output</b>: Automatically calculate makeup gain. If this is
+unchecked, then adjustments of Ratio, Knee, and Thrhold will make
+changes to the overall output level. Unchecking may be useful to
+interpret Thrhold as a limiting threshold, and one would likely use a
+high ratio in this case.</p>
+      <p><b>Stereo</b>: Process each channel separately.</p>       	
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="dist"></a>Distortion</h3>
+
+
+<table border="0" cellpadding="5" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;">
+      <p><img src="imagenes/dist.jpg" alt="rakarrack Distortion" align="bottom" border="1" height="250" width="184"></p>
+      </td>
+      <td bgcolor="#fbfbfb">
+      <p>Adapted from the ZynAddSubFX 'Distortion'</p>
+      <p>This is a waveshaper, and not particularly an amp or stompbox
+modeling effect. This must be used judiciously with EQ's as well as the
+LPF and HPF settings (Low Pass Filter, High Pass Filter).</p>
+      <p>Tip: Your classic green stompbox has a Pre Filter curve with
+cutoff at 720Hz. This corresponds to approximately 51 on the HPF
+setting. If trying to emulate stompbox or amp sounds, it is highly
+advisable to use the Pre Filter option with HPF higher than 30 and LPF
+lower than 70. As you increase drive, decrease LPF. </p>
+      <p>Rakarrack attempts to be friendly to computers limited in both
+RAM and CPU. Because of this, the waveshaper does not use oversampling
+to reduce the effects of digital aliasing. Without going deep into DSP
+theory, this means that hard clipping with a lot of drive will create
+harmonics that are greater than half the sampling rate. These harmonics
+get mirrored back into the audio range. If they are significant in
+magnitude, then there will be a "grainy" non-musical sound. This is
+what most guitarists are talking about when making reference to
+"digital distortion". Functions like Sine, Pow and Atan generate a lot
+of harmonics, and even at lower signal levels. Lmt, Clip and Zigzag are
+among the worst, but these are generally used for nasty noisy sounds,
+so a little digital aliasing may not be a bad thing.</p>
+      <p>Fortunately, for instruments such as guitars, you can
+significantly limit the bandwidth of the input signal without
+catastrophically discoloring the timbre of the instrument by applying
+Low Pass Pre-filtering. By reducing the high frequency content of the
+input, you can greatly minimize the level of aliasing harmonics present
+in the output. </p>
+      <p>The main point is that great sounding distortions can be
+obtained from Rakarrack, but the distortion module is not meant to
+emulate your favorite stompbox, but to off the flexibility create these
+sounds as well as unique flavors of distortion.</p>
+      <p>The Crunch waveshaping type is the most physically informed of
+the waveshaping functions currently used. The clipping characteristic
+is most closely related to curve produced by a JFET amplifier stage.
+With proper EQ settings, a sound reminiscent of high gain British
+stacks can be obtained.</p>
+      <p><b>Sub Octv</b>: Allows you to mix some sub-octave rumble into the
+output. Technically speaking, this modulates the output with a square
+wave at half the fundamental frequency (sub octave). </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="ovrd"></a>Overdrive</h3>
+
+
+<table border="0" cellpadding="5" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td>
+      <p><img src="imagenes/ovrd.jpg" alt="rakarrack Overdrive" align="bottom" border="1" height="250" width="185"></p>
+      </td>
+      <td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      <p>Adapted from the ZynAddSubFX Distortion</p>
+      <p>Same as Distortion, but without sub-octave.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="eco"></a>Echo</h3>
+
+
+<table border="0" cellpadding="5" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;">
+      <p><img src="imagenes/eco.jpg" alt="rakarrack Echo" align="bottom" border="1" height="250" width="185"></p>
+      </td>
+      <td bgcolor="#fbfbfb">
+      <p>Adapted from the ZynAddSubFX Echo</p>
+      <p><b>Wet/Dry</b>: Mix level of echo with original.</p>
+      <p><b>Reverse</b>: Mixes reverse delay with forward delay.</p>
+      <p>More about reverse: Echo works by storing audio samples in
+memory and playing back samples that were stored a while ago. At a
+sample rate of 48kHz, the number of samples stored in memory for a 1
+second delay is 48,000. To play back audio from 1 second ago, there is
+a reader that increments through, right in front of the write. The
+reader reads a sample from a second ago, and the writer writes that
+memory location with a new sample from the present.</p>
+      <p>Now, what if we could read this block of memory backwards?
+Then everything stored in memory comes out in reverse, and has an
+interesting reverse envelop sound. In the digital word, we can read it
+forward as easily as backwards, so why not keep track of both and let
+you mix them together?</p>
+      <p><b>Pan</b>: Sends the delay more to the right or left. Zero balances
+it in the middle.</p>
+      <p><b>Delay</b>: Amount of time before you hear the echo.</p>
+      <p><b>Lrdl.</b>: Left/Right delay difference. A setting of 64 means
+that the delay time is the same for left and right channels. If larger
+than 64, the right channel is delayed longer than the left channel.
+Less than 64 the reverse is true. This allows you to achieve the stereo
+'Ping Pong' effect.</p>
+      <p><b>L/R Cr</b>: Left/Right Crossing. This mixes left and right
+channels.</p>
+      <p><b>Fb</b>: Feedback. How much of the delayed output to add to the
+input. This makes the echo regenerate, like it's bouncing around in a
+canyon.</p>
+      <p><b>Direct</b>: When is on, the effect only play the echoes.</p>
+
+      <p><b>Damp</b>: Low pass filter on the delayed signal. This rolls off
+the high frequencies on every regeneration. Setting to a higher level
+will make the echo sound more natural. </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="chor"></a>Chorus</h3>
+
+
+<table cellpadding="5" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td>
+      <p><img src="imagenes/chorus.jpg" alt="rakarrack Chorus" align="bottom" border="1" height="250" width="185"></p>
+      </td>
+      <td bgcolor="#fbfbfb">
+      <p>Adapted from the ZynAddSubFX Chorus</p>
+      <p>Tips</p>
+      <p><b>Tempo</b>: LFO Rate</p>
+      <p><b>Rnd</b>: Add noise to LFO to make it more natural sounding.</p>
+      <p><b>Intense</b>: Increase effect intensity.  A digital Flanger or
+      Chorus uses a delay line with several hundred to several thousand
+      taps.  When it changes taps to modulate the delay time, there is a
+      discontinuous change in the signal called "zipper noise".  To
+      eliminate this, fractional delay times need to be calculated in order
+      to smoothly transition from one delay line tap to the next.  The
+      default Rakarrack Phaser and Chorus use linear interpolation.  This
+      mode makes use of a Lagrange interpolation polynomial to estimate
+      fractional delay times and some other tricks to maximize the flanger
+      depth and flatten the frequency response on the chorus.  Adding the
+      mode switch adds the feature without breaking old presets.</p>
+      <p><b>St.df</b> : Stereo difference of LFO.</p>
+      <p><b>L/R Cr.</b> : Mix left into right, Right into left. At maximum
+level, left and right channels are swapped.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="phas"></a>Phaser</h3>
+
+
+<table cellpadding="5" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td>
+      <p><img src="imagenes/phaser.jpg" alt="rakarrack Phaser" align="bottom" border="1" height="250" width="185"></p>
+      </td>
+      <td bgcolor="#fbfbfb">
+      <p>Adapted from the ZynAddSubFX Phaser</p>
+      <p>More mild digital phaser with exponential LFO sweep.</p>
+      <p><b>Phase</b>: This is the offset for the "center" of the sweep. </p>
+      <p><b>Depth</b>: LFO deviation or some may like to think of it as LFO
+amplitude. This is the same type of function that has been labeled
+'width' in Analog Phaser.</p>
+      <p><b>Fb</b>: Feedback. Some phasers title this "Regen". Feedback is
+negative as this moves toward zero, positive from 64+. 64, strangely,
+corresponds to zero feedback.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="aphas"></a>Analog Phaser</h3>
+
+
+<table cellpadding="5" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;">
+      <p><img src="imagenes/Aphaser.jpg" alt="rakarrack Analog Phaser" align="bottom" border="1" height="250" width="185"></p>
+      </td>
+      <td bgcolor="#fbfbfb">
+      <p>ZynAddSubFX Phaser Seriously Hacked</p>
+      <p>Overhauled DSP engine in Zyn phaser and used shell to create a
+"Physically Informed Digital Model of an Analog FET Phaser". Don't
+forget to spit after chewing that mouthful.</p>
+      <p>When should you want to use Phaser instead?</p>
+      <p>A) Next to the pitch shifter, Analog Phaser is one of the most
+CPU intensive FX in Rakarrack. If you find your computer can't handle
+it, then Phaser is much more friendly to slow processors.</p>
+      <p>B) You just plain like the original Phaser Effect and want to
+use it.</p>
+      <p>C) When you want to use two phasers at the same time, you can
+chain Analog Phaser and Phaser together for some unique filtering
+sounds.</p>
+      <p>A Phaser works by adding a delay to a certain group of
+frequencies and shifting the filter that selects the group of
+frequencies up and down the spectrum. When mixed with the original
+input, some of the delayed parts of the signal cancel with the the
+original (destructive interference). The technical term for this is
+'notch filter'. For every two phase stages, a new notch appears in the
+spectrum, so for 4 stages and up we have a 'comb filter' because a plot
+of the frequency response begins to look like something you use to
+brush your hair as the number of phase stages increases.</p>
+      <p>If you don't care about what's under the hood, skip this
+paragraph -- To get the basic behavior of an Analog Phaser, the
+transfer function of a real analog phaser all-pass filter stage was
+computed and transformed into a discrete-time equivalent transfer
+function, then broken down into the resulting numerical computation
+algorithm. These all-pass filter stages were chained together in
+sequence of the overall analog circuit. Five or six different
+schematics were referenced in the design of this model to see what
+different units do to achieve a certain sound. The resulting 'Virtual
+Circuit' is an original creation. Finally, some of the non-perfect
+physical components and distortion were modeled in a simplistic way to
+add a certain warmth to the effect without sinking your CPU into an ice
+age.</p>
+      <p><b>Wet/Dry</b>: At zero, both the phase shifted signal and input
+signal are mixed equally. This creates the deepest notch filter. Why
+would you want to mix all Wet? Modulating the all-pass filter stages
+can create frequency shifting at faster modulation rates. This produces
+a chorus-like effect, and you may want the frequency bending without
+the notch filtering. Think UniVibe.</p>
+      <p><b>LFO Type</b>: More or less self explanatory. The Barber Pole
+setting will disappoint you if you're looking for a true barber pole
+phaser. This is simply an arrangement of multiple ramps modulating the
+phaser, so you hear the thump every time the ramp starts over. It's a
+pleasant enough effect at really slow rates, and creates something
+interesting at very high rates. In between it's annoying :) .</p>
+      <p><b>Tempo</b>: LFO frequency.</p>
+      <p><b>Depth</b>: How deep the phaser can sweep. It's an LFO offset. 64
+is dead center. If you want it to stay in the high range, set this
+higher than 64. If you want the phaser to spend more time carving out
+the lower frequency range, set this to some thing less than 64.</p>
+      <p><b>Width</b>: This is how far the LFO travels. It's the LFO amplitude.</p>
+      <p><b>Fb</b>: Feedback. Usually named 'Regen' on a phaser stompbox. For
+deeper notches keep Fb negative for even number stages and positive for
+odd number stages.</p>
+      <p><b>Mismatch</b>: FET Phasers suffer from the manufacturing process of
+JFET transistors. These things generally vary over a very wide range of
+properties per batch. What does this mean to a Phaser? It means that
+the frequency where 45 degrees phase shift occurs varies from stage to
+stage. This mismatch makes the notches wider, but less deep. This
+parameter best aligns with reality at a setting of 5 to 10. Large
+settings may be used to obtain a better 'Vibe sound.</p>
+      <p><b>Distort</b>: FETs used as variable resistors are only linear over
+a certain range. This nonlinearity adds harmonics to the processed
+signal and somewhat warps the frequency response. This is a very subtle
+effect, but worthwhile to be able to zero it if you don't want it
+modeled.</p>
+      <p><b>St. Diff</b>: Stereo Difference. Delay the LFO in the right or
+left channel. This combined with the panner effect can make it sound
+like something is twirling in an elliptical orbit around your head.</p>
+      <p><b>Stages</b>: First order all-pass filter networks to be chained
+together. Set to one for a high pass filter (or low pass filter with
+subtract checked). 4 stages is very typical in the average stompbox.
+Bi-mode and Tri-mode phasers include switchable 6 and 8 stage filters.
+It's rare to see an analog phaser with more than 8 stages in stompbox
+form because parts get expensive, and noise becomes an expensive design
+problem to mitigate. In the digital world, adding more stages is just
+another time through the filter loop if you can spare the CPU time.</p>
+      <p><b>Subtract</b>: Subtract wet from dry instead of add.</p>
+      <p><b>Hyper</b>: Flattens out the lower end of the LFO. Used with a Tri
+wave, this emulates the "Hyper Sine" found in some analog phaser
+pedals. It was a clever way that analog filter designers contrived to
+make the LFO behave according to the human's perception of frequency.
+To our ears, musical pitch increases exponentially with frequency.</p>
+    </td>
+    </tr>
+  </tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="flan"></a>Flanger</h3>
+
+
+<table cellpadding="5" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td>
+      <p><img src="imagenes/flanger.jpg" alt="rakarrack Flanger" align="bottom" border="1" height="250" width="185"></p>
+      </td>
+      <td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      <p>Adapted from the ZynAddSubFX Chorus</p>
+      <p><b>Intense</b>: Increase effect intensity.  A digital Flanger or
+      Chorus uses a delay line with several hundred to several thousand
+      taps.  When it changes taps to modulate the delay time, there is a
+      discontinuous change in the signal called "zipper noise".  To
+      eliminate this, fractional delay times need to be calculated in order
+      to smoothly transition from one delay line tap to the next.  The
+      default Rakarrack Phaser and Chorus use linear interpolation.  This
+      mode makes use of a Lagrange interpolation polynomial to estimate
+      fractional delay times and some other tricks to maximize the flanger
+      depth and flatten the frequency response on the chorus.  Adding the
+      mode switch adds the feature without breaking old presets.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="reve"></a>Reverb</h3>
+
+
+<table border="0" cellpadding="5" cellspacing="2">
+
+  <col width="204"> <col width="487"> <tbody>
+    <tr>
+      <td>
+      <p><img src="imagenes/reverb.jpg" alt="rakarrack Reverb" align="bottom" border="1" height="250" width="185"></p>
+      </td>
+      <td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      <p>Adapted from the ZynAddSubFX Reverb</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="eqp"></a>EQ Parametric</h3>
+
+
+<table border="0" cellpadding="5" cellspacing="2">
+
+  <col width="206"> <col width="489"> <tbody>
+    <tr>
+      <td>
+      <p><img src="imagenes/peq.jpg" alt="rakarrack Parametric EQ" align="bottom" border="1" height="250" width="185"></p>
+      </td>
+      <td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      <p>Adapted from the ZynAddSubFX Equalizer</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="cabe"></a>Cabinet Emulation</h3>
+
+
+<table cellpadding="5" cellspacing="2">
+<tbody>
+    <tr>
+      <td>
+      <br>
+</td><td style="vertical-align: top;">
+      <p><img src="imagenes/cabinet.jpg" alt="rakarrack Cabinet" align="bottom" border="1" height="250" width="185"></p>
+      </td>
+      <td style="background-color: rgb(251, 251, 251);">
+      <p>  Effect using the ZynAddSubFx Equalizer
+engine</p>
+      <p>This applies an approximation of certain
+speakers, cabinets,speaker/cabinet combinations according to publicly
+available frequency plots. For those wanting convolution-based cabinet
+modeling you can use Convolotron, but this cost a little bit of CPU resources.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="pan"></a>AutoPan/Stereo Expander</h3>
+
+
+<table cellpadding="5" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td>
+      <p><img src="imagenes/pan.jpg" alt="rakarrack AutoPan" align="bottom" border="1" height="250" width="185"></p>
+      </td>
+      <td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      <p>For the stompbox minded people, this is a
+stereo tremolo effect. Extra Stereo setting creates a more spacious
+stereo imaging effect.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="har"></a>Harmonizer</h3>
+
+
+<table cellpadding="5" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;">
+      <p><img src="imagenes/har.jpg" alt="rakarrack Harmonizer" align="bottom" border="1" height="250" width="185"></p>
+      </td>
+      <td style="background-color: rgb(251, 251, 251);">
+      <h3>Intelligent Harmonizer Explained</h3>
+      <p>Rakarrack harmonizer effect use the audio
+engine of the smbPtichShifter.cpp located at
+http://www.dspdimension.com. In order to save CPU use only a mono
+pitch-shifter in the lowest quality available, you can change this on
+the program <a href="#settings">Settings</a> window, but only for a
+low quality values because high quality ones use too much CPU. The
+audio signal converted to mono is send it to the pitch-shifter and
+returned to the two pole Peak filter, panned and send it to both
+channels L/R. The rakarrack Harmonizer has 3 modes:</p>
+      <h4>Normal Mode</h4>
+      <p>Is how a normal pitchshifter run, the pitch
+ratio is fixed and can be selected in the <b>Interval</b> effect
+parameter of the effect.</p>
+      <h4>Select Mode</h4>
+      <p>In this mode the pitch ratio is variable, this
+value depends of the selected <b>Interval</b> parameter, and the <b>Note</b>
+and <b>Chord</b> effect parameters. Rakarrack then recognize the audio
+note played (Only "melodies" monophonic data can be played in this
+mode) and modifies the pitch ratio in order to do a musical
+harmonization with the Tonality/Chord selected in the parameters, of
+course the twelve tonality's are available and 33 chords:</p>
+      <p>,6,Maj7,lyd,Maj(9),Maj7(9),6/9,+,m,m6,m7,m7(b5),m9,m7(9),m7(11)<br>
+,m(Maj7),m(Maj7)(9),dim,dim7,7,7(Sus4),7(b5),7(9),7(#11),7(13),7(b9)<br>
+,7(b13),7(#9),+Maj7,+7,1+8,1+5,(Sus4),2</p>
+      <h4>MIDI Mode</h4>
+      <p>This mode run in the same way as <b>Select
+Mode</b> but the Tonality/Chord is recognized via MIDI notes, the MIDI
+chord recognizer recognizes all the above chords plus all the
+inversions and bass changed chords, also has memory, they use the chord
+just another chord is send it and recognized. The MIDI channel can be
+selected in the <a href="#settings">Settings</a> window, then the
+Harmonizer adjust the pitch ratio with the audio note recognized,
+played by the user, and the Tonality/Chord received via MIDI.
+(Sequencer track ... )</p>
+    </td>
+    </tr>
+  </tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="delm"></a>Musical Delay</h3>
+
+
+<table cellpadding="5" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td>
+      <p><img src="imagenes/md.jpg" alt="rakarrack Musical Delay" align="bottom" border="1" height="250" width="185"></p>
+      </td>
+      <td bgcolor="#fbfbfb">
+      <h3>Musical Delay Explained</h3>
+      <p>The musical delay effect is a dual line delay,
+the word "musical" is due that you can adjust the delay time in both
+lines in a musical terms, with Tempo effect parameter, and the Delay1,
+Delay2, Delay3 effect parameters.</p>
+      <p>The Delay lines are measured in fractions of
+quarter notes at the <b>Tempo</b> selected. That means 1/2 is an
+Eighth note and 1/4 is a Sixteenth note. (1,1/2,1/3,1/4,1/5,1/6) are
+the possible values, that include eighth triplets, etc.</p>
+      <p>The center delay parameter, is the delay
+between the two delay lines, and is the only one can be set equal to
+zero.</p>
+      <p>The <b>Tempo</b> effect parameter value range
+is big (10~480) that's for admit half or double song Tempo in order to
+obtain largest or shortest delays.</p>
+      <p>Off course you have Gain, Pan and Feedback
+parameters for each delay line in order to adjust the desired effect.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="dere"></a>Derelict</h3>
+
+
+<table border="0" cellpadding="5" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td>
+      <p><img src="imagenes/derelict.jpg" alt="Derelict" align="bottom" border="0" height="250" width="185"></p>
+      </td>
+      <td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      <p>Distortion using resonant filter engine and standard
+Distortion waveshaping functions. Controls are mostly like Distortion
+module, but includes "Color" to add resonance to the waveshaper signal.
+This allows for a "bigger" sound that is useful for fuzzes and so on.
+Your imagination will take it where you want. Addition of this module
+also allows the user to have up to 3 simultaneous distortion modules, 2
+of with can have sub-octave modulation.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="gate"></a>Noise Gate</h3>
+
+<table cellpadding="5" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td>
+      <p><img src="imagenes/ng.jpg" alt="rakarrack Noise Gate" align="bottom" border="1" height="250" width="185"></p>
+      </td>
+      <td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      <p>New Effect based on Gate, Steve Harris LADSPA
+plugin. Only use the noise gate when you really need it. This can be a
+life saver, but it can also be a source of great frustration if
+improperly configured.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="wha"></a>WahWah</h3>
+
+
+<table cellpadding="5" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;">
+      <p><img src="imagenes/ww.jpg" alt="rakarrack WahWah" align="bottom" border="1" height="250" width="185"></p>
+      </td>
+      <td bgcolor="#fbfbfb">
+      <p>  Adapted from the ZynAddSubFX
+DynamicFilter</p>
+      <p>By now you're saying, "Ok, I get the Pan,
+Freq, Rnd, St. Dif, and Depth thing, but what the..."</p>
+      <p>In addition to use as Auto-wah (LFO-modulated
+Wah-Wah), this is also an envelope filter. </p>
+      <p>Currently, here are the three parameters
+related to envelope control:</p>
+      <p><b>Amp S.</b>: Amplitude sensitivity. This is like
+the sweep range. If sensitivity is set low, you have to pluck really
+hard to make the filter move. If set high, then the filter will sweep
+to the limit.</p>
+      <p><b>Amp. S.I.</b>: This stands for "Amplitude
+Sensitivity Inverse", but is applied in a somewhat interesting way.
+This slider offsets the base frequency for the wah wah filter
+resonance. At the same time, it acts as a logical check for which
+direction to sweep. When this is set less than 64, the filter responds
+to plucking by sweeping upward in frequency. When this is set higher
+than 64, then the filter responds to plucking by sweeping downward in
+frequency. <b>Tip: If you want to control wah-wah with a MIDI foot
+pedal, this is the parameter you will want to map. For pure
+pedal-controlled wah-wah, set Amp. S and Depth to zero.</b></p>
+      <p><b>Smooth</b>: How much to smooth the signal
+envelope. At a low level, the sound is like a bubble maker. At a high
+level, the filter responds very slowly to signal attack.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="awha"></a>AlienWah</h3>
+
+
+<table cellpadding="5" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td>
+      <p><img src="imagenes/aw.jpg" alt="rakarrack AlienWah" align="bottom" border="1" height="250" width="185"></p>
+      </td>
+      <td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      <p>AlienWah - Created by our hero, Paul Nasca Octavian originally for the ZynAddSubFX synthesizer.<br>
+AlienWah fits into the comb filter category, similar to phasers and
+flangers.&nbsp; AlienWah amplitude modulates two delay lines each with
+a phase separation of "Phase", then feeds them into each other in a
+somewhat circular fashion making each delay line a cascade of low order
+digital filters. In this manner it is similar to a Phaser.&nbsp; It's
+sort of like a digital low-pass filter that spirals down a pair of
+delay lines causing an interesting interference pattern.&nbsp; Some
+people may think of this effect as a "Flaser".</p>
+<p>For the less technically minded, the AlienWah configuration produces
+mostly vocal sounds with a strange timbre sounding much like sci-fi
+depictions of a language spoken by invading space aliens, or some
+strange creature found near the center of the earth. </p>
+<p>Even though some of the more extreme settings create weird alien
+sounds, it can also be configured for interesting subtle comb filtering
+sounds for shaping a rather beautiful timbre onto an instrument.&nbsp;
+It is a truly amazing effect.</p>
+<p>Here is a description of the parameters:</p>
+<p><b>Wet/Dry</b>: Being a delay-based effect, Wet/Dry does more than
+simply mix Wet/Dry sounds.&nbsp; Destructive interference occurs
+between the effected signal and clean so a proper blend can be used
+also to voice the effect.</p>
+<p><b>Pan</b>: Put effect more to the left or right channel.&nbsp; Used in
+conjunction with Wet/Dry mix, one can voice the effect differently
+between left right.</p>
+<p><b>Tempo</b>: LFO rate</p>
+<p><b>Rnd</b>: Add random noise to LFO to make it sound somewhat more
+"analog".</p>
+<p><b>LFO Type</b>: Self explanatory</p>
+<p><b>Phase</b>: This is a very interesting parameter.&nbsp; It sets the
+modulation offset between the two delay lines.&nbsp; On either extreme
+it has a lower "closed mouth" sound, while in the middle it creates
+more of an "open mouth" sound.&nbsp; This parameter "centers" the LFO
+around the point it is set.</p>
+<p><b>St. df</b>: Stereo Difference between left &amp; right LFO.&nbsp; A setting
+of 64 has both LFOs in phase between left/right.&nbsp; This parameter
+used with L/R Cr. is like having a second "Phase" parameter, so more
+interesting interaction can be achieved by using this control.&nbsp;
+It's more than what meets the eye.</p>
+<p><b>Depth</b>: This would be better termed "width" as this parameter adjusts the amplitude of the
+LFO.</p>
+<p><b>Delay</b>: Length of the delay line in samples.&nbsp; In a sense, this
+also is the filter order.&nbsp; The longer the delay time, the deeper
+the sound of the filter.</p>
+<p><b>Fb</b>: Feedback.&nbsp; Less than 64 is negative feedback, more than
+64 is positive feedback.&nbsp; 64 corresponds to zero feedback. Without
+feedback, the effect is rather dull.&nbsp; It's the perpetual
+regeneration along the delay line that creates&nbsp; the interesting
+phase cancellations and resonances that sound alien.</p>
+<p><b>L/R Cr.</b>: Left/Right Crossing.&nbsp; Amount of left to mix into
+right and right into left.&nbsp; Less than zero subtracts left from
+right, right from left, while greater than zero adds them.
+</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="Valve"></a>Valve</h3>
+
+
+<table cellpadding="5" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td>
+      <p><img src="imagenes/val.jpg" alt="rakarrack Valve"></p>
+      </td>
+      <td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      <p>New Effect based on Valve, Steve Harris LADSPA
+plugin, filters, harmonic enhancer and some extra distortion where
+added.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="Dual_Flange"></a>Dual Flange</h3>
+
+
+<table cellpadding="5" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;">
+      <p><img src="imagenes/df.jpg" alt="rakarrack Dual Flange"></p>
+      </td>
+      <td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      <p>Another Flanger alternative.  <br>
+Basic operation of a flanger:  Delay the incoming signal and add
+it to the input signal.  This creates destructive interference in
+a similar manner to a Phaser, but the notch filter frequencies are
+evenly spaced from the lowest notch up to infinity (in theory).
+
+Dual Flange picks two different delays and adds them to the input
+signal.  The two separately delayed paths have a spacing relationship that follows the other by a percentage, and not a constant
+offset.  At maximum wet, these two delay "taps" are added equally,
+thus the notches between the two are infinitely deep, and the effect is
+at its maximum severity.  Mixing in the clean signal reduces the
+depth of the notches, but also creates a complex and interesting
+frequency response.  The result is a unique color to the tone not
+available by a standard flanger.</p>
+      <p><b>Wet/Dry</b>:  Mix delayed
+signal with Dry</p>
+      <p><b>Pan</b>:</p>
+      <p><b>L/R.Cr</b>:</p>
+      <p><b>Depth</b>: Frequency (Hz) of
+the lowest notch frequency on lowest end of sweep range</p>
+      <p><b>Width</b>: LFO sweep width,
+deviation measured in Hz. </p>
+      <p><b>Offset</b>: Percent
+difference in delay between delay A and delay B.</p>
+      <p><b>Fb</b>: Feedback.  0 is
+none, negative and positive.</p>
+      <p><b>LPF</b>: Damp the delay
+line.  This makes the high frequency notches more shallow, thus
+the sound approaches that of a Phaser or other mellow 
+sweeping      comb filter</p>
+      <p><b>Subtract</b>: Subtract delayed
+signal instead of add</p>
+      <p><b>Th. zero</b>: Through
+Zero.  Delay Dry signal to 1/2 way between high and low delay
+deviations of delayed signal.</p>
+      <p><b>Tempo</b>: Sweep speed </p>
+      <p><b>St.df</b>: Stereo Difference
+between LFO's</p>
+      <p><b>LFO Type</b>:</p>
+      <p><b>Rnd</b>: Random.  Add
+random noise to LFO to help reduce unmusical effects of linear
+interpolation between samples.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="Ring"></a>Ring</h3>
+
+
+<table cellpadding="5" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td>
+      <p><img src="imagenes/ring.jpg" alt="rakarrack Ring"></p>
+      </td>
+      <td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      <p>New
+Effect based on Ring, Steve Harris LADSPA
+plugin. <b>Auto Freq</b> recognizes the frequency of the note played (Only
+monophonic sorry ..) in order that you can use Ring as a simple
+monophonic synthesizer.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="Exciter"></a>Exciter</h3>
+
+
+<table cellpadding="5" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td>
+      <p><img src="imagenes/ex.jpg" alt="rakarrack Exciter"></p>
+      </td>
+      <td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      <p>New Effect based on Harmonic, Steve Harris
+LADSPA
+plugin.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="DistBand"></a>DistBand</h3>
+
+
+<table cellpadding="5" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td>
+      <p><img src="imagenes/db.jpg" alt="rakarrack DistBand"></p>
+      </td>
+      <td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      <p>Multi Band Distortion, use the Cross1 and
+Cross2 to select the ranges of each band.</p>
+      <p><br>
+20Hz -&gt; Cross1 = Low<br>
+Cross1 -&gt; Cross2 = Mid<br>
+Cross2 -&gt; 20KHz = High<br>
+      </p>
+      <p>You can select a waveshape type for each band.<br>
+      </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="Arpie"></a>Arpie</h3>
+
+
+
+<table cellpadding="5" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;">
+      <p><img src="imagenes/arp.jpg" alt="rakarrack Arpie"></p>
+      </td>
+      <td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      <p>"Arpie"
+is a pet name for Arpeggiator.  This effect is a modified version
+of Echo.  The delay line is played back at higher rates to create
+arpeggios at octave intervals.  You can select a preset sequence,
+then adjust the number of steps to repeat from the sequence to gain a
+wide variety of patterns. Arpie can be adjusted to achieve thick and
+beautiful soundscapes as well as very edgy electronic trance and techno
+sounds.  Of course, with slower  tempos such that several
+phrases are repeated one can get the tempo-doubling side effect to lay
+out paint-pealing leads without hardly moving your fingers.</p>
+      <p><b>Wet/Dry</b>: Amount of
+arpeggiated accompaniment in the mix</p>
+      <p><b>Arpe's</b>: Mix pitch
+shifted delay line with normal delay</p>
+      <p><b>Pan</b>:</p>
+      <p><b>Tempo</b>: Measured in beats
+per minute</p>
+      <p><b>Subdivision</b>: Ratio to
+subdivide measure.  A setting of 1 is equal to 1 measure at Tempo.
+For example, 1/4 means the length of the delay line is equal to a
+quarter note  at the selected tempo.  The sequence will jump
+4 steps per measure.  </p>
+      <p><b>LRdl.</b>: Same as for Echo</p>
+      <p><b>L/R.Cr</b>: Same as for Echo</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="Expander"></a>Expander</h3>
+
+
+
+<table cellpadding="5" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;">
+      <p><img src="imagenes/exp.jpg" alt="rakarrack Expander"></p>
+      </td>
+      <td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      <p>The
+primary purpose for this effect is to offer a differently natured Noise
+Gate than the "Noise Gate" module.  The turn-on characteristic is
+modeled after that of a BJT transistor, thus it behaves more similarly
+to an analog noise gate.  It is likely that Expander uses less CPU
+resources than Noise Gate, but neither are very resource intensive
+modules.</p>
+<p>The basic behavior is the louder you play, the louder it gets until it
+gets pinned at the maximum "Level".  As a noise gate, the volume
+is exponentially increased in the lower volume levels until Threshold,
+at which point the gate is entirely open.</p>
+<p>To use the effect as an expander, it is best to set the threshold at
+higher levels, and shape at moderate levels (less than 10). Short
+attack/release times in this mode will cause it to work much like one
+would expect from a dynamics expander.  In this mode it is
+essentially a compressor in reverse.</p>
+<p>To take the idea of expander a little further, one can set long attack
+times and short release times to achieve a string swell effect akin to
+adjusting the volume pot on the guitar...only the effect does it
+automatically for you.</p>
+<p>Finally, the filters may be used for a bit of frequency shaping before
+a distortion effect, or used in front of the Compressor to help brighten
+the tone.</p>
+
+      <p><b>A. Time</b>: Attack Time, time to open the gate</p>
+      <p><b>R. Time</b>: Release Time, time it takes the gate to return to off
+      state</p>
+      <p><b>Shape</b>: Gate transition
+shape.  Large number means gate turns on suddenly at
+threshold.  Small number means gate gradually turns on Noise
+suppression is best at higher numbers, but the gradual expansion above
+the threshold can be a more musical way for gate  to turn on.</p>
+      <p><b>Thrhold</b>: Threshold. 
+The gate is reducing signal volume below this level.  Moderate
+threshold setting with smaller number for shape is useful for string
+swell effects.</p>
+      <p><b>Level</b>: Boost the output. 1 ... 127 represents a fractional increase in volume
+from 0dB to 20dB</p>
+      <p><b>HPF</b>: High Pass Filter</p>
+      <p><b>LPF</b>: Low Pass Filter</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="Shuffle"></a>Shuffle</h3>
+
+
+
+<table cellpadding="5" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td>
+      <p><img src="imagenes/shu.jpg" alt="rakarrack Shuffle"></p>
+      </td>
+      <td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      <p>Effect based on  Stereo Shuffling
+paper  by Michael Gerzon. That convert L/R signals to M/S, Mid and
+Side. You can equalize one of this bands with a parametric four band,
+the Rev selector select the M/S band to equalize, ON = S, OFF = M. That
+produce interesting spatial sound, also can be used to remove certain
+frequencies on the M/S channels.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="Synthfilter"></a>Synthfilter</h3>
+
+
+
+<table cellpadding="5" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td>
+      <p><img src="imagenes/syn.jpg" alt="rakarrack Synthfilter"></p>
+      </td>
+      <td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+<p>A different type of view of the Analog Phaser effect revealed a basic
+      structure supporting high-order filters with adjustable number of
+      filter stages ...most of the work was already done, so thanks again to
+      Paul Nasca for this piece of code from the original ZynAddSubFX
+      Phaser.</p>
+    <p>Starting with a phaser (as opposed to wah-wah or EQ) was inspired by a
+      phaser circuit modification suggested by Mark Hammer, a frequent forum
+      poster at diystompboxes.com/smfforum. This modification allowed two
+      phase stages to be converted to low-pass stages with a switch in an
+      analog phaser. This is the type of effect marketed as a "phase-wah".
+      Of course, converting all of these phase stages to low pass stages
+      makes this circuit look an awful lot like what is found inside the old
+      Korg Delta DL-50 synthesizer.</p>
+      <p>Converting a normal OTA phaser into a synth filter would be a
+      relatively ugly hack in the circuit bending world, but a simple
+      exercise in software bending, and with a more elegant final product.
+      With a little bit of experimentation, I had a filter sounding much
+      like something found in an analog synthesizer. Thinking back to an
+      analog envelope filter I once built, I determined high pass filter
+      stages would also be of great utility. The final result: A very
+      flexible filter module able to accomplish many flavors of low pass,
+      band pass and high pass filter shapes. Possibilities range anywhere
+      from simple wah-wah sounds to definite mushy filters from
+      synthland.</p>
+      <p>You can operate up to 12 high-pass and 12 low pass stages
+      simultaneously. At present, the user is protected from resonance near
+      instability. If you are a synth filter lover and want to be able to
+      make your filter unstable, then it is a very minor adjustment to the
+      source code if you wish to internally amp up the feedback range to
+      allow this. Finally, the SynthFilter comes with wet/dry mix so you can
+      accomplish interesting phase-wah sounds.</p>
+      
+      <p><b>Wet/Dry</b>:  Like many other filtering effects, it is not as simple as
+      Wet/Dry.  Destructive interference happens between the wet and dry
+      signals to varying degrees as this slider is adjusted, so new &amp;
+      interesting notch and comb filtering effects evolve as you move this
+      from wet to dry.</p>
+      
+      <p><b>Distort</b>:  This adds some nonlinear response to the filter.  In addition
+      to adding audible distortion, this parameter has the effect of making
+      the filter less resonant.  Set to zero for a "clean" filter sound.</p>
+      
+      <p><b>Tempo</b>: The filter can be modulated by an LFO.  This sets the
+       rate.</p>
+      
+      <p><b>LFO Type</b>:  The shape of LFO you wish to use.</p>
+      
+      <p><b>Subtr.</b>: Subtract.  Make output of filter negative, thus changing which
+      parts of the signal will cancel when using Wet/Dry mix.</p>
+      
+      <p><b>St. df</b>: Stereo Difference.  Delay between LFO's for left and right
+      channels.</p>
+      
+      <p><b>Width</b>: Width of the LFO, also think of this parameter as LFO
+      Amplitude.</p>
+      
+      <p><b>Fb</b>: Feedback amount.  Positive or negative values make the
+      feedback positive or negative.  This parameter makes the filter more
+      resonant.</p>
+      
+      <p><b>LPF Stg</b>: Number of first order low pass filter stages.</p>
+       <p><b>HPF Stg</b>: Number of first order high pass filter stages.  HPF and LPF
+      are series processed, so combining the two creates a band pass
+       filter.</p>
+      
+      <p><b>Depth</b>: Filter "start frequency".  Set Width and E. Sens to zero then
+      use this to manually sweep the filter with a MIDI message.  More
+      simply, use this parameter with a MIDI expression pedal to make
+      Synthfilter behave as an interesting type of wahwah.</p>
+      
+      <p><b>E. Sens</b>: Envelope Sensitivity.  This adjusts how much the filter
+      sweep responds to the dynamics of the input signal.  Numbers greater
+      than zero cause the filter to sweep upward as your playing gets
+      louder.  Numbers less than zero cause the filter to sweep downward as
+      your playing gets louder.  Set to zero for no effect.  Use "Depth" to
+      adjust the filter start frequency.  For example, if filter is to sweep
+      downward, set Depth to a large number and E. Sens to a negative
+      number.</p>
+      
+      <p><b>A. Time</b>: Attack Time.  Sets how quickly the envelope detector responds
+      to input dynamics.</p>
+      <p><b>R. Time</b>: Release Time.  Sets amount of time for envelope detector to
+      release the build-up from loud dynamics.</p>
+      <p>*Attack and Release are measured in milliseconds.</p>
+      <p>*Attack and Release times have no effect if E. Sens is set to
+      zero.</p>
+      
+       <p><b>Offset</b>: Separation between High Pass and Low Pass filters.  If both HP
+      and LP filters have stages 1 or more, this adjusts the bandwidth of the
+      resulting bandpass filter.  Set to zero, a bandpass filter with a
+      narrow peak will result, or set large, the bandpass filter will be
+      wider.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="VaryBand"></a>VaryBand</h3>
+
+
+<table cellpadding="5" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td>
+      <p><img src="imagenes/var.jpg" alt="rakarrack VaryBand"></p>
+      </td>
+      <td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      <p>Four
+Bands volume modulated with two LFOs. You can select for each LFO the
+type, Tempo(speed) and LR difference (St.df). Cross points are to
+defining the band frequency range.</p>
+      <p>20-&gt; Cross1 = Low<br>
+Cross1-&gt;Cross2 = Mid Low<br>
+Cross2-&gt;Cross3 = High Low<br>
+Cross3-&gt;26 KHz = High<br>
+      </p>
+      <p>The <b>Combi</b> choice select the LFO for each band</p>
+      <p>1 = LFO1<br>
+2 = LFO2<br>
+o = Bypass<br>
+x = Disable Band.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="Convolotron"></a>Convolotron</h3>
+
+<table cellpadding="5" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;">
+      <p><img src="imagenes/con.jpg" alt="rakarrack Convolotron"></p>
+      </td>
+      <td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      <p>Convolotron A module optimized for physical
+speaker/cabinet modeling.</p>
+      <p>A lame EE joke: "If you do that once, I will
+convolve your face
+with a Dirac Delta. If you do it again, I will convolve your head with
+an impulse train."</p>
+      <p>Some jargon associated with this effect:</p>
+      <p><b>IR  Impulse Response</b>. 
+Filters are often classified according to their impulse response. An
+impulse response is the output of the filter (or physical system)
+resulting from application of a short-duration, one-time, "impulse" of
+energy. An audio signal can be constructed mathematically as
+a series of such impulses separated by an infinitesimal period of time,
+and scaled by a certain factor representing the real-time amplitude of
+the signal.  If one impulse is applied to a filter, the filter
+begins to react with its characteristic impulse response. Then if
+another impulse is applied a little later, the same impulse response is
+invoked and is added to the first.  If we think of the audio 
+signal as a rapid succession of impulses, then the result of adding up
+all the impulse responses will reconstruct what the physical system
+will do in response to the input signal. This process is called
+convolution.</p>
+      <p><b>Convolution</b>. 
+A process of successively adding the impulse responses for any signal
+that has been or will be applied to the system.  In the case of
+realtime audio processing the impulse responses are causal in nature,
+so we can
+ignore the future and apply the effects only for what has already
+occurred.</p>
+      <p><b>Convolotron</b>.  A
+rakarrack module that takes an audio file as an IR, and convolves it
+with the input signal.  This signal may be an IR recorded from an
+amplifier, a microphone,  a cheap computer speaker system, horns,
+bells, gongs, reverb...kicking a door...</p>
+      <p>Some caveats:  Convolotron is very CPU hungry. 
+Rakarrack
+does straight-forward time-domain convolution.  Another Linux
+software application to compare is  JConv, which is not as CPU
+hungry because there are
+some frequency domain math tricks which allow the user to sacrifice
+some quality to reduce  processing load.  As a result, Rakarrack requires some
+"horsepower", but is better suited to amplifier/cabinet modeling
+assuming your CPU can handle it.</p>
+      <p> <b>Parameters</b></p>
+      <p><b>Wet/Dry</b>:  Self explanatory. 
+For amp responses, most of the time you will want this all wet.</p>
+      <p><b>Pan</b>: The effect is processed in mono (L &amp; R are mixed
+on the
+input).  Pan routes the output left or right.</p>
+      <p><b>Level</b>:    The actual IR file will determine
+the gain of the effect.  This helps you adjust  to a good
+level.</p>
+      <p><b>Damp</b>:     Darkens the sound of the IR.
+      </p>
+      <p><b>Fb</b>:      Feedback.  Pretty
+self explanatory.</p>
+      <p><b>Length</b>: Measured in milliseconds. This tells Convolotron where to truncate the
+IR. Set this to the maximum value your CPU can afford without
+Xruns.  A longer Length  will result in a more true model of
+the system being convolved.</p>
+      
+      <p><b></b><b>Safe Mode</b>: Automatically
+limits Length internally based on sample rate and info from your 
+/proc/cpuinfo to help prevent freezing your computer.</p>
+      <p><b>Preset</b>:   Several amp IR's are available by
+default for your convenience.</p>
+      <p><b>User</b>:    
+You may download or generate your own IR's.  You can even do silly
+things like loading ring tones or segments of a song (if you like to
+experiment).  Must be wav  format, and keep in mind that
+convolotron only uses the first  "Length" milliseconds  of
+the file...so if you have a file with 100ms silence at the beginning,
+you will get nothing but silence on the output.</p>
+      <br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="Looper"></a>Looper</h3>
+
+<table cellpadding="5" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;">
+      <p><img src="imagenes/loo.jpg" alt="rakarrack Looper"></p>
+      </td>
+      <td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      <p>Looper</p>
+      <p>Autism: A pervasive developmental disorder
+characterized by severe deficits in social interaction and
+communication, by an extremely limited range of activities and
+interests, and often by the <b> presence of repetitive,
+stereotyped behaviors.</b><br>
+(The American Heritage® Dictionary of the English Language, Fourth
+Edition copyright ©2000 by Houghton Mifflin Company)<br>
+      <br>
+It's a joke...<br>
+      </p>
+      <p><b>Wet/Dry</b>: Balance the mix of the recorded loop with the
+incoming signal to the output.</p>
+      <p><b>Level 1</b>: Volume level of track 1. '64' is unity. 
+Higher is louder than the original signal, lower is more quiet.</p>
+      <p><b>Level 2</b>: Volume level of track 2.</p>
+      <p><b>Tempo</b>:  Set the tempo of the song.  This control responds to TapTempo. 
+      However, time stretching is not used in the Looper, so changing Tempo
+      during recording, or on a recorded loop will have no effect on the
+      recorded tempo.</p>
+      
+      <p><b>Time Sig</b>:  Time Signature.  Use this to set the beat of the song.  The
+      loop will be quantized to the nearest measure.</p>
+      
+      <p><b>MS</b>:  Metronome Sound. You can select N (Normal mode) to hear a "mark"
+      on every first beat of the measure, then a lower "tick" for the
+      remaining beats, or H (High tick) to hear the "mark" sound on every
+      beat, or L (Low tick) to hear the lower tick sound on every beat.</p>
+
+      <p><b>Reverse</b>: Play loop in reverse.</p>
+      <p><b>Auto Play</b>: If this is checked, the looper will begin to
+play
+automatically after recording the first time. It also will cause the Record
+button to start play automatically. Disable this option to
+synchronize Looper with Jack Transport</p>
+      <p><b>Play/Stop</b>: What more needs to be said?</p>
+      <p><b>Pause</b>: Pauses whatever is happening.</p>
+      <p><b>Record</b>: Unless AutoPlay is selected, Record only arms
+      recording.  Play/Stop will set the tape rolling.  First time, it
+      begins recording and will continue to record until you push record
+      again. At this point you have defined the length of the loop. If you
+      press record again, everything you play will be overdubbed onto the
+      active track(s). To erase the track, you need to have the track active
+      and select "clear". This operates on the active track only if R1 or R2
+      (corresponding to the track) is selected. This allows you to record on
+      track 2 while hearing track 1.</p>
+      <p><b>R1, R2</b>: Enable recording on track 1
+and track 2, respectively.  If neither are checked, then the
+record button will not do anything.</p>
+      <p><b>Track 1, 2</b>: Enable Play, Stop, Record on the selected
+track. 
+Again, both the track and the R button need to be selected to record on
+the specified track.</p>
+      <p><b>Clear</b>: Erase the selected track and set
+length to zero.</p>
+<p><b>Lnk</b>:  Link track 1 and track 2 with the same length.  Activate this if you
+want track 1 and 2 to play at the same time.  Deactivate if you want
+something like a verse-chorus-verse-chorus song structure where track 1 is
+the chorus part, and track 2 is the verse part.</p>
+<p><b>M</b>: Enable Metronome. Note Looper has its own metronome so it is
+able to synchronize with your play/pause commands.  Pressing play resets the
+metronome to beat 1, no matter where it is in the measure.  You will
+probably confuse yourself if you try to use the master metronome and Looper
+metronome simultaneously.</p>
+
+<p>Example sequence of operation:<br>
+Set Wet/Dry to 0, Level 1 to 64, Auto Play Active, Track 1 active, R1
+active. Press record and begin to play into the loop. When finished,
+press record again, and your loop will immediately start up from the
+beginning.  Play along, or press record again to add more parts to
+the loop. Harmonizer with Octave down for bass simulator can be of
+assistance.  MuTroMojo and Synthfilter with reverse envelope sweep
+can be of assistance for bongo drum sounds.</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="MuTroMojo"></a>MutroMojo</h3>
+
+<table cellpadding="5" cellspacing="2">
+<tbody>
+<tr>
+<td style="vertical-align: top;">
+<p><img src="imagenes/mut.jpg" alt="rakarrack MuTroMojo"></p>
+</td>
+<td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+<p>MutroMojo</p>
+<p>The name is derived from two well known effects using the same filter topology: Mutron, Mojotron.
+For those not well accustomed to classic analog pedal effects, these were envelope controlled filters built upon the
+state-variable-filter.  This filter structure has three "states"
+which can be extracted: High pass, Low pass, Band pass.  This is
+easy to implement digitally, and is much more efficient for the
+processor than to compute the three filter bands as separate filters.</p>
+<p>MuTroMojo allows you to adjust the three bands at whatever levels you
+want.  This flexibility allows anything from various wahwah
+effects to synth filter effects, and possibly even sounds of the
+moogerfooger (though Synthfilter structure is better suited to
+"moog-like" sounds).  Like any good Rakarrack effect, it has an
+LFO synchronized to Tempo.  This means Tap Tempo will set the rate
+of the LFO effect. </p>
+<p>Additionally, you have the envelope follower applied with the E. Sens
+parameter, and smoothed by Smooth.  Here's the breakdown:</p>
+<p><b>Wet/Dry</b>: It's obvious that this
+mixes wet and dry signals, but this interacts like a phaser or flanger. By
+mixing some Dry into higher order filters (increase Stages) you can
+create notches in the frequency response. With individualized
+control over HP, BP, and LP filter bands, you can create some
+interesting comb filter responses. This is more than simply "amount of effect".</p>
+<p><b>LP, BP, HP</b>: Low Pass, Band Pass, High Pass, respectively. 
+Greater than zero mixes the output in phase, less than zero mixes the
+output out of phase.  This can be alternated to create different
+types of destructive interference between filter bands.  For the
+more technically minded, you can dust off your filter cookbook and tune
+in to a wide variety of filter responses.  This can also be used
+as a sort of parametric EQ or tone stack.</p>
+<p><b>Stg</b>: Stages. Each filter stage is a second order
+filter.  "Stg" sets the number of filters in series.  The
+number of stages will improve the amount of rejection above/below the
+cutoff.  A tip:  You can use this module as a compromise for
+up sampling quality when using up sampling.  For example set Wah
+and Range to maximum levels with LP at 32 and BP, HP at 0.  With
+this configuration you have a 12dB/Octave low pass filter set at about
+6kHz.  For clean electric guitar, you won't lose much of the
+original signal because most guitar pickups form such a filter at
+5kHz.  Then the upsampling can be set to Zero Order Hold, and this
+filter will smooth it out.  To improve quality, increase the
+MuTroMojo Stages.  In this mode it acts as an "Interpolating
+Filter", which is able to reconstruct the missing information between
+samples.  The higher quality upsampling options do the same thing,
+but they use much higher order Sinc interpolation filters and try to
+maximize bandwidth.  Unfortunately these higher order filters use
+more CPU, and they also have bad transient responses. If you can
+sacrifice the bandwidth, you can use lower order filters for nearly the
+same result.  This is where the MuTroMojo can give you more choice
+with whether you want to trade bandwidth or CPU usage while balancing
+transient characteristics.  If none of that made sense, then maybe
+you can ask on the rakarrack IRC channel for a better explanation...or
+look up sample rate conversion and interpolation for discussion of the
+trade-offs and benefits.  Otherwise, just experiment with settings
+that sound good to you, and forget about the technical details of why.</p>
+<p><b>Width</b>: Deviation of the LFO. This describes how far it sweeps.</p>
+<p><b>Tempo</b>: LFO Rate expressed in beats per minute. This is synchronized when Tap Tempo is active.</p>
+<p><b>Res.</b>: Resonance.  Increasing this makes a higher and more narrow peak at the filter resonant frequency.</p>
+<p><b>Range</b>: Upper bound on the filter sweep range.</p>
+<p><b>Wah</b>: Sweeps the filter resonant frequency from the minimum bound (hard coded in each preset) up to the upper bound
+(set by Range).  This is the parameter you would want to map to a MIDI expression pedal for a wah wah effect.</p>
+<p><b>E. Sens</b>: Amount that filter sweep responds to input signal dynamics. 
+Positive number means the filter center frequency sweeps upwared, negative
+means it sweeps downward.  Zero means the filter does not respond to
+dynamics of the input.</p>
+
+<p><b>Smooth</b>:  Smooth the envelope detector shape.  This has no effect unless you
+have E. Sens set to something other than zero.  If E. Sens is set to a
+useful level, then the Smooth parameter adjusts how quickly the filter
+center frequency responds to changes in signal dynamics.</p>
+
+
+</td>
+</tr>
+</tbody>
+</table>
+
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="Echoverse"></a>Echoverse</h3>
+
+<table cellpadding="5" cellspacing="2">
+<tbody><tr><td style="vertical-align: top;">
+      <p><img src="imagenes/ecv.jpg" alt="rakarrack Echoverse"></p>
+      </td>
+      <td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      
+      <p>Echoverse</p>
+<p>This effect is intended to be an "in your face" wall of sound.<br>
+This has been adapted from the normal "Echo" effect, but with some
+modifications that help improve the sound and behavior.  With
+Wet/Dry mix, you will  notice it is possible to get 100% wet
+(echoes only).  The reverse is a little more "clean".  More
+importantly, this effect synchronizes to master Tempo, and is
+responsive to TapTempo control.</p>
+<p>SubDivision allows you to divide delay times to 2,3,4... beats per
+measure.  Also added is "Extra Stereo" effect that makes the
+effect come alive in 3D space (assuming you're amplifying or recording
+in stereo).</p>
+<p><b>Wet/Dry</b>: Direct/Reverberant mix. It's like
+changing the distance you are located from the sound source.</p>
+<p><b>Reverse</b>: Same as Echo</p>
+<p><b>Pan</b>: Move the effect to the left or right</p>
+<p><b>Tempo</b>: Beats per minute.  This is synchronized to TapTempo when
+active.</p>
+<p><b>LRdl.</b>: Difference between left channel and right channel delay
+times.</p>
+<p><b>Fb.</b>: Feedback. Other descriptive words are Repeat, Regen or
+Tail.</p>
+<p><b>SubDivision</b>: Delay time can by synchronized to the length of
+a musical measure subdivision.  For example, the image to the left
+indicates delay time is set to 1/2 notes of a song played at a Tempo of
+90 beats per minute. </p>
+<p><b>Damp</b>: High frequency damping.</p>
+<p><b>E.S.</b>: Extra Stereo.  This is the amount of the effect
+applied.</p>
+<p><b>Angle</b>: This is the angle from which the sound appears to be coming.</p>
+</td></tr></tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="CoilCrafter"></a>Coil Crafter</h3>
+<table cellpadding="5" cellspacing="2">
+<tbody><tr><td style="vertical-align: top;">
+      <p><img src="imagenes/coi.jpg" alt="rakarrack CoilCrafter"></p>
+      </td>
+      <td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      
+      <p>Coil Crafter - Pickup Emulation/Converter</p>
+      <p>
+This unit contains two filters tuned to typical pickup frequency
+responses. Origin is used to match the pickup you're using. This
+filter "undoes", or reverses, the frequency response of your source
+pickup. "Destiny" is what kind of pickups you want it to sound like is
+in your guitar. This applies the frequency response of the pickups
+selected.</p>
+
+<p>Two caveats:</p>
+
+<p>A) This does not make your Gibson Les Paul sound like a strat. It
+makes it sound like you put single coil pickups in your Les Paul. The
+Tone control helps to take off some of the lows so you can somewhat
+emulate different guitar body types.</p>
+
+<p>B) You have to adjust parameters for the "Origin" pickup in order to
+cancel the effects of the pickups you are actually using. Without good
+electronics lab test equipment, this is largely guesswork tuned into
+range by your ears. If it sounds good, then who cares if it's
+technically right.</p>
+
+
+<p><b>Gain</b>: Volume control</p>
+
+<p><b>Tone</b>: Simple low cut</p>
+
+<p><b>Origin</b>: Pickups you are using. This will "undo" your pickup's
+response.</p>
+
+<p><b>Freq1</b>: Resonant frequency of origin pickup.</p>
+
+<p><b>Q1</b>: Resonance of origin pickup.</p>
+
+<p><b>Destiny</b>: This is the type of pickup you wish to emulate.</p>
+
+<p><b>Freq2</b>: Resonant frequency of desired pickup response.</p>
+
+<p><b>Q2</b>: Resonance of desired pickup.</p>
+
+<p><b>Pos</b>: Uses harmonic exciter to emulate switching to neck position pickup.</p>
+
+</td></tr></tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="ShelfBoost"></a>ShelfBoost</h3>
+
+      
+<table cellpadding="5" cellspacing="2">
+<tbody><tr><td style="vertical-align: top;">
+      <p><img src="imagenes/she.jpg" alt="rakarrack ShelfBoost"></p>
+      </td>
+      <td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      <p>Low Shelf Tone Booster</p>
+      <p>This is a simple Low Shelf Filter that can be
+used as Tone Booster, is good to put after Distortion effects in order
+to adjust the distortion tone or cut undesired freqs. Also with a
+really hard gain you can obtain a nice distortion in combination with
+the "invisible" Compressor/Limiter that rakarrack has on the end of the
+chain, if you try that be sure to low the main Output volume.</p>
+
+      </td></tr></tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="Vocoder"></a>Vocoder</h3>
+
+<table cellpadding="5" cellspacing="2">
+<tbody><tr><td style="vertical-align: top;">
+      <p><img src="imagenes/voc.jpg" alt="rakarrack Vocoder"></p>
+      </td>
+      <td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      <p>Vocoder</p>
+      <p>For those not already familiar with vocoders, this is the effect responsible for many robot sounds on several popular
+      songs.</p>
+<p>The basic structure is this:</p>
+<p>Your voice from a microphone needs to be connected to the "Aux" input
+of Rakarrack.  Second, you will have some sound source coming
+through Rakarrack's normal processing chain.  This is likely a
+guitar or synthesizer.  When you speak into the mic, you will hear
+the sound of your instrument with a robot-like voice.  The best
+types of signals are constant and rich in frequency content.  For
+example, distorted guitar chords are a good "carrier" for the
+Vocoder.  Various synthesizer strings sounds or brass emulations
+are also good sources for the voice.</p>
+<p>This particular implementation uses the analog Vocoder model. 
+These units were implemented with several parallel filter banks. 
+One filter bank was used on the voice, and the other on the
+instrument.  The bank on the voice was used to "find out" what
+frequency bands are being used by the voice, then the power from each
+of these bands was used to scale the corresponding bands on the
+instrument so it has more or less power in these bands.  Briefly
+put, the power in the signal of each frequency band from the mic was
+used to control the volume on each corresponding frequency band for the
+incoming instrument.  Think of two 32 band equalizers.  The
+first 32 band EQ has a mic plugged into it.  As you speak into the
+mic, you can see the VU meter bars bounce on each corresponding band (if
+this is the kind of EQ that displays VU bars for every band). 
+Imagine something being linked to the VU meter bars that can push the
+sliders up and down on the Equalizer used to process the
+instrument.  This is what a vocoder does.</p>
+<p>Rakarrack uses a 32-band filter bank to implement the effect. 
+These are all second-order band pass filters spaced evenly on a
+logarithmic scale from 300Hz to 3600Hz, thus covering most of the
+important formant frequencies.</p>
+<p>Additionally there are some basic hard-coded utilities to help in processing the voice channel:<br>
+Gate:  Anything below -75dB is gated.  You can "cheat" the
+gate with the Input level adjustment.  If too much noise is
+getting through to the vocoder when you're not talking, you can
+decrease the input level until the noise floor disappears.  Of
+course, if you have a noisy preamp, mic, lots of background
+noise...etc, this gives you poor signal/noise ratio, then there is
+little we can program into the application to help improve the dynamics
+:-(.  </p>
+<p>Compressor:  A simple compressor is applied to the vocals with a
+ratio of approximately 2:1.  It is implemented using
+add/subtract/multiply/divide instructions to avoid CPU costly log and
+pow functions.  As a result, the compression curve looks more like
+saturation on a vacuum tube or JFET, and the compression ratio
+increases steadily with the input signal level.  Consequently, it
+is a soft-knee compressor and lends itself well to vocal processing as
+a easy soft-knee compressor.  Because of the way this compressor
+behaves, increasing the Input level is tantamount to decreasing the
+threshold and increasing ratio simultaneously.  It is designed
+this way so it works effectively without the user needing to know
+anything about it.  Incidentally, this same compressor is used to
+create the Sustainer effect.</p>
+<p>The take-home message with regard to the "invisible" utilities is that
+the Input level parameter gives you a lot of power over the dynamics of
+the microphone input, and can help in getting a good consistent vocal
+sound onto the instrument being processed.</p>
+<p>Here is the list of parameters:</p>
+<p><b>Wet/Dry</b>: We have been over this many times.</p>
+<p><b>Pan</b>: Move the processed signal to the left or right</p>
+<p><b>Input</b>: Microphone input level.  Explained in detail above.</p>
+<p><b>Muf.</b>: "Muffle".  Maybe more like "blur" or
+"smear".  This increases the averaging time on the power coming
+into each frequency band.  Adjusting to a large level has an
+effect of making it sound like the voice is in a very large reverberant
+room.  Lower levels achieve a more articulate sound.</p>
+<p><b>Q</b>: Resonance of the
+filters.  Increasing this number makes the filter bands more
+narrow.  Extremely high values make the filters so resonant it
+sounds like metallic reverberation.  This also "smears" the
+vocals.  Unless you are going for extreme sounds, the best range
+is 65 to 90.</p>
+<p><b>Ring</b>: If you are going for extreme sounds, this
+is the ticket.  This causes the voice from each mic band to be
+multiplied with each instrument band.  The adjustment is basically
+modulation depth.</p>
+<p><b>Level</b>: Final output level. </p>
+</td></tr></tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="Sustainer"></a>Sustainer</h3>
+
+<table cellpadding="5" cellspacing="2">
+<tbody><tr><td style="vertical-align: top;">
+      <p><img src="imagenes/sus.jpg" alt="rakarrack Sustainer"></p>
+      </td>
+      <td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      <p>Sustainer</p>
+      <p>A very simple "no frills" soft knee compressor
+good for making notes sustain.  All you have to think about is
+"sustain" and output volume.</p>
+<p>This module was inspired by, and is built upon, the vocal compressor
+used in the Vocoder.   This compressor has a more "bright"
+sound than the normal compressor.  Read up on Vocoder for more
+information about this compressor.</p>
+<p>The Attack time is equal to the Release time, and this time is set to
+50ms.</p>
+<p><b>Gain</b>: Gain recovery after the compressor.  This is a simple volume
+control.</p>
+<p><b>Sustain</b>: This lowers the threshold and increases the ratio as the number
+increases.  Adjust anywhere from mild compression to a more extreme
+"breathing" compression sound.</p>
+</td></tr></tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="Sequence"></a>Sequence</h3>
+<table cellpadding="5" cellspacing="2">
+<tbody><tr><td style="vertical-align: top;">
+      <p><img src="imagenes/seq.jpg" alt="rakarrack Sequence"></p>
+      </td><td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      <p>Sequence</p>
+      <p><br>
+      </p>
+      <p>8-step sequencer with multiple modes of
+operation.  The sequencer controls effects that are hard-coded
+internally which can be activated by the Mode selector.  To date
+the sequencer includes various modes for modulating a band-pass filter,
+amplitude, and there is also a pitch bending mode based on the code
+used in Harmonizer and Shifter.</p>
+<p>Some of the uses include a sequenced tremolo (try Tremor mode) or
+something akin to the Sample/Hold filter (Stepper mode), or a sequenced
+wah wah (lineal).</p>
+<p><b>Preset</b>: Several built-in preset configurations exist to showcase the possibilities of the
+effect.</p>
+<p><b>Wet/Dry</b>: Nothing special here.</p>
+<p><b>Sliders 1 - 8</b>: Level of effect at each step in
+the sequence.  If a filter, sliders set filter center
+frequency.  If Tremor, sets volume of signal at the corresponding
+step in the sequence.</p>
+<p><b>Tempo</b>: Rate in Beats Per Minute at which the sequencer changes to the next
+step.</p>
+<p><b>Q</b>: Filter resonance.  This may or may not do anything
+with modes that don't use a filter.  For certain modes, it may be
+used to control a "hidden" parameter, so it is worthwhile to try it to
+see if it does something.</p>
+<p><b>St. df</b>: Stereo difference.  This delays the right
+channel sequence from the left by the number of steps selected
+(1-8).  This makes it sound as though the sound source is moving
+all around the room.</p>
+<p><b>Range</b> For most modes, it provides a choice ranges over which the
+sequence sliders control the parameter.  For example, on a filter,
+it controls the maximum and minimum center frequencies.</p>
+<p><b>Mode</b> Select different modes of operation.  The modes
+include:</p>
+<p><i>Lineal</i>: Filter &amp; optional amplitude. Moves smoothly from one step to the
+next.</p>
+<p><i>Up Down</i>: Filter &amp; optional amplitude. Returns to zero between
+steps, and steps up to the level adjusted in the sequence sliders.</p>
+<p><i>Stepper</i>: Filter &amp; optional amplitude. Steps abruptly from
+one level to the next.  This is the most like a Sample/Hold
+modulated filter.</p>
+<p><i>Shifter</i>: Frequency shifter.  Bends smoothly from one frequency
+to the next</p>
+<p><i>Tremor</i>: Amplitude.  This is a sequenced Tremolo that can be
+switched between two different stepping modes by the "Amp" switch.</p>
+<p><i>Arpeggiator</i>: Frequency shifter. Pass directly from one frequency to
+      the next one, the semitone is adjusted by the sequence sliders,
+      semitone = "slider value / 10".</p>
+<p><i>Chorus</i>: Frequency Shifter, this mode use small amount of pitch
+      shifter in order to generate a chorus effect.With St.df=0 normal
+      operation, with St.df=1 added Extra Stereo, with St.df=2, Q can
+      control the pan.</p>
+<p><b>Amp</b>: Invoke amplitude modulation when available in the mode. In
+      Frequency shifter modes Amp is used to switch down the frequency.</p>
+<p>Finally, here is a reward for those who read the Help:</p>
+<p>What is a sequencer effect without a random mode?  There is an
+"Easter Egg" hidden in this effect that invokes a random
+sequence.  Pull all the step sliders (1-8) to zero.  If the
+sum of the values on these sliders is less than 4, then the Sequencer
+will step randomly.  To return to a sequenced operation, bring one
+of the sliders to something greater than 4.  At this point, the
+Sequence queue contains the randomly generated levels from the last
+complete cycle through the queue.  In random mode, these are
+refreshed on each cycle so the sequence does not repeat, but once you
+leave random mode the current random sequence remains in the
+queue.  You can "erase" each of these one-by-one by adjusting the
+corresponding slider.</p>
+</td></tr></tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="Shifter"></a>Shifter</h3>
+<table cellpadding="5" cellspacing="2">
+<tbody><tr><td style="vertical-align: top;">
+      <p><img src="imagenes/shi.jpg" alt="rakarrack Shifter"></p>
+      </td><td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      <p>Shifter Pitch Shifter</p>
+      <p>Pitch shifting effect built on the Harmonizer
+DSP engine.  This flows with the general concept of a synthesizer
+pitch wheel or a whammy pedal.</p>
+<p>This effect has the ability to shift pitch up or down an octave. <br>
+In Trigger mode, the effect will cause the pitch to bend up (or down)
+when the signal has exceeded the threshold.  The rate for upward
+bending is set by Attack.  Time to return to normal pitch after
+the signal has fallen below the threshold is set by Decay.  A
+second mode is available to make use of the Whammy slider for a pedal
+controlled digital whammy effect.</p>
+<p><b>Wet/Dry</b>: Mix some of the unaffected signal to the output.</p>
+<p><b>Int</b>: Musical interval setting the maximum pitch deviation. In
+Trigger Mode with interval value set to "0", the real interval is set
+to "1" and can be controlled by the Whammy slider.</p>
+<p><b>Gain</b>: Overall effect volume.</p>
+<p><b>Pan</b>: Pan effect to left or right channel.</p>
+<p><b>Attack</b>: Sets how quickly the pitch bends upward when input has exceeded the
+threshold.</p>
+<p><b>Decay</b>: Sets how quickly the pitch returns to "zero" after signal is below
+threshold.</p>
+<p><b>Thrshold</b>: Level at which the signal will trigger pitch bending.</p>
+<p><b>Down</b>: Pitch bends up by
+default.  Check this box to make pitch bend downward.</p>
+<p><b>Whammy</b>: If Whammy mode is selected, this acts as a smooth pitch
+bend from "zero" (in tune) to a maximum set by Interval.  This is
+intended primarily for external MIDI controllers, whether it may be a
+MIDI foot pedal, pitch wheel, Ardour automation, or a MIDI sequencer
+software.</p>
+<p><b>Mode</b>: Sets mode of operation.</p>
+</td></tr></tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="StompBox"></a>StompBox</h3>
+
+<table cellpadding="5" cellspacing="2">
+
+<tbody><tr><td style="vertical-align: top;">
+      <p><img src="imagenes/sto.jpg" alt="rakarrack StompBox"></p>
+      </td>
+      <td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      <p>StompBox</p>
+      <p>A stand-alone stompbox emulator.</p>
+<p>Between the various equalization tools and distortion modules,
+Rakarrack offers great flexibility to get a wide range of distortion
+sounds, but this method requires much experimentation, while some
+things are simply not possible.  What if you are a person who
+wants to dial in a good sound quickly, and don't enjoy tweaking
+seemingly endless possibilities?</p>
+<p>StompBox aims to simplify the process by giving the user a familiar
+"StompBox" interface with only "Level", "Gain", and a 3-band EQ, which
+generally covers all the features presented by a typical stompbox.</p>
+<p>Additionally, most of these "Stomp Box" modes are physically informed
+models of actual stompboxes, with the most notable features derived
+from the circuit's schematic.  Please enjoy these models as a
+unique creation of their own, and not as something expected to be a
+part-for-part replacement.  It is my belief (as the developer)
+that these models have some convincing characteristics, but I am aware
+of many subtle things that are not taken into account.  Further,
+there are many variants of a specific type of pedal on the market; for
+example, an Overdrive pedal is basically the same circuit for almost
+all models marketed as "overdrive".  The differences are minor
+variations that the specific designer determined produced a better
+sound.  Even though the names of the modes indicate one model or
+the other, the internal signal processing in Rakarrack includes
+variations of its own: some to counteract unfortunate digital artifacts
+and some applied as common "mods" that tweakers apply to their physical
+stompboxes.</p>
+<p>Perhaps a good analogy would be that of an artistic painting versus a
+photograph.  The Rakarrack stompbox models are more like an
+artistic painting, where the artist (programmer) looks at the object
+(schematic), "paint" (write code) the prominent features, then add
+details that make it become an identifiable image of the original
+object.  In contrast, a photograph captures things exactly how
+they appear, with artifacts such as resolution and lighting/color
+distortions.  Many commercial products attempt more of a
+"photographic" approach to stompbox modeling, where each part and
+component is modeled in detail.  This of course, makes the CPU
+usage increase dramatically while IMHO little value is added in terms
+of making a *GOOD* sound (however they do make it much more true to the
+original).  I think there would also be risk of legal issues if we
+attempted to model commercial stompboxes exactly and (especially)
+present them to our users in that form.  For the most part you
+will be able to tell what stompboxes were used as a standard for a
+specific type of sound, as the names are relatively tell-tale. 
+Hopefully we have kept things generic enough to avoid aggravating the
+industry.  If any person of such authority takes issue, let it be
+known we are happy to make changes &amp; remove things you feel are
+infringing on your patent or trademark rights.  However, being
+free software, this is probably greater benefit in the form of free
+marketing for these industries.</p>
+<p>Last, not all of the stompboxes modeled actually have a 3-band
+EQ.  For these cases, one or two of the EQ bands is configured to
+emulate the EQ control on the pedal while the others have a
+configuration that matches the "theme" of the pedal, and they have no
+effect at "0" setting.  Thus, any pedal model will have EQ
+controls that behave similarly to the original.</p>
+<p>Now with all the explanation and disclaimers set aside, let's give some
+insight to what this thing is able to do.  The first important
+parameter to understand is the "Mode" selector.  This is where you
+get to select the flavor of stompbox distortion you wish to model:</p>
+<p><i>Amp</i>: This is a model twice derived from a tube preamp. 
+The general circuit flow follows that of a typical overdrive pedal
+(Tubescreamer type), however the waveshaper uses dynamically modulated
+symmetry with a soft clipping function somewhat emulating the behavior
+of a vacuum tube.  The reason it is considered twice derived is
+because the overdrive pedal originally used the frequency contouring of
+a tube preamp along with a soft diode clipper to (poorly) emulate the
+characteristics of an overdriven tube.  Rakarrack "Amp" model
+therefore is a model of a model, but the clipping routine is much more
+dynamic and "alive" than the average diode clipper.  The
+pre-emphasis filter was modified somewhat to pick up more of the lower
+end to make it better suited to fat blues lead tones.  The 3-band
+EQ is constructed based on criteria derived partially from a typical
+tube amp tone stack blended with some of the character of the overdrive
+pedal tone control.  If Low and Mid bands are left flat (zero),
+then the high band behaves like the OD pedal Tone control.</p>
+<p><i>Grunge</i>: This will explain itself to those who are familiar
+with the source model.  The original has only high and low EQ
+bands.  The Rakarrack model implements the mid band to allow for
+some mid scooping, or a mid boost if desired.  Set mid at "zero"
+to get the most true behavior of the original.</p>
+<p><i>Rat</i></p>
+<p><i>Fat Cat</i>: Rat and Fat Cat are minor variations on the same
+thing.  In truth, the difference between the two is subtle. 
+The EQ behaves like the original if low and mid bands are left flat
+(zero).  The high band behaves as the original tone control. 
+The mid band EQ is designed to work on frequencies associated with the
+nasal sound.  The low band is very broad and can be adjusted to
+make the pedal sound very "beefy".</p>
+<p><i>Dist+</i>: The name says it all for any who know the
+original.  The original has no tone control, so all three bands
+are fabricated.  The EQ on this is of the same type as for the Rat
+model.  To get the sound of the original pedal, leave mid and low
+flat, then push high to its maximum.</p>
+<p><i>Death</i>: A good mode for a raw-edged chainsaw guitar sound and death
+metal enthusiasts.  One may easily guess the original model if it
+is stated that the internal circuit is identical to "Grunge", only some
+contouring modifications and 3 bands of EQ.  This model, unlike
+the original, has a gain control.</p>
+<p><i>Mid Elves Own</i>: Say it out loud and it will will sound
+similar to how the original stompbox name sounds.  This model
+excludes the sweepable mid-band EQ.  Instead, the mid-band picks a
+good place and leaves it fixed there.  It is an intentional design
+decision not to include the extra slider for mid sweep.  This is
+to maintain the simplicity of a generic interface for all models. The
+Rakarrack Parametric EQ as well as MuTroMojo modules are capable of
+providing a sweepable mid scoop or boost if desired.</p>
+<p><i>Fuzz</i>: 
+The first kind of distortion to come in a stompbox.  It makes
+everything sound as you hear things while experiencing mild
+electrocution from the chassis of a poorly grounded amplifier. 
+This does not capture any particular circuit, but rather summarizes an
+era (although elements of the various different fuzz boxes were
+considered in the design).  The controls on this unit do not
+follow the pattern of the stompbox models as fuzz originally was a 1 or
+2 knob wonder.  Here is the guide:</p>
+<p><b>Level</b>: This does what it says</p>
+<p><b>Gain</b>: This is mostly consistent with the name.  This makes it
+more distorted but at the same time the lows get cut from the input
+increasingly as gain is increased.  This is similar to how the
+classic Fuzz Face behaves.</p>
+<p><b>Low</b>: This has nothing to do with the low frequency EQ.  This
+controls the bias in the virtual "circuit".  As you adjust up or
+down, the waveform gets clipped increasingly asymmetrically in one
+direction or the other. It has no effect at "0" setting, although the
+clipping characteristic is naturally asymmetric.  This setting can
+make the fuzz sound rather "nasty", and is a good parameter to map to
+the ACI to change dynamically.</p>
+<p><b>Mid</b>: A mid-band EQ, but not like a normal mid-band EQ.  This
+one operates on the input before the distortion, and is tuned to act
+like a stuck wah wah pedal.  Settings less than zero cut mids from
+the input mix, making the fuzz sound a little more "woolly".</p>
+<p><b>High</b> This is a tone knob modeled according to the Big Muff tone
+control.  Positive numbers cut lows while boosting highs. 
+Negative numbers cut highs while boosting lows.</p>
+</td></tr></tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="Reverbtron"></a>Reverbtron</h3>
+
+<table cellpadding="5" cellspacing="2">
+<tbody><tr><td style="vertical-align: top;">
+      <p><img src="imagenes/rvt.jpg" alt="rakarrack Reverbtron"></p>
+      </td><td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      <p>Reverbtron</p>
+      <p>A convolution Reverb and delay processor.</p>
+<p>Reverbtron is based upon the engine of Convolotron (thus the name), but
+takes into consideration that time-domain convolution has expensive
+taste for CPU cycles.  Convolving a reverb impulse response in
+real time is impossible without the use of special hardware dedicated
+to intensive DSP functions unless something in the impulse response is
+sacrificed for lower processing requirements.</p>
+<p>In the case of Reverbtron, the full shape of the response it preserved
+from the head to the tail, but true replication of the frequency
+response is sacrificed. In short, the "magic" actually happens in the
+IR conversion utility used to convert the .wav IR file to a .rvb file
+for Rakarrack.  Various elements of the waveform are considered,
+then the .rvb file is constructed as a list of pairs: Time, Reflection
+Amplitude.  This file is actually a plain text file, and you may
+edit this file or generate your own custom files.  In fact you
+could use plain utilities such as bash scripting, perl, octave, scilab,
+etc.  Internally Reverbtron convolves this directly with the
+signal using the time index to determine at what delay amount to
+perform the multiplication.  When Length is reduce, Reverbtron
+simply subsamples the file at even intervals.  As one can see, the
+quality of the resultant reverb relies 100% on the construction of the
+.rvb file.  This has the side effect for enabling future
+improvements to Reverbtron for users who install Rakarrack from their
+distribution repository.  Then they only need to download .rvb
+files as the Rakarrack team improves the IR file processing.</p>
+<p>A tip to reduce CPU usage to an amount that even some slower processors 
+can easily manage is open the Rakarrack Preferences and set the internal 
+sampling rate to a low rate, down to 8kHz.  It may seem a low quality 
+sound will result from using a samplerate of 8kHz, but with some magical 
+mathematics in the downsampling and upsampling process it is possible to 
+replicate the input signal perfectly in the upsampling routine, only 
+band-limited to 1/2 the sample rate.  In other words, the loss in 
+quality is no worse than applying a steep low-pass filter at slightly 
+below 1/2 the sample rate, assuming you are using one of the sinc 
+interpolation up/down sampling selections.  There will be non-musical 
+artifacts resulting from zero-order hold or linear interpolation, 
+although this may be acceptable to you if your CPU is too slow to handle 
+the higher quality selections. Almost all selections of resampling will 
+be faster than processing at a higher samplerate.</p>
+<p>Here are the parameters:</p>
+<p><b>Wet/Dry</b>: Amount of dry signal to mix with the convolved
+signal.  Notice that the IR file defines the maximum
+wetness.  The Fade parameter fades the head end of the IR where
+the amount of dry is defined.  Usually this works well by mixing
+all wet and setting fade until it appears there is silence at the
+beginning for a duration equal to the incoming instrument's note attack
+time.</p>
+<p><b>Pan</b>: Fade the output more to the left or right.</p>
+<p><b>Level</b>: Helps to compensate for louder and softer IR volume
+levels.</p>
+<p><b>Damp</b>: Reduces high frequency content in the signal.  This can help to tame poorly behaved IR
+files, or simply to impose a different character on the IR.</p>
+<p><b>Fb</b>: Feedback.  Feed output to input.  Be careful as this
+has the same sensitivity and character as microphone feedback. 
+Setting initial delay or fade to a modest level helps to create more of
+a regenerative sound instead of feedback. Damp can be used to tame the
+feedback as well.</p>
+<p><b>Length</b>: This is measured in the number of points to process. 
+A length of 800 means that literally 800 reflections will be processed,
+but it also means 800 multiplication and addition instructions will
+happen for every frame.  This is an indication of the amount of
+subsampling performed on the IR file.  Contrary to intuition, a
+high number does not always make the reverb sound better.  There
+can be multiple "sweet spots" along the range, even with numbers less
+than 300.</p>
+<p><b>Stretch</b>: Want your IR to reverberate for a longer period of
+time?  Have a long one and want to shorten it?  Stretch
+changes the time base.  A negative number shortens the IR, a
+positive number makes it longer.  You can stretch some IRs long
+enough to create good discrete echoes; and very complex ones at that.</p>
+<p><b>I. Del</b>: Initial Delay.  This parameter delays the entire
+reverb response.  This is a way of thumbing your nose at
+physics.  You can create reverb effects that don't happen in the
+real physical world.</p>
+<p><b>Fade</b>: Reduce the level of the initial response of the IR. 
+This can be used to increase the wet level on an IR that contains much
+of the direct response.</p>
+<p><b>Diffusion</b>: Diffuse the percussive echoes. Synthesizes an
+artificial Head Related Transfer Function (HRTF) and performs a second convolution 
+on the output.  Increasing the slider value increases the number of 
+reflections in the HRTF, and will better diffuse the discrete echo 
+sounds.  For instruments with fast or percussive attacks this can be a 
+very necessary control to help make the reverb more smooth and natural 
+sounding.</p>
+<p><b>ES</b>: Extra Stereo. Emulate a spatial effect in stereo. This works 
+approximately like this:  
+Signal-&gt;LPF-&gt;Right-&gt;LPF-&gt;Delay-&gt;Left-&gt;FeedbackToSignal....and it just 
+keeps feeding back on itself in a loop until it decays.  The delay time 
+is set internally by a guess at the room size based on properties of the 
+IR file.  The method assumes in a real room your ears will be most 
+sensitive to reflections from the walls on the left and right side.  Each 
+time a sound reflects off a wall, generally it loses more high frequency 
+content than low frequency content, and a reflection will be delayed and 
+filtered by the time it passes your left ear, bounces off the right wall 
+and returns to your right ear.  Anybody with technical understanding 
+will know this is a very general approximation, but the result is 
+pleasant, and certainly creates an illusion of space when listening in 
+stereo (particularly with headphones).</p>
+<p><b>LPF</b>: Low Pass Filter.  Sets the cutoff point where high
+frequencies are damped in the ES option.</p>
+<p><b>Safe</b>: Limits Length regardless of the setting.</p>
+<p><b>User</b>: Browse for your own .rbv file.  These files are
+generated by invoking the rakverb command on a .wav format IR file.
+"rakverb -i foo.wav" will generate a file called "foo.rbv" in the same
+directory.  This is the file you would want to load into
+Reverbtron.</p>
+<p><b>Preset</b>: Rakarrack comes with several IR files already processed
+and ready to go so you don't need to search the web looking for impulse
+responses.</p>
+</td></tr></tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="Echotron"></a>Echotron</h3>
+<table cellpadding="5" cellspacing="2">
+<tbody><tr><td style="vertical-align: top;">
+      <p><img style="width: 175px; height: 250px;" src="imagenes/ect.jpg" alt="rakarrack Echotron"></p>
+      </td><td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      <p>Echotron</p>
+      <p>Multi-tap delay with virtually unlimited taps (limited to 127,
+but if more than that is desired, use Reverbtron).&nbsp; In the most
+simple case, assign the timing and spacing of delay taps in a simple
+text file, then load as a custom "user" file.&nbsp; Tempo is normalized
+to 1 measure = 1 Second at 60 beats per minute.&nbsp; Simply think of a
+"1.0" in the time column of the text file as "one measure".&nbsp; For
+example, if you want 8th note echoes at Tempo, assign delays in
+multiples of 0.125.&nbsp; Potential musical subdivisions are limited
+only by your creativity and ability to do fractional mathematics as
+pertains to musical rhythm and timing.&nbsp; If you don't like math,
+but you like to experiment, then simply try a bunch of numbers less
+than 6 and see what happens.&nbsp; Maybe someday we will make a GUI
+editor to generate the text files</p>
+<p>A more advanced feature of Echotron is the assignment of filters in each 
+delay line tap.  In the text file, you can configure a state-variable 
+filter with center frequency, resonance, and individually mix the 3 
+bands, as with MuTroMojo.  Up to 32 filters may be configured in the text 
+file.  If you wish to bypass a filter in any line of the file, set 
+Stages to 0 (zero).  The first 32 occurrences of filters with stages 
+greater than 0 will be processed.  Any filter parameters defined after 
+the first 32 are ignored.</p>
+<p>You can assign left/right panning in the text file to create interesting rotational
+patterns.</p>
+<p>There is a maximum delay time of 6 seconds, but there is no minimum
+delay time; for example, a delay time of zero is perfectly acceptable
+if using the filters to create a phaser or wah wah (be careful with the
+feedback parameter).&nbsp; Other small delay times are possible for
+creating chorus and flanger effects.&nbsp; You may also set the delay
+times the same for multiple taps if you wish to create a comb filter
+with the state variable filter, or even an 8-band equalizer is possible.</p>
+<p>From the GUI, you can enable/disable the filters, enable/disable filter
+modulation, enable/disable delay line modulation, and all is
+synchronized to Tempo.&nbsp; You may also limit the number of Taps
+processed from the file.</p>
+<p>This effect is the swiss army tool for stereo ping-pong and rotational
+delays, flangers, phasers (thanks to state variable filter) and even
+stereo spatialization techniques.&nbsp; Hopefully we have done a good
+job demonstrating the most noteworthy possibilities in the default
+files installed with Rakarrack.</p>
+<p>Here is a description of the parameters:</p>
+<p><b>Wet/Dry</b>: Mix unprocessed signal with processed output.</p>
+<p><b>Pan</b>: Pan processed output to left or right channel.</p>
+<p><b>Tempo</b>: Beats per minute. Synchronizes with master TapTempo.</p>
+<p><b>Damp</b>: High frequency damping in the feedback loop.</p>
+<p><b>Fb</b>: Amount of Feedback (regeneration)</p>
+<p><b>L/R Cr.</b>: Amount of blending left
+&amp; right channels. Less than zero means subtract left from right
+&amp; right from left.&nbsp; Greater than zero means adding left to
+right, right to left.&nbsp; At +/-32 left &amp; right are mixed
+50/50.&nbsp; At +/-64, left/right are completely swapped.</p>
+<p><b>Width</b>: Width of the LFO.&nbsp; This adjusts the LFO amplitude.</p>
+<p><b>Depth</b>: Filter center
+frequency.&nbsp; "0" means it is centered on the frequency designated
+in the text file.&nbsp; &gt;0 Shifts the filter up in frequency, &lt;0
+shifts them down.&nbsp; This is a good parameter to assign to a MIDI
+expression pedal.</p>
+<p><b>St. df</b>: Sets stereo time difference between LFO right and left
+channels.</p>
+<p><b>LFO Type</b>: Select the modulation shape.</p>
+<p><b>AF</b>: Activate Filters.&nbsp; If the box is checked, filters defined in the
+text file will be applied to the delay taps.</p>
+<p><b>MF</b>: Modulate Filters.&nbsp; If the box is checked, modulation will be
+applied to the filters' cut-off frequencies.</p>
+<p><b>MD</b>: Modulate Delays.&nbsp; If the box is checked, the delay line will be
+modulated (like a chorus or flanger).</p>
+<p><b>#</b>: Sets the number of taps to process sequentially from the text
+file.&nbsp; For example, if you have a text file that defines 20
+echoes, you can limit it to use the first 2 or 3 or....whatever you
+want up to 127.</p>
+<p><b>File</b>: Select from several files supplied by the Rakarrack team.&nbsp; This
+will include a broad spectrum of uses so you can get started using
+Echotron without ever touching a text file.</p>
+<p><b>User</b>: So you want to do
+something you can't do with one of the default files.&nbsp; You edit
+your own text file with the desired delay times, levels, and filter
+pattern, browse to this file, select, and voila! Your Echotron has
+morphed into a completely unique effect.</p>
+<p><b>Text Files</b></p><p>
+</p><p>Below is an example text file with explanation of each field and any caveats you may need to
+know:</p><img style="width: 844px; height: 271px;" alt="rakarrack file .dly" src="imagenes/dlyfile.png"><br>
+      <br>
+<p><b>Filter</b>:&nbsp; This field multiplies the tempo for the filter
+LFO modulation. For example, if you are playing a song at 80 beats per
+minute, but you wish to make the LFO half as fast as the echoes, you
+enter a 0.5 in this field to adjust the filter LFO speed to 40 beats
+per minute.</p>
+<p><b>Delay</b>:&nbsp; This field multiplies tempo for the delay line
+modulation. Same concept as for filter, but this is the LFO applied to
+the delay line. Note there is not a field for delay time subdivision.
+This is because you define this by the times you put into the Time
+column, so such a field would be redundant.</p>
+<p><b>Pan</b>:&nbsp; Ranges from -1.0 to 1.0.&nbsp; less than 0.0 is pan left,
+greater is pan right.&nbsp; 0.0 puts the delay equally to left and
+right.&nbsp; Anything magnitude of +/-1.0 or greater will be treated as
+extreme left or right.</p>
+<p><b>Time</b>: This is the real time at 60 beats per minute. An
+easier way to think of this as a musician is increments of
+measures. "1.0" means 1 measure at the tempo selected in the
+effect GUI. The above indicates a quarter note in the first line,
+and a 1/2 note in the second line.Ranges from -6.0 to 6.0</p>
+<p><b>Level</b>: how loud you want the echo to return.&nbsp; 1.0 returns it
+exactly as loud as it came it.&nbsp; More makes it come back louder,
+less makes it softer.&nbsp; You can use both positive and negative
+numbers.Ranges from -2.0 to 2.0</p>
+<p><b>LP</b>: Mix State variable Low Pass Filter amount.</p>
+<p><b>BP</b>: Band pass filter amount.</p>
+<p><b>HP</b>: High Pass Filter amount.</p>
+<p>*For LP, BP, and HP when filters are activated, these also adjust the
+level.&nbsp; If you don't want the filter to have an effect at a
+certain time, then set LP, BP, and HP all to 1.0.Ranges -2.0 to 2.0</p>
+<p><b>Freq</b>: Filter center frequency.Ranges 20.0 to 20000.0</p>
+<p><b>Q</b>: Filter resonance.Ranges 0.0 to 300.0 </p>
+<p><b>Stages</b>: Number of filter stages.&nbsp; This is virtually
+unlimited, but you can crash your CPU with the processing requirement
+if you aren't careful.Ranges 1 to 16</p>
+<p>Caveats:</p>
+<p>Always separate the fields with a &lt;TAB&gt;, and not spaces.&nbsp; Echotron looks specifically for TAB
+separation.</p>
+<p>You can enter as many lines as you want, but only the first 127 will be used by the program.
+</p>
+<p>There are only 8 filters available.&nbsp; After the 8th line, filter parameters are ignored by the
+program.</p>
+<p>It is not wise to set Q values greater than 300, but there is no
+arbitrary limit.&nbsp; At some high range the filter is likely to go
+unstable.</p>
+<p>It is not wise to set Level greater in magnitude to +/-1.0.&nbsp; There
+is some normalization internal to Echotron, but it is best to think of
+1.0 as the volume knob's maximum range.</p>
+<p>It is best to copy one of the default files distributed with Rakarrack
+and edit it as desired.&nbsp; Always save with an extension .dly so you
+don't confuse it with other kinds of text files. </p>
+</td></tr></tbody>
+</table>
+
+<p><a href="effects.html">Effects</a></p>
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="StereoHarm"></a>StereoHarm</h3>
+<br>
+<table cellpadding="5" cellspacing="2">
+<tbody><tr><td style="vertical-align: top;">
+      <p><img style="width: 185px; height: 250px;" src="imagenes/sth.jpg" alt="rakarrack StereoHarm"></p>
+      </td><td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      <p>Stereo Harm</p>
+      
+<p>This is a Stereo Harmonizer, two voices in stereo, the SEL and MIDI
+functions are same as Harmonizer, please read the Harmonizer
+help,&nbsp; in this effect Chrm L and Chrm R where added, that is
+Chroma, you can use Interval L/R set to "0" and modify this Chromas to
+reach a "Open" stereo chorus effect. This Chorma parameters can be used
+also in normal Mode. </p>
+<p>In SEL and MIDI modes Chroma parameter doesent has effect, because the frequency is selected internally by the
+program.</p>
+</td></tr></tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+<p><a href="help.html">Table of Contents</a></p>
+
+<h3><a name="CompBand"></a>CompBand</h3>
+<br>
+
+<table cellpadding="5" cellspacing="2">
+
+<tbody><tr><td style="vertical-align: top;">
+      <p><img style="width: 185px; height: 250px;" src="imagenes/cpb.jpg" alt="rakarrack CompBand"></p>
+      </td><td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      <p>CompBand</p>
+<p>Is Four band Compressor, using the Compressor effect, the Wet/Dry
+parameter is included&nbsp; for&nbsp; mastering purposes,&nbsp;
+probably if you use with a single instrument you will want to hear the
+Wet. </p>
+
+<p>Four bands are availables&nbsp; L(Low), ML (Mid Low), MH (Mid High), H
+(High). You can control the ratio and threshold for each one of this
+bands.</p>
+<p>The Cross Sliders is to determine the frequency range of&nbsp; each band in the
+form:</p>
+
+<p>0-&gt; Cross1 = Low</p>
+<p>Cross1-&gt;Cross2 = Mid Low</p>
+<p>Cross2-&gt;Cross3 = High Low</p>
+<p>Cross3-&gt;26 KHz = High</p>
+</td></tr></tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="Otrem"></a>Opticaltrem</h3>
+<br>
+<table cellpadding="5" cellspacing="2">
+<tbody><tr><td style="vertical-align: top;">
+      <p><img style="width: 185px; height: 250px;" src="imagenes/opt.jpg" alt="rakarrack Optocaltrem"></p>
+      </td><td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      <p>Opticaltrem</p>
+<p>Short explanation of Tremolo, for those who are "newbies" to guitar
+effects:&nbsp; A tremolo is like an automatic volume knob.&nbsp; You
+set the rate and depth, and it's like having somebody change the volume
+knob up and down at the set rate and amount set by depth.&nbsp; No
+effects processor would be complete without a tremolo.&nbsp; In prior
+versions of Rakarrack, there is the AutoPan function in the stereo Pan
+effect.&nbsp; In Auto mode, the Pan is a tremolo, but is not a
+"classic" sounding tremolo.</p>
+<p>This module emulates the tremolo found in classic guitar amplifiers
+(which also can be found in several stompbox tremolo units).&nbsp; The
+reason for the name "Opticaltrem" is because of the photo-electric
+device that was used to change the electrical resistance of the signal
+path in the amplifier circuit.&nbsp; The device in that configuration
+makes a tremolo effect when exposed to a pulsing light source.&nbsp;
+Incidentally, this is the same type of component used in "Optical
+Compressors".&nbsp; If&nbsp; you have ever heard that term, now you
+know what it means.</p>
+
+<p>Here is a more technical explanation:</p>
+<p>The volume knob is nothing more than a variable resistor.&nbsp; The
+volume knob varies the amount of signal current going into the next
+stage of the circuit.&nbsp; In many old guitar amplifiers this effect
+is emulated by a variable resistance that can be changed by exposing it
+to light.&nbsp; Usually the variable resistance element consisted of a
+light-proof container (opaque box) containing a Cds (Cadmium Sulfide)
+cell and a lamp, or LED for more modern units.&nbsp; When Cds is
+exposed to light, its electrical resistance decreases, and thus its
+terminals behave like the resistance between the wiper and outer lug on
+a potentiometer (volume control). </p>
+<p>If the response of the pulsing lamp was perfectly linear with the
+voltage from the LFO, and if the Cds cell response was perfectly linear
+with the light, then the effect would sound exactly the same as
+Pan.&nbsp;&nbsp; As it is with most physical electrical devices, most
+things have interesting nonlinear properties.&nbsp; Even more, there is
+a time dependency in the system.&nbsp; It takes time for a lamp to heat
+up and turn on.&nbsp; When current is removed, there is still some heat
+in the filament, and light fades out in a time-dependent way.&nbsp;
+Then, the Cds cell itself has some "memory".&nbsp; The resistance does
+not change instantly when light is applied and removed, nor does it
+work the same for charging and discharging.</p>
+<p>Perhaps that explains why there is a need for a special "Opticaltrem"
+module in Rakarrack to emulate this behavior.&nbsp; We hope this will
+bring to mind the sound of the tremolo in an old tube amp.</p>
+
+<p><b>Depth</b>: Amount of effect.&nbsp; At full depth it is almost turning off entirely between
+pulses.</p>
+<p><b>Tempo</b>: Speed of pulsating sound.</p>
+<p><b>Rnd</b>: Adds some random noise to the LFO to emulate the imperfections of an analog LFO.</p>
+<p><b>LFO Type</b>: The shape you want it to use.</p>
+<p><b>St.df</b>: Stereo difference between left and right LFO's.</p>
+<p><b>Pan</b>: The effect can be panned to the left or to the right.</p>
+</td></tr></tbody>
+</table>
+<p><a href="effects.html">Effects</a></p>
+<p><a href="help.html">Table of Contents</a></p>
+<h3><a name="Vibe"></a>Vibe</h3>
+<br>
+<table cellpadding="5" cellspacing="2">
+<tbody><tr><td style="vertical-align: top;">
+      <p><img style="width: 180px; height: 250px;" src="imagenes/vib.jpg" alt="rakarrack Vibe"></p>
+      </td><td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      
+<p>Vibe</p>
+<p> Chorus/Phaser effect emulating a rotating speaker.</p>
+<p>This effect was added at the request of a Rakarrack user wishing to have a
+software UniVibe.  This effect is based on the original UniVibe circuit and
+mathematically models components most likely to contribute to the overall
+effect.  Of course, the originals varied widely from one unit to the next
+due to some components being manufactured under less advanced process
+control.  On these components we made our best guess and tuned by ear.  This
+is the same situation for those attempting the same kind of thing with
+modern analog clones.</p>
+
+<p>The sound of the original type of unit can be easily found by searching the
+internet for "Vibe effect demo".  Its popularity among guitar players makes
+for the proliferation of clones and audio clip demonstrations, and
+ultimately an attempt by the Rakarrack team to emulate this.  We hope you
+will find our version satisfactory and useful.</p>
+
+<p>Things not available in the original units are the inclusion of stereo
+processing paths and feedback, not to mention the variety of LFO's standard
+to all Rakarrack modulation effects.  Consequently, this effect can be taken
+to sonic destinations the original was never able to achieve.  The feedback
+scheme applied in software, for example, would require a messy modification
+using several extra electronics components to properly apply to a real
+analog unit.  In software this is more elegant and produces a lovely phasing
+effect.</p>
+
+<p><b>Wet/Dry</b>: The original 'Vibe had a switch allowing you to select "Chorus" or
+"Vibrato".  Internal to the circuit, this switch only selected between
+different amounts of wet/dry in the final mix.  The "Chorus" setting is a
+bit of a misnomer because it is actually more of a Phaser.  A Wet/Dry of 0
+(50/50) corresponds to the "Chorus" setting.  A wet/dry setting of -64 (all
+wet) corresponds to the "Vibrato" setting of the original analog unit. 
+Later clones of the circuit added the wet/dry mix as a pot so you could mix
+anything in between.  Rakarrack applies this philosophy.</p>
+
+<p><b>Width</b>: Width of modulation (LFO) sweep.</p>
+
+<p><b>Depth</b>: How deep the modulation can go on the lowest end of the sweep.  A
+small number will introduce more "thump" in the response.</p>
+
+<p><b>Tempo</b>: Speed of the LFO sweep</p>
+
+<p><b>Rnd</b>: Adds some randomized "noise" to the LFO to help make it sound less
+mechanical.</p>
+
+<p><b>LFO</b>: Type  Modulation Shape</p>
+
+<p><b>St. df</b>: Amount of delay between left and right channel LFO's.  At 0 or 127
+the LFO's are 180 degrees out of phase.  At 32 or 96 means there is a
+quadrature relationship between the two.  If you don't know what that means,
+then you only need to know this setting to makes left and right channels
+sound different by adding stereo width to the effect.  Anything near 64 will
+have minimal stereo spreading.</p>
+
+<p><b>Fb</b>: Feedback.  0 is no feedback. The original Vibe does not use feedback.  A
+setting of -64 is extreme negative feedback and causes a more intense phaser
+sound.   +64 makes the whole effect sound more "full".</p>
+
+<p><b>L/R.Cr</b>: Left/Right channel crossing.  Mix left channel into right channel
+and right channel into left channel.  Less than zero mixes the channels out
+of phase from each other, greater than zero mixes left and right like a
+normal mixer.  This parameter can have an interesting outcome depending on
+the setting on St.df.  In some cases the interference between left and right
+can be used to make a tremolo effect, particularly when St.df is set to 32
+(quadrature).</p>
+
+<p><b>Pan</b>: Pan the effect to the left or right.  This can be used to change the
+color of the effect between left and right channels if Wet/Dry mix is set to
+a certain amount dry.</p>
+</td></tr></tbody>
+</table>
+<br>
+<p><a href="effects.html">Effects</a></p>
+<p><a href="help.html">Table of Contents</a> -  <a href="midilearn.html">MIDI Learn</a></p>
+
+<h3><a name="Infinity"></a>Infinity</h3>
+<br>
+<table cellpadding="5" cellspacing="2">
+<tbody><tr><td style="vertical-align: top;">
+      <p><img style="width: 180px; height: 250px;" src="imagenes/inf.jpg" alt="rakarrack Infinity"></p>
+      </td><td style="background-color: rgb(251, 251, 251); vertical-align: top;">
+      
+<p>Ininity</p>
+<p>This is an implementation of and audio counterpart to the classic barberpole
+illusion:  the filters appear to be continuously ascending (or descending)
+akin to the manner in which the colored strips on the barberpole appear to
+have no beginning or end.  There are other illusions that come out of this
+effect model as well when you increase the rate.</p>
+
+<p>One such illusion is the apparent beat frequency.  Set the "Rev" switch to
+reverse left and right channel directions and mix all wet.  Turn up the rate
+until you hear a beat frequency.  If you are wearing headphones, remove one
+from the left or right ear:  the beat frequency is gone.  With stereo
+speakers, mute one speaker and the beat frequency goes away.  It is most
+interesting with headphones because the left and right channel signals are
+completely isolated.  The perception of a beat frequency is entirely in your
+head!</p>
+
+<p>The infinity is also capable of frequency shifting, as in Single Sideband
+Modulation, not pitch shifting.  This does crazy robotic things to vocals,
+or in a more subtle form may be used to slightly detune your instrument. 
+You may also use it to detune a delay then use jack to create a feedback
+loop so you have an echo which is perpetually ascending or descending.</p>
+
+<p>Apart from illusions and crazy sound effects, there is a wide range of
+subtle swirls or stereo panning and doppler shift effects possible.</p>
+
+<p>Think of this as an 8-band EQ where each band perpetually moves up the
+spectrum to the top of the range, then starts over at the bottom.  This will
+give an understanding for adjusting the level on the bands #1-8.</p>
+
+<p><b>Wet/Dry</b>:  Mix un-filtered signal with the filtered signal.</p>
+
+<p><b>Res</b>:  Filter resonance, also known as an adjustment of the Q factor.  More
+positive is more resonance, negative is less resonance.   It is suggested to
+set Res to 0 or less when using Infinity for frequency shifting or doppler
+effects.</p>
+
+<p><b>1-8</b>:  Level of filter bands.  Infinity uses 8-bandpass filters spaced evenly
+on a logarithmic scale from Start to End.  The mix level of each filter band
+is adjusted by these controls.  If all are set to the same value, they have
+practically no effect except when resonance is set quite high.  It is
+suggested to use alternating +/- settings.  A varying volume (like tremolo)
+effect can be obtained by setting them at different levels and low Res with
+some 0 in between.</p>
+
+<p><b>Rev</b>: Reverse the direction between left and right channels.  If Right channel
+filters are sweeping upward, left will be falling when this is
+activated.</p>
+
+<p><b>Stages</b>: This adds up to 12 phaser stages to each filter band.  A strong
+phaser effect can be obtained by setting this to something greater than 4
+and alternating the bands #1-8 by 64, -64, 64, -64...  There is an
+interesting switch internally that interacts with the Pan parameter when
+Stages is greater than 8.  This makes pan into a variable rate parameter,
+which allows for rotating doppler effects.</p>
+
+<p><b>AutoPan</b>: As long as stages is, this acts only as an auto-panning effect
+that alternates amplitude on left and right channels.  When stages then
+it acts as a variable rate control allowing doppler frequency bending to
+create the illusion of rotation.</p>
+
+<p><b>St. df</b>: Stereo offset between left and right filters.</p>
+
+<p><b>Start</b>: Where the filters start.  Set lower than end if you want filters to
+sweep upward.  Set greater than End if you want filters to sweep
+downward.</p>
+
+<p><b>End</b>: Where the filters end.</p>
+
+<p><b>Tempo</b>: The rate the filters sweep up or down.</p>
+
+<p><b>Subdiv</b>: Tempo frequency subdivision.  Numbers greater than zero make the
+rate slower.  Numbers less than 0 make the rate faster, even up into audible
+range frequencies for the crazy pitch shifting and ring modulation type
+sounds.  Notice this has no effect on the AutoPan frequency.  AutoPan Tempo
+is hard-coded to cycle every full measure at Tempo.</p>
+
+</td></tr></tbody>
+</table>
+<br>
+<p><a href="effects.html">Effects</a></p>
+<p><a href="help.html">Table of Contents</a> -  <a href="midilearn.html">MIDI Learn</a></p>
+
+
+</body></html>
