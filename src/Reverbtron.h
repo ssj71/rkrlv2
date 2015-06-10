@@ -52,8 +52,8 @@ public:
     void cleanup ();
     int setfile (int value);
     void adjust(int DS, double sample_rate);
-    RvbFile* loadfile(char* filename);
-    void applyfile(RvbFile* file);
+    RvbFile loadfile(char* filename);
+    void applyfile(RvbFile file);
 
     int Ppreset;
 
@@ -62,7 +62,7 @@ public:
     float outvolume;
 
     char Filename[128];
-    RvbFile *File;
+    RvbFile File;
 
 private:
 
@@ -72,7 +72,7 @@ private:
     void setlpf (int Plpf);
     void setfb(int value);
     void convert_time();
-    void loaddefault(RvbFile* file);
+    RvbFile loaddefault();
 
 
     //Parametrii

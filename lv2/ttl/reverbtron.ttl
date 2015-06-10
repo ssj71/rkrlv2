@@ -225,44 +225,44 @@
 <http://rakarrack.sourceforge.net/effects.html#Reverbtron:preset:chamber>
         a pset:Preset ;
         lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Reverbtron> ;
-        rdfs:seeAlso <stomp_presets.ttl> .
+        rdfs:seeAlso <reverbtron_presets.ttl> .
 
 <http://rakarrack.sourceforge.net/effects.html#Reverbtron:preset:concrete_stairwell>
         a pset:Preset ;
         lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Reverbtron> ;
-        rdfs:seeAlso <stomp_presets.ttl> .
+        rdfs:seeAlso <reverbtron_presets.ttl> .
 
 <http://rakarrack.sourceforge.net/effects.html#Reverbtron:preset:hall>
         a pset:Preset ;
         lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Reverbtron> ;
-        rdfs:seeAlso <stomp_presets.ttl> .
+        rdfs:seeAlso <reverbtron_presets.ttl> .
 
 <http://rakarrack.sourceforge.net/effects.html#Reverbtron:preset:med_hall>
         a pset:Preset ;
         lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Reverbtron> ;
-        rdfs:seeAlso <stomp_presets.ttl> .
+        rdfs:seeAlso <reverbtron_presets.ttl> .
 
 <http://rakarrack.sourceforge.net/effects.html#Reverbtron:preset:Room>
         a pset:Preset ;
         lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Reverbtron> ;
-        rdfs:seeAlso <stomp_presets.ttl> .
+        rdfs:seeAlso <reverbtron_presets.ttl> .
 
 <http://rakarrack.sourceforge.net/effects.html#Reverbtron:preset:hall2>
         a pset:Preset ;
         lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Reverbtron> ;
-        rdfs:seeAlso <stomp_presets.ttl> .
+        rdfs:seeAlso <reverbtron_presets.ttl> .
 
 <http://rakarrack.sourceforge.net/effects.html#Reverbtron:preset:guitar>
         a pset:Preset ;
         lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Reverbtron> ;
-        rdfs:seeAlso <stomp_presets.ttl> .
+        rdfs:seeAlso <reverbtron_presets.ttl> .
 
 <http://rakarrack.sourceforge.net/effects.html#Reverbtron:preset:studio>
         a pset:Preset ;
         lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Reverbtron> ;
-        rdfs:seeAlso <stomp_presets.ttl> .
+        rdfs:seeAlso <reverbtron_presets.ttl> .
 
 <http://rakarrack.sourceforge.net/effects.html#Reverbtron:preset:chathedral>
         a pset:Preset ;
         lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Reverbtron> ;
-        rdfs:seeAlso <stomp_presets.ttl> .
+        rdfs:seeAlso <reverbtron_presets.ttl> .
