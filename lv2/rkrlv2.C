@@ -176,6 +176,9 @@ void getFeatures(RKRLV2* plug, const LV2_Feature * const* host_features)
     LV2_URID_Map *urid_map;
     plug->period_max = INTERMEDIATE_BUFSIZE;
     plug->loading_file = 0;
+    plug->URIDs.atom_Float = 0;//initialize to make sure required features met
+    plug->scheduler = 0;
+    plug->URIDs.atom_Int = 0;
     for(i=0; host_features[i]; i++)
     {
         if(!strcmp(host_features[i]->URI,LV2_OPTIONS__options))
@@ -2401,6 +2404,12 @@ LV2_Handle init_revtronlv2(const LV2_Descriptor *descriptor,double sample_freq, 
     plug->effectindex = 33;
 
     getFeatures(plug,host_features);
+    if(!plug->scheduler || (plug->URIDs.atom_Float == plug->URIDs.atom_Int))
+    {
+    	//a required feature was not supported by host
+    	free(plug);
+    	return 0;
+    }
 
     plug->revtron = new Reverbtron(0,0, sample_freq, plug->period_max, /*downsample*/5, /*up interpolation method*/4, /*down interpolation method*/2);
     plug->revtron->changepar(4,1);//set to user selected files

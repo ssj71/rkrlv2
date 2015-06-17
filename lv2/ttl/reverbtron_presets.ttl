@@ -6,8 +6,6 @@
 @prefix state: <http://lv2plug.in/ns/ext/state#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-#        //Spring
-#        {64, 0, 1, 500, 0, 0, 99, 70, 0, 0, 0, 64, 0, 0, 20000, 0},
 <http://rakarrack.sourceforge.net/effects.html#Reverbtron:preset:chamber>
 	a pset:Preset ;
 	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Reverbtron> ;
@@ -61,58 +59,435 @@
 		<http://rakarrack.sourceforge.net/effects.html#Reverbtron:rvbfile> <Chamber.rvb>
 	] .
 
-#        //Concrete Stair
-#        {64, 0, 1, 500, 0, 0, 0, 40, 1, 0, 0, 64, 0, 0, 20000, 0},
-#        //Nice Hall
-#        {64, 0, 1, 500, 0, 0, 60, 15, 2, 0, 0, 64, 0, 0, 20000, 0},
-#        //Hall
-#        {64, 16, 1, 500, 0, 0, 0, 22, 3, -17, 0, 64, 0, 0, 20000, 0},
-#        //Room
-#        {64, 0, 1, 1500, 0, 0, 48, 20, 4, 0, 0, 64, 0, 0, 20000, 0},
-#        //Hall
-#        {88, 0, 1, 1500, 0, 0, 88, 14, 5, 0, 0, 64, 0, 0, 20000, 0},
-#        //Guitar
-#        {64, 0, 1, 1500, 0, 0, 30, 34, 6, 0, 0, 64, 0, 0, 20000, 0},
-#        //Studio
-#        {64, 0, 1, 1500, 0, 0, 30, 20, 7, 0, 0, 64, 0, 0, 20000, 0},
-#        //Cathedral
-#        {64, 0, 1, 1500, 0, 30, 0, 40, 9, 0, 0, 64, 0, 0, 20000, 0}
 <http://rakarrack.sourceforge.net/effects.html#Reverbtron:preset:concrete_stairwell>
-        a pset:Preset ;
-        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Reverbtron> ;
-        .
+    a pset:Preset ;
+    lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Reverbtron> ;
+	rdfs:label "Concrete Stairwell" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 64.0
+	] , [
+		lv2:symbol "FADE" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "SAFE" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "LENGTH" ;
+		pset:value 500.0
+        #skip user
+	] , [
+		lv2:symbol "DELAY" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "DAMP" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "LEVEL" ;
+		pset:value 40.0
+        #skip file num
+	] , [
+		lv2:symbol "STRETCH" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "FB" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "ES" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "SH" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "LPF" ;
+		pset:value 20000.0
+	] , [
+		lv2:symbol "DIFFUSE" ;
+		pset:value 0.0
+	] ;
+	state:state [
+		<http://rakarrack.sourceforge.net/effects.html#Reverbtron:rvbfile> <Concrete_Stairwell.rvb>
+	] 
+    .
 
 <http://rakarrack.sourceforge.net/effects.html#Reverbtron:preset:hall>
-        a pset:Preset ;
-        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Reverbtron> ;
-        .
+   	a pset:Preset ;
+    lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Reverbtron> ;
+	rdfs:label "Hall" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 64.0
+	] , [
+		lv2:symbol "FADE" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "SAFE" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "LENGTH" ;
+		pset:value 500.0
+        #skip user
+	] , [
+		lv2:symbol "DELAY" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "DAMP" ;
+		pset:value 60.0
+	] , [
+		lv2:symbol "LEVEL" ;
+		pset:value 15.0
+        #skip file num
+	] , [
+		lv2:symbol "STRETCH" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "FB" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "ES" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "SH" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "LPF" ;
+		pset:value 20000.0
+	] , [
+		lv2:symbol "DIFFUSE" ;
+		pset:value 0.0
+	] ;
+	state:state [
+		<http://rakarrack.sourceforge.net/effects.html#Reverbtron:rvbfile> <Hall.rvb>
+	] 
+    .
 
 <http://rakarrack.sourceforge.net/effects.html#Reverbtron:preset:med_hall>
-        a pset:Preset ;
-        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Reverbtron> ;
-        .
+    a pset:Preset ;
+    lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Reverbtron> ;
+ 	rdfs:label "Medium Hall" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 64.0
+	] , [
+		lv2:symbol "FADE" ;
+		pset:value 16.0
+	] , [
+		lv2:symbol "SAFE" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "LENGTH" ;
+		pset:value 500.0
+        #skip user
+	] , [
+		lv2:symbol "DELAY" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "DAMP" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "LEVEL" ;
+		pset:value 22.0
+        #skip file num
+	] , [
+		lv2:symbol "STRETCH" ;
+		pset:value -17.0
+	] , [
+		lv2:symbol "FB" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "ES" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "SH" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "LPF" ;
+		pset:value 20000.0
+	] , [
+		lv2:symbol "DIFFUSE" ;
+		pset:value 0.0
+	] ;
+	state:state [
+		<http://rakarrack.sourceforge.net/effects.html#Reverbtron:rvbfile> <Med_Hall.rvb>
+	] 
+    .
 
 <http://rakarrack.sourceforge.net/effects.html#Reverbtron:preset:Room>
-        a pset:Preset ;
-        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Reverbtron> ;
-        .
+    a pset:Preset ;
+    lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Reverbtron> ;
+  	rdfs:label "Room" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 64.0
+	] , [
+		lv2:symbol "FADE" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "SAFE" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "LENGTH" ;
+		pset:value 1500.0
+        #skip user
+	] , [
+		lv2:symbol "DELAY" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "DAMP" ;
+		pset:value 48.0
+	] , [
+		lv2:symbol "LEVEL" ;
+		pset:value 20.0
+        #skip file num
+	] , [
+		lv2:symbol "STRETCH" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "FB" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "ES" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "SH" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "LPF" ;
+		pset:value 20000.0
+	] , [
+		lv2:symbol "DIFFUSE" ;
+		pset:value 0.0
+	] ;
+	state:state [
+		<http://rakarrack.sourceforge.net/effects.html#Reverbtron:rvbfile> <Large_Room.rvb>
+	] 
+    .
 
 <http://rakarrack.sourceforge.net/effects.html#Reverbtron:preset:hall2>
-        a pset:Preset ;
-        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Reverbtron> ;
-        .
+    a pset:Preset ;
+    lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Reverbtron> ;
+   	rdfs:label "Hall 2" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 88.0
+	] , [
+		lv2:symbol "FADE" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "SAFE" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "LENGTH" ;
+		pset:value 1500.0
+        #skip user
+	] , [
+		lv2:symbol "DELAY" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "DAMP" ;
+		pset:value 88.0
+	] , [
+		lv2:symbol "LEVEL" ;
+		pset:value 14.0
+        #skip file num
+	] , [
+		lv2:symbol "STRETCH" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "FB" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "ES" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "SH" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "LPF" ;
+		pset:value 20000.0
+	] , [
+		lv2:symbol "DIFFUSE" ;
+		pset:value 0.0
+	] ;
+	state:state [
+		<http://rakarrack.sourceforge.net/effects.html#Reverbtron:rvbfile> <Large_Hall.rvb>
+	] 
+    .
 
 <http://rakarrack.sourceforge.net/effects.html#Reverbtron:preset:guitar>
-        a pset:Preset ;
-        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Reverbtron> ;
-        .
+    a pset:Preset ;
+    lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Reverbtron> ;
+    rdfs:label "Guitar" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 64.0
+	] , [
+		lv2:symbol "FADE" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "SAFE" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "LENGTH" ;
+		pset:value 1500.0
+        #skip user
+	] , [
+		lv2:symbol "DELAY" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "DAMP" ;
+		pset:value 30.0
+	] , [
+		lv2:symbol "LEVEL" ;
+		pset:value 34.0
+        #skip file num
+	] , [
+		lv2:symbol "STRETCH" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "FB" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "ES" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "SH" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "LPF" ;
+		pset:value 20000.0
+	] , [
+		lv2:symbol "DIFFUSE" ;
+		pset:value 0.0
+	] ;
+	state:state [
+		<http://rakarrack.sourceforge.net/effects.html#Reverbtron:rvbfile> <Guitar_Ambience.rvb>
+	] 
+    . 
 
 <http://rakarrack.sourceforge.net/effects.html#Reverbtron:preset:studio>
-        a pset:Preset ;
-        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Reverbtron> ;
-        .
+    a pset:Preset ;
+    lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Reverbtron> ;
+    rdfs:label "Studio" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 64.0
+	] , [
+		lv2:symbol "FADE" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "SAFE" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "LENGTH" ;
+		pset:value 1500.0
+        #skip user
+	] , [
+		lv2:symbol "DELAY" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "DAMP" ;
+		pset:value 30.0
+	] , [
+		lv2:symbol "LEVEL" ;
+		pset:value 20.0
+        #skip file num
+	] , [
+		lv2:symbol "STRETCH" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "FB" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "ES" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "SH" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "LPF" ;
+		pset:value 20000.0
+	] , [
+		lv2:symbol "DIFFUSE" ;
+		pset:value 0.0
+	] ;
+	state:state [
+		<http://rakarrack.sourceforge.net/effects.html#Reverbtron:rvbfile> <Studio.rvb>
+	] 
+    . 
+   
 
 <http://rakarrack.sourceforge.net/effects.html#Reverbtron:preset:chathedral>
-        a pset:Preset ;
-        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Reverbtron> ;
-        .
+    a pset:Preset ;
+    lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Reverbtron> ;
+    rdfs:label "Cathedral" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 64.0
+	] , [
+		lv2:symbol "FADE" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "SAFE" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "LENGTH" ;
+		pset:value 1500.0
+        #skip user
+	] , [
+		lv2:symbol "DELAY" ;
+		pset:value 30.0
+	] , [
+		lv2:symbol "DAMP" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "LEVEL" ;
+		pset:value 40.0
+        #skip file num
+	] , [
+		lv2:symbol "STRETCH" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "FB" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "ES" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "SH" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "LPF" ;
+		pset:value 20000.0
+	] , [
+		lv2:symbol "DIFFUSE" ;
+		pset:value 0.0
+	] ;
+	state:state [
+		<http://rakarrack.sourceforge.net/effects.html#Reverbtron:rvbfile> <Santa_Lucia.rvb>
+	] 
+    . 

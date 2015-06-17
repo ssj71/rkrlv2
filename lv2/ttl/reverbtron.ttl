@@ -92,7 +92,7 @@
             lv2:index 6 ;
             lv2:symbol "WETDRY" ;
             lv2:name "Wet/Dry" ;
-            lv2:default 0 ;
+            lv2:default 64 ;
             lv2:minimum 0 ;
             lv2:maximum 127 ;
             lv2:portProperty lv2:integer ;
@@ -110,7 +110,7 @@
             lv2:index 8 ;
             lv2:symbol "SAFE" ;
             lv2:name "Safe" ;
-            lv2:default 0 ;
+            lv2:default 1 ;
             lv2:minimum 0 ;
             lv2:maximum 1 ;
             lv2:portProperty lv2:integer ;
@@ -120,7 +120,7 @@
             lv2:index 9 ;
             lv2:symbol "LENGTH" ;
             lv2:name "Length" ;
-            lv2:default 0 ;
+            lv2:default 500 ;
             lv2:minimum 20 ;
             lv2:maximum 1500 ;
             lv2:portProperty lv2:integer ;
@@ -140,7 +140,7 @@
             lv2:index 11 ;
             lv2:symbol "DAMP" ;
             lv2:name "Dampening" ;
-            lv2:default 0 ;
+            lv2:default 99 ;
             lv2:minimum 0 ;
             lv2:maximum 127 ;
             lv2:portProperty lv2:integer ;
@@ -149,7 +149,7 @@
             lv2:index 12 ;
             lv2:symbol "LEVEL" ;
             lv2:name "Level" ;
-            lv2:default 0 ;
+            lv2:default 70 ;
             lv2:minimum 0 ;
             lv2:maximum 127 ;
             lv2:portProperty lv2:integer ;
@@ -205,7 +205,7 @@
             lv2:index 18 ;
             lv2:symbol "LPF" ;
             lv2:name "Lowpass Filter" ;
-            lv2:default 0 ;
+            lv2:default 20000 ;
             lv2:minimum 20 ;
             lv2:maximum 26000 ;
             lv2:portProperty lv2:integer ;
@@ -220,6 +220,9 @@
             lv2:maximum 127 ;
             lv2:portProperty lv2:integer ;
     ] ;
+    state:state [
+		<http://rakarrack.sourceforge.net/effects.html#Reverbtron:rvbfile> <Chamber.rvb>
+	] 
 	.
 
 <http://rakarrack.sourceforge.net/effects.html#Reverbtron:preset:chamber>
