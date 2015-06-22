@@ -2498,7 +2498,7 @@ void run_revtronlv2(LV2_Handle handle, uint32_t nframes)
     plug->revtron->efxoutr = plug->output_r_p;
 
     //now run
-    plug->revtron->out(plug->output_l_p,plug->output_r_p,nframes);
+    plug->revtron->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
     wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->revtron->outvolume, nframes);
@@ -2512,26 +2512,27 @@ static LV2_Worker_Status revwork(LV2_Handle handle, LV2_Worker_Respond_Function 
     RKRLV2* plug = (RKRLV2*)handle;
     LV2_Atom_Object* obj = (LV2_Atom_Object*)data;
     const LV2_Atom* file_path;
+
+    //work was scheduled to load a new file
+    lv2_atom_object_get(obj, plug->URIDs.patch_value, &file_path, 0);
+    if (file_path && file_path->type == plug->URIDs.atom_Path)
     {
-    	//work was scheduled to load a new file
-    	lv2_atom_object_get(obj, plug->URIDs.patch_value, &file_path, 0);
-        if (file_path && file_path->type == plug->URIDs.atom_Path)
-        {
-            // Load file.
-        	char* path = (char*)LV2_ATOM_BODY_CONST(file_path);
-            RvbFile file = plug->revtron->loadfile(path);
-            respond(rhandle,sizeof(RvbFile),(void*)&file);
-        }//got file
-        else
-            return LV2_WORKER_ERR_UNKNOWN;
-    }
+        // Load file.
+        char* path = (char*)LV2_ATOM_BODY_CONST(file_path);
+        RvbFile file = plug->revtron->loadfile(path);
+        respond(rhandle,sizeof(RvbFile),(void*)&file);
+    }//got file
+    else
+        return LV2_WORKER_ERR_UNKNOWN;
+
     return LV2_WORKER_SUCCESS;
 }
 
 static LV2_Worker_Status revwork_response(LV2_Handle handle, uint32_t size, const void* data)
 {
     RKRLV2* plug = (RKRLV2*)handle;
-    plug->revtron->applyfile(*(RvbFile*)data);
+    RvbFile file = *(RvbFile*)data);
+    plug->revtron->applyfile(file);
     return LV2_WORKER_SUCCESS;
 }
 
