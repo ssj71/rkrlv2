@@ -2493,16 +2493,15 @@ void run_revtronlv2(LV2_Handle handle, uint32_t nframes)
         }//atom is object
     }//each atom in sequence
 
-    //revtron does it inline
-    memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-    memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
-
     //now set out ports
     plug->revtron->efxoutl = plug->output_l_p;
     plug->revtron->efxoutr = plug->output_r_p;
 
     //now run
     plug->revtron->out(plug->output_l_p,plug->output_r_p,nframes);
+
+    //and for whatever reason we have to do the wet/dry mix ourselves
+    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->revtron->outvolume, nframes);
 
     return;
 }

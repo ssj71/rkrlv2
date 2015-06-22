@@ -35,8 +35,8 @@ public:
 	float tdata[2000];
 	float ftime[2000];
 	int data_length;
-	int maxtime;
-	int maxdata;
+	float maxtime;
+	float maxdata;
 };
 
 class Reverbtron

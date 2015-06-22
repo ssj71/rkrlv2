@@ -411,6 +411,8 @@ RvbFile Reverbtron::loaddefault()
     f.ftime[1] = 1.25f;
     f.tdata[0] = 0.75f;
     f.tdata[1] = 0.5f;
+    f.maxtime = 1.25f;
+    f.maxdata = 0.75f;
     return f;
 }
 
@@ -452,7 +454,7 @@ void Reverbtron::convert_time()
             if( findex<skip) {
                 if(index<Plength) {
                     if( (tmpstretch*(idelay + File.ftime[i] )) > 9.9f ) {
-                        File.ftime[i] = 0.0f;
+                        File.ftime[i] = 0.0f;//TODO: why are we destroying the file data?
                         data[i] = 0.0f;
                     }
                     time[index]=lrintf(tmpstretch*(idelay + File.ftime[i])*nfSAMPLE_RATE);  //Add initial delay to all the samples
