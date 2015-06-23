@@ -3,6 +3,7 @@
 #include<lv2/lv2plug.in/ns/ext/urid/urid.h>
 #include<lv2/lv2plug.in/ns/ext/midi/midi.h>
 #include<lv2/lv2plug.in/ns/ext/atom/util.h>
+#include<lv2/lv2plug.in/ns/ext/atom/forge.h>
 #include<lv2/lv2plug.in/ns/ext/time/time.h>
 #include<lv2/lv2plug.in/ns/ext/buf-size/buf-size.h>
 #include<lv2/lv2plug.in/ns/ext/options/options.h>
@@ -63,8 +64,10 @@ typedef struct _RKRLV2
     uint8_t effectindex;//index of effect
     uint16_t period_max;
     uint8_t loading_file;//flag to indicate that file load work is underway
+    uint8_t file_changed;
     RvbFile* rvbfile;//file for reverbtron
 
+    //ports
     float *input_l_p;
     float *input_r_p;
     float *output_l_p;
@@ -74,7 +77,11 @@ typedef struct _RKRLV2
     float *param_p[16];
     float *dbg_p;
 
+    //various "advanced" lv2 stuffs
     LV2_Worker_Schedule* scheduler;
+    LV2_Atom_Forge	forge;
+    LV2_Atom_Forge_Frame atom_frame;
+    LV2_URID_Map *urid_map;
 
     struct urids
     {
@@ -94,6 +101,7 @@ typedef struct _RKRLV2
 
     } URIDs;
 
+    //effect modules
     EQ* eq;             //0, 11
     Compressor* comp;   //1
     Distorsion* dist;   //2
@@ -135,7 +143,7 @@ typedef struct _RKRLV2
 enum other_ports
 {
     //be sure to account for index of array vs lv2 port index
-    HARMONIZER_MIDI,
+    HARMONIZER_MIDI,//unassigned right now
     VOCODER_AUX_IN = 7,
     VOCODER_VU_LEVEL = 8
 };
@@ -175,9 +183,9 @@ wetdry_mix (float inl[], float inr[], float outl[], float outr[], float mix, uin
 void getFeatures(RKRLV2* plug, const LV2_Feature * const* host_features)
 {
     uint8_t i,j;
-    LV2_URID_Map *urid_map;
     plug->period_max = INTERMEDIATE_BUFSIZE;
     plug->loading_file = 0;
+    plug->file_changed = 0;
     plug->URIDs.atom_Float = 0;//initialize to make sure required features met
     plug->scheduler = 0;
     plug->URIDs.atom_Int = 0;
@@ -205,22 +213,23 @@ void getFeatures(RKRLV2* plug, const LV2_Feature * const* host_features)
         }
         else if(!strcmp(host_features[i]->URI,LV2_URID__map))
         {
-            urid_map = (LV2_URID_Map *) host_features[i]->data;
-            if(urid_map)
+            plug->urid_map = (LV2_URID_Map *) host_features[i]->data;
+            if(plug->urid_map)
             {
-                plug->URIDs.midi_MidiEvent = urid_map->map(urid_map->handle,LV2_MIDI__MidiEvent);
-                plug->URIDs.atom_Float = urid_map->map(urid_map->handle,LV2_ATOM__Float);
-                plug->URIDs.atom_Int = urid_map->map(urid_map->handle,LV2_ATOM__Int);
-                plug->URIDs.atom_Object = urid_map->map(urid_map->handle,LV2_ATOM__Object);
-                plug->URIDs.atom_Path = urid_map->map(urid_map->handle,LV2_ATOM__Path);
-                plug->URIDs.atom_URID = urid_map->map(urid_map->handle,LV2_ATOM__URID);
-                plug->URIDs.bufsz_max = urid_map->map(urid_map->handle,LV2_BUF_SIZE__maxBlockLength);
-                plug->URIDs.patch_Set = urid_map->map(urid_map->handle,LV2_PATCH__Set);
-                plug->URIDs.patch_Get = urid_map->map(urid_map->handle,LV2_PATCH__Get);
-                plug->URIDs.patch_property = urid_map->map(urid_map->handle,LV2_PATCH__property);
-                plug->URIDs.patch_value = urid_map->map(urid_map->handle,LV2_PATCH__value);
-                plug->URIDs.filetype_rvb = urid_map->map(urid_map->handle,RVBFILE_URI);
-                plug->URIDs.filetype_dly = urid_map->map(urid_map->handle,DLYFILE_URI);
+                plug->URIDs.midi_MidiEvent = plug->urid_map->map(plug->urid_map->handle,LV2_MIDI__MidiEvent);
+                plug->URIDs.atom_Float = plug->urid_map->map(plug->urid_map->handle,LV2_ATOM__Float);
+                plug->URIDs.atom_Int = plug->urid_map->map(plug->urid_map->handle,LV2_ATOM__Int);
+                plug->URIDs.atom_Object = plug->urid_map->map(plug->urid_map->handle,LV2_ATOM__Object);
+                plug->URIDs.atom_Path = plug->urid_map->map(plug->urid_map->handle,LV2_ATOM__Path);
+                plug->URIDs.atom_URID = plug->urid_map->map(plug->urid_map->handle,LV2_ATOM__URID);
+                plug->URIDs.bufsz_max = plug->urid_map->map(plug->urid_map->handle,LV2_BUF_SIZE__maxBlockLength);
+                plug->URIDs.patch_Set = plug->urid_map->map(plug->urid_map->handle,LV2_PATCH__Set);
+                plug->URIDs.patch_Get = plug->urid_map->map(plug->urid_map->handle,LV2_PATCH__Get);
+                plug->URIDs.patch_property = plug->urid_map->map(plug->urid_map->handle,LV2_PATCH__property);
+                plug->URIDs.patch_value = plug->urid_map->map(plug->urid_map->handle,LV2_PATCH__value);
+                plug->URIDs.filetype_rvb = plug->urid_map->map(plug->urid_map->handle,RVBFILE_URI);
+                plug->URIDs.filetype_dly = plug->urid_map->map(plug->urid_map->handle,DLYFILE_URI);
+
             }
         }
     }
@@ -2412,6 +2421,7 @@ LV2_Handle init_revtronlv2(const LV2_Descriptor *descriptor,double sample_freq, 
     	free(plug);
     	return 0;
     }
+    lv2_atom_forge_init(&plug->forge, plug->urid_map);
 
     plug->revtron = new Reverbtron(0,0, sample_freq, plug->period_max, /*downsample*/5, /*up interpolation method*/4, /*down interpolation method*/2);
     plug->revtron->changepar(4,1);//set to user selected files
@@ -2466,6 +2476,30 @@ void run_revtronlv2(LV2_Handle handle, uint32_t nframes)
         }
     }
 
+    // Set up forge to write directly to notify output port.
+    const uint32_t notify_capacity = plug->atom_out_p->atom.size;
+    lv2_atom_forge_set_buffer(&plug->forge, (uint8_t*)plug->atom_out_p, notify_capacity);
+
+    // Start a sequence in the notify output port.
+    lv2_atom_forge_sequence_head(&plug->forge, &plug->atom_frame, 0);
+
+    //if we loaded a state, send the new file name to the host to display
+    if(plug->file_changed)
+    {
+    	plug->file_changed = 0;
+    	lv2_atom_forge_frame_time(&plug->forge, 0);
+        LV2_Atom_Forge_Frame frame;
+        lv2_atom_forge_object( &plug->forge, &frame, 0, plug->URIDs.patch_Set);
+
+        lv2_atom_forge_key(&plug->forge, plug->URIDs.patch_property);
+        lv2_atom_forge_urid(&plug->forge, plug->URIDs.filetype_rvb);
+        lv2_atom_forge_key(&plug->forge, plug->URIDs.patch_value);
+        lv2_atom_forge_path(&plug->forge, plug->revtron->File.Filename, strlen(plug->revtron->File.Filename)+1);
+
+        lv2_atom_forge_pop(&plug->forge, &frame);
+    }
+
+
     //see if there's a file
     LV2_ATOM_SEQUENCE_FOREACH( plug->atom_in_p, ev)
     {
@@ -2490,8 +2524,16 @@ void run_revtronlv2(LV2_Handle handle, uint32_t nframes)
             else if (obj->body.otype == plug->URIDs.patch_Get)
             {
                 // Received a get message, emit our state (probably to UI)
-                //lv2_atom_forge_frame_time(&plug->forge, plug->frame_offset);
-                //write_set_file(&plug->forge, &plug->URIDs, plug->sample->path, plug->sample->path_len);
+                lv2_atom_forge_frame_time(&plug->forge, ev->time.frames );//use current event's time
+                LV2_Atom_Forge_Frame frame;
+                lv2_atom_forge_object( &plug->forge, &frame, 0, plug->URIDs.patch_Set);
+
+            	lv2_atom_forge_key(&plug->forge, plug->URIDs.patch_property);
+            	lv2_atom_forge_urid(&plug->forge, plug->URIDs.filetype_rvb);
+            	lv2_atom_forge_key(&plug->forge, plug->URIDs.patch_value);
+            	lv2_atom_forge_path(&plug->forge, plug->revtron->File.Filename, strlen(plug->revtron->File.Filename)+1);
+
+            	lv2_atom_forge_pop(&plug->forge, &frame);
             }
         }//atom is object
     }//each atom in sequence
@@ -2586,6 +2628,7 @@ static LV2_State_Status revrestore(LV2_Handle handle, LV2_State_Retrieve_Functio
             char* path = (char*)value;
             RvbFile f = plug->revtron->loadfile(path);
             plug->revtron->applyfile(f);
+            plug->file_changed = 1;
     }
 
     return LV2_STATE_SUCCESS;

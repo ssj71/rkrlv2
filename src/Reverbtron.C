@@ -446,7 +446,6 @@ void Reverbtron::convert_time()
     skip = 0.0f;
     index = 0;
 
-
     if(File.data_length>Llength) {
         for(i=0; i<File.data_length; i++) {
             skip += incr;
