@@ -13,6 +13,7 @@
 #include<stdlib.h>
 #include<stdio.h>
 #include<string.h>
+#include<unistd.h>
 #include"rkrlv2.h"
 
 #include"EQ.h"
@@ -62,6 +63,7 @@ typedef struct _RKRLV2
     uint8_t effectindex;//index of effect
     uint16_t period_max;
     uint8_t loading_file;//flag to indicate that file load work is underway
+    RvbFile* rvbfile;//file for reverbtron
 
     float *input_l_p;
     float *input_r_p;
@@ -2400,7 +2402,7 @@ LV2_Handle init_revtronlv2(const LV2_Descriptor *descriptor,double sample_freq, 
 {
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
-    plug->nparams = 6;
+    plug->nparams = 14;
     plug->effectindex = 33;
 
     getFeatures(plug,host_features);
@@ -2413,6 +2415,7 @@ LV2_Handle init_revtronlv2(const LV2_Descriptor *descriptor,double sample_freq, 
 
     plug->revtron = new Reverbtron(0,0, sample_freq, plug->period_max, /*downsample*/5, /*up interpolation method*/4, /*down interpolation method*/2);
     plug->revtron->changepar(4,1);//set to user selected files
+    plug->rvbfile = new RvbFile;
 
     return plug;
 }
@@ -2433,7 +2436,7 @@ void run_revtronlv2(LV2_Handle handle, uint32_t nframes)
             plug->revtron->changepar(i,val);
         }
     }
-    for(; i<8; i++)//skip file num
+    for(; i+1<8; i++)//skip file num
     {
         val = (int)*plug->param_p[i];
         if(plug->revtron->getpar(i+1) != val)
@@ -2441,7 +2444,7 @@ void run_revtronlv2(LV2_Handle handle, uint32_t nframes)
             plug->revtron->changepar(i+1,val);
         }
     }
-    for(; i<11; i++)
+    for(; i+2<11; i++)
     {
         val = (int)*plug->param_p[i];
         if(plug->revtron->getpar(i+2) != val)
@@ -2519,8 +2522,15 @@ static LV2_Worker_Status revwork(LV2_Handle handle, LV2_Worker_Respond_Function 
     {
         // Load file.
         char* path = (char*)LV2_ATOM_BODY_CONST(file_path);
-        RvbFile file = plug->revtron->loadfile(path);
-        respond(rhandle,sizeof(RvbFile),(void*)&file);
+        //the file is too large for a host's circular buffer
+        //so store it in the plugin for the response to use
+        //to prevent threading issues, we'll use a simple
+        //flag as a crude mutex
+        while(plug->loading_file)
+        	usleep(1000);
+        plug->loading_file = 1;
+        *plug->rvbfile = plug->revtron->loadfile(path);
+        respond(rhandle,0,0);
     }//got file
     else
         return LV2_WORKER_ERR_UNKNOWN;
@@ -2531,8 +2541,8 @@ static LV2_Worker_Status revwork(LV2_Handle handle, LV2_Worker_Respond_Function 
 static LV2_Worker_Status revwork_response(LV2_Handle handle, uint32_t size, const void* data)
 {
     RKRLV2* plug = (RKRLV2*)handle;
-    RvbFile file = *(RvbFile*)data);
-    plug->revtron->applyfile(file);
+    plug->revtron->applyfile(*plug->rvbfile);
+    plug->loading_file = 0;//clear flag for next file load
     return LV2_WORKER_SUCCESS;
 }
 
@@ -2698,6 +2708,7 @@ void cleanup_rkrlv2(LV2_Handle handle)
         break;
     case 35:
         delete plug->revtron;
+        delete plug->rvbfile;
         break;
     }
     free(plug);

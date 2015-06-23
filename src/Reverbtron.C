@@ -44,7 +44,7 @@ Reverbtron::Reverbtron (float * efxoutl_, float * efxoutr_, double sample_rate,
     Plrcross = 100;
     Phidamp = 60;
     Filenum = 0;
-    Plength = 50;
+    Llength = 50;
     Puser = 0;
     Psafe = 0;
     convlength = 10.0f;  //max reverb time
@@ -130,7 +130,7 @@ Reverbtron::out (float * smpsl, float * smpsr, uint32_t period)
     int  i, j, xindex, hindex;
     float l,lyn, hyn;
     float ldiff,rdiff;
-    int length = Plength;
+    int length = Llength;
     hlength = Pdiff;
     int doffset;
 
@@ -406,7 +406,7 @@ RvbFile Reverbtron::loaddefault()
 {
 	RvbFile f;
 	strcpy(f.Filename,"default");
-    f.data_length = Plength = 2;
+    f.data_length = Llength = 2;
     f.ftime[0] = 1.0f;
     f.ftime[1] = 1.25f;
     f.tdata[0] = 0.75f;
@@ -431,9 +431,9 @@ void Reverbtron::convert_time()
     memset(data, 0, sizeof(float)*2000);
     memset(time, 0, sizeof(int)*2000);
 
-    if(Plength>=File.data_length) Plength = File.data_length;
-    if(Plength==0) Plength=400;
-    incr = ((float) Plength)/((float) File.data_length);
+    if(Llength>=File.data_length) Llength = File.data_length;
+    if(Llength==0) Llength=400;
+    incr = ((float) Llength)/((float) File.data_length);
 
 
     if(fstretch>0.0) {
@@ -447,12 +447,12 @@ void Reverbtron::convert_time()
     index = 0;
 
 
-    if(File.data_length>Plength) {
+    if(File.data_length>Llength) {
         for(i=0; i<File.data_length; i++) {
             skip += incr;
             findex = (float)index;
             if( findex<skip) {
-                if(index<Plength) {
+                if(index<Llength) {
                     if( (tmpstretch*(idelay + File.ftime[i] )) > 9.9f ) {
                         File.ftime[i] = 0.0f;//TODO: why are we destroying the file data?
                         data[i] = 0.0f;
@@ -463,7 +463,7 @@ void Reverbtron::convert_time()
                 }
             }
         };
-        Plength = index;
+        Llength = index;
     } //endif
     else {
         for(i=0; i<File.data_length; i++) {
@@ -473,7 +473,7 @@ void Reverbtron::convert_time()
             data[i]=normal*File.tdata[i];
 
         };
-        Plength = i;
+        Llength = i;
     }
 
 //generate an approximated randomized hrtf for diffusing reflections:
@@ -536,7 +536,7 @@ Reverbtron::setfb(int value)
     else
         fb = (float)value/64.0f * 0.15f;
 
-    fb*=((1627.0f-(float)Pdiff-(float)Plength)/1627.0f);
+    fb*=((1627.0f-(float)Pdiff-(float)Llength)/1627.0f);
     fb*=(1.0f-((float)Plevel/127.0f));
     fb*=(1.0f-diffusion)*.5f;
 
@@ -674,8 +674,8 @@ Reverbtron::changepar (int npar, int value)
         Psafe=value;
         break;
     case 3:
-        Plength = value;
-        if((Psafe) && (Plength>400)) Plength = 400;
+        Llength = Plength = value;
+        if((Psafe) && (Llength>400)) Llength = 400;
         convert_time();
         break;
     case 4:

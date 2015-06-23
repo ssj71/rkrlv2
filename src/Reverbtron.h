@@ -100,6 +100,7 @@ private:
     int hoffset;
     int maxx_size;
     //int data_length;
+    int Llength; //Plength but limited
     int avgtime;
     int hrtf_size;
     int hlength;
