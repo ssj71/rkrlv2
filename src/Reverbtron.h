@@ -100,6 +100,7 @@ private:
     int hoffset;
     int maxx_size;
     //int data_length;
+    int error;// flag if error when loading file
     int Llength; //Plength but limited
     int avgtime;
     int hrtf_size;

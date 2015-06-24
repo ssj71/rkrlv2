@@ -47,6 +47,7 @@ Reverbtron::Reverbtron (float * efxoutl_, float * efxoutr_, double sample_rate,
     Llength = 50;
     Puser = 0;
     Psafe = 0;
+    error = 0;
     convlength = 10.0f;  //max reverb time
     fb = 0.0f;
     feedback = 0.0f;
@@ -274,9 +275,7 @@ Reverbtron::setfile(int value)
     }
     filedata = loadfile(Filename);
     applyfile(filedata);
-    cleanup();
-    convert_time();
-    if(filedata.data_length < 3)
+    if(error)
     	return 0;
     return 1;
 
@@ -345,9 +344,11 @@ Reverbtron::loadfile(char* filename)
     FILE *fs;
 
     RvbFile f;
+    error = 0;
 
     if ((fs = fopen (filename, "r")) == NULL) {
         f = loaddefault();
+        error = 1;
         return(f);
     }
     strcpy(f.Filename,filename);

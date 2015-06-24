@@ -1,0 +1,14 @@
+#Simple stereo echo if using first two taps
+#Circular sounding echo if using all 5
+#First line of file is
+#Column	Parameter
+#1 Filter Modulation Tempo multiplier
+#2 Delay Modulation Tempo multiplier 
+#3 Filter Resonance Mode.  0=backward compatibility, 1=higher resonance mode (M button on Mutromojo)
+0.5	5	1
+#Pan	Time	Level	LP	BP	HP	Freq	Q	Stages
+-0.5	0.5	1.0	1.0	0.0	0.0	3000	1.0	1
+0.5	1.0	0.93	1.0	0.0	0.0	1500	1.0	1
+0.0	1.5	0.86	1.0	0.0	0.0	750	1.0	1
+0.75	2.0	0.8	1.0	0.0	0.0	550	1.0	1
+-0.75	2.5	0.75	1.0	0.0	0.0	550	1.0	1

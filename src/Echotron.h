@@ -28,70 +28,14 @@
 #include "AnalogFilter.h"
 #include "EffectLFO.h"
 #include "delayline.h"
+#include "RBFilter.h"
 
 #define  ECHOTRON_F_SIZE   128       //Allow up to 150 points in the file
 #define  ECHOTRON_MAXFILTERS  32      //filters available
 
-
-class Echotron
+class DlyFile
 {
 public:
-    Echotron (float * efxoutl_, float * efxoutr_);
-    ~Echotron ();
-    void out (float * smpsl, float * smpr);
-    void setpreset (int npreset);
-    void changepar (int npar, int value);
-    int getpar (int npar);
-    void cleanup ();
-    int setfile (int value);
-    int Ppreset;
-
-    int Pchange;
-
-    float *efxoutl;
-    float *efxoutr;
-    float outvolume;
-
-    char Filename[128];
-
-
-private:
-
-    void setvolume (int Pvolume);
-    void setpanning (int Ppanning);
-    void sethidamp (int Phidamp);
-    void setlpf (int Plpf);
-    void setfb(int value);
-    void init_params();
-    void modulate_delay();
-    void modulate_filters();
-    void loaddefault();
-
-
-    //User input parameters
-    EffectLFO lfo;
-    EffectLFO dlfo;
-    int Pvolume;	//This is master wet/dry mix like other FX...but I am finding it is not useful
-    int Ppanning;	//Panning
-    int Plrcross;	// L/R Mixing  //
-    int Phidamp;
-    int Puser;		//0,1//
-    int Ptempo;		//Tempo, BPM//For stretching reverb responses
-    int Filenum;
-    int Pfb;		//-64 ... 64// amount of feedback
-    int Pdepth;
-    int Pwidth;
-    int Pfilters;         //0 or 1// use or don't use filters in delay line
-    int Pmodfilts;	//0 or 1// apply LFO to filter freqs
-    int Pmoddly;		//0 or 1// apply LFO to delay time
-    int Pstdiff;
-    int Plength;
-
-
-    int offset;
-    int maxx_size;
-
-
     //arrays of parameters from text file:
     float fPan[ECHOTRON_F_SIZE];  //1+Pan from text file
     float fTime[ECHOTRON_F_SIZE];
@@ -111,6 +55,96 @@ private:
     float ldata[ECHOTRON_F_SIZE];
     float rdata[ECHOTRON_F_SIZE];
 
+    int fLength;
+    char Filename[128];
+
+};
+
+class Echotron
+{
+public:
+    Echotron (float * efxoutl_, float * efxoutr_, double sample_rate);
+    ~Echotron ();
+    void out (float * smpsl, float * smpr, uint32_t period);
+    void setpreset (int npreset);
+    void changepar (int npar, int value);
+    int getpar (int npar);
+    void cleanup ();
+    int setfile (int value);
+    DlyFile loadfile(char* path);
+    void applyfile(DlyFile);
+    int Ppreset;
+
+    int Pchange;
+
+    float *efxoutl;
+    float *efxoutr;
+    float outvolume;
+
+    char Filename[128];
+    DlyFile File;
+
+    int error;
+
+private:
+
+    void setvolume (int Pvolume);
+    void setpanning (int Ppanning);
+    void sethidamp (int Phidamp);
+    void setlpf (int Plpf);
+    void setfb(int value);
+    void init_params();
+    void modulate_delay();
+    void modulate_filters();
+    DlyFile loaddefault();
+
+
+    //User input parameters
+    EffectLFO *lfo;
+    EffectLFO *dlfo;
+    int Pvolume;	//This is master wet/dry mix like other FX...but I am finding it is not useful
+    int Ppanning;	//Panning
+    int Plrcross;	// L/R Mixing  //
+    int Phidamp;
+    int Puser;		//0,1//
+    int Ptempo;		//Tempo, BPM//For stretching reverb responses
+    int Filenum;
+    int Pfb;		//-64 ... 64// amount of feedback
+    int Pdepth;
+    int Pwidth;
+    int Pfilters;         //0 or 1// use or don't use filters in delay line
+    int Pmodfilts;	//0 or 1// apply LFO to filter freqs
+    int Pmoddly;		//0 or 1// apply LFO to delay time
+    int Pstdiff;
+    int Plength;
+
+    int Llength; //limited length
+
+    int offset;
+    int maxx_size;
+
+
+    //arrays of parameters from text file:
+    /*
+    float fPan[ECHOTRON_F_SIZE];  //1+Pan from text file
+    float fTime[ECHOTRON_F_SIZE];
+    float fLevel[ECHOTRON_F_SIZE];
+    float fLP[ECHOTRON_F_SIZE];
+    float fBP[ECHOTRON_F_SIZE];
+    float fHP[ECHOTRON_F_SIZE];
+    float fFreq[ECHOTRON_F_SIZE];
+    float fQ[ECHOTRON_F_SIZE];
+    int iStages[ECHOTRON_F_SIZE];
+    float subdiv_dmod;
+    float subdiv_fmod;
+    int f_qmode;
+
+    float rtime[ECHOTRON_F_SIZE];
+    float ltime[ECHOTRON_F_SIZE];
+    float ldata[ECHOTRON_F_SIZE];
+    float rdata[ECHOTRON_F_SIZE];
+    */
+
 //end text configurable parameters
 
     int initparams;
@@ -125,6 +159,9 @@ private:
 
     float level,fb, rfeedback, lfeedback,levpanl,levpanr, lrcross, ilrcross;
     float tempo_coeff;
+
+    float fPERIOD;
+    float fSAMPLE_RATE;
 
     class AnalogFilter *lpfl, *lpfr;	//filters
 

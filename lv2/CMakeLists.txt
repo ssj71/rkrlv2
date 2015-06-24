@@ -71,6 +71,7 @@ add_library(rkrlv2 SHARED
   ../src/Shifter.C
   ../src/StompBox.C
   ../src/Reverbtron.C
+  ../src/Echotron.C
 )
 
 set_target_properties(rkrlv2 PROPERTIES PREFIX "")
