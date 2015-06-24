@@ -20,7 +20,7 @@
         doap:maintainer [
                 foaf:name "Rakarrack Team" ;
                 foaf:homepage <http://rakarrack.sourceforge.net>;
-                foaf:mbox <ssjackson71@gmail.com> ;
+                foaf:mbox <mailto:ssjackson71@gmail.com> ;
         ] ;
         lv2:optionalFeature lv2:hardRTCapable ;
 #        ui:ui  <http://rakarrack.sourceforge.net/effects.html#Arpie_ui> ;

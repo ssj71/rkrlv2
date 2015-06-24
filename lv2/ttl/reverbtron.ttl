@@ -37,7 +37,7 @@
     doap:maintainer [
             foaf:name "Rakarrack Team" ;
             foaf:homepage <http://rakarrack.sourceforge.net>;
-            foaf:mbox <ssjackson71@gmail.com> ;
+            foaf:mbox <mailto:ssjackson71@gmail.com> ;
     ] ;
     lv2:requiredFeature urid:map, worker:schedule ;
     lv2:optionalFeature lv2:hardRTCapable, state:loadDefaultState ;
