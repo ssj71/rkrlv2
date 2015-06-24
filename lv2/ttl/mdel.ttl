@@ -30,6 +30,8 @@
 <http://rakarrack.sourceforge.net/effects.html#delm>
         a lv2:Plugin, lv2:DelayPlugin ;
         doap:name "rkr Musical Delay" ;
+        doap:description "Tempo Selectable Dual Delay";
+        doap:license <http://opensource.org/licenses/gpl-2.0> ;
         doap:maintainer [
                 foaf:name "Rakarrack Team" ;
                 foaf:homepage <http://rakarrack.sourceforge.net>;

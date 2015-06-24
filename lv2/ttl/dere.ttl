@@ -17,6 +17,8 @@
 <http://rakarrack.sourceforge.net/effects.html#dere>
         a lv2:Plugin, lv2:DistortionPlugin ;
         doap:name "rkr Derelict" ;
+        doap:description "Distortion with Extra Color";
+        doap:license <http://opensource.org/licenses/gpl-2.0> ;
         doap:maintainer [
                 foaf:name "Rakarrack Team" ;
                 foaf:homepage <http://rakarrack.sourceforge.net>;

@@ -16,7 +16,9 @@
 
 <http://rakarrack.sourceforge.net/effects.html#awha>
         a lv2:Plugin, lv2:PhaserPlugin ;
-        doap:name "rkr AlienWah" ;
+        doap:name "rkr AlienWah" ; 
+        doap:description "Flaser";
+        doap:license <http://opensource.org/licenses/GPL-2.0> ;
         doap:maintainer [
                 foaf:name "Rakarrack Team" ;
                 foaf:homepage <http://rakarrack.sourceforge.net>;

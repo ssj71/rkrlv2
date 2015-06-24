@@ -17,6 +17,8 @@
 <http://rakarrack.sourceforge.net/effects.html#Arpie>
         a lv2:Plugin, lv2:DelayPlugin ;
         doap:name "rkr Arpie" ;
+        doap:description "Arpeggiated Pitch Shifter";
+        doap:license <http://opensource.org/licenses/GPL-2.0> ;
         doap:maintainer [
                 foaf:name "Rakarrack Team" ;
                 foaf:homepage <http://rakarrack.sourceforge.net>;

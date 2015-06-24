@@ -17,6 +17,8 @@
 <http://rakarrack.sourceforge.net/effects.html#aphas>
         a lv2:Plugin, lv2:PhaserPlugin ;
         doap:name "rkr Analog Phaser" ;
+        doap:description "Phaser";
+        doap:license <http://opensource.org/licenses/GPL-2.0> ;
         doap:maintainer [
                 foaf:name "Rakarrack Team" ;
                 foaf:homepage <http://rakarrack.sourceforge.net>;

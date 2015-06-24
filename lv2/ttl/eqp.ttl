@@ -34,6 +34,8 @@
 <http://rakarrack.sourceforge.net/effects.html#eqp>
         a lv2:Plugin, lv2:ParaEQPlugin ;
         doap:name "rkr Parametric EQ" ;
+        doap:description "3 Band Parametric Eq";
+        doap:license <http://opensource.org/licenses/gpl-2.0> ;
         doap:maintainer [
                 foaf:name "Rakarrack Team" ;
                 foaf:homepage <http://rakarrack.sourceforge.net>;

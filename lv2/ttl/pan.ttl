@@ -17,6 +17,8 @@
 <http://rakarrack.sourceforge.net/effects.html#pan>
         a lv2:Plugin, lv2:SpatialPlugin ;
         doap:name "rkr Pan" ;
+        doap:description "Auto-panner";
+        doap:license <http://opensource.org/licenses/gpl-2.0> ;
         doap:maintainer [
                 foaf:name "Rakarrack Team" ;
                 foaf:homepage <http://rakarrack.sourceforge.net>;

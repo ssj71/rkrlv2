@@ -18,6 +18,8 @@
 <http://rakarrack.sourceforge.net/effects.html#wha>
         a lv2:Plugin, lv2:FilterPlugin ;
         doap:name "rkr WahWah" ;
+        doap:description "Envelope/LFO Controlled Wah";
+        doap:license <http://opensource.org/licenses/gpl-2.0> ;
         doap:maintainer [
                 foaf:name "Rakarrack Team" ;
                 foaf:homepage <http://rakarrack.sourceforge.net>;

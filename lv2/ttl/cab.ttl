@@ -17,6 +17,8 @@
 <http://rakarrack.sourceforge.net/effects.html#cabe>
         a lv2:Plugin, lv2:FilterPlugin ;
         doap:name "rkr Cabinet" ;
+        doap:description "Guitar Cabinet Emulation";
+        doap:license <http://opensource.org/licenses/GPL-2.0> ;
         doap:maintainer [
                 foaf:name "Rakarrack Team" ;
                 foaf:homepage <http://rakarrack.sourceforge.net>;

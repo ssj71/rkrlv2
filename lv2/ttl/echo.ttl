@@ -17,6 +17,8 @@
 <http://rakarrack.sourceforge.net/effects.html#eco>
         a lv2:Plugin, lv2:ReverbPlugin ;
         doap:name "rkr Echo" ;
+        doap:description "Echo";
+        doap:license <http://opensource.org/licenses/gpl-2.0> ;
         doap:maintainer [
                 foaf:name "Rakarrack Team" ;
                 foaf:homepage <http://rakarrack.sourceforge.net>;

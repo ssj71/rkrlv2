@@ -17,6 +17,8 @@
 <http://rakarrack.sourceforge.net/effects.html#har_no_mid>
         a lv2:Plugin, lv2:PitchPlugin ;
         doap:name "rkr Harmonizer (no midi)" ;
+        doap:description "Harmonizing Pitch Shifter";
+        doap:license <http://opensource.org/licenses/gpl-2.0> ;
         doap:maintainer [
                 foaf:name "Rakarrack Team" ;
                 foaf:homepage <http://rakarrack.sourceforge.net>;

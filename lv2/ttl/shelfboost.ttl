@@ -19,6 +19,8 @@
 <http://rakarrack.sourceforge.net/effects.html#ShelfBoost>
         a lv2:Plugin, lv2:FilterPlugin ;
         doap:name "rkr Shelf Boost" ;
+        doap:description "Tone Booster";
+        doap:license <http://opensource.org/licenses/gpl-2.0> ;
         doap:maintainer [
                 foaf:name "Rakarrack Team" ;
                 foaf:homepage <http://rakarrack.sourceforge.net>;

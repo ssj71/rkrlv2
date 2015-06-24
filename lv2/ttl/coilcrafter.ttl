@@ -19,6 +19,8 @@
 <http://rakarrack.sourceforge.net/effects.html#CoilCrafter>
         a lv2:Plugin, lv2:FilterPlugin ;
         doap:name "rkr Coil Crafter" ;
+        doap:description "Guitar Pickup Emulator";
+        doap:license <http://opensource.org/licenses/GPL-2.0> ;
         doap:maintainer [
                 foaf:name "Rakarrack Team" ;
                 foaf:homepage <http://rakarrack.sourceforge.net>;

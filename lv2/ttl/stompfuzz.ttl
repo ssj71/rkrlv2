@@ -18,6 +18,8 @@
 <http://rakarrack.sourceforge.net/effects.html#StompBox_fuzz>
         a lv2:Plugin, lv2:DistortionPlugin ;
         doap:name "rkr StompBox:Fuzz" ;
+        doap:description "Fuzz Pedal Emulator";
+        doap:license <http://opensource.org/licenses/gpl-2.0> ;
         doap:maintainer [
                 foaf:name "Rakarrack Team" ;
                 foaf:homepage <http://rakarrack.sourceforge.net>;
