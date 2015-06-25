@@ -177,7 +177,7 @@
                 lv2:name "Modulation Mode" ;
                 lv2:default 0 ;
                 lv2:minimum 0 ;
-                lv2:maximum 7 ;
+                lv2:maximum 8 ;
                 lv2:portProperty lv2:integer ;
                 lv2:portProperty lv2:enumeration;
                 lv2:scalePoint [ rdfs:label "Lineal (Filter)"; rdf:value 0 ] ;
@@ -199,14 +199,14 @@
                 lv2:maximum 8 ;
                 lv2:portProperty lv2:integer ;
                 lv2:portProperty lv2:enumeration;
-                lv2:scalePoint [ rdfs:label "450-2.5k"; rdf:value 0 ] ;
-                lv2:scalePoint [ rdfs:label "150-4k"; rdf:value 1 ] ;
-                lv2:scalePoint [ rdfs:label "40-800"; rdf:value 2 ] ;
-                lv2:scalePoint [ rdfs:label "100-1.6k"; rdf:value 3 ] ;
-                lv2:scalePoint [ rdfs:label "80-16k"; rdf:value 4 ] ;
-                lv2:scalePoint [ rdfs:label "60-18k"; rdf:value 5 ] ;
-                lv2:scalePoint [ rdfs:label "40-2.2k"; rdf:value 6 ] ;
-                lv2:scalePoint [ rdfs:label "20-6k"; rdf:value 7 ] ;
+                lv2:scalePoint [ rdfs:label "450-2.5k"; rdf:value 1 ] ;
+                lv2:scalePoint [ rdfs:label "150-4k"; rdf:value 2 ] ;
+                lv2:scalePoint [ rdfs:label "40-800"; rdf:value 3 ] ;
+                lv2:scalePoint [ rdfs:label "100-1.6k"; rdf:value 4 ] ;
+                lv2:scalePoint [ rdfs:label "80-16k"; rdf:value 5 ] ;
+                lv2:scalePoint [ rdfs:label "60-18k"; rdf:value 6 ] ;
+                lv2:scalePoint [ rdfs:label "40-2.2k"; rdf:value 7 ] ;
+                lv2:scalePoint [ rdfs:label "20-6k"; rdf:value 8 ] ;
                 units:unit units:hz ;
         ] ;
 	.

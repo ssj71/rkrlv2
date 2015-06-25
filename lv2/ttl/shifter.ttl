@@ -151,8 +151,6 @@
                 lv2:minimum 0 ;
                 lv2:maximum 127 ;
                 lv2:portProperty lv2:integer ;
-                lv2:portProperty lv2:enumeration;
-                lv2:scalePoint [ rdfs:label "450-2.5k"; rdf:value 0 ] ;
         ] ;
 	.
 

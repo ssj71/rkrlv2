@@ -125,8 +125,8 @@
                 lv2:symbol "DAMP" ;
                 lv2:name "Damping" ;
                 lv2:default 83 ;
-                lv2:minimum 64.0 ;
-                lv2:maximum 127.0 ;
+                lv2:minimum 64 ;
+                lv2:maximum 127 ;
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;

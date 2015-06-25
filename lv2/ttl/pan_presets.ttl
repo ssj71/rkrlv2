@@ -39,7 +39,7 @@
 		pset:value 64.0
 	] .
 
-<http://rakarrack.sourceforge.net/effects.html#pan:preset:extrastereo>
+<http://rakarrack.sourceforge.net/effects.html#pan:preset:extra_stereo>
 	a pset:Preset ;
 	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#pan> ;
 	rdfs:label "Extra Stereo" ;

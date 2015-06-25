@@ -82,7 +82,7 @@
                 lv2:index 5 ;
                 lv2:symbol "LFREQ" ;
                 lv2:name "Frequency" ;
-                lv2:default 0 ;
+                lv2:default 200 ;
                 lv2:minimum 20 ;
                 lv2:maximum 1000 ;
                 lv2:portProperty lv2:integer ;
@@ -113,7 +113,7 @@
                 lv2:index 8 ;
                 lv2:symbol "MFREQ" ;
                 lv2:name "Frequency" ;
-                lv2:default 0 ;
+                lv2:default 800 ;
                 lv2:minimum 80 ;
                 lv2:maximum 8000 ;
                 lv2:portProperty lv2:integer ;
@@ -144,7 +144,7 @@
                 lv2:index 11 ;
                 lv2:symbol "HFREQ" ;
                 lv2:name "Frequency" ;
-                lv2:default 0 ;
+                lv2:default 12000 ;
                 lv2:minimum 6000 ;
                 lv2:maximum 26000 ;
                 lv2:portProperty lv2:integer ;

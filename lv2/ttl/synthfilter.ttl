@@ -76,7 +76,7 @@
                 lv2:index 6 ;
                 lv2:symbol "TEMPO" ;
                 lv2:name "Tempo" ;
-                lv2:default 0 ;
+                lv2:default 80 ;
                 lv2:minimum 1 ;
                 lv2:maximum 600 ;
                 lv2:portProperty lv2:integer ;
@@ -201,7 +201,7 @@
                 lv2:index 18 ;
                 lv2:symbol "RTIME" ;
                 lv2:name "Release Time" ;
-                lv2:default 0 ;
+                lv2:default 100 ;
                 lv2:minimum 5 ;
                 lv2:maximum 500 ;
                 lv2:portProperty lv2:integer ;

@@ -76,7 +76,7 @@
                 lv2:index 6 ;
                 lv2:symbol "TONE" ;
                 lv2:name "Tone" ;
-                lv2:default 20 ;
+                lv2:default 2020 ;
                 lv2:minimum 220 ;
                 lv2:maximum 16000 ;
                 lv2:portProperty lv2:integer ;

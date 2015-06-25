@@ -114,8 +114,8 @@
                 lv2:symbol "LPF" ;
                 lv2:name "Lowpass Filter" ;
                 lv2:default 6703 ;
-                lv2:minimum 20.0 ;
-                lv2:maximum 26000.0 ;
+                lv2:minimum 20 ;
+                lv2:maximum 26000 ;
                 lv2:portProperty lv2:integer ;
                 units:unit units:hz ;
         ], [
@@ -123,9 +123,9 @@
                 lv2:index 11 ;
                 lv2:symbol "HPF" ;
                 lv2:name "Highpass Filter" ;
-                lv2:default 21.0 ;
-                lv2:minimum 20.0 ;
-                lv2:maximum 20000.0 ;
+                lv2:default 21 ;
+                lv2:minimum 20 ;
+                lv2:maximum 20000 ;
                 lv2:portProperty lv2:integer ;
                 units:unit units:hz ;
         ], [
