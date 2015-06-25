@@ -24,6 +24,9 @@
                 foaf:homepage <http://rakarrack.sourceforge.net>;
                 foaf:mbox <mailto:ssjackson71@gmail.com> ;
         ] ;
+        lv2:minorVersion 0 ;
+        lv2:microVersion 0 ;
+        rdfs:comment "Two flange effects cascaded to create unique and more intense tones than available through a single flanger." ;
         lv2:optionalFeature lv2:hardRTCapable ;
 #        ui:ui  <http://rakarrack.sourceforge.net/effects.html#Dual_Flange_ui> ;
 

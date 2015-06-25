@@ -25,6 +25,9 @@
                 foaf:homepage <http://rakarrack.sourceforge.net>;
                 foaf:mbox <mailto:ssjackson71@gmail.com> ;
         ] ;
+        lv2:minorVersion 0 ;
+        lv2:microVersion 0 ;
+        rdfs:comment "Pitch shifter with easy controls for expression pedal controled whammy effects. Also has a mode for envelope based control." ;
         lv2:optionalFeature lv2:hardRTCapable ;
 #        ui:ui  <http://rakarrack.sourceforge.net/effects.html#Shifter_ui> ;
 

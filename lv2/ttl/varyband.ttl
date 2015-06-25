@@ -37,6 +37,9 @@
                 foaf:homepage <http://rakarrack.sourceforge.net>;
                 foaf:mbox <mailto:ssjackson71@gmail.com> ;
         ] ;
+        lv2:minorVersion 0 ;
+        lv2:microVersion 0 ;
+        rdfs:comment "Multi-band tremolo effect allowing 2 LFOs to modulate volume of any combination of 4 frequency bands." ;
         lv2:optionalFeature lv2:hardRTCapable ;
 #        ui:ui  <http://rakarrack.sourceforge.net/effects.html#VaryBand_ui> ;
 

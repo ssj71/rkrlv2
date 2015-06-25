@@ -25,6 +25,9 @@
                 foaf:homepage <http://rakarrack.sourceforge.net>;
                 foaf:mbox <mailto:ssjackson71@gmail.com> ;
         ] ;
+        lv2:minorVersion 0 ;
+        lv2:microVersion 0 ;
+        rdfs:comment "8-step modulation sequencer. Each step is user-adjustable. Signal amplitude, filter cutoff frequency, or pitch shifting modulations available." ;
         lv2:optionalFeature lv2:hardRTCapable ;
 #        ui:ui  <http://rakarrack.sourceforge.net/effects.html#Sequence_ui> ;
 

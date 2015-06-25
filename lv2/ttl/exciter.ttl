@@ -24,6 +24,9 @@
                 foaf:homepage <http://rakarrack.sourceforge.net>;
                 foaf:mbox <mailto:ssjackson71@gmail.com> ;
         ] ;
+        lv2:minorVersion 0 ;
+        lv2:microVersion 0 ;
+        rdfs:comment "Harmonic exciter that allows you to adjust the volume of each of 10 harmonics." ;
         lv2:optionalFeature lv2:hardRTCapable,
             <http://lv2plug.in/ns/ext/urid#map>,
             <http://lv2plug.in/ns/ext/bufsz#maxBlockLength>;

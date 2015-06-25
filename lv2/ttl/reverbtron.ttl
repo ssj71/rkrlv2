@@ -41,6 +41,9 @@
             foaf:homepage <http://rakarrack.sourceforge.net>;
             foaf:mbox <mailto:ssjackson71@gmail.com> ;
     ] ;
+    lv2:minorVersion 0 ;
+    lv2:microVersion 0 ;
+    rdfs:comment "Convolution-based reverb effect. IR samples can be converted to .rvb format and loaded into this effect for a less cpu-intensive convolution. Several files included." ;
     lv2:requiredFeature urid:map, worker:schedule ;
     lv2:optionalFeature lv2:hardRTCapable, state:loadDefaultState ;
     lv2:extensionData worker:interface, state:interface ;

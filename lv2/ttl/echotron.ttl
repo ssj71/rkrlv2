@@ -41,6 +41,9 @@
             foaf:homepage <http://rakarrack.sourceforge.net>;
             foaf:mbox <mailto:ssjackson71@gmail.com> ;
     ] ;
+    lv2:minorVersion 0 ;
+    lv2:microVersion 0 ;
+    rdfs:comment "An extremely-configurable delay that allows up to 127 taps. Individual tap timing can be customized and loaded through text files. You can also have a custom filter on each tap. Several example files included." ;
     lv2:requiredFeature urid:map, worker:schedule ;
     lv2:optionalFeature lv2:hardRTCapable, state:loadDefaultState ;
     lv2:extensionData worker:interface, state:interface ;

@@ -26,6 +26,9 @@
                 foaf:homepage <http://rakarrack.sourceforge.net>;
                 foaf:mbox <mailto:ssjackson71@gmail.com> ;
         ] ;
+        lv2:minorVersion 0 ;
+        lv2:microVersion 0 ;
+        rdfs:comment "A filter like what can be found in synthesizers. Up to 12 lowpass + 12 highpass filters with resonance. Cutoff frequency is controllable by LFO or volume envelope." ;
         lv2:optionalFeature lv2:hardRTCapable ;
 #        ui:ui  <http://rakarrack.sourceforge.net/effects.html#Synthfilter_ui> ;
 

@@ -24,6 +24,9 @@
                 foaf:mbox <mailto:ssjackson71@gmail.com> ;
         ] ;
         lv2:optionalFeature lv2:hardRTCapable ;
+        lv2:minorVersion 0 ;
+        lv2:microVersion 0 ;
+        rdfs:comment "10 band graphical equalizer with resonance control." ;
 #        ui:ui  <http://rakarrack.sourceforge.net/effects.html#eql_ui> ;
 
         lv2:port [

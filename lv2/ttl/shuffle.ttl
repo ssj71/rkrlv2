@@ -47,6 +47,9 @@
                 foaf:homepage <http://rakarrack.sourceforge.net>;
                 foaf:mbox <mailto:ssjackson71@gmail.com> ;
         ] ;
+        lv2:minorVersion 0 ;
+        lv2:microVersion 0 ;
+        rdfs:comment "Creates interesting spatial effects. Converts stereo signal to Mid/Side and applys a parametric four band EQ to M or S channel. Effect based on Stereo Shuffling paper by Michael Gerzon." ;
         lv2:optionalFeature lv2:hardRTCapable ;
 #        ui:ui  <http://rakarrack.sourceforge.net/effects.html#Shuffle_ui> ;
 

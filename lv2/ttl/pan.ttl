@@ -17,13 +17,16 @@
 <http://rakarrack.sourceforge.net/effects.html#pan>
         a lv2:Plugin, lv2:SpatialPlugin ;
         doap:name "rkr Pan" ;
-        doap:description "Auto-panner";
+        doap:description "Auto-panner/Stereo Tremelo";
         doap:license <http://opensource.org/licenses/gpl-2.0> ;
         doap:maintainer [
                 foaf:name "Rakarrack Team" ;
                 foaf:homepage <http://rakarrack.sourceforge.net>;
                 foaf:mbox <mailto:ssjackson71@gmail.com> ;
         ] ;
+        lv2:minorVersion 0 ;
+        lv2:microVersion 0 ;
+        rdfs:comment "LFO controlled auto-panning/stereo tremelo effect. Useful to expand your stereo image." ;
         lv2:optionalFeature lv2:hardRTCapable ;
 #        ui:ui  <http://rakarrack.sourceforge.net/effects.html#pan_ui> ;
 

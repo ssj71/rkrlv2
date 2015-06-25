@@ -24,6 +24,9 @@
                 foaf:homepage <http://rakarrack.sourceforge.net>;
                 foaf:mbox <mailto:ssjackson71@gmail.com> ;
         ] ;
+        lv2:minorVersion 0 ;
+        lv2:microVersion 0 ;
+        rdfs:comment "Equalizer with preset curves to match the effect of various guitar cabinets." ;
         lv2:optionalFeature lv2:hardRTCapable;
 #        ui:ui  <http://rakarrack.sourceforge.net/effects.html#cabe_ui> ;
 

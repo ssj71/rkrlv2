@@ -25,6 +25,9 @@
                 foaf:homepage <http://rakarrack.sourceforge.net>;
                 foaf:mbox <mailto:ssjackson71@gmail.com> ;
         ] ;
+        lv2:minorVersion 0 ;
+        lv2:microVersion 0 ;
+        rdfs:comment "Physically-informed fuzz stompbox emulation. Based on several popular schematics, this is designed to capture the sound of an era more than emulate a specific model." ;
         lv2:optionalFeature lv2:hardRTCapable ;
 #        ui:ui  <http://rakarrack.sourceforge.net/effects.html#StompBox_fuzz_ui> ;
 
