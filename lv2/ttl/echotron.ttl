@@ -34,7 +34,7 @@
 <http://rakarrack.sourceforge.net/effects.html#Echotron>
     a lv2:Plugin, lv2:DelayPlugin ;
     doap:name "rkr Echotron" ;
-    doap:description "Convolution-Based Reverb";
+    doap:description "Extremely Configurable Delay" ;
     doap:license <http://opensource.org/licenses/gpl-2.0> ;
     doap:maintainer [
             foaf:name "Rakarrack Team" ;
@@ -45,7 +45,7 @@
     lv2:optionalFeature lv2:hardRTCapable, state:loadDefaultState ;
     lv2:extensionData worker:interface, state:interface ;
 #    ui:ui  <http://rakarrack.sourceforge.net/effects.html#Echotron_ui> ;
-    patch:writable <http://rakarrack.sourceforge.net/effects.html#Echotron:rvbfile> ;
+    patch:writable <http://rakarrack.sourceforge.net/effects.html#Echotron:dlyfile> ;
 
     lv2:port [
             a lv2:InputPort, lv2:AudioPort ;
@@ -234,51 +234,31 @@
             lv2:portProperty lv2:toggled ; 
     ] ;
     state:state [
-		<http://rakarrack.sourceforge.net/effects.html#Echotron:dlyfile> <Chamber.rvb>
+		<http://rakarrack.sourceforge.net/effects.html#Echotron:dlyfile> <SwingPong.dly>
 	] 
 	.
 
-<http://rakarrack.sourceforge.net/effects.html#Echotron:preset:chamber>
+<http://rakarrack.sourceforge.net/effects.html#Echotron:preset:summer>
         a pset:Preset ;
         lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Echotron> ;
         rdfs:seeAlso <echotron_presets.ttl> .
 
-<http://rakarrack.sourceforge.net/effects.html#Echotron:preset:concrete_stairwell>
+<http://rakarrack.sourceforge.net/effects.html#Echotron:preset:ambience>
         a pset:Preset ;
         lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Echotron> ;
         rdfs:seeAlso <echotron_presets.ttl> .
 
-<http://rakarrack.sourceforge.net/effects.html#Echotron:preset:hall>
+<http://rakarrack.sourceforge.net/effects.html#Echotron:preset:arranjer>
         a pset:Preset ;
         lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Echotron> ;
         rdfs:seeAlso <echotron_presets.ttl> .
 
-<http://rakarrack.sourceforge.net/effects.html#Echotron:preset:med_hall>
+<http://rakarrack.sourceforge.net/effects.html#Echotron:preset:suction>
         a pset:Preset ;
         lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Echotron> ;
         rdfs:seeAlso <echotron_presets.ttl> .
 
-<http://rakarrack.sourceforge.net/effects.html#Echotron:preset:Room>
-        a pset:Preset ;
-        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Echotron> ;
-        rdfs:seeAlso <echotron_presets.ttl> .
-
-<http://rakarrack.sourceforge.net/effects.html#Echotron:preset:hall2>
-        a pset:Preset ;
-        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Echotron> ;
-        rdfs:seeAlso <echotron_presets.ttl> .
-
-<http://rakarrack.sourceforge.net/effects.html#Echotron:preset:guitar>
-        a pset:Preset ;
-        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Echotron> ;
-        rdfs:seeAlso <echotron_presets.ttl> .
-
-<http://rakarrack.sourceforge.net/effects.html#Echotron:preset:studio>
-        a pset:Preset ;
-        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Echotron> ;
-        rdfs:seeAlso <echotron_presets.ttl> .
-
-<http://rakarrack.sourceforge.net/effects.html#Echotron:preset:chathedral>
+<http://rakarrack.sourceforge.net/effects.html#Echotron:preset:suctionflange>
         a pset:Preset ;
         lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Echotron> ;
         rdfs:seeAlso <echotron_presets.ttl> .

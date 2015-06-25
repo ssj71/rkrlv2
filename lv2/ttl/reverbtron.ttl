@@ -34,7 +34,7 @@
 <http://rakarrack.sourceforge.net/effects.html#Reverbtron>
     a lv2:Plugin, lv2:ReverbPlugin ;
     doap:name "rkr Reverbtron" ;
-    doap:description "Convolution-Based Reverb";
+    doap:description "Convolution-Based Reverb" ;
     doap:license <http://opensource.org/licenses/gpl-2.0> ;
     doap:maintainer [
             foaf:name "Rakarrack Team" ;
