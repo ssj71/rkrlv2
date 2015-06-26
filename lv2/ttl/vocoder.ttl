@@ -17,7 +17,7 @@
 # 	.
 
 <http://rakarrack.sourceforge.net/effects.html#Vocoder>
-        a lv2:Plugin, lv2:ModulationPlugin ;
+        a lv2:Plugin, lv2:ModulatorPlugin ;
         doap:name "rkr Vocoder" ;
         doap:description "32 Band Vocoder";
         doap:license <http://opensource.org/licenses/gpl-2.0> ;

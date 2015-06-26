@@ -113,7 +113,7 @@
         rdfs:seeAlso <expander.ttl> .
 # 22 
 <http://rakarrack.sourceforge.net/effects.html#Shuffle>
-        a lv2:Plugin, lv2:SpatializerPlugin ;
+        a lv2:Plugin, lv2:SpatialPlugin ;
         lv2:binary <rkrlv2.so> ;
         rdfs:seeAlso <shuffle.ttl> .
 # 23 
@@ -123,12 +123,12 @@
         rdfs:seeAlso <synthfilter.ttl> .
 # 24 
 <http://rakarrack.sourceforge.net/effects.html#VaryBand>
-        a lv2:Plugin, lv2:ModulationPlugin ;
+        a lv2:Plugin, lv2:ModulatorPlugin ;
         lv2:binary <rkrlv2.so> ;
         rdfs:seeAlso <varyband.ttl> .
 # 25 
 <http://rakarrack.sourceforge.net/effects.html#MuTroMojo>
-        a lv2:Plugin, lv2:Filter ;
+        a lv2:Plugin, lv2:FilterPlugin ;
         lv2:binary <rkrlv2.so> ;
         rdfs:seeAlso <mutromojo.ttl> .
 # 26 
@@ -148,7 +148,7 @@
         rdfs:seeAlso <shelfboost.ttl> .
 # 29 
 <http://rakarrack.sourceforge.net/effects.html#Vocoder>
-        a lv2:Plugin, lv2:ModulationPlugin ;
+        a lv2:Plugin, lv2:ModulatorPlugin ;
         lv2:binary <rkrlv2.so> ;
         rdfs:seeAlso <vocoder.ttl> .
 # 30 
