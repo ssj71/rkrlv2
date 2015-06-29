@@ -59,6 +59,16 @@
         lv2:port [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 4 ;
+                lv2:symbol "ON" ;
+                lv2:name "On" ;
+                lv2:default 1 ;
+                lv2:minimum 0 ;
+                lv2:maximum 1 ;
+                lv2:portProperty lv2:integer ;
+                lv2:portProperty lv2:toggled ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 5 ;
                 lv2:symbol "WETDRY" ;
                 lv2:name "Wet/Dry" ;
                 lv2:default 0 ;
@@ -67,7 +77,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 5 ;
+                lv2:index 6 ;
                 lv2:symbol "DIST" ;
                 lv2:name "Distort" ;
                 lv2:default 0 ;
@@ -76,7 +86,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 6 ;
+                lv2:index 7 ;
                 lv2:symbol "TEMPO" ;
                 lv2:name "Tempo" ;
                 lv2:default 80 ;
@@ -86,7 +96,7 @@
                 units:unit units:bpm ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 7 ;
+                lv2:index 8 ;
                 lv2:symbol "RND" ;
                 lv2:name "Randomness" ;
                 lv2:default 0 ;
@@ -95,7 +105,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 8 ;
+                lv2:index 9 ;
                 lv2:symbol "TYPE" ;
                 lv2:name "LFO Type" ;
                 lv2:default 0 ;
@@ -117,7 +127,7 @@
                 lv2:scalePoint [ rdfs:label "Triangle Bottomed Sine"; rdf:value 11 ] ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 9 ;
+                lv2:index 10 ;
                 lv2:symbol "STDL" ;
                 lv2:name "LFO L/R Delay" ;
                 lv2:default -2 ;
@@ -126,7 +136,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 10 ;
+                lv2:index 11 ;
                 lv2:symbol "WIDTH" ;
                 lv2:name "Width" ;
                 lv2:default 50 ;
@@ -135,7 +145,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 11 ;
+                lv2:index 12 ;
                 lv2:symbol "FB" ;
                 lv2:name "Feedback" ;
                 lv2:default -30 ;
@@ -145,7 +155,7 @@
                 units:unit units:hz ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 12 ;
+                lv2:index 13 ;
                 lv2:symbol "LSTAGES" ;
                 lv2:name "Lowpass Stages" ;
                 lv2:default 2 ;
@@ -154,7 +164,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 13 ;
+                lv2:index 14 ;
                 lv2:symbol "HSTAGES" ;
                 lv2:name "Highpass Stages" ;
                 lv2:default 0 ;
@@ -163,7 +173,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 14 ;
+                lv2:index 15 ;
                 lv2:symbol "SUB" ;
                 lv2:name "Subtract Output" ;
                 lv2:default 0 ;
@@ -173,7 +183,7 @@
                 lv2:portProperty lv2:toggled ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 15 ;
+                lv2:index 16 ;
                 lv2:symbol "DEPTH" ;
                 lv2:name "Depth" ;
                 lv2:default 100 ;
@@ -182,7 +192,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 16 ;
+                lv2:index 17 ;
                 lv2:symbol "SENSE" ;
                 lv2:name "Envelope Sensitivity" ;
                 lv2:default -30 ;
@@ -191,7 +201,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 17 ;
+                lv2:index 18 ;
                 lv2:symbol "ATIME" ;
                 lv2:name "Attack Time" ;
                 lv2:default 80 ;
@@ -201,7 +211,7 @@
                 units:unit units:ms ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 18 ;
+                lv2:index 19 ;
                 lv2:symbol "RTIME" ;
                 lv2:name "Release Time" ;
                 lv2:default 100 ;
@@ -211,7 +221,7 @@
                 units:unit units:ms ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 19 ;
+                lv2:index 20 ;
                 lv2:symbol "OFFSET" ;
                 lv2:name "HPF/LPF Offset" ;
                 lv2:default 0 ;

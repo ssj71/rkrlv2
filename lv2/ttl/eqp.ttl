@@ -74,6 +74,16 @@
         lv2:port [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 4 ;
+                lv2:symbol "ON" ;
+                lv2:name "On" ;
+                lv2:default 1 ;
+                lv2:minimum 0 ;
+                lv2:maximum 1 ;
+                lv2:portProperty lv2:integer ;
+                lv2:portProperty lv2:toggled ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 5 ;
                 lv2:symbol "GAIN" ;
                 lv2:name "Gain" ;
                 lv2:default 0 ;
@@ -82,7 +92,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 5 ;
+                lv2:index 6 ;
                 lv2:symbol "LFREQ" ;
                 lv2:name "Frequency" ;
                 lv2:default 200 ;
@@ -93,7 +103,7 @@
                 pg:group <http://rakarrack.sourceforge.net/effects.html#eqp:group:low> ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 6 ;
+                lv2:index 7 ;
                 lv2:symbol "LGAIN" ;
                 lv2:name "Gain" ;
                 lv2:default 0 ;
@@ -103,7 +113,7 @@
                 pg:group <http://rakarrack.sourceforge.net/effects.html#eqp:group:low> ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 7 ;
+                lv2:index 8 ;
                 lv2:symbol "LQ" ;
                 lv2:name "Width" ;
                 lv2:default 0 ;
@@ -113,7 +123,7 @@
                 pg:group <http://rakarrack.sourceforge.net/effects.html#eqp:group:low> ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 8 ;
+                lv2:index 9 ;
                 lv2:symbol "MFREQ" ;
                 lv2:name "Frequency" ;
                 lv2:default 800 ;
@@ -124,7 +134,7 @@
                 pg:group <http://rakarrack.sourceforge.net/effects.html#eqp:group:mid> ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 9 ;
+                lv2:index 10 ;
                 lv2:symbol "MGAIN" ;
                 lv2:name "Gain" ;
                 lv2:default 0 ;
@@ -134,7 +144,7 @@
                 pg:group <http://rakarrack.sourceforge.net/effects.html#eqp:group:mid> ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 10 ;
+                lv2:index 11 ;
                 lv2:symbol "MQ" ;
                 lv2:name "Width" ;
                 lv2:default 0 ;
@@ -144,7 +154,7 @@
                 pg:group <http://rakarrack.sourceforge.net/effects.html#eqp:group:mid> ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 11 ;
+                lv2:index 12 ;
                 lv2:symbol "HFREQ" ;
                 lv2:name "Frequency" ;
                 lv2:default 12000 ;
@@ -155,7 +165,7 @@
                 pg:group <http://rakarrack.sourceforge.net/effects.html#eqp:group:high> ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 12 ;
+                lv2:index 13 ;
                 lv2:symbol "HGAIN" ;
                 lv2:name "Gain" ;
                 lv2:default 0 ;
@@ -165,7 +175,7 @@
                 pg:group <http://rakarrack.sourceforge.net/effects.html#eqp:group:high> ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 13 ;
+                lv2:index 14 ;
                 lv2:symbol "HQ" ;
                 lv2:name "Width" ;
                 lv2:default 0 ;

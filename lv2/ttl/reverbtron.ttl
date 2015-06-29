@@ -93,8 +93,18 @@
             lv2:designation lv2:control ;
     ] ;
     lv2:port [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 6 ;
+                lv2:symbol "ON" ;
+                lv2:name "On" ;
+                lv2:default 1 ;
+                lv2:minimum 0 ;
+                lv2:maximum 1 ;
+                lv2:portProperty lv2:integer ;
+                lv2:portProperty lv2:toggled ;
+        ], [
             a lv2:InputPort, lv2:ControlPort ;
-            lv2:index 6 ;
+            lv2:index 7 ;
             lv2:symbol "WETDRY" ;
             lv2:name "Wet/Dry" ;
             lv2:default 64 ;
@@ -103,7 +113,7 @@
             lv2:portProperty lv2:integer ;
     ], [
             a lv2:InputPort, lv2:ControlPort ;
-            lv2:index 7 ;
+            lv2:index 8 ;
             lv2:symbol "FADE" ;
             lv2:name "Fade" ;
             lv2:default 0 ;
@@ -112,7 +122,7 @@
             lv2:portProperty lv2:integer ;
     ], [
             a lv2:InputPort, lv2:ControlPort ;
-            lv2:index 8 ;
+            lv2:index 9 ;
             lv2:symbol "SAFE" ;
             lv2:name "Safe" ;
             lv2:default 1 ;
@@ -122,7 +132,7 @@
             lv2:portProperty lv2:toggled ; 
     ], [
             a lv2:InputPort, lv2:ControlPort ;
-            lv2:index 9 ;
+            lv2:index 10 ;
             lv2:symbol "LENGTH" ;
             lv2:name "Length" ;
             lv2:default 500 ;
@@ -132,7 +142,7 @@
             units:unit units:ms ;
     ], [
             a lv2:InputPort, lv2:ControlPort ;
-            lv2:index 10 ;
+            lv2:index 11 ;
             lv2:symbol "DELAY" ;
             lv2:name "Initial Delay" ;
             lv2:default 64 ;
@@ -142,7 +152,7 @@
             units:unit units:ms ;
     ], [
             a lv2:InputPort, lv2:ControlPort ;
-            lv2:index 11 ;
+            lv2:index 12 ;
             lv2:symbol "DAMP" ;
             lv2:name "Dampening" ;
             lv2:default 99 ;
@@ -151,7 +161,7 @@
             lv2:portProperty lv2:integer ;
     ], [
             a lv2:InputPort, lv2:ControlPort ;
-            lv2:index 12 ;
+            lv2:index 13 ;
             lv2:symbol "LEVEL" ;
             lv2:name "Level" ;
             lv2:default 70 ;
@@ -160,7 +170,7 @@
             lv2:portProperty lv2:integer ;
     ], [
             a lv2:InputPort, lv2:ControlPort ;
-            lv2:index 13 ;
+            lv2:index 14 ;
             lv2:symbol "STRETCH" ;
             lv2:name "Time Stretch" ;
             lv2:default 0 ;
@@ -169,7 +179,7 @@
             lv2:portProperty lv2:integer ;
     ], [
             a lv2:InputPort, lv2:ControlPort ;
-            lv2:index 14 ;
+            lv2:index 15 ;
             lv2:symbol "FB" ;
             lv2:name "Feedback" ;
             lv2:default 0 ;
@@ -178,7 +188,7 @@
             lv2:portProperty lv2:integer ;
     ], [
             a lv2:InputPort, lv2:ControlPort ;
-            lv2:index 15 ;
+            lv2:index 16 ;
             lv2:symbol "PAN" ;
             lv2:name "Pan" ;
             lv2:default 0 ;
@@ -187,7 +197,7 @@
             lv2:portProperty lv2:integer ;
     ], [
             a lv2:InputPort, lv2:ControlPort ;
-            lv2:index 16 ;
+            lv2:index 17 ;
             lv2:symbol "ES" ;
             lv2:name "Extra Stereo" ;
             lv2:default 0 ;
@@ -197,7 +207,7 @@
             lv2:portProperty lv2:toggled ; 
     ], [
             a lv2:InputPort, lv2:ControlPort ;
-            lv2:index 17 ;
+            lv2:index 18 ;
             lv2:symbol "SH" ;
             lv2:name "Shuffle" ;
             lv2:default 0 ;
@@ -207,7 +217,7 @@
             lv2:portProperty lv2:toggled ; 
     ], [
             a lv2:InputPort, lv2:ControlPort ;
-            lv2:index 18 ;
+            lv2:index 19 ;
             lv2:symbol "LPF" ;
             lv2:name "Lowpass Filter" ;
             lv2:default 20000 ;
@@ -217,7 +227,7 @@
             units:unit units:hz ;
     ], [
             a lv2:InputPort, lv2:ControlPort ;
-            lv2:index 19 ;
+            lv2:index 20 ;
             lv2:symbol "DIFFUSE" ;
             lv2:name "Diffusion" ;
             lv2:default 0 ;
