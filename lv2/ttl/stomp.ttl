@@ -58,9 +58,9 @@
         lv2:port [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 4 ;
-                lv2:symbol "ON" ;
-                lv2:name "On" ;
-                lv2:default 1 ;
+                lv2:symbol "BYPASS" ;
+                lv2:name "Bypass" ;
+                lv2:default 0 ;
                 lv2:minimum 0 ;
                 lv2:maximum 1 ;
                 lv2:portProperty lv2:integer ;
