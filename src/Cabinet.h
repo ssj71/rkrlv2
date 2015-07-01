@@ -30,6 +30,7 @@ class Cabinet
 public:
     Cabinet (float * efxoutl_, float * efxoutr_, double sample_frequency);
     ~Cabinet ();
+    void cleanup();
     void out (float * smpsl, float * smpsr, uint32_t period);
     void setpreset(int npreset);
     int Cabinet_Preset;

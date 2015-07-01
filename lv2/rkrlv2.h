@@ -72,4 +72,47 @@ enum RKRLV2_ports_
     EXTRA
 };
 
+
+//just make sure these line up with the order in manifest.ttl
+enum RKRLV2_effects_
+{
+	IEQ =0,
+	ICOMP,
+	IDIST,
+	IECHO,
+	ICHORUS,
+	IAPHASE,
+	IHARM_NM,
+	IEXCITER,
+	IPAN,
+	IAWAH,
+	IREV,//10
+	IEQP,
+	ICAB,
+	IMDEL,
+	IWAH,
+	IDERE,
+	IVALVE,
+	IDFLANGE,
+	IRING,
+	IMBDIST,
+	IARPIE,//20
+	IEXPAND,
+	ISHUFF,
+	ISYNTH,
+	IMBVOL,
+	IMUTRO,
+	IECHOVERSE,
+	ICOIL,
+	ISHELF,
+	IVOC,
+	ISUS,//30
+	ISEQ,
+	ISHIFT,
+	ISTOMP,
+	IFUZZ,
+	IREVTRON,
+	IECHOTRON
+};
+
 #endif

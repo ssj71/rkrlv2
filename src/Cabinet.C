@@ -20,6 +20,8 @@
 
 */
 
+//this really just wraps eq and has different presets
+
 #include "Cabinet.h"
 
 Cabinet::Cabinet(float * efxoutl_, float * efxoutr_, double sample_frequency)
@@ -35,6 +37,13 @@ Cabinet::~Cabinet()
 {
     delete eq;
 }
+
+void
+Cabinet::cleanup()
+{
+	eq->cleanup();
+}
+
 
 void
 Cabinet::out(float* smpsl, float* smpsr, uint32_t period)

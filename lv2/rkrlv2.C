@@ -250,7 +250,7 @@ LV2_Handle init_eqlv2(const LV2_Descriptor *descriptor,double sample_freq, const
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 12;
-    plug->effectindex = 0;
+    plug->effectindex = IEQ;
     plug->prev_bypass = 0;
 
     plug->eq = new EQ(0,0,sample_freq);
@@ -340,7 +340,7 @@ LV2_Handle init_complv2(const LV2_Descriptor *descriptor,double sample_freq, con
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 9;
-    plug->effectindex = 1;
+    plug->effectindex = ICOMP;
     plug->prev_bypass = 0;
 
     plug->comp = new Compressor(0,0, sample_freq);
@@ -398,7 +398,7 @@ LV2_Handle init_distlv2(const LV2_Descriptor *descriptor,double sample_freq, con
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 12;
-    plug->effectindex = 2;
+    plug->effectindex = IDIST;
     plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
@@ -476,7 +476,7 @@ LV2_Handle init_echolv2(const LV2_Descriptor *descriptor,double sample_freq, con
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 9;
-    plug->effectindex = 3;
+    plug->effectindex = IECHO;
     plug->prev_bypass = 0;
 
     plug->echo = new Echo(0,0,sample_freq);
@@ -558,7 +558,7 @@ LV2_Handle init_choruslv2(const LV2_Descriptor *descriptor,double sample_freq, c
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 12;
-    plug->effectindex = 4;
+    plug->effectindex = ICHORUS;
     plug->prev_bypass = 0;
 
     plug->chorus = new Chorus(0,0,sample_freq);
@@ -653,7 +653,7 @@ LV2_Handle init_aphaselv2(const LV2_Descriptor *descriptor,double sample_freq, c
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 13;
-    plug->effectindex = 5;
+    plug->effectindex = IAPHASE;
     plug->prev_bypass = 0;
 
     plug->aphase = new Analog_Phaser(0,0,sample_freq);
@@ -739,7 +739,7 @@ LV2_Handle init_harmnomidlv2(const LV2_Descriptor *descriptor,double sample_freq
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 10;
-    plug->effectindex = 6;
+    plug->effectindex = IHARM_NM;
     plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
@@ -875,7 +875,7 @@ LV2_Handle init_exciterlv2(const LV2_Descriptor *descriptor,double sample_freq, 
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 13;
-    plug->effectindex = 7;
+    plug->effectindex = IEXCITER;
     plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
@@ -936,7 +936,7 @@ LV2_Handle init_panlv2(const LV2_Descriptor *descriptor,double sample_freq, cons
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 9;
-    plug->effectindex = 8;
+    plug->effectindex = IPAN;
     plug->prev_bypass = 0;
 
     plug->pan = new Pan(0,0,sample_freq);
@@ -1022,7 +1022,7 @@ LV2_Handle init_alienlv2(const LV2_Descriptor *descriptor,double sample_freq, co
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 11;
-    plug->effectindex = 9;
+    plug->effectindex = IAWAH;
     plug->prev_bypass = 0;
 
     plug->alien = new Alienwah(0,0,sample_freq);
@@ -1108,7 +1108,7 @@ LV2_Handle init_revelv2(const LV2_Descriptor *descriptor,double sample_freq, con
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 10;
-    plug->effectindex = 10;
+    plug->effectindex = IREV;
     plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
@@ -1188,7 +1188,7 @@ LV2_Handle init_eqplv2(const LV2_Descriptor *descriptor,double sample_freq, cons
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 10;
-    plug->effectindex = 11;
+    plug->effectindex = IEQP;
     plug->prev_bypass = 0;
 
     plug->eq = new EQ(0,0,sample_freq);
@@ -1279,7 +1279,7 @@ LV2_Handle init_cablv2(const LV2_Descriptor *descriptor,double sample_freq, cons
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 10;
-    plug->effectindex = 12;
+    plug->effectindex = ICAB;
     plug->prev_bypass = 0;
 
     plug->cab = new Cabinet(0,0,sample_freq);
@@ -1340,7 +1340,7 @@ LV2_Handle init_mdellv2(const LV2_Descriptor *descriptor,double sample_freq, con
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 13;
-    plug->effectindex = 13;
+    plug->effectindex = IMDEL;
     plug->prev_bypass = 0;
 
     plug->mdel = new MusicDelay (0,0,sample_freq);
@@ -1425,7 +1425,7 @@ LV2_Handle init_wahlv2(const LV2_Descriptor *descriptor,double sample_freq, cons
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 11;
-    plug->effectindex = 14;
+    plug->effectindex = IWAH;
     plug->prev_bypass = 0;
 
 
@@ -1512,7 +1512,7 @@ LV2_Handle init_derelv2(const LV2_Descriptor *descriptor,double sample_freq, con
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 12;
-    plug->effectindex = 15;
+    plug->effectindex = IDERE;
     plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
@@ -1585,7 +1585,7 @@ LV2_Handle init_valvelv2(const LV2_Descriptor *descriptor,double sample_freq, co
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 13;
-    plug->effectindex = 16;
+    plug->effectindex = IVALVE;
     plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
@@ -1657,7 +1657,7 @@ LV2_Handle init_dflangelv2(const LV2_Descriptor *descriptor,double sample_freq, 
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 15;
-    plug->effectindex = 17;
+    plug->effectindex = IDFLANGE;
     plug->prev_bypass = 0;
 
     plug->dflange = new Dflange(0,0, sample_freq);
@@ -1729,7 +1729,7 @@ LV2_Handle init_ringlv2(const LV2_Descriptor *descriptor,double sample_freq, con
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 13;
-    plug->effectindex = 18;
+    plug->effectindex = IRING;
     plug->prev_bypass = 0;
 
     //magic numbers: shift qual 4, downsample 5, up qual 4, down qual 2,
@@ -1827,7 +1827,7 @@ LV2_Handle init_mbdistlv2(const LV2_Descriptor *descriptor,double sample_freq, c
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 15;
-    plug->effectindex = 19;
+    plug->effectindex = IMBDIST;
     plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
@@ -1900,7 +1900,7 @@ LV2_Handle init_arplv2(const LV2_Descriptor *descriptor,double sample_freq, cons
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 11;
-    plug->effectindex = 20;
+    plug->effectindex = IARPIE;
     plug->prev_bypass = 0;
 
     plug->arp = new Arpie(0,0,sample_freq);
@@ -1982,7 +1982,7 @@ LV2_Handle init_expandlv2(const LV2_Descriptor *descriptor,double sample_freq, c
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 7;
-    plug->effectindex = 21;
+    plug->effectindex = IEXPAND;
     plug->prev_bypass = 0;
 
     plug->expand = new Expander(0,0, sample_freq);
@@ -2041,7 +2041,7 @@ LV2_Handle init_shuflv2(const LV2_Descriptor *descriptor,double sample_freq, con
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 11;
-    plug->effectindex = 22;
+    plug->effectindex = ISHUFF;
     plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
@@ -2102,7 +2102,7 @@ LV2_Handle init_synthlv2(const LV2_Descriptor *descriptor,double sample_freq, co
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 16;
-    plug->effectindex = 23;
+    plug->effectindex = ISYNTH;
     plug->prev_bypass = 0;
 
     plug->synth = new Synthfilter(0,0,sample_freq);
@@ -2176,7 +2176,7 @@ LV2_Handle init_mbvollv2(const LV2_Descriptor *descriptor,double sample_freq, co
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 14;
-    plug->effectindex = 24;
+    plug->effectindex = IMBVOL;
     plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
@@ -2264,7 +2264,7 @@ LV2_Handle init_mutrolv2(const LV2_Descriptor *descriptor,double sample_freq, co
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 19;
-    plug->effectindex = 25;
+    plug->effectindex = IMUTRO;
     plug->prev_bypass = 0;
 
 
@@ -2346,7 +2346,7 @@ LV2_Handle init_echoverselv2(const LV2_Descriptor *descriptor,double sample_freq
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 10;
-    plug->effectindex = 26;;
+    plug->effectindex = IECHOVERSE;
     plug->prev_bypass = 0;
 
     plug->echoverse = new RBEcho(0,0,sample_freq);
@@ -2430,7 +2430,7 @@ LV2_Handle init_coillv2(const LV2_Descriptor *descriptor,double sample_freq, con
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 7;
-    plug->effectindex = 27;
+    plug->effectindex = ICOIL;
     plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
@@ -2496,7 +2496,7 @@ LV2_Handle init_shelflv2(const LV2_Descriptor *descriptor,double sample_freq, co
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 5;
-    plug->effectindex = 28;
+    plug->effectindex = ISHELF;
     plug->prev_bypass = 0;
 
     plug->shelf = new ShelfBoost(0,0,sample_freq);
@@ -2554,7 +2554,7 @@ LV2_Handle init_voclv2(const LV2_Descriptor *descriptor,double sample_freq, cons
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 7;
-    plug->effectindex = 29;
+    plug->effectindex = IVOC;
     plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
@@ -2631,7 +2631,7 @@ LV2_Handle init_suslv2(const LV2_Descriptor *descriptor,double sample_freq, cons
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 2;
-    plug->effectindex = 30;
+    plug->effectindex = ISUS;
     plug->prev_bypass = 0;
 
 
@@ -2691,7 +2691,7 @@ LV2_Handle init_seqlv2(const LV2_Descriptor *descriptor,double sample_freq, cons
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 15;
-    plug->effectindex = 31;
+    plug->effectindex = ISEQ;
     plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
@@ -2765,7 +2765,7 @@ LV2_Handle init_shiftlv2(const LV2_Descriptor *descriptor,double sample_freq, co
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 10;
-    plug->effectindex = 32;
+    plug->effectindex = ISHIFT;
     plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
@@ -2840,7 +2840,7 @@ LV2_Handle init_stomplv2(const LV2_Descriptor *descriptor,double sample_freq, co
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 6;
-    plug->effectindex = 33;
+    plug->effectindex = ISTOMP;
     plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
@@ -2902,7 +2902,7 @@ LV2_Handle init_stomp_fuzzlv2(const LV2_Descriptor *descriptor,double sample_fre
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 5;
-    plug->effectindex = 34;
+    plug->effectindex = IFUZZ;
     plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
@@ -2920,7 +2920,7 @@ LV2_Handle init_revtronlv2(const LV2_Descriptor *descriptor,double sample_freq, 
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 14;
-    plug->effectindex = 35;
+    plug->effectindex = IREVTRON;
     plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
@@ -3178,7 +3178,7 @@ LV2_Handle init_echotronlv2(const LV2_Descriptor *descriptor,double sample_freq,
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 13;
-    plug->effectindex = 36;
+    plug->effectindex = IECHOTRON;
     plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
@@ -3459,115 +3459,115 @@ void cleanup_rkrlv2(LV2_Handle handle)
     RKRLV2* plug = (RKRLV2*)handle;
     switch(plug->effectindex)
     {
-    case 0:
-    case 11:
+    case IEQ:
+    case IEQP:
         delete plug->eq;//eql, eqp, cabinet
         break;
-    case 1:
+    case ICOMP:
         delete plug->comp;
         break;
-    case 2:
+    case IDIST:
         delete plug->dist;
         break;
-    case 3:
+    case IECHO:
         delete plug->echo;
         break;
-    case 4:
+    case ICHORUS:
         delete plug->chorus;
         break;
-    case 5:
+    case IAPHASE:
         delete plug->aphase;
         break;
-    case 6:
+    case IHARM_NM:
         delete plug->harm;
         delete plug->noteID;
         delete plug->chordID;
         break;
-    case 7:
+    case IEXCITER:
         delete plug->exciter;
         break;
-    case 8:
+    case IPAN:
         delete plug->pan;
         break;
-    case 9:
+    case IAWAH:
         delete plug->alien;
         break;
-    case 10:
+    case IREV:
         delete plug->reve;
         break;
-    case 12:
+    case ICAB:
         delete plug->cab;
         break;
-    case 13:
+    case IMDEL:
         delete plug->mdel;
         break;
-    case 14:
+    case IWAH:
         delete plug->wah;
         break;
-    case 15:
+    case IDERE:
         delete plug->dere;
         break;
-    case 16:
+    case IVALVE:
         delete plug->valve;
         break;
-    case 17:
+    case IDFLANGE:
         delete plug->dflange;
         break;
-    case 18:
+    case IRING:
         delete plug->noteID;
         delete plug->ring;
         break;
-    case 19:
+    case IMBDIST:
         delete plug->mbdist;
         break;
-    case 20:
+    case IARPIE:
         delete plug->arp;
         break;
-    case 21:
+    case IEXPAND:
         delete plug->expand;
         break;
-    case 22:
+    case ISHUFF:
         delete plug->shuf;
         break;
-    case 23:
+    case ISYNTH:
         delete plug->synth;
         break;
-    case 24:
+    case IMBVOL:
         delete plug->mbvol;
         break;
-    case 25:
+    case IMUTRO:
         delete plug->mutro;
         break;
-    case 26:
+    case IECHOVERSE:
         delete plug->echoverse;
         break;
-    case 27:
+    case ICOIL:
         delete plug->coil;
         break;
-    case 28:
+    case ISHELF:
         delete plug->shelf;
         break;
-    case 29:
+    case IVOC:
         delete plug->voc;
         break;
-    case 30:
+    case ISUS:
         delete plug->sus;
         break;
-    case 31:
+    case ISEQ:
         delete plug->seq;
         break;
-    case 32:
+    case ISHIFT:
         delete plug->shift;
         break;
-    case 33:
-    case 34:
+    case ISTOMP:
+    case IFUZZ:
         delete plug->stomp;
         break;
-    case 35:
+    case IREVTRON:
         delete plug->revtron;
         delete plug->rvbfile;
         break;
-    case 36:
+    case IECHOTRON:
         delete plug->echotron;
         delete plug->dlyfile;
         break;
@@ -4198,79 +4198,79 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
 {
     switch (index)
     {
-    case 0:
+    case IEQ:
         return &eqlv2_descriptor ;
-    case 1:
+    case ICOMP:
         return &complv2_descriptor ;
-    case 2:
+    case IDIST:
         return &distlv2_descriptor ;
-    case 3:
+    case IECHO:
         return &echolv2_descriptor ;
-    case 4:
+    case ICHORUS:
         return &choruslv2_descriptor ;
-    case 5:
+    case IAPHASE:
         return &aphaselv2_descriptor ;
-    case 6:
+    case IHARM_NM:
         return &harmnomidlv2_descriptor ;
-    case 7:
+    case IEXCITER:
         return &exciterlv2_descriptor ;
-    case 8:
+    case IPAN:
         return &panlv2_descriptor ;
-    case 9:
+    case IAWAH:
         return &alienlv2_descriptor ;
-    case 10:
+    case IREV:
         return &revelv2_descriptor ;
-    case 11:
+    case IEQP:
         return &eqplv2_descriptor ;
-    case 12:
+    case ICAB:
         return &cablv2_descriptor ;
-    case 13:
+    case IMDEL:
         return &mdellv2_descriptor ;
-    case 14:
+    case IWAH:
         return &wahlv2_descriptor ;
-    case 15:
+    case IDERE:
         return &derelv2_descriptor ;
-    case 16:
+    case IVALVE:
         return &valvelv2_descriptor ;
-    case 17:
+    case IDFLANGE:
         return &dflangelv2_descriptor ;
-    case 18:
+    case IRING:
         return &ringlv2_descriptor ;
-    case 19:
+    case IMBDIST:
         return &mbdistlv2_descriptor ;
-    case 20:
+    case IARPIE:
         return &arplv2_descriptor ;
-    case 21:
+    case IEXPAND:
         return &expandlv2_descriptor ;
-    case 22:
+    case ISHUFF:
         return &shuflv2_descriptor ;
-    case 23:
+    case ISYNTH:
         return &synthlv2_descriptor ;
-    case 24:
+    case IMBVOL:
         return &mbvollv2_descriptor ;
-    case 25:
+    case IMUTRO:
         return &mutrolv2_descriptor ;
-    case 26:
+    case IECHOVERSE:
         return &echoverselv2_descriptor ;
-    case 27:
+    case ICOIL:
         return &coillv2_descriptor ;
-    case 28:
+    case ISHELF:
         return &shelflv2_descriptor ;
-    case 29:
+    case IVOC:
         return &voclv2_descriptor ;
-    case 30:
+    case ISUS:
         return &suslv2_descriptor ;
-    case 31:
+    case ISEQ:
         return &seqlv2_descriptor ;
-    case 32:
+    case ISHIFT:
         return &shiftlv2_descriptor ;
-    case 33:
+    case ISTOMP:
         return &stomplv2_descriptor ;
-    case 34:
+    case IFUZZ:
         return &stompfuzzlv2_descriptor ;
-    case 35:
+    case IREVTRON:
         return &revtronlv2_descriptor ;
-    case 36:
+    case IECHOTRON:
         return &echotronlv2_descriptor ;
     default:
         return 0;
