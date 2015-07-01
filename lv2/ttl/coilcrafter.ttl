@@ -59,7 +59,7 @@
         lv2:port [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 4 ;
-                symbol "BYPASS" ;
+                lv2:symbol "BYPASS" ;
                 lv2:name "Bypass" ;
                 lv2:default 0 ;
                 lv2:minimum 0 ;

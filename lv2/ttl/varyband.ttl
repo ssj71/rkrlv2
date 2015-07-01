@@ -91,7 +91,7 @@
                 lv2:index 6 ;
                 lv2:symbol "TEMPO1" ;
                 lv2:name "Tempo" ;
-                lv2:default 0 ;
+                lv2:default 64 ;
                 lv2:minimum 1 ;
                 lv2:maximum 600 ;
                 lv2:portProperty lv2:integer ;
