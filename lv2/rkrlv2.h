@@ -48,6 +48,7 @@ enum RKRLV2_ports_
     INR,
     OUTL,
     OUTR,
+    BYPASS,
     PARAM0,
     PARAM1,
     PARAM2,
