@@ -120,7 +120,6 @@
                 lv2:minimum 20 ;
                 lv2:maximum 20000 ;
                 lv2:portProperty lv2:integer ;
-                lv2:portProperty lv2:toggled ;
                 units:unit units:hz ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
