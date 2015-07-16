@@ -8,16 +8,16 @@
 @prefix lv2:   <http://lv2plug.in/ns/lv2core#> .
 @prefix ui:   <http://lv2plug.in/ns/extensions/ui#> .
 
-# <http://rakarrack.sourceforge.net/effects.html#har_ui>
+# <http://rakarrack.sourceforge.net/effects.html#StereoHarm_ui>
 # 	a ui:X11UI ;
 # 	ui:binary <rkrlv2_ui.so> ;
 # 	lv2:extensionData ui:idleInterface;
 # 	.
 
-<http://rakarrack.sourceforge.net/effects.html#har_no_mid>
+<http://rakarrack.sourceforge.net/effects.html#StereoHarm_no_mid>
         a lv2:Plugin, lv2:PitchPlugin ;
-        doap:name "rkr Harmonizer (no midi)" ;
-        doap:description "Harmonizing Pitch Shifter";
+        doap:name "rkr StereoHarmonizer (no midi)" ;
+        doap:description "Dual Harmonizing Pitch Shifters";
         doap:license <http://opensource.org/licenses/gpl-2.0> ;
         doap:maintainer [
                 foaf:name "Rakarrack Team" ;
@@ -26,11 +26,11 @@
         ] ;
         lv2:minorVersion 0 ;
         lv2:microVersion 0 ;
-        rdfs:comment "Pitch shifter that harmonizes with your dry signal. This works best for monophonic sounds (a single note at a time). Also allows selection of root and chord for intelligent harmonies." ;
+        rdfs:comment "Pitch shifter that harmonizes 2 voices with your dry signal. This works best for monophonic sounds (a single note at a time). Also allows selection of root and chord for intelligent harmonies." ;
         lv2:optionalFeature lv2:hardRTCapable,
             <http://lv2plug.in/ns/ext/urid#map>,
             <http://lv2plug.in/ns/ext/bufsz#maxBlockLength>;
-#        ui:ui  <http://rakarrack.sourceforge.net/effects.html#har_ui> ;
+#        ui:ui  <http://rakarrack.sourceforge.net/effects.html#StereoHarm_ui> ;
 
         lv2:port [
                 a lv2:InputPort, lv2:AudioPort ;
@@ -79,8 +79,8 @@
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 6 ;
-                lv2:symbol "PAN" ;
-                lv2:name "Pan" ;
+                lv2:symbol "GAINL" ;
+                lv2:name "Left Gain" ;
                 lv2:default 0 ;
                 lv2:minimum -64 ;
                 lv2:maximum 63 ;
@@ -88,17 +88,8 @@
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 7 ;
-                lv2:symbol "GAIN" ;
-                lv2:name "Gain" ;
-                lv2:default 0 ;
-                lv2:minimum -64 ;
-                lv2:maximum 63 ;
-                lv2:portProperty lv2:integer ;
-        ], [
-                a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 8 ;
-                lv2:symbol "INT" ;
-                lv2:name "Interval" ;
+                lv2:symbol "INTL" ;
+                lv2:name "Left Interval" ;
                 lv2:default 0 ;
                 lv2:minimum -12 ;
                 lv2:maximum 12 ;
@@ -106,17 +97,50 @@
                 units:unit units:semitone12TET ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 8 ;
+                lv2:symbol "CHRML" ;
+                lv2:name "Left Chroma" ;
+                lv2:default 0 ;
+                lv2:minimum -2000 ;
+                lv2:maximum 2000 ;
+                lv2:portProperty lv2:integer ;
+                # units:unit units:semitone12TET ; #should be .1 cents
+                rdfs:comment "A fine detune from the interval (useful for stereo chorus)" ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 9 ;
-                lv2:symbol "FREQ" ;
-                lv2:name "Filter Frequency" ;
-                lv2:default 6000 ;
-                lv2:minimum 20 ;
-                lv2:maximum 26000 ;
+                lv2:symbol "GAINR" ;
+                lv2:name "Right Gain" ;
+                lv2:default 0 ;
+                lv2:minimum -64 ;
+                lv2:maximum 64 ;
                 lv2:portProperty lv2:integer ;
                 units:unit units:hz ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 10 ;
+                lv2:symbol "INTR" ;
+                lv2:name "Right Interval" ;
+                lv2:default 0 ;
+                lv2:minimum -12 ;
+                lv2:maximum 12 ;
+                lv2:portProperty lv2:integer ;
+                units:unit units:semitone12TET ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 11 ;
+                lv2:symbol "CHR" ;
+                lv2:name "Right Chroma" ;
+                rdfs:description "Detune right channel" ;
+                lv2:default 0 ;
+                lv2:minimum -2000 ;
+                lv2:maximum 2000 ;
+                lv2:portProperty lv2:integer ;
+                # units:unit units:semitone12TET ; #should be .1 cents
+                rdfs:comment "A fine detune from the interval (useful for stereo chorus)" ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 12 ;
                 lv2:symbol "SELECT" ;
                 lv2:name "Select Chord Mode" ;
                 lv2:default 0 ;
@@ -126,10 +150,10 @@
                 lv2:portProperty lv2:toggled ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 11 ;
+                lv2:index 13 ;
                 lv2:symbol "NOTE" ;
                 lv2:name "Note" ;
-                lv2:default 0 ;
+                lv2:default 4 ;
                 lv2:minimum 0 ;
                 lv2:maximum 23 ;
                 lv2:portProperty lv2:integer ;
@@ -160,7 +184,7 @@
                 lv2:scalePoint [ rdfs:label "A"; rdf:value 23 ] ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 12 ;
+                lv2:index 14 ;
                 lv2:symbol "CHORD" ;
                 lv2:name "Chord" ;
                 lv2:default 0 ;
@@ -202,24 +226,6 @@
                 lv2:scalePoint [ rdfs:label "1+5"; rdf:value 31 ] ;
                 lv2:scalePoint [ rdfs:label "(Sus4)"; rdf:value 32 ] ;
                 lv2:scalePoint [ rdfs:label "2"; rdf:value 33 ] ;
-        ], [
-                a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 13 ;
-                lv2:symbol "FGAIN" ;
-                lv2:name "Filter Gain" ;
-                lv2:default 0 ;
-                lv2:minimum -64 ;
-                lv2:maximum 63 ;
-                lv2:portProperty lv2:integer ;
-        ], [
-                a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 14 ;
-                lv2:symbol "FQ" ;
-                lv2:name "Filter Q" ;
-                lv2:default 0 ;
-                lv2:minimum -64 ;
-                lv2:maximum 63 ;
-                lv2:portProperty lv2:integer ;
 #        ], [
 #                a lv2:InputPort, lv2:ControlPort ;
 #                lv2:index 15 ;
@@ -230,21 +236,35 @@
 #                lv2:maximum 1 ;
 #                lv2:portProperty lv2:integer ;
 #                lv2:portProperty lv2:toggled ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 15 ;
+                lv2:symbol "LRC" ;
+                lv2:name "Left/Right Crossover" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 127 ;
+                lv2:portProperty lv2:integer ;
         ] ;
 	.
 
-<http://rakarrack.sourceforge.net/effects.html#har_no_mid:preset:plain>
+<http://rakarrack.sourceforge.net/effects.html#StereoHarm_no_mid:preset:plain>
         a pset:Preset ;
-        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#har_no_mid> ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#StereoHarm_no_mid> ;
         rdfs:seeAlso <harm_no_midi_presets.ttl> .
 
-<http://rakarrack.sourceforge.net/effects.html#har_no_mid:preset:octavador>
+<http://rakarrack.sourceforge.net/effects.html#StereoHarm_no_mid:preset:octavator>
         a pset:Preset ;
-        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#har_no_mid> ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#StereoHarm_no_mid> ;
         rdfs:seeAlso <harm_no_midi_presets.ttl> .
 
-<http://rakarrack.sourceforge.net/effects.html#har_no_mid:preset:3mdown>
+<http://rakarrack.sourceforge.net/effects.html#StereoHarm_no_mid:preset:chorus>
         a pset:Preset ;
-        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#har_no_mid> ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#StereoHarm_no_mid> ;
+        rdfs:seeAlso <harm_no_midi_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#StereoHarm_no_mid:preset:hard_chorus>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#StereoHarm_no_mid> ;
         rdfs:seeAlso <harm_no_midi_presets.ttl> .
 

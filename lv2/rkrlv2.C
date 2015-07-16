@@ -53,7 +53,7 @@
 #include"StompBox.h"
 #include"Reverbtron.h"
 #include"Echotron.h"
-
+#include"StereoHarm.h"
 
 //this is the default hopefully hosts don't use periods of more than this, or they will communicate the max bufsize
 #define INTERMEDIATE_BUFSIZE 1024
@@ -143,6 +143,7 @@ typedef struct _RKRLV2
     StompBox* stomp;	//33,34
     Reverbtron* revtron;//35
     Echotron* echotron; //36
+    StereoHarm* sharm;  //37
 } RKRLV2;
 
 enum other_ports
@@ -3448,6 +3449,141 @@ static const void* echotron_extension_data(const char* uri)
 }
 
 
+//////// stereo harmonizer /////////
+LV2_Handle init_sharmnomidlv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 11;
+    plug->effectindex = ISHARM_NM;
+    plug->prev_bypass = 0;
+
+    getFeatures(plug,host_features);
+
+    //magic numbers: shift qual 4, downsample 5, up qual 4, down qual 2,
+    plug->sharm = new StereoHarm(0,0,4,5,4,2, plug->period_max, sample_freq);
+    plug->noteID = new Recognize(0,0,.6, sample_freq, 440.0);//.6 is default trigger value
+    plug->chordID = new RecChord();
+
+
+
+    return plug;
+}
+
+void run_sharmnomidlv2(LV2_Handle handle, uint32_t nframes)
+{
+    int i;
+    int val;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->sharm->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
+
+    //check and set changed parameters
+    i = 0;
+    val = (int)*plug->param_p[i];// 0 wet/dry
+    if(plug->sharm->getpar(i) != val)
+    {
+        plug->sharm->changepar(i,val);
+    }
+    i++;
+    val = (int)*plug->param_p[i] + 64;// 1 gain l
+    if(plug->sharm->getpar(i) != val)
+    {
+        plug->sharm->changepar(i,val);
+    }
+    i++;
+    val = (int)*plug->param_p[i] + 12;// 2 interval l
+    if(plug->sharm->getpar(i) != val)
+    {
+        plug->sharm->changepar(i,val);
+    }
+    i++;
+    val = (int)*plug->param_p[i];// 3 chroma l
+    if(plug->sharm->getpar(i) != val)
+    {
+        plug->sharm->changepar(i,val);
+    }
+    i++;
+    val = (int)*plug->param_p[i] + 64;// 4 gain r
+    if(plug->sharm->getpar(i) != val)
+    {
+        plug->sharm->changepar(i,val);
+    }
+    i++;
+    val = (int)*plug->param_p[i] + 12;// 5 interval r
+    if(plug->sharm->getpar(i) != val)
+    {
+        plug->sharm->changepar(i,val);
+    }
+    for(i++; i<10; i++) // 6-11
+    {
+        val = (int)*plug->param_p[i];
+        if(plug->sharm->getpar(i) != val)
+        {
+            plug->sharm->changepar(i,val);
+        }
+    }
+// skip midi mode, not implementing midi here
+//    val = (int)*plug->param_p[i];// 10 midi mode
+//    if(plug->aphase->getpar(i) != val)
+//    {
+//        plug->aphase->changepar(i,val);
+//        if(!val) plug->harm->changepar(3,plug->harm->getpar(3));
+//    }
+    val = (int)*plug->param_p[i];// 11 lr cr.
+    if(plug->sharm->getpar(i+1) != val)
+    {
+        plug->sharm->changepar(i+1,val);
+    }
+    /*
+    see Chord() in rkr.fl
+    harmonizer, need recChord and recNote.
+    see process.C ln 1507
+    */
+
+    //TODO may need to make sure input is over some threshold
+    if(plug->sharm->mira && plug->sharm->PSELECT)
+    {
+        plug->noteID->schmittFloat(plug->input_l_p,plug->input_r_p,nframes);
+        if(plug->noteID->reconota != -1 && plug->noteID->reconota != plug->noteID->last)
+        {
+            if(plug->noteID->afreq > 0.0)
+            {
+                plug->chordID->Vamos(1,plug->sharm->Pintervall - 12,plug->noteID->reconota);
+                plug->chordID->Vamos(2,plug->sharm->Pintervalr - 12,plug->noteID->reconota);
+                plug->sharm->r_ratiol = plug->chordID->r__ratio[1];//pass the found ratio
+                plug->sharm->r_ratior = plug->chordID->r__ratio[2];//pass the found ratio
+            }
+        }
+    }
+    //now set out ports and global period size
+    plug->sharm->efxoutl = plug->output_l_p;
+    plug->sharm->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->sharm->out(plug->input_l_p,plug->input_r_p,nframes);
+
+    //and for whatever reason we have to do the wet/dry mix ourselves
+    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p,
+               plug->sharm->outvolume, nframes);
+
+    return;
+}
+
+
 /////////////////////////////////
 ///////// END OF FX /////////////
 /////////////////////////////////
@@ -3571,6 +3707,10 @@ void cleanup_rkrlv2(LV2_Handle handle)
         delete plug->echotron;
         delete plug->dlyfile;
         break;
+    case ISHARM_NM:
+    	delete plug->sharm;
+    	break;
+
     }
     free(plug);
 }
@@ -4193,6 +4333,17 @@ static const LV2_Descriptor echotronlv2_descriptor=
     echotron_extension_data
 };
 
+static const LV2_Descriptor sharmnomidlv2_descriptor=
+{
+    SHARMNOMIDLV2_URI,
+    init_sharmnomidlv2,
+    connect_rkrlv2_ports,
+    0,//activate
+    run_sharmnomidlv2,
+    0,//deactivate
+    cleanup_rkrlv2
+};
+
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor* lv2_descriptor(uint32_t index)
 {
@@ -4272,6 +4423,8 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
         return &revtronlv2_descriptor ;
     case IECHOTRON:
         return &echotronlv2_descriptor ;
+    case ISHARM_NM:
+    	return &sharmnomidlv2_descriptor ;
     default:
         return 0;
     }

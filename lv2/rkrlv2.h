@@ -38,6 +38,7 @@
 #define STOMPFUZZLV2_URI "http://rakarrack.sourceforge.net/effects.html#StompBox_fuzz"
 #define REVTRONLV2_URI "http://rakarrack.sourceforge.net/effects.html#Reverbtron"
 #define ECHOTRONLV2_URI "http://rakarrack.sourceforge.net/effects.html#Echotron"
+#define SHARMNOMIDLV2_URI "http://rakarrack.sourceforge.net/effects.html#StereoHarm_no_mid"
 
 #define RVBFILE_URI "http://rakarrack.sourceforge.net/effects.html#Reverbtron:rvbfile"
 #define DLYFILE_URI "http://rakarrack.sourceforge.net/effects.html#Echotron:dlyfile"
@@ -112,7 +113,8 @@ enum RKRLV2_effects_
 	ISTOMP,
 	IFUZZ,
 	IREVTRON,
-	IECHOTRON
+	IECHOTRON,
+	ISHARM_NM
 };
 
 #endif

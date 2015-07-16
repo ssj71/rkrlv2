@@ -72,6 +72,7 @@ add_library(rkrlv2 SHARED
   ../src/StompBox.C
   ../src/Reverbtron.C
   ../src/Echotron.C
+  ../src/StereoHarm.C
 )
 
 set_target_properties(rkrlv2 PROPERTIES PREFIX "")
