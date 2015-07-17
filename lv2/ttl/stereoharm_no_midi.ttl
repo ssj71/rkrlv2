@@ -251,20 +251,20 @@
 <http://rakarrack.sourceforge.net/effects.html#StereoHarm_no_mid:preset:plain>
         a pset:Preset ;
         lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#StereoHarm_no_mid> ;
-        rdfs:seeAlso <harm_no_midi_presets.ttl> .
+        rdfs:seeAlso <stereoharm_no_midi_presets.ttl> .
 
 <http://rakarrack.sourceforge.net/effects.html#StereoHarm_no_mid:preset:octavator>
         a pset:Preset ;
         lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#StereoHarm_no_mid> ;
-        rdfs:seeAlso <harm_no_midi_presets.ttl> .
+        rdfs:seeAlso <stereoharm_no_midi_presets.ttl> .
 
 <http://rakarrack.sourceforge.net/effects.html#StereoHarm_no_mid:preset:chorus>
         a pset:Preset ;
         lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#StereoHarm_no_mid> ;
-        rdfs:seeAlso <harm_no_midi_presets.ttl> .
+        rdfs:seeAlso <stereoharm_no_midi_presets.ttl> .
 
 <http://rakarrack.sourceforge.net/effects.html#StereoHarm_no_mid:preset:hard_chorus>
         a pset:Preset ;
         lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#StereoHarm_no_mid> ;
-        rdfs:seeAlso <harm_no_midi_presets.ttl> .
+        rdfs:seeAlso <stereoharm_no_midi_presets.ttl> .
 

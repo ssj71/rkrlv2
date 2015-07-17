@@ -1,0 +1,170 @@
+@prefix atom: <http://lv2plug.in/ns/ext/atom#> .
+@prefix lv2: <http://lv2plug.in/ns/lv2core#> .
+@prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix state: <http://lv2plug.in/ns/ext/state#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+<http://rakarrack.sourceforge.net/effects.html#StereoHarm_no_mid:preset:plain>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#StereoHarm_no_mid> ;
+        rdfs:label "Plain" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 64.0
+        ], [
+                lv2:symbol "GAINL" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "INTL" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "CHRML" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "GAINR" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "INTR" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "CHR" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "SELECT" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "NOTE" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "CHORD" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LRC" ;
+                pset:value 64.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#StereoHarm_no_mid:preset:octavator>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#StereoHarm_no_mid> ;
+        rdfs:label "Octavator" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 64.0
+        ], [
+                lv2:symbol "GAINL" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "INTL" ;
+                pset:value -12.0
+        ], [
+                lv2:symbol "CHRML" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "GAINR" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "INTR" ;
+                pset:value -12.0
+        ], [
+                lv2:symbol "CHR" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "SELECT" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "NOTE" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "CHORD" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LRC" ;
+                pset:value 64.0
+        ] ;
+	.
+
+
+<http://rakarrack.sourceforge.net/effects.html#StereoHarm_no_mid:preset:chorus>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#StereoHarm_no_mid> ;
+        rdfs:label "Chorus" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 64.0
+        ], [
+                lv2:symbol "GAINL" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "INTL" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "CHRML" ;
+                pset:value 80.0
+        ], [
+                lv2:symbol "GAINR" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "INTR" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "CHR" ;
+                pset:value -80.0
+        ], [
+                lv2:symbol "SELECT" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "NOTE" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "CHORD" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LRC" ;
+                pset:value 64.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#StereoHarm_no_mid:preset:hard_chorus>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#StereoHarm_no_mid> ;
+        rdfs:label "Hard Chorus" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 64.0
+        ], [
+                lv2:symbol "GAINL" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "INTL" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "CHRML" ;
+                pset:value 280.0
+        ], [
+                lv2:symbol "GAINR" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "INTR" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "CHR" ;
+                pset:value -280.0
+        ], [
+                lv2:symbol "SELECT" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "NOTE" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "CHORD" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LRC" ;
+                pset:value 64.0
+        ] ;
+	.
+
