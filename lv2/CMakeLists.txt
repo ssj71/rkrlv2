@@ -73,6 +73,7 @@ add_library(rkrlv2 SHARED
   ../src/Reverbtron.C
   ../src/Echotron.C
   ../src/StereoHarm.C
+  ../src/CompBand.C
 )
 
 set_target_properties(rkrlv2 PROPERTIES PREFIX "")

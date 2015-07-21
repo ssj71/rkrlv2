@@ -38,39 +38,39 @@
 
 
 
-CompBand::CompBand (float * efxoutl_, float * efxoutr_)
+CompBand::CompBand (float * efxoutl_, float * efxoutr_, double sample_rate, uint32_t intermediate_bufsize)
 {
     efxoutl = efxoutl_;
     efxoutr = efxoutr_;
 
-    lowl = (float *) malloc (sizeof (float) * period);
-    lowr = (float *) malloc (sizeof (float) * period);
-    midll = (float *) malloc (sizeof (float) * period);
-    midlr = (float *) malloc (sizeof (float) * period);
-    midhl = (float *) malloc (sizeof (float) * period);
-    midhr = (float *) malloc (sizeof (float) * period);
-    highl = (float *) malloc (sizeof (float) * period);
-    highr = (float *) malloc (sizeof (float) * period);
+    lowl = (float *) malloc (sizeof (float) * intermediate_bufsize);
+    lowr = (float *) malloc (sizeof (float) * intermediate_bufsize);
+    midll = (float *) malloc (sizeof (float) * intermediate_bufsize);
+    midlr = (float *) malloc (sizeof (float) * intermediate_bufsize);
+    midhl = (float *) malloc (sizeof (float) * intermediate_bufsize);
+    midhr = (float *) malloc (sizeof (float) * intermediate_bufsize);
+    highl = (float *) malloc (sizeof (float) * intermediate_bufsize);
+    highr = (float *) malloc (sizeof (float) * intermediate_bufsize);
 
 
-    lpf1l = new AnalogFilter (2, 500.0f,.7071f, 0);
-    lpf1r = new AnalogFilter (2, 500.0f,.7071f, 0);
-    hpf1l = new AnalogFilter (3, 500.0f,.7071f, 0);
-    hpf1r = new AnalogFilter (3, 500.0f,.7071f, 0);
-    lpf2l = new AnalogFilter (2, 2500.0f,.7071f, 0);
-    lpf2r = new AnalogFilter (2, 2500.0f,.7071f, 0);
-    hpf2l = new AnalogFilter (3, 2500.0f,.7071f, 0);
-    hpf2r = new AnalogFilter (3, 2500.0f,.7071f, 0);
-    lpf3l = new AnalogFilter (2, 5000.0f,.7071f, 0);
-    lpf3r = new AnalogFilter (2, 5000.0f,.7071f, 0);
-    hpf3l = new AnalogFilter (3, 5000.0f,.7071f, 0);
-    hpf3r = new AnalogFilter (3, 5000.0f,.7071f, 0);
+    lpf1l = new AnalogFilter (2, 500.0f,.7071f, 0, sample_rate);
+    lpf1r = new AnalogFilter (2, 500.0f,.7071f, 0, sample_rate);
+    hpf1l = new AnalogFilter (3, 500.0f,.7071f, 0, sample_rate);
+    hpf1r = new AnalogFilter (3, 500.0f,.7071f, 0, sample_rate);
+    lpf2l = new AnalogFilter (2, 2500.0f,.7071f, 0, sample_rate);
+    lpf2r = new AnalogFilter (2, 2500.0f,.7071f, 0, sample_rate);
+    hpf2l = new AnalogFilter (3, 2500.0f,.7071f, 0, sample_rate);
+    hpf2r = new AnalogFilter (3, 2500.0f,.7071f, 0, sample_rate);
+    lpf3l = new AnalogFilter (2, 5000.0f,.7071f, 0, sample_rate);
+    lpf3r = new AnalogFilter (2, 5000.0f,.7071f, 0, sample_rate);
+    hpf3l = new AnalogFilter (3, 5000.0f,.7071f, 0, sample_rate);
+    hpf3r = new AnalogFilter (3, 5000.0f,.7071f, 0, sample_rate);
 
 
-    CL = new Compressor(efxoutl,efxoutr);
-    CML = new Compressor(efxoutl,efxoutr);
-    CMH = new Compressor(efxoutl,efxoutr);
-    CH = new Compressor(efxoutl,efxoutr);
+    CL = new Compressor(efxoutl,efxoutr, sample_rate);
+    CML = new Compressor(efxoutl,efxoutr, sample_rate);
+    CMH = new Compressor(efxoutl,efxoutr, sample_rate);
+    CH = new Compressor(efxoutl,efxoutr, sample_rate);
 
     CL->Compressor_Change_Preset(0,5);
     CML->Compressor_Change_Preset(0,5);
@@ -88,6 +88,32 @@ CompBand::CompBand (float * efxoutl_, float * efxoutr_)
 
 CompBand::~CompBand ()
 {
+	free(lowl);
+	free(lowr);
+	free(midll);
+	free(midlr);
+	free(midhl);
+	free(midhr);
+	free(highl);
+	free(highr);
+
+    delete lpf1l;
+    delete lpf1r;
+    delete hpf1l;
+    delete hpf1r;
+    delete lpf2l;
+    delete lpf2r;
+    delete hpf2l;
+    delete hpf2r;
+    delete lpf3l;
+    delete lpf3r;
+    delete hpf3l;
+    delete hpf3r;
+
+    delete CL;
+    delete CML;
+    delete CMH;
+    delete CH;
 };
 
 /*
@@ -118,9 +144,9 @@ CompBand::cleanup ()
  * Effect output
  */
 void
-CompBand::out (float * smpsl, float * smpsr)
+CompBand::out (float * smpsl, float * smpsr, uint32_t period)
 {
-    int i;
+    unsigned int i;
 
 
     memcpy(lowl,smpsl,sizeof(float) * period);
@@ -128,30 +154,30 @@ CompBand::out (float * smpsl, float * smpsr)
     memcpy(midhl,smpsl,sizeof(float) * period);
     memcpy(highl,smpsl,sizeof(float) * period);
 
-    lpf1l->filterout(lowl);
-    hpf1l->filterout(midll);
-    lpf2l->filterout(midll);
-    hpf2l->filterout(midhl);
-    lpf3l->filterout(midhl);
-    hpf3l->filterout(highl);
+    lpf1l->filterout(lowl, period);
+    hpf1l->filterout(midll, period);
+    lpf2l->filterout(midll, period);
+    hpf2l->filterout(midhl, period);
+    lpf3l->filterout(midhl, period);
+    hpf3l->filterout(highl, period);
 
     memcpy(lowr,smpsr,sizeof(float) * period);
     memcpy(midlr,smpsr,sizeof(float) * period);
     memcpy(midhr,smpsr,sizeof(float) * period);
     memcpy(highr,smpsr,sizeof(float) * period);
 
-    lpf1r->filterout(lowr);
-    hpf1r->filterout(midlr);
-    lpf2r->filterout(midlr);
-    hpf2r->filterout(midhr);
-    lpf3r->filterout(midhr);
-    hpf3r->filterout(highr);
+    lpf1r->filterout(lowr, period);
+    hpf1r->filterout(midlr, period);
+    lpf2r->filterout(midlr, period);
+    hpf2r->filterout(midhr, period);
+    lpf3r->filterout(midhr, period);
+    hpf3r->filterout(highr, period);
 
 
-    CL->out(lowl,lowr);
-    CML->out(midll,midlr);
-    CMH->out(midhl,midhr);
-    CH->out(highl,highr);
+    CL->out(lowl,lowr, period);
+    CML->out(midll,midlr, period);
+    CMH->out(midhl,midhr, period);
+    CH->out(highl,highr, period);
 
 
     for (i = 0; i < period; i++) {
@@ -270,6 +296,7 @@ CompBand::setpreset (int npreset)
 {
     const int PRESET_SIZE = 13;
     const int NUM_PRESETS = 3;
+    int pdata[PRESET_SIZE];
     int presets[NUM_PRESETS][PRESET_SIZE] = {
         //Good Start
         {0, 16, 16, 16, 16, 0, 0, 0, 0, 1000, 5000, 10000, 48},
@@ -283,7 +310,7 @@ CompBand::setpreset (int npreset)
     };
 
     if(npreset>NUM_PRESETS-1) {
-        Fpre->ReadPreset(43,npreset-NUM_PRESETS+1);
+        Fpre->ReadPreset(43,npreset-NUM_PRESETS+1,pdata);
         for (int n = 0; n < PRESET_SIZE; n++)
             changepar (n, pdata[n]);
     } else {

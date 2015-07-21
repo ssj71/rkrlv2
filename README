@@ -56,8 +56,8 @@ EFFECTS (X - done, W - won't do, + - done with missing features)
 [X] StompBox 
 [X] Reverbtron 
 [X] Echotron 
-[X] StereoHarm - this seems like it's of limited use in plugin form, just use 2 instances of the mono version
-[ ] CompBand 
+[+] StereoHarm - this seems like it's of limited use in plugin form, just use 2 instances of the mono version
+[X] CompBand 
 [ ] Opticaltrem 
 [ ] Vibe 
 [ ] Infinity

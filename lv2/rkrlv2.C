@@ -54,6 +54,7 @@
 #include"Reverbtron.h"
 #include"Echotron.h"
 #include"StereoHarm.h"
+#include"CompBand.h"
 
 //this is the default hopefully hosts don't use periods of more than this, or they will communicate the max bufsize
 #define INTERMEDIATE_BUFSIZE 1024
@@ -144,6 +145,7 @@ typedef struct _RKRLV2
     Reverbtron* revtron;//35
     Echotron* echotron; //36
     StereoHarm* sharm;  //37
+    CompBand* mbcomp; 	//38
 } RKRLV2;
 
 enum other_ports
@@ -3699,7 +3701,7 @@ void run_harmlv2(LV2_Handle handle, uint32_t nframes)
             if (ev->body.type == plug->URIDs.midi_MidiEvent)
             {
                 uint8_t* msg = (uint8_t*)&ev->body;
-                if(msg[0]&0xF0 == 0x90)//note on
+                if(msg[0] == 0x90)//note on channel 1
                 {
                     if(msg[2] == 0)
                     {
@@ -3719,7 +3721,7 @@ void run_harmlv2(LV2_Handle handle, uint32_t nframes)
                         }
                     }
                 }
-                if(msg[0]&0xF0 == 0x80)//note off
+                if(msg[0] == 0x80)//note off channel 1
                 {
                     for(i=0;i<POLY;i++)
                     {
@@ -3761,6 +3763,66 @@ void run_harmlv2(LV2_Handle handle, uint32_t nframes)
     return;
 }
 #endif
+
+///// MB comp /////////
+LV2_Handle init_mbcomplv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 13;
+    plug->effectindex = IMBCOMP;
+    plug->prev_bypass = 0;
+
+    getFeatures(plug,host_features);
+
+    plug->mbcomp = new CompBand(0,0, sample_freq, plug->period_max);
+
+    return plug;
+}
+
+void run_mbcomplv2(LV2_Handle handle, uint32_t nframes)
+{
+    int i;
+    int val;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->mbcomp->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
+    //check and set changed parameters
+    for(i=0; i<plug->nparams; i++)
+    {
+        val = (int)*plug->param_p[i];
+        if(plug->mbcomp->getpar(i) != val)//this effect is 1 indexed
+        {
+            plug->mbcomp->changepar(i+1,val);
+        }
+    }
+
+    //comp does in inline
+    memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+    memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+
+    //now set out ports
+    plug->mbcomp->efxoutl = plug->output_l_p;
+    plug->mbcomp->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->mbcomp->out(plug->output_l_p,plug->output_r_p,nframes);
+
+    return;
+}
 
 
 /////////////////////////////////
@@ -3888,8 +3950,12 @@ void cleanup_rkrlv2(LV2_Handle handle)
         break;
     case ISHARM_NM:
     	delete plug->sharm;
+        delete plug->noteID;
+        delete plug->chordID;
     	break;
-
+    case IMBCOMP:
+    	delete plug->mbcomp;
+    	break;
     }
     free(plug);
 }
@@ -4066,6 +4132,11 @@ void connect_rkrlv2_ports(LV2_Handle handle, uint32_t port, void *data)
         puts("UNKNOWN PORT YO!!");
     }
 }
+
+
+/////////////////////////////////
+///    Plugin Descriptors
+////////////////////////////////
 
 static const LV2_Descriptor eqlv2_descriptor=
 {
@@ -4523,13 +4594,13 @@ static const LV2_Descriptor sharmnomidlv2_descriptor=
     cleanup_rkrlv2
 };
 
-static const LV2_Descriptor sharmnomidlv2_descriptor=
+static const LV2_Descriptor mbcomplv2_descriptor=
 {
-    SHARMNOMIDLV2_URI,
-    init_sharmnomidlv2,
+    MBCOMPLV2_URI,
+    init_mbcomplv2,
     connect_rkrlv2_ports,
     0,//activate
-    run_sharmnomidlv2,
+    run_mbcomplv2,
     0,//deactivate
     cleanup_rkrlv2
 };
@@ -4615,6 +4686,8 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
         return &echotronlv2_descriptor ;
     case ISHARM_NM:
     	return &sharmnomidlv2_descriptor ;
+    case IMBCOMP:
+    	return &mbcomplv2_descriptor ;
     default:
         return 0;
     }

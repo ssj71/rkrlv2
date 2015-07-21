@@ -40,6 +40,7 @@
 #define ECHOTRONLV2_URI "http://rakarrack.sourceforge.net/effects.html#Echotron"
 #define SHARMNOMIDLV2_URI "http://rakarrack.sourceforge.net/effects.html#StereoHarm_no_mid"
 #define HARMLV2_URI "http://rakarrack.sourceforge.net/effects.html#har"
+#define MBCOMPLV2_URI "http://rakarrack.sourceforge.net/effects.html#CompBand"
 
 #define RVBFILE_URI "http://rakarrack.sourceforge.net/effects.html#Reverbtron:rvbfile"
 #define DLYFILE_URI "http://rakarrack.sourceforge.net/effects.html#Echotron:dlyfile"
@@ -116,6 +117,7 @@ enum RKRLV2_effects_
 	IREVTRON,
 	IECHOTRON,
 	ISHARM_NM,
+	IMBCOMP
 };
 
 #endif
