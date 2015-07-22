@@ -64,6 +64,7 @@ Opticaltrem::Opticaltrem (float * efxoutl_, float * efxoutr_, double sample_rate
 
 Opticaltrem::~Opticaltrem ()
 {
+	delete lfo;
 }
 
 

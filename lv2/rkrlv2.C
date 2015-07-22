@@ -3872,7 +3872,7 @@ void run_otremlv2(LV2_Handle handle, uint32_t nframes)
     plug->otrem->PERIOD = nframes;
 
     //check and set changed parameters
-    for(i=0; i<4; i++)
+    for(i=0; i<4; i++)//0-4
     {
         val = (int)*plug->param_p[i];
         if(plug->otrem->getpar(i) != val)
