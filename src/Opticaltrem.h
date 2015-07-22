@@ -34,10 +34,10 @@ class Opticaltrem
 
 public:
 
-    Opticaltrem (float * efxoutl_, float * efxoutr_);
+    Opticaltrem (float * efxoutl_, float * efxoutr_, double sample_rate);
     ~Opticaltrem ();
 
-    void out (float * smpsl, float * smpsr);
+    void out (float * smpsl, float * smpsr, uint32_t period);
     void setpanning(int value);
     void setpreset (int npreset);
     void changepar (int npar, int value);
@@ -47,6 +47,7 @@ public:
     float *efxoutl;
     float *efxoutr;
 
+    uint32_t PERIOD;
 
 private:
     int Pdepth;
@@ -59,7 +60,9 @@ private:
     float gl, oldgl;
     float gr, oldgr;
     float rpanning, lpanning;
-    EffectLFO lfo;
+    EffectLFO* lfo;
+
+    float cSAMPLE_RATE;
 
     class FPreset *Fpre;
 

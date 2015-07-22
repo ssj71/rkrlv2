@@ -55,6 +55,9 @@
 #include"Echotron.h"
 #include"StereoHarm.h"
 #include"CompBand.h"
+#include"Opticaltrem.h"
+#include"Vibe.h"
+#include"Infinity.h"
 
 //this is the default hopefully hosts don't use periods of more than this, or they will communicate the max bufsize
 #define INTERMEDIATE_BUFSIZE 1024
@@ -146,6 +149,9 @@ typedef struct _RKRLV2
     Echotron* echotron; //36
     StereoHarm* sharm;  //37
     CompBand* mbcomp; 	//38
+    Opticaltrem* otrem; //39
+    Vibe* vibe;			//40
+    Infinity* inf;		//41
 } RKRLV2;
 
 enum other_ports
@@ -3804,15 +3810,11 @@ void run_mbcomplv2(LV2_Handle handle, uint32_t nframes)
     for(i=0; i<plug->nparams; i++)
     {
         val = (int)*plug->param_p[i];
-        if(plug->mbcomp->getpar(i) != val)//this effect is 1 indexed
+        if(plug->mbcomp->getpar(i) != val)
         {
-            plug->mbcomp->changepar(i+1,val);
+            plug->mbcomp->changepar(i,val);
         }
     }
-
-    //comp does in inline
-    memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-    memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
 
     //now set out ports
     plug->mbcomp->efxoutl = plug->output_l_p;
@@ -3821,9 +3823,90 @@ void run_mbcomplv2(LV2_Handle handle, uint32_t nframes)
     //now run
     plug->mbcomp->out(plug->output_l_p,plug->output_r_p,nframes);
 
+    //and for whatever reason we have to do the wet/dry mix ourselves
+    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p,
+               plug->mbcomp->outvolume, nframes);
+
     return;
 }
 
+///// OptTrem /////////
+LV2_Handle init_otremlv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 6;
+    plug->effectindex = IOPTTREM;
+    plug->prev_bypass = 0;
+
+    getFeatures(plug,host_features);
+
+
+    plug->otrem = new Opticaltrem(0,0, sample_freq);
+
+    return plug;
+}
+
+void run_otremlv2(LV2_Handle handle, uint32_t nframes)
+{
+    int i;
+    int val;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->otrem->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
+
+    //LFO effects require period be set before setting other params
+    plug->otrem->PERIOD = nframes;
+
+    //check and set changed parameters
+    for(i=0; i<4; i++)
+    {
+        val = (int)*plug->param_p[i];
+        if(plug->otrem->getpar(i) != val)
+        {
+            plug->otrem->changepar(i,val);
+        }
+    }
+    for(; i<6; i++)//4-5 pan and st del
+    {
+        val = (int)*plug->param_p[i]+64;
+        if(plug->otrem->getpar(i) != val)
+        {
+            plug->otrem->changepar(i,val);
+        }
+    }
+    val = (int)*plug->param_p[i];//6 invert
+    if(plug->otrem->getpar(i) != val)
+    {
+        plug->otrem->changepar(i,val);
+    }
+
+    //optotrem does it inline
+    memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+    memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+
+    //now set out ports
+    plug->otrem->efxoutl = plug->output_l_p;
+    plug->otrem->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->otrem->out(plug->output_l_p,plug->output_r_p,nframes);
+
+    return;
+}
 
 /////////////////////////////////
 ///////// END OF FX /////////////
@@ -4605,6 +4688,17 @@ static const LV2_Descriptor mbcomplv2_descriptor=
     cleanup_rkrlv2
 };
 
+static const LV2_Descriptor otremlv2_descriptor=
+{
+    OPTTREMLV2_URI,
+    init_otremlv2,
+    connect_rkrlv2_ports,
+    0,//activate
+    run_otremlv2,
+    0,//deactivate
+    cleanup_rkrlv2
+};
+
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor* lv2_descriptor(uint32_t index)
 {
@@ -4688,6 +4782,8 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
     	return &sharmnomidlv2_descriptor ;
     case IMBCOMP:
     	return &mbcomplv2_descriptor ;
+    case IOPTTREM:
+    	return &otremlv2_descriptor ;
     default:
         return 0;
     }
