@@ -58,6 +58,16 @@
         lv2:port [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 4 ;
+                lv2:symbol "BYPASS" ;
+                lv2:name "Bypass" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 1 ;
+                lv2:portProperty lv2:integer ;
+                lv2:portProperty lv2:toggled ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 5 ;
                 lv2:symbol "WETDRY" ;
                 lv2:name "Wet/Dry" ;
                 lv2:default 64 ;
@@ -66,7 +76,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 5 ;
+                lv2:index 6 ;
                 lv2:symbol "PAN" ;
                 lv2:name "Pan" ;
                 lv2:default 0 ;
@@ -75,7 +85,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 6 ;
+                lv2:index 7 ;
                 lv2:symbol "LRCr" ;
                 lv2:name "Left/Right Crossover" ;
                 lv2:default 14 ;
@@ -85,7 +95,7 @@
                 units:unit units:bpm ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 7 ;
+                lv2:index 8 ;
                 lv2:symbol "LEVEL" ;
                 lv2:name "Level" ;
                 lv2:default 0 ;
@@ -94,7 +104,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 8 ;
+                lv2:index 9 ;
                 lv2:symbol "DEPTH" ;
                 lv2:name "Depth" ;
                 lv2:default 1 ;
@@ -103,7 +113,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 9 ;
+                lv2:index 10 ;
                 lv2:symbol "FREQ" ;
                 lv2:name "Frequency" ;
                 lv2:default 64 ;
@@ -112,7 +122,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 10 ;
+                lv2:index 11 ;
                 lv2:symbol "STEREO" ;
                 lv2:name "Stereo" ;
                 lv2:default 0 ;
@@ -122,7 +132,7 @@
                 lv2:portProperty lv2:toggled ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 11 ;
+                lv2:index 12 ;
                 lv2:symbol "SIN" ;
                 lv2:name "Sine" ;
                 lv2:default 40 ;
@@ -131,7 +141,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 12 ;
+                lv2:index 13 ;
                 lv2:symbol "TRI" ;
                 lv2:name "Triangle" ;
                 lv2:default 4 ;
@@ -140,7 +150,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 13 ;
+                lv2:index 14 ;
                 lv2:symbol "SAW" ;
                 lv2:name "Sawtooth" ;
                 lv2:default 10 ;
@@ -149,7 +159,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 14 ;
+                lv2:index 15 ;
                 lv2:symbol "SQUARE" ;
                 lv2:name "Square" ;
                 lv2:default 0 ;
@@ -158,7 +168,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 15 ;
+                lv2:index 16 ;
                 lv2:symbol "INPUT" ;
                 lv2:name "Input Gain" ;
                 lv2:default 64 ;
@@ -167,7 +177,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 16 ;
+                lv2:index 17 ;
                 lv2:symbol "AFREQ" ;
                 lv2:name "Auto-Frequency" ;
                 lv2:default 0 ;

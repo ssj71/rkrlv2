@@ -28,7 +28,7 @@
 
 
 
-StereoHarm::StereoHarm (float *efxoutl_, float *efxoutr_, long int Quality, int DS, int uq, int dq)
+StereoHarm::StereoHarm (float *efxoutl_, float *efxoutr_, long int Quality, int DS, int uq, int dq, uint32_t intermediate_bufsize, double sample_rate)
 {
 
 
@@ -36,10 +36,13 @@ StereoHarm::StereoHarm (float *efxoutl_, float *efxoutr_, long int Quality, int 
     efxoutl = efxoutl_;
     efxoutr = efxoutr_;
     hq = Quality;
-    adjust(DS);
+    SAMPLE_RATE = (unsigned int)sample_rate;
+    adjust(DS, intermediate_bufsize);
 
-    templ = (float *) malloc (sizeof (float) * period);
-    tempr = (float *) malloc (sizeof (float) * period);
+    templ = (float *) malloc (sizeof (float) * intermediate_bufsize);
+    tempr = (float *) malloc (sizeof (float) * intermediate_bufsize);
+
+
 
 
     outil = (float *) malloc (sizeof (float) * nPERIOD);
@@ -81,6 +84,16 @@ StereoHarm::StereoHarm (float *efxoutl_, float *efxoutr_, long int Quality, int 
 
 StereoHarm::~StereoHarm ()
 {
+	free(templ);
+	free(tempr);
+	free(outil);
+	free(outir);
+	free(outol);
+	free(outor);
+	delete U_Resample;
+	delete D_Resample;
+	delete PSl;
+	delete PSr;
 };
 
 void
@@ -98,10 +111,10 @@ StereoHarm::cleanup ()
 
 
 void
-StereoHarm::out (float *smpsl, float *smpsr)
+StereoHarm::out (float *smpsl, float *smpsr, uint32_t period)
 {
 
-    int i;
+    unsigned int i;
 
 
     if(DS_state != 0) {
@@ -129,8 +142,8 @@ StereoHarm::out (float *smpsl, float *smpsr)
     }
 
     if ((PMIDI) || (PSELECT)) {
-        PSl->ratio = r__ratio[1];
-        PSr->ratio = r__ratio[2];
+        PSl->ratio = r_ratiol;
+        PSr->ratio = r_ratior;
     }
 
     if (PSl->ratio != 1.0f) {
@@ -162,7 +175,6 @@ StereoHarm::out (float *smpsl, float *smpsr)
 
 
 };
-
 
 
 void
@@ -270,10 +282,12 @@ StereoHarm::setMIDI (int value)
 
 
 void
-StereoHarm::adjust(int DS)
+StereoHarm::adjust(int DS, uint32_t period)
 {
 
     DS_state=DS;
+    float fSAMPLE_RATE = SAMPLE_RATE;
+    float fPERIOD = period;
 
 
     switch(DS) {
@@ -372,6 +386,7 @@ StereoHarm::setpreset (int npreset)
 {
     const int PRESET_SIZE = 12;
     const int NUM_PRESETS = 4;
+    int pdata[PRESET_SIZE];
     int presets[NUM_PRESETS][PRESET_SIZE] = {
         //Plain
         {64, 64, 12, 0, 64, 12, 0, 0, 0, 0, 0, 64},
@@ -386,7 +401,7 @@ StereoHarm::setpreset (int npreset)
 
     cleanup();
     if(npreset>NUM_PRESETS-1) {
-        Fpre->ReadPreset(42,npreset-NUM_PRESETS+1);
+        Fpre->ReadPreset(42,npreset-NUM_PRESETS+1,pdata);
         for (int n = 0; n < PRESET_SIZE; n++)
             changepar (n, pdata[n]);
     } else {

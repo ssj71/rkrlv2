@@ -28,20 +28,21 @@
 
 #include "global.h"
 #include "smbPitchShift.h"
+#include "Resample.h"
 
 
 class StereoHarm
 {
 
 public:
-    StereoHarm (float *efxoutl_, float *efxoutr_, long int Quality, int DS, int uq, int dq);
+    StereoHarm (float *efxoutl_, float *efxoutr_, long int Quality, int DS, int uq, int dq, uint32_t intermediate_bufsize, double sample_rate);
     ~StereoHarm ();
-    void out (float *smpsl, float *smpsr);
+    void out (float *smpsl, float *smpsr, uint32_t period);
     void setpreset (int npreset);
     void changepar (int npar, int value);
     int getpar (int npar);
     void cleanup ();
-    void adjust(int DS);
+    void adjust(int DS, uint32_t period);
 
 
     int Ppreset;
@@ -52,8 +53,9 @@ public:
     int PSELECT;
     int mira;
     int DS_state;
-    int nPERIOD;
+    unsigned int nPERIOD;
     int nSAMPLE_RATE;
+    unsigned int SAMPLE_RATE;
     long window;
 
     long int hq;
@@ -71,6 +73,8 @@ public:
 
     float outvolume;
 
+    float r_ratiol;
+    float r_ratior;
 
 
 private:

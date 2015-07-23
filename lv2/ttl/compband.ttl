@@ -3,21 +3,23 @@
 @prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix units: <http://lv2plug.in/ns/extensions/units#> .
+@prefix pg: <http://lv2plug.in/ns/ext/port-groups#> .
+@prefix param: <http://lv2plug.in/ns/ext/parameters#> .
 @prefix pset: <http://lv2plug.in/ns/ext/presets#> .
 
 @prefix lv2:   <http://lv2plug.in/ns/lv2core#> .
 @prefix ui:   <http://lv2plug.in/ns/extensions/ui#> .
 
-# <http://rakarrack.sourceforge.net/effects.html#Exciter_ui>
+# <http://rakarrack.sourceforge.net/effects.html#CompBand_ui>
 # 	a ui:X11UI ;
 # 	ui:binary <rkrlv2_ui.so> ;
-# 	lv2:extensionData ui:idleInterface;
+# 	lv2:extensionData ui:idleInterface ;
 # 	.
 
-<http://rakarrack.sourceforge.net/effects.html#Exciter>
-        a lv2:Plugin, lv2:DistortionPlugin ;
-        doap:name "rkr Exciter" ;
-        doap:description "Harmonic Exciter";
+<http://rakarrack.sourceforge.net/effects.html#CompBand>
+        a lv2:Plugin, lv2:CompressorPlugin ;
+        doap:name "rkr CompBand" ;
+        doap:description "Multi-Band Compressor";
         doap:license <http://opensource.org/licenses/gpl-2.0> ;
         doap:maintainer [
                 foaf:name "Rakarrack Team" ;
@@ -26,11 +28,9 @@
         ] ;
         lv2:minorVersion 0 ;
         lv2:microVersion 0 ;
-        rdfs:comment "Harmonic exciter that allows you to adjust the volume of each of 10 harmonics." ;
-        lv2:optionalFeature lv2:hardRTCapable,
-            <http://lv2plug.in/ns/ext/urid#map>,
-            <http://lv2plug.in/ns/ext/bufsz#maxBlockLength>;
-#        ui:ui  <http://rakarrack.sourceforge.net/effects.html#Exciter_ui> ;
+        rdfs:comment "Multi-band compressor with 4 frequency bands and wet/dry mix control. Each band has individual ratio and threshold controls." ;
+        lv2:optionalFeature lv2:hardRTCapable ;
+#        ui:ui  <http://rakarrack.sourceforge.net/effects.html#CompBand_ui> ;
 
         lv2:port [
                 a lv2:InputPort, lv2:AudioPort ;
@@ -69,8 +69,8 @@
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 5 ;
-                lv2:symbol "GAIN" ;
-                lv2:name "Gain" ;
+                lv2:symbol "WETDRY" ;
+                lv2:name "Wet/Dry" ;
                 lv2:default 0 ;
                 lv2:minimum 0 ;
                 lv2:maximum 127 ;
@@ -78,138 +78,133 @@
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 6 ;
-                lv2:symbol "HAR1" ;
-                lv2:name "1st Harmonic" ;
-                lv2:default 0 ;
-                lv2:minimum -64 ;
-                lv2:maximum 64 ;
+                lv2:symbol "LR" ;
+                lv2:name "Low Band Ratio" ;
+                lv2:default 4 ;
+                lv2:minimum 2 ;
+                lv2:maximum 42 ;
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 7 ;
-                lv2:symbol "HAR2" ;
-                lv2:name "2nd Harmonic" ;
-                lv2:default 0 ;
-                lv2:minimum -64 ;
-                lv2:maximum 64 ;
+                lv2:symbol "M1R" ;
+                lv2:name "Mid Band 1 Ratio" ;
+                lv2:default 4 ;
+                lv2:minimum 2 ;
+                lv2:maximum 42 ;
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 8 ;
-                lv2:symbol "HAR3" ;
-                lv2:name "3rd Harmonic" ;
-                lv2:default 0 ;
-                lv2:minimum -64 ;
-                lv2:maximum 64 ;
+                lv2:symbol "M2R" ;
+                lv2:name "Mid Band 2 Ratio" ;
+                lv2:default 4 ;
+                lv2:minimum 2 ;
+                lv2:maximum 42 ;
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 9 ;
-                lv2:symbol "HAR4" ;
-                lv2:name "4th Harmonic" ;
-                lv2:default 0 ;
-                lv2:minimum -64 ;
-                lv2:maximum 64 ;
+                lv2:symbol "HR" ;
+                lv2:name "High Band Ratio" ;
+                lv2:default 4 ;
+                lv2:minimum 2 ;
+                lv2:maximum 42 ;
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 10 ;
-                lv2:symbol "HAR5" ;
-                lv2:name "5th Harmonic" ;
+                lv2:symbol "LT" ;
+                lv2:name "Low Band Threshold" ;
                 lv2:default 0 ;
-                lv2:minimum -64 ;
-                lv2:maximum 64 ;
+                lv2:minimum -70 ;
+                lv2:maximum 24 ;
                 lv2:portProperty lv2:integer ;
+                units:unit units:db;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 11 ;
-                lv2:symbol "HAR6" ;
-                lv2:name "6th Harmonic" ;
+                lv2:symbol "M1T" ;
+                lv2:name "Mid Band 1 Threshold" ;
                 lv2:default 0 ;
-                lv2:minimum -64 ;
-                lv2:maximum 64 ;
+                lv2:minimum -70 ;
+                lv2:maximum 24 ;
                 lv2:portProperty lv2:integer ;
+                units:unit units:db;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 12 ;
-                lv2:symbol "HAR7" ;
-                lv2:name "7th Harmonic" ;
+                lv2:symbol "M2T" ;
+                lv2:name "Mid Band 2 Threshold" ;
                 lv2:default 0 ;
-                lv2:minimum -64 ;
-                lv2:maximum 64 ;
+                lv2:minimum -70 ;
+                lv2:maximum 24 ;
                 lv2:portProperty lv2:integer ;
+                units:unit units:db;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 13 ;
-                lv2:symbol "HAR8" ;
-                lv2:name "8th Harmonic" ;
+                lv2:symbol "HT" ;
+                lv2:name "High Threshold" ;
                 lv2:default 0 ;
-                lv2:minimum -64 ;
-                lv2:maximum 64 ;
+                lv2:minimum -70 ;
+                lv2:maximum 24 ;
                 lv2:portProperty lv2:integer ;
+                units:unit units:db;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 14 ;
-                lv2:symbol "HAR9" ;
-                lv2:name "9th Harmonic" ;
-                lv2:default 0 ;
-                lv2:minimum -64 ;
-                lv2:maximum 64 ;
+                lv2:symbol "LMCR" ;
+                lv2:name "Low/Mid1 Crossover" ;
+                lv2:default 200 ;
+                lv2:minimum 20 ;
+                lv2:maximum 1000 ;
                 lv2:portProperty lv2:integer ;
+                units:unit units:hz ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 15 ;
-                lv2:symbol "HAR10" ;
-                lv2:name "10th Harmonic" ;
-                lv2:default 0 ;
-                lv2:minimum -64 ;
-                lv2:maximum 64 ;
+                lv2:symbol "MMCR" ;
+                lv2:name "Mid1/Mid2 Crossover" ;
+                lv2:default 2000 ;
+                lv2:minimum 1000 ;
+                lv2:maximum 8000 ;
                 lv2:portProperty lv2:integer ;
+                units:unit units:hz ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 16 ;
-                lv2:symbol "LPF" ;
-                lv2:name "Low-Pass Filter Cutoff" ;
-                lv2:default 20000 ;
-                lv2:minimum 20 ;
+                lv2:symbol "MHCR" ;
+                lv2:name "Mid2/High Crossover" ;
+                lv2:default 15000 ;
+                lv2:minimum 2000 ;
                 lv2:maximum 26000 ;
                 lv2:portProperty lv2:integer ;
-                units:unit units:hz;
+                units:unit units:hz ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 17 ;
-                lv2:symbol "HPF" ;
-                lv2:name "High-Pass Filter Cutoff" ;
-                lv2:default 20 ;
-                lv2:minimum 20 ;
-                lv2:maximum 20000 ;
+                lv2:symbol "GAIN" ;
+                lv2:name "Gain" ;
+                lv2:default 88 ;
+                lv2:minimum 0 ;
+                lv2:maximum 127 ;
                 lv2:portProperty lv2:integer ;
-                units:unit units:hz;
         ] ;
 	.
 
-<http://rakarrack.sourceforge.net/effects.html#Exciter:preset:plain>
-	a pset:Preset ;
-	rdfs:seeAlso <exciter_presets.ttl> ;
-	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Exciter> .
 
-<http://rakarrack.sourceforge.net/effects.html#Exciter:preset:loudness>
-	a pset:Preset ;
-	rdfs:seeAlso <exciter_presets.ttl> ;
-	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Exciter> .
+<http://rakarrack.sourceforge.net/effects.html#CompBand:preset:good_start>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#CompBand> ;
+        rdfs:seeAlso <compband_presets.ttl> .
 
-<http://rakarrack.sourceforge.net/effects.html#Exciter:preset:exciter_1>
-	a pset:Preset ;
-	rdfs:seeAlso <exciter_presets.ttl> ;
-	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Exciter> .
+<http://rakarrack.sourceforge.net/effects.html#CompBand:preset:loudness>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#CompBand> ;
+        rdfs:seeAlso <compband_presets.ttl> .
 
-<http://rakarrack.sourceforge.net/effects.html#Exciter:preset:exciter_2>
-	a pset:Preset ;
-	rdfs:seeAlso <exciter_presets.ttl> ;
-	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Exciter> .
-
-<http://rakarrack.sourceforge.net/effects.html#Exciter:preset:exciter_3>
-	a pset:Preset ;
-	rdfs:seeAlso <exciter_presets.ttl> ;
-	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Exciter> .
-
+<http://rakarrack.sourceforge.net/effects.html#CompBand:preset:loudness2>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#CompBand> ;
+        rdfs:seeAlso <compband_presets.ttl> .

@@ -93,8 +93,18 @@
             lv2:designation lv2:control ;
     ] ;
     lv2:port [
-            a lv2:InputPort, lv2:ControlPort ;
+            lv2:InputPort, lv2:ControlPort ;
             lv2:index 6 ;
+            lv2:symbol "BYPASS" ;
+            lv2:name "Bypass" ;
+            lv2:default 0 ;
+            lv2:minimum 0 ;
+            lv2:maximum 1 ;
+            lv2:portProperty lv2:integer ;
+            lv2:portProperty lv2:toggled ;
+        ], [
+            a lv2:InputPort, lv2:ControlPort ;
+            lv2:index 7 ;
             lv2:symbol "WETDRY" ;
             lv2:name "Wet/Dry" ;
             lv2:default 64 ;
@@ -103,7 +113,7 @@
             lv2:portProperty lv2:integer ;
     ], [
             a lv2:InputPort, lv2:ControlPort ;
-            lv2:index 7 ;
+            lv2:index 8 ;
             lv2:symbol "DEPTH" ;
             lv2:name "Filter Depth" ;
             lv2:default 0 ;
@@ -112,7 +122,7 @@
             lv2:portProperty lv2:integer ;
     ], [
             a lv2:InputPort, lv2:ControlPort ;
-            lv2:index 8 ;
+            lv2:index 9 ;
             lv2:symbol "WIDTH" ;
             lv2:name "LFO Width" ;
             lv2:default 41 ;
@@ -121,7 +131,7 @@
             lv2:portProperty lv2:integer ;
     ], [
             a lv2:InputPort, lv2:ControlPort ;
-            lv2:index 9 ;
+            lv2:index 10 ;
             lv2:symbol "LENGTH" ;
             lv2:name "Number of Taps" ;
             lv2:default 127 ;
@@ -130,7 +140,7 @@
             lv2:portProperty lv2:integer ;
     ], [
             a lv2:InputPort, lv2:ControlPort ;
-            lv2:index 10 ;
+            lv2:index 11 ;
             lv2:symbol "TEMPO" ;
             lv2:name "TEMPO" ;
             lv2:default 64 ;
@@ -140,7 +150,7 @@
             units:unit units:bpm ;
     ], [
             a lv2:InputPort, lv2:ControlPort ;
-            lv2:index 11 ;
+            lv2:index 12 ;
             lv2:symbol "DAMP" ;
             lv2:name "Dampening" ;
             lv2:default 99 ;
@@ -149,7 +159,7 @@
             lv2:portProperty lv2:integer ;
     ], [
             a lv2:InputPort, lv2:ControlPort ;
-            lv2:index 12 ;
+            lv2:index 13 ;
             lv2:symbol "LRC" ;
             lv2:name "Left/Right Crossover" ;
             lv2:default 20 ;
@@ -158,7 +168,7 @@
             lv2:portProperty lv2:integer ;
     ], [
             a lv2:InputPort, lv2:ControlPort ;
-            lv2:index 13 ;
+            lv2:index 14 ;
             lv2:symbol "STDF" ;
             lv2:name "LFO L/R Delay" ;
             lv2:default 0 ;
@@ -167,7 +177,7 @@
             lv2:portProperty lv2:integer ;
     ], [
             a lv2:InputPort, lv2:ControlPort ;
-            lv2:index 14 ;
+            lv2:index 15 ;
             lv2:symbol "FB" ;
             lv2:name "Feedback" ;
             lv2:default 0 ;
@@ -176,7 +186,7 @@
             lv2:portProperty lv2:integer ;
     ], [
             a lv2:InputPort, lv2:ControlPort ;
-            lv2:index 15 ;
+            lv2:index 16 ;
             lv2:symbol "PAN" ;
             lv2:name "Pan" ;
             lv2:default 0 ;
@@ -185,7 +195,7 @@
             lv2:portProperty lv2:integer ;
     ], [
             a lv2:InputPort, lv2:ControlPort ;
-            lv2:index 16 ;
+            lv2:index 17 ;
             lv2:symbol "MD" ;
             lv2:name "Modulate Delays" ;
             lv2:default 0 ;
@@ -195,7 +205,7 @@
             lv2:portProperty lv2:toggled ; 
     ], [
             a lv2:InputPort, lv2:ControlPort ;
-            lv2:index 17 ;
+            lv2:index 18 ;
             lv2:symbol "MF" ;
             lv2:name "Modulate Filters" ;
             lv2:default 0 ;
@@ -205,7 +215,7 @@
             lv2:portProperty lv2:toggled ; 
     ], [
             a lv2:InputPort, lv2:ControlPort ;
-            lv2:index 18 ;
+            lv2:index 19 ;
             lv2:symbol "LFOTYPE" ;
             lv2:name "LFO Type" ;
             lv2:default 0 ;
@@ -227,7 +237,7 @@
             lv2:scalePoint [ rdfs:label "Triangle Bottomed Sine"; rdf:value 11 ] ;
     ], [
             a lv2:InputPort, lv2:ControlPort ;
-            lv2:index 19 ;
+            lv2:index 20 ;
             lv2:symbol "AF" ;
             lv2:name "Activate Filters" ;
             lv2:default 0 ;

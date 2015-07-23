@@ -8,16 +8,16 @@
 @prefix lv2:   <http://lv2plug.in/ns/lv2core#> .
 @prefix ui:   <http://lv2plug.in/ns/extensions/ui#> .
 
-# <http://rakarrack.sourceforge.net/effects.html#awha_ui>
+# <http://rakarrack.sourceforge.net/effects.html#Otrem_ui>
 # 	a ui:X11UI ;
 # 	ui:binary <rkrlv2_ui.so> ;
 # 	lv2:extensionData ui:idleInterface;
 # 	.
 
-<http://rakarrack.sourceforge.net/effects.html#awha>
-        a lv2:Plugin, lv2:PhaserPlugin ;
-        doap:name "rkr AlienWah" ; 
-        doap:description "Flaser";
+<http://rakarrack.sourceforge.net/effects.html#Otrem>
+        a lv2:Plugin, lv2:ModulatorPlugin ;
+        doap:name "rkr OpticalTrem" ;
+        doap:description "Optical Tremolo Emulation";
         doap:license <http://opensource.org/licenses/GPL-2.0> ;
         doap:maintainer [
                 foaf:name "Rakarrack Team" ;
@@ -26,9 +26,9 @@
         ] ;
         lv2:minorVersion 0 ;
         lv2:microVersion 0 ;
-        rdfs:comment "This effect features two alternating comb filters for a vocal/formant-like wah sound. It could be considered a combined flanger and phaser. It can be extreme or add very subtle shimmer" ;
+        rdfs:comment "An optical tremolo effect emulation such as often built into a guitar amplifier. This varies the signal volume through an LFO."
         lv2:optionalFeature lv2:hardRTCapable ;
-#        ui:ui  <http://rakarrack.sourceforge.net/effects.html#awha_ui> ;
+#        ui:ui  <http://rakarrack.sourceforge.net/effects.html#Otrem_ui> ;
 
         lv2:port [
                 a lv2:InputPort, lv2:AudioPort ;
@@ -54,7 +54,6 @@
                 lv2:symbol "OUTPUT_R" ;
                 lv2:name "Audio Out R" ;
         ] ;
-
         lv2:port [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 4 ;
@@ -68,34 +67,26 @@
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 5 ;
-                lv2:symbol "WETDRY" ;
-                lv2:name "Wet/Dry" ;
+                lv2:symbol "DEPTH" ;
+                lv2:name "Depth" ;
                 lv2:default 64 ;
                 lv2:minimum 0 ;
                 lv2:maximum 127 ;
                 lv2:portProperty lv2:integer ;
+                rdfs:comment "How much the volume changes from the LFO sweep" ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 6 ;
-                lv2:symbol "PAN" ;
-                lv2:name "Panning" ;
-                lv2:default 0 ;
-                lv2:minimum -64 ;
-                lv2:maximum 63 ;
-                lv2:portProperty lv2:integer ;
-        ], [
-                a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 7 ;
                 lv2:symbol "TEMPO" ;
                 lv2:name "Tempo" ;
-                lv2:default 80 ;
+                lv2:default 33 ;
                 lv2:minimum 1 ;
                 lv2:maximum 600 ;
                 lv2:portProperty lv2:integer ;
                 units:unit units:bpm ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 8 ;
+                lv2:index 7 ;
                 lv2:symbol "RND" ;
                 lv2:name "Randomness" ;
                 lv2:default 0 ;
@@ -104,7 +95,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 9 ;
+                lv2:index 8 ;
                 lv2:symbol "TYPE" ;
                 lv2:name "LFO Type" ;
                 lv2:default 0 ;
@@ -126,62 +117,63 @@
                 lv2:scalePoint [ rdfs:label "Triangle Bottomed Sine"; rdf:value 11 ] ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 10 ;
-                lv2:symbol "STDL" ;
+                lv2:index 9 ;
+                lv2:symbol "STDF" ;
                 lv2:name "LFO L/R Delay" ;
-                lv2:default -2 ;
+                lv2:default 16 ;
+                lv2:minimum -64 ;
+                lv2:maximum 63 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 10 ;
+                lv2:symbol "PAN" ;
+                lv2:name "Panning" ;
+                lv2:default 0 ;
                 lv2:minimum -64 ;
                 lv2:maximum 63 ;
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 11 ;
-                lv2:symbol "DEPTH" ;
-                lv2:name "Depth" ;
-                lv2:default 60 ;
-                lv2:minimum 0 ;
-                lv2:maximum 127 ;
-                lv2:portProperty lv2:integer ;
-        ], [
-                a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 12 ;
-                lv2:symbol "FB" ;
-                lv2:name "Feedback" ;
-                lv2:default 105 ;
-                lv2:minimum 0 ;
-                lv2:maximum 127 ;
-                lv2:portProperty lv2:integer ;
-        ], [
-                a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 13 ;
-                lv2:symbol "DELAY" ;
-                lv2:name "Delay" ;
-                lv2:default 25 ;
-                lv2:minimum 0 ;
-                lv2:maximum 127 ;
-                lv2:portProperty lv2:integer ;
-        ], [
-                a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 14 ;
-                lv2:symbol "LRCR" ;
-                lv2:name "Left/Right Crossover" ;
+                lv2:symbol "INV" ;
+                lv2:name "Invert" ;
                 lv2:default 0 ;
                 lv2:minimum 0 ;
-                lv2:maximum 127 ;
+                lv2:maximum 1 ;
                 lv2:portProperty lv2:integer ;
-        ], [
-                a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 15 ;
-                lv2:symbol "PHASE" ;
-                lv2:name "Phase" ;
-                lv2:default 64 ;
-                lv2:minimum 0 ;
-                lv2:maximum 127 ;
-                lv2:portProperty lv2:integer ;
+                lv2:portProperty lv2:toggled ;
+                rdfs:comment "Switches optical isolator circuit characteristics for a different tone" ;
         ] ;
 	.
 
-<http://rakarrack.sourceforge.net/effects.html#awha:preset:alienwah_1>
+<http://rakarrack.sourceforge.net/effects.html#Otrem:preset:fast>
         a pset:Preset ;
-        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#awha> ;
-        rdfs:seeAlso <alienwah_presets.ttl> .
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Otrem> ;
+        rdfs:seeAlso <otrem_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#Otrem:preset:trem_2>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Otrem> ;
+        rdfs:seeAlso <otrem_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#Otrem:preset:hard_pan>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Otrem> ;
+        rdfs:seeAlso <otrem_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#Otrem:preset:soft_pan>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Otrem> ;
+        rdfs:seeAlso <otrem_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#Otrem:preset:ramp_down>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Otrem> ;
+        rdfs:seeAlso <otrem_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#Otrem:preset:hard_ramp>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Otrem> ;
+        rdfs:seeAlso <otrem_presets.ttl> .
+

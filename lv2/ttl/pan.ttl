@@ -58,6 +58,16 @@
         lv2:port [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 4 ;
+                lv2:symbol "BYPASS" ;
+                lv2:name "Bypass" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 1 ;
+                lv2:portProperty lv2:integer ;
+                lv2:portProperty lv2:toggled ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 5 ;
                 lv2:symbol "WETDRY" ;
                 lv2:name "Wet/Dry" ;
                 lv2:default 64 ;
@@ -66,7 +76,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 5 ;
+                lv2:index 6 ;
                 lv2:symbol "PAN" ;
                 lv2:name "Panning" ;
                 lv2:default 0 ;
@@ -75,7 +85,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 6 ;
+                lv2:index 7 ;
                 lv2:symbol "TEMPO" ;
                 lv2:name "Tempo" ;
                 lv2:default 26 ;
@@ -85,7 +95,7 @@
                 units:unit units:bpm ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 7 ;
+                lv2:index 8 ;
                 lv2:symbol "RND" ;
                 lv2:name "Randomness" ;
                 lv2:default 0 ;
@@ -94,7 +104,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 8 ;
+                lv2:index 9 ;
                 lv2:symbol "TYPE" ;
                 lv2:name "LFO Type" ;
                 lv2:default 0 ;
@@ -116,7 +126,7 @@
                 lv2:scalePoint [ rdfs:label "Triangle Bottomed Sine"; rdf:value 11 ] ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 9 ;
+                lv2:index 10 ;
                 lv2:symbol "STDL" ;
                 lv2:name "LFO L/R Delay" ;
                 lv2:default 0 ;
@@ -125,7 +135,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 10 ;
+                lv2:index 11 ;
                 lv2:symbol "EXTRA_AMOUNT" ;
                 lv2:name "Extra Stereo Amount" ;
                 lv2:default 0 ;
@@ -134,7 +144,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 11 ;
+                lv2:index 12 ;
                 lv2:symbol "AUTO" ;
                 lv2:name "Autopan" ;
                 lv2:default 1 ;
@@ -144,7 +154,7 @@
                 lv2:portProptery lv2:toggled ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 12 ;
+                lv2:index 13 ;
                 lv2:symbol "EXTRA_ON" ;
                 lv2:name "Extra Stereo Enable" ;
                 lv2:default 0 ;

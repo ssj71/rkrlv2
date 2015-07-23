@@ -385,7 +385,9 @@ Harmonizer::changepar (int npar, int value)
         fsetfreq (value);
         break;
     case 5:
-        PSELECT = value;;
+        PSELECT = value;
+        if(!value)
+        	setinterval(Pinterval);
         break;
     case 6:
         Pnote = value;
@@ -401,6 +403,8 @@ Harmonizer::changepar (int npar, int value)
         break;
     case 10:
         setMIDI (value);
+        if(!value)
+    	    setinterval(Pinterval);
         break;
 
 

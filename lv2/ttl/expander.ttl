@@ -57,6 +57,16 @@
         lv2:port [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 4 ;
+                lv2:symbol "BYPASS" ;
+                lv2:name "Bypass" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 1 ;
+                lv2:portProperty lv2:integer ;
+                lv2:portProperty lv2:toggled ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 5 ;
                 lv2:symbol "THRESHOLD" ;
                 lv2:name "Threshold" ;
                 lv2:default -30 ;
@@ -66,7 +76,7 @@
                 units:unit units:db;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 5 ;
+                lv2:index 6 ;
                 lv2:symbol "SHAPE" ;
                 lv2:name "Shape" ;
                 lv2:default 2 ;
@@ -75,7 +85,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 6 ;
+                lv2:index 7 ;
                 lv2:symbol "ATTACK" ;
                 lv2:name "Attack Time" ;
                 lv2:default 20 ;
@@ -85,7 +95,7 @@
                 units:unit units:ms;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 7 ;
+                lv2:index 8 ;
                 lv2:symbol "RELEASE" ;
                 lv2:name "Release Time" ;
                 lv2:default 120 ;
@@ -95,7 +105,7 @@
                 units:unit units:ms;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 8 ;
+                lv2:index 9 ;
                 lv2:symbol "LPF" ;
                 lv2:name "Lowpass Filter" ;
                 lv2:default 3134 ;
@@ -105,7 +115,7 @@
                 units:unit units:hz;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 9 ;
+                lv2:index 10 ;
                 lv2:symbol "HPF" ;
                 lv2:name "Highpass Filter" ;
                 lv2:default 76 ;
@@ -115,7 +125,7 @@
                 units:unit units:hz;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 10 ;
+                lv2:index 11 ;
                 lv2:symbol "OUTPUT" ;
                 lv2:name "Output Gain" ;
                 lv2:default 10 ;

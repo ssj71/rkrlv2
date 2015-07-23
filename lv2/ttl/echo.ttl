@@ -57,6 +57,16 @@
         lv2:port [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 4 ;
+                lv2:symbol "BYPASS" ;
+                lv2:name "Bypass" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 1 ;
+                lv2:portProperty lv2:integer ;
+                lv2:portProperty lv2:toggled ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 5 ;
                 lv2:symbol "WETDRY" ;
                 lv2:name "Wet/Dry" ;
                 lv2:default 67 ;
@@ -65,7 +75,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 5 ;
+                lv2:index 6 ;
                 lv2:symbol "PAN" ;
                 lv2:name "Panning" ;
                 lv2:default 0 ;
@@ -74,7 +84,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 6 ;
+                lv2:index 7 ;
                 lv2:symbol "DELAY" ;
                 lv2:name "Delay" ;
                 lv2:default 565 ;
@@ -84,7 +94,7 @@
                 units:unit units:ms ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 7 ;
+                lv2:index 8 ;
                 lv2:symbol "LR_DELAY" ;
                 lv2:name "Left/Right Delay Offset" ;
                 lv2:default 0 ;
@@ -93,7 +103,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 8 ;
+                lv2:index 9 ;
                 lv2:symbol "LRCr" ;
                 lv2:name "Left/Right Crossover" ;
                 lv2:default 30 ;
@@ -102,7 +112,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 9 ;
+                lv2:index 10 ;
                 lv2:symbol "FEEDBACK" ;
                 lv2:name "Feedback" ;
                 lv2:default 59 ;
@@ -111,7 +121,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 10 ;
+                lv2:index 11 ;
                 lv2:symbol "DAMP" ;
                 lv2:name "Damping" ;
                 lv2:default 0 ;
@@ -120,7 +130,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 11 ;
+                lv2:index 12 ;
                 lv2:symbol "REV" ;
                 lv2:name "Reverse" ;
                 lv2:default 127 ;
@@ -129,7 +139,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 12 ;
+                lv2:index 13 ;
                 lv2:symbol "DIRECT" ;
                 lv2:name "Direct" ;
                 lv2:default 0 ;

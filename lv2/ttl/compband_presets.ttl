@@ -1,0 +1,146 @@
+@prefix atom: <http://lv2plug.in/ns/ext/atom#> .
+@prefix lv2: <http://lv2plug.in/ns/lv2core#> .
+@prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix state: <http://lv2plug.in/ns/ext/state#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+<http://rakarrack.sourceforge.net/effects.html#CompBand:preset:good_start>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#CompBand> ;
+	    rdfs:label "Good Start" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LR" ;
+                pset:value 16.0
+        ], [
+                lv2:symbol "M1R" ;
+                pset:value 16.0
+        ], [
+                lv2:symbol "M2R" ;
+                pset:value 16.0
+        ], [
+                lv2:symbol "HR" ;
+                pset:value 16.0
+        ], [
+                lv2:symbol "LT" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "M1T" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "M2T" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "HT" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LMCR" ;
+                pset:value 1000.0
+        ], [
+                lv2:symbol "MMCR" ;
+                pset:value 5000.0
+        ], [
+                lv2:symbol "MHCR" ;
+                pset:value 10000.0
+        ], [
+                lv2:symbol "GAIN" ;
+                pset:value 48.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#CompBand:preset:loudness>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#CompBand> ;
+	    rdfs:label "Loudness" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 0.0
+        ], [
+                lv2:symbol "LR" ;
+                pset:value 16.0
+        ], [
+                lv2:symbol "M1R" ;
+                pset:value 2.0
+        ], [
+                lv2:symbol "M2R" ;
+                pset:value 2.0
+        ], [
+                lv2:symbol "HR" ;
+                pset:value 4.0
+        ], [
+                lv2:symbol "LT" ;
+                pset:value -16.0
+        ], [
+                lv2:symbol "M1T" ;
+                pset:value 24.0
+        ], [
+                lv2:symbol "M2T" ;
+                pset:value 24.0
+        ], [
+                lv2:symbol "HT" ;
+                pset:value -8.0
+        ], [
+                lv2:symbol "LMCR" ;
+                pset:value 140.0
+        ], [
+                lv2:symbol "MMCR" ;
+                pset:value 1000.0
+        ], [
+                lv2:symbol "MHCR" ;
+                pset:value 5000.0
+        ], [
+                lv2:symbol "GAIN" ;
+                pset:value 48.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#CompBand:preset:loudness2>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#CompBand> ;
+	    rdfs:label "Loudness 2" ;
+        lv2:port [
+                lv2:symbol "WETDRY" ;
+                pset:value 64.0
+        ], [
+                lv2:symbol "LR" ;
+                pset:value 16.0
+        ], [
+                lv2:symbol "M1R" ;
+                pset:value 2.0
+        ], [
+                lv2:symbol "M2R" ;
+                pset:value 2.0
+        ], [
+                lv2:symbol "HR" ;
+                pset:value 2.0
+        ], [
+                lv2:symbol "LT" ;
+                pset:value -32.0
+        ], [
+                lv2:symbol "M1T" ;
+                pset:value 24.0
+        ], [
+                lv2:symbol "M2T" ;
+                pset:value 24.0
+        ], [
+                lv2:symbol "HT" ;
+                pset:value 24.0
+        ], [
+                lv2:symbol "LMCR" ;
+                pset:value 100.0
+        ], [
+                lv2:symbol "MMCR" ;
+                pset:value 1000.0
+        ], [
+                lv2:symbol "MHCR" ;
+                pset:value 5000.0
+        ], [
+                lv2:symbol "GAIN" ;
+                pset:value 48.0
+        ] ;
+	.

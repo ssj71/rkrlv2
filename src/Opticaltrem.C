@@ -26,10 +26,11 @@
 #include <math.h>
 #include "Opticaltrem.h"
 
-Opticaltrem::Opticaltrem (float * efxoutl_, float * efxoutr_)
+Opticaltrem::Opticaltrem (float * efxoutl_, float * efxoutr_, double sample_rate)
 {
     efxoutl = efxoutl_;
     efxoutr = efxoutr_;
+    cSAMPLE_RATE = 1.0f/sample_rate;
 
     R1 = 2700.0f;	   //tremolo circuit series resistance
     Ra = 1000000.0f;  //Cds cell dark resistance.
@@ -55,12 +56,15 @@ Opticaltrem::Opticaltrem (float * efxoutl_, float * efxoutr_)
     oldgr = 0.0f;
     gl = 0.0f;
     gr = 0.0f;
-    cperiod = 1.0f/fPERIOD;
+
+    lfo = new EffectLFO(sample_rate);
+    PERIOD = 256;//best guess until better info comes
 
 }
 
 Opticaltrem::~Opticaltrem ()
 {
+	delete lfo;
 }
 
 
@@ -72,13 +76,13 @@ Opticaltrem::cleanup ()
 };
 
 void
-Opticaltrem::out (float *smpsl, float *smpsr)
+Opticaltrem::out (float *smpsl, float *smpsr, uint32_t period)
 {
 
-    int i;
+    unsigned int i;
     float lfol, lfor, xl, xr, fxl, fxr;
     float rdiff, ldiff;
-    lfo.effectlfoout (&lfol, &lfor);
+    lfo->effectlfoout (&lfol, &lfor);
 
     if(Pinvert) {
     lfol = lfol*fdepth;
@@ -101,8 +105,8 @@ Opticaltrem::out (float *smpsl, float *smpsr)
     lfol = powf(lfol, 1.9f);  //emulate lamp turn on/off characteristic
 
     //lfo interpolation
-    rdiff = (lfor - oldgr)*cperiod;
-    ldiff = (lfol - oldgl)*cperiod;
+    rdiff = (lfor - oldgr)/(float)period;
+    ldiff = (lfol - oldgl)/(float)period;
     gr = lfor;
     gl = lfol;
     oldgr = lfor;
@@ -173,6 +177,7 @@ Opticaltrem::setpreset (int npreset)
 {
     const int PRESET_SIZE = 7;
     const int NUM_PRESETS = 6;
+    int pdata[PRESET_SIZE];
     int presets[NUM_PRESETS][PRESET_SIZE] = {
         //Fast
         {127, 260, 10, 0, 64, 64, 0},
@@ -190,7 +195,7 @@ Opticaltrem::setpreset (int npreset)
     };
 
     if(npreset>NUM_PRESETS-1) {
-        Fpre->ReadPreset(44,npreset-NUM_PRESETS+1);
+        Fpre->ReadPreset(44,npreset-NUM_PRESETS+1, pdata);
         for (int n = 0; n < PRESET_SIZE; n++)
             changepar (n, pdata[n]);
     } else {
@@ -211,20 +216,20 @@ Opticaltrem::changepar (int npar, int value)
         fdepth = 0.5f + ((float) Pdepth)/254.0f;
         break;
     case 1:
-        lfo.Pfreq = value;
-        lfo.updateparams ();
+        lfo->Pfreq = value;
+        lfo->updateparams (PERIOD);
         break;
     case 2:
-        lfo.Prandomness = value;
-        lfo.updateparams ();
+        lfo->Prandomness = value;
+        lfo->updateparams (PERIOD);
         break;
     case 3:
-        lfo.PLFOtype = value;
-        lfo.updateparams ();
+        lfo->PLFOtype = value;
+        lfo->updateparams (PERIOD);
         break;
     case 4:
-        lfo.Pstereo = value;
-        lfo.updateparams ();
+        lfo->Pstereo = value;
+        lfo->updateparams (PERIOD);
         break;
     case 5: // pan
         Ppanning = value;
@@ -260,16 +265,16 @@ Opticaltrem::getpar (int npar)
         return (Pdepth);
         break;
     case 1:
-        return (lfo.Pfreq);
+        return (lfo->Pfreq);
         break;
     case 2:
-        return (lfo.Prandomness);
+        return (lfo->Prandomness);
         break;
     case 3:
-        return (lfo.PLFOtype);
+        return (lfo->PLFOtype);
         break;
     case 4:
-        return (lfo.Pstereo);
+        return (lfo->Pstereo);
         break;
     case 5:
         return (Ppanning); //pan

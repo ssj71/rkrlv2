@@ -53,7 +53,11 @@
 #include"StompBox.h"
 #include"Reverbtron.h"
 #include"Echotron.h"
-
+#include"StereoHarm.h"
+#include"CompBand.h"
+#include"Opticaltrem.h"
+#include"Vibe.h"
+#include"Infinity.h"
 
 //this is the default hopefully hosts don't use periods of more than this, or they will communicate the max bufsize
 #define INTERMEDIATE_BUFSIZE 1024
@@ -66,14 +70,16 @@ typedef struct _RKRLV2
     uint16_t period_max;
     uint8_t loading_file;//flag to indicate that file load work is underway
     uint8_t file_changed;
+    uint8_t prev_bypass;
     RvbFile* rvbfile;//file for reverbtron
-    DlyFile* dlyfile;//file for reverbtron
+    DlyFile* dlyfile;//file for echotron
 
     //ports
     float *input_l_p;
     float *input_r_p;
     float *output_l_p;
     float *output_r_p;
+    float *bypass_p;
     const LV2_Atom_Sequence* atom_in_p;
     LV2_Atom_Sequence* atom_out_p;
     float *param_p[16];
@@ -141,6 +147,11 @@ typedef struct _RKRLV2
     StompBox* stomp;	//33,34
     Reverbtron* revtron;//35
     Echotron* echotron; //36
+    StereoHarm* sharm;  //37
+    CompBand* mbcomp; 	//38
+    Opticaltrem* otrem; //39
+    Vibe* vibe;			//40
+    Infinity* inf;		//41
 } RKRLV2;
 
 enum other_ports
@@ -153,7 +164,7 @@ enum other_ports
 
 // A few helper functions taken from the RKR object
 void
-wetdry_mix (float inl[], float inr[], float outl[], float outr[], float mix, uint32_t period)
+wetdry_mix (RKRLV2* plug, float mix, uint32_t period)
 {
     unsigned int i;
     float v1, v2;
@@ -176,10 +187,25 @@ wetdry_mix (float inl[], float inr[], float outl[], float outr[], float mix, uin
 
     for (i = 0; i < period; i++)
     {
-        outl[i] = inl[i] * v2 + outl[i] * v1;
-        outr[i] = inr[i] * v2 + outr[i] * v1;
+        plug->output_l_p[i] = plug->input_r_p[i] * v2 + plug->output_l_p[i] * v1;
+        plug->output_r_p[i] = plug->input_r_p[i] * v2 + plug->output_r_p[i] * v1;
     };
 
+}
+
+void
+xfade_out (RKRLV2* plug, uint32_t period)
+{
+	unsigned int i;
+	float v = 0;
+	float step = 1/(float)period;
+	//just a linear fade since it's (hopefully correlated)
+    for (i = 0; i < period; i++)
+    {
+    	plug->output_l_p[i] = (1-v)*plug->output_l_p[i] + v*plug->input_l_p[i];
+    	plug->output_r_p[i] = (1-v)*plug->output_r_p[i] + v*plug->input_r_p[i];
+    	v+=step;
+    }
 }
 
 //TODO: make this return error is required feature not supported
@@ -248,7 +274,8 @@ LV2_Handle init_eqlv2(const LV2_Descriptor *descriptor,double sample_freq, const
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 12;
-    plug->effectindex = 0;
+    plug->effectindex = IEQ;
+    plug->prev_bypass = 0;
 
     plug->eq = new EQ(0,0,sample_freq);
 
@@ -279,17 +306,26 @@ void run_eqlv2(LV2_Handle handle, uint32_t nframes)
 
     RKRLV2* plug = (RKRLV2*)handle;
 
-    //check and set changed parameters
-    //eq1 is a little strange for parameters
-    // DON'T USE THIS ONE AS AN EXAMPLE
-    i = 0;
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->eq->cleanup();
+    	plug->prev_bypass = 1;
 
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
+    //check and set changed parameters
+    i = 0;
     val = (int)*plug->param_p[0]+64;//gain
     if(plug->eq->getpar(0) != val)
     {
         plug->eq->changepar(0,val);
     }
-
     val = (int)*plug->param_p[1]+64;//q
     if(plug->eq->getpar(13) != val)
     {
@@ -299,7 +335,6 @@ void run_eqlv2(LV2_Handle handle, uint32_t nframes)
             plug->eq->changepar(j*5+13,val);
         }
     }
-
     for(i=2; i<plug->nparams; i++)
     {
         val = (int)*plug->param_p[i]+64;//various freq. bands
@@ -329,7 +364,8 @@ LV2_Handle init_complv2(const LV2_Descriptor *descriptor,double sample_freq, con
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 9;
-    plug->effectindex = 1;
+    plug->effectindex = ICOMP;
+    plug->prev_bypass = 0;
 
     plug->comp = new Compressor(0,0, sample_freq);
 
@@ -342,6 +378,19 @@ void run_complv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->comp->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
 
     //check and set changed parameters
     for(i=0; i<plug->nparams; i++)
@@ -373,7 +422,8 @@ LV2_Handle init_distlv2(const LV2_Descriptor *descriptor,double sample_freq, con
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 12;
-    plug->effectindex = 2;
+    plug->effectindex = IDIST;
+    plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
 
@@ -389,6 +439,20 @@ void run_distlv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->dist->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     //check and set changed parameters
     i=0;
@@ -425,7 +489,7 @@ void run_distlv2(LV2_Handle handle, uint32_t nframes)
     plug->dist->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->dist->outvolume, nframes);
+    wetdry_mix(plug, plug->dist->outvolume, nframes);
 
     return;
 }
@@ -436,7 +500,8 @@ LV2_Handle init_echolv2(const LV2_Descriptor *descriptor,double sample_freq, con
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 9;
-    plug->effectindex = 3;
+    plug->effectindex = IECHO;
+    plug->prev_bypass = 0;
 
     plug->echo = new Echo(0,0,sample_freq);
 
@@ -449,6 +514,20 @@ void run_echolv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->echo->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     //check and set changed parameters
     i=0;
@@ -492,7 +571,7 @@ void run_echolv2(LV2_Handle handle, uint32_t nframes)
     plug->echo->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->echo->outvolume, nframes);
+    wetdry_mix(plug, plug->echo->outvolume, nframes);
 
     return;
 }
@@ -503,7 +582,8 @@ LV2_Handle init_choruslv2(const LV2_Descriptor *descriptor,double sample_freq, c
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 12;
-    plug->effectindex = 4;
+    plug->effectindex = ICHORUS;
+    plug->prev_bypass = 0;
 
     plug->chorus = new Chorus(0,0,sample_freq);
 
@@ -516,6 +596,20 @@ void run_choruslv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->chorus->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     //LFO effects require period be set before setting other params
     plug->chorus->PERIOD = nframes;
@@ -572,7 +666,7 @@ void run_choruslv2(LV2_Handle handle, uint32_t nframes)
     plug->chorus->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->chorus->outvolume, nframes);
+    wetdry_mix(plug, plug->chorus->outvolume, nframes);
 
     return;
 }
@@ -583,7 +677,8 @@ LV2_Handle init_aphaselv2(const LV2_Descriptor *descriptor,double sample_freq, c
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 13;
-    plug->effectindex = 5;
+    plug->effectindex = IAPHASE;
+    plug->prev_bypass = 0;
 
     plug->aphase = new Analog_Phaser(0,0,sample_freq);
 
@@ -596,6 +691,20 @@ void run_aphaselv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->aphase->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     //LFO effects require period be set before setting other params
     plug->aphase->PERIOD = nframes;
@@ -643,7 +752,7 @@ void run_aphaselv2(LV2_Handle handle, uint32_t nframes)
     plug->aphase->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->aphase->outvolume, nframes);
+    wetdry_mix(plug, plug->aphase->outvolume, nframes);
 
     return;
 }
@@ -654,7 +763,8 @@ LV2_Handle init_harmnomidlv2(const LV2_Descriptor *descriptor,double sample_freq
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 10;
-    plug->effectindex = 6;
+    plug->effectindex = IHARM_NM;
+    plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
 
@@ -674,6 +784,20 @@ void run_harmnomidlv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->harm->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     //check and set changed parameters
     i = 0;
@@ -762,8 +886,7 @@ void run_harmnomidlv2(LV2_Handle handle, uint32_t nframes)
     plug->harm->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p,
-               plug->harm->outvolume, nframes);
+    wetdry_mix(plug, plug->harm->outvolume, nframes);
 
     return;
 }
@@ -775,7 +898,8 @@ LV2_Handle init_exciterlv2(const LV2_Descriptor *descriptor,double sample_freq, 
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 13;
-    plug->effectindex = 7;
+    plug->effectindex = IEXCITER;
+    plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
 
@@ -790,6 +914,20 @@ void run_exciterlv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->exciter->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     //check and set changed parameters
     for(i=0; i<plug->nparams; i++)
@@ -821,7 +959,8 @@ LV2_Handle init_panlv2(const LV2_Descriptor *descriptor,double sample_freq, cons
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 9;
-    plug->effectindex = 8;
+    plug->effectindex = IPAN;
+    plug->prev_bypass = 0;
 
     plug->pan = new Pan(0,0,sample_freq);
 
@@ -834,6 +973,20 @@ void run_panlv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->pan->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     //LFO effects require period be set before setting other params
     plug->pan->PERIOD = nframes;
@@ -881,7 +1034,7 @@ void run_panlv2(LV2_Handle handle, uint32_t nframes)
     plug->pan->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->pan->outvolume, nframes);
+    wetdry_mix(plug, plug->pan->outvolume, nframes);
 
     return;
 }
@@ -892,7 +1045,8 @@ LV2_Handle init_alienlv2(const LV2_Descriptor *descriptor,double sample_freq, co
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 11;
-    plug->effectindex = 9;
+    plug->effectindex = IAWAH;
+    plug->prev_bypass = 0;
 
     plug->alien = new Alienwah(0,0,sample_freq);
 
@@ -905,6 +1059,20 @@ void run_alienlv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->alien->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     //LFO effects require period be set before setting other params
     plug->alien->PERIOD = nframes;
@@ -952,7 +1120,7 @@ void run_alienlv2(LV2_Handle handle, uint32_t nframes)
     plug->alien->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->alien->outvolume, nframes);
+    wetdry_mix(plug, plug->alien->outvolume, nframes);
 
     return;
 }
@@ -963,7 +1131,8 @@ LV2_Handle init_revelv2(const LV2_Descriptor *descriptor,double sample_freq, con
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 10;
-    plug->effectindex = 10;
+    plug->effectindex = IREV;
+    plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
 
@@ -978,6 +1147,20 @@ void run_revelv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->reve->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     //check and set changed parameters
     i=0;
@@ -1017,7 +1200,7 @@ void run_revelv2(LV2_Handle handle, uint32_t nframes)
     plug->reve->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->reve->outvolume, nframes);
+    wetdry_mix(plug, plug->reve->outvolume, nframes);
 
     return;
 }
@@ -1028,7 +1211,8 @@ LV2_Handle init_eqplv2(const LV2_Descriptor *descriptor,double sample_freq, cons
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 10;
-    plug->effectindex = 11;
+    plug->effectindex = IEQP;
+    plug->prev_bypass = 0;
 
     plug->eq = new EQ(0,0,sample_freq);
 
@@ -1049,6 +1233,20 @@ void run_eqplv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->eq->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     //check and set changed parameters
     i = 0;
@@ -1104,7 +1302,8 @@ LV2_Handle init_cablv2(const LV2_Descriptor *descriptor,double sample_freq, cons
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 10;
-    plug->effectindex = 12;
+    plug->effectindex = ICAB;
+    plug->prev_bypass = 0;
 
     plug->cab = new Cabinet(0,0,sample_freq);
 
@@ -1116,6 +1315,20 @@ void run_cablv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->cab->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     //check and set changed parameters
     val = (int)*plug->param_p[0]+64;//gain
@@ -1150,7 +1363,8 @@ LV2_Handle init_mdellv2(const LV2_Descriptor *descriptor,double sample_freq, con
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 13;
-    plug->effectindex = 13;
+    plug->effectindex = IMDEL;
+    plug->prev_bypass = 0;
 
     plug->mdel = new MusicDelay (0,0,sample_freq);
 
@@ -1163,6 +1377,20 @@ void run_mdellv2(LV2_Handle handle, uint32_t nframes)
     uint8_t i;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->mdel->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     //check and set changed parameters
     i = 0;
@@ -1208,7 +1436,7 @@ void run_mdellv2(LV2_Handle handle, uint32_t nframes)
     plug->mdel->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->mdel->outvolume, nframes);
+    wetdry_mix(plug, plug->mdel->outvolume, nframes);
 
 
     return;
@@ -1220,7 +1448,8 @@ LV2_Handle init_wahlv2(const LV2_Descriptor *descriptor,double sample_freq, cons
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 11;
-    plug->effectindex = 14;
+    plug->effectindex = IWAH;
+    plug->prev_bypass = 0;
 
 
     plug->wah = new DynamicFilter(0,0,sample_freq);
@@ -1234,6 +1463,20 @@ void run_wahlv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->wah->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     //LFO effects require period be set before setting other params
     plug->wah->PERIOD = nframes;
@@ -1281,7 +1524,7 @@ void run_wahlv2(LV2_Handle handle, uint32_t nframes)
     plug->wah->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->wah->outvolume, nframes);
+    wetdry_mix(plug, plug->wah->outvolume, nframes);
 
     return;
 }
@@ -1292,7 +1535,8 @@ LV2_Handle init_derelv2(const LV2_Descriptor *descriptor,double sample_freq, con
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 12;
-    plug->effectindex = 15;
+    plug->effectindex = IDERE;
+    plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
 
@@ -1308,6 +1552,20 @@ void run_derelv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->dere->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     //check and set changed parameters
     i=0;
@@ -1339,7 +1597,7 @@ void run_derelv2(LV2_Handle handle, uint32_t nframes)
     plug->dere->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->dere->outvolume, nframes);
+    wetdry_mix(plug, plug->dere->outvolume, nframes);
 
     return;
 }
@@ -1350,7 +1608,8 @@ LV2_Handle init_valvelv2(const LV2_Descriptor *descriptor,double sample_freq, co
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 13;
-    plug->effectindex = 16;
+    plug->effectindex = IVALVE;
+    plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
 
@@ -1365,6 +1624,20 @@ void run_valvelv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->valve->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     //check and set changed parameters
     i=0;
@@ -1396,7 +1669,7 @@ void run_valvelv2(LV2_Handle handle, uint32_t nframes)
     plug->valve->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->valve->outvolume, nframes);
+    wetdry_mix(plug, plug->valve->outvolume, nframes);
 
     return;
 }
@@ -1407,7 +1680,8 @@ LV2_Handle init_dflangelv2(const LV2_Descriptor *descriptor,double sample_freq, 
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 15;
-    plug->effectindex = 17;
+    plug->effectindex = IDFLANGE;
+    plug->prev_bypass = 0;
 
     plug->dflange = new Dflange(0,0, sample_freq);
 
@@ -1420,6 +1694,20 @@ void run_dflangelv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->dflange->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     //lfo effects must set period before params
     plug->dflange->PERIOD = nframes;
@@ -1464,7 +1752,8 @@ LV2_Handle init_ringlv2(const LV2_Descriptor *descriptor,double sample_freq, con
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 13;
-    plug->effectindex = 18;
+    plug->effectindex = IRING;
+    plug->prev_bypass = 0;
 
     //magic numbers: shift qual 4, downsample 5, up qual 4, down qual 2,
     plug->ring = new Ring(0,0, sample_freq);
@@ -1479,6 +1768,20 @@ void run_ringlv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->ring->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     //check and set changed parameters
     i = 0;
@@ -1534,8 +1837,7 @@ void run_ringlv2(LV2_Handle handle, uint32_t nframes)
     plug->ring->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p,
-               plug->ring->outvolume, nframes);
+    wetdry_mix(plug, plug->ring->outvolume, nframes);
 
     return;
 }
@@ -1547,7 +1849,8 @@ LV2_Handle init_mbdistlv2(const LV2_Descriptor *descriptor,double sample_freq, c
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 15;
-    plug->effectindex = 19;
+    plug->effectindex = IMBDIST;
+    plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
 
@@ -1563,6 +1866,20 @@ void run_mbdistlv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->mbdist->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     //check and set changed parameters
     i=0;
@@ -1594,7 +1911,7 @@ void run_mbdistlv2(LV2_Handle handle, uint32_t nframes)
     plug->mbdist->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->mbdist->outvolume, nframes);
+    wetdry_mix(plug, plug->mbdist->outvolume, nframes);
 
     return;
 }
@@ -1605,7 +1922,8 @@ LV2_Handle init_arplv2(const LV2_Descriptor *descriptor,double sample_freq, cons
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 11;
-    plug->effectindex = 20;
+    plug->effectindex = IARPIE;
+    plug->prev_bypass = 0;
 
     plug->arp = new Arpie(0,0,sample_freq);
 
@@ -1618,6 +1936,20 @@ void run_arplv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->arp->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     //check and set changed parameters
     i=0;
@@ -1661,7 +1993,7 @@ void run_arplv2(LV2_Handle handle, uint32_t nframes)
     plug->arp->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->arp->outvolume, nframes);
+    wetdry_mix(plug, plug->arp->outvolume, nframes);
 
     return;
 }
@@ -1672,7 +2004,8 @@ LV2_Handle init_expandlv2(const LV2_Descriptor *descriptor,double sample_freq, c
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 7;
-    plug->effectindex = 21;
+    plug->effectindex = IEXPAND;
+    plug->prev_bypass = 0;
 
     plug->expand = new Expander(0,0, sample_freq);
 
@@ -1685,6 +2018,20 @@ void run_expandlv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->expand->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     //check and set changed parameters
     for(i=0; i<plug->nparams; i++)
@@ -1716,7 +2063,8 @@ LV2_Handle init_shuflv2(const LV2_Descriptor *descriptor,double sample_freq, con
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 11;
-    plug->effectindex = 22;
+    plug->effectindex = ISHUFF;
+    plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
 
@@ -1731,6 +2079,20 @@ void run_shuflv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->shuf->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     //check and set changed parameters
     for(i=0; i<plug->nparams; i++) //rest are not offset
@@ -1750,7 +2112,7 @@ void run_shuflv2(LV2_Handle handle, uint32_t nframes)
     plug->shuf->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->shuf->outvolume, nframes);
+    wetdry_mix(plug, plug->shuf->outvolume, nframes);
 
     return;
 }
@@ -1762,7 +2124,8 @@ LV2_Handle init_synthlv2(const LV2_Descriptor *descriptor,double sample_freq, co
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 16;
-    plug->effectindex = 23;
+    plug->effectindex = ISYNTH;
+    plug->prev_bypass = 0;
 
     plug->synth = new Synthfilter(0,0,sample_freq);
 
@@ -1775,6 +2138,20 @@ void run_synthlv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->synth->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     //LFO effects require period be set before setting other params
     plug->synth->PERIOD = nframes;
@@ -1810,7 +2187,7 @@ void run_synthlv2(LV2_Handle handle, uint32_t nframes)
     plug->synth->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->synth->outvolume, nframes);
+    wetdry_mix(plug, plug->synth->outvolume, nframes);
 
     return;
 }
@@ -1821,7 +2198,8 @@ LV2_Handle init_mbvollv2(const LV2_Descriptor *descriptor,double sample_freq, co
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 14;
-    plug->effectindex = 24;
+    plug->effectindex = IMBVOL;
+    plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
 
@@ -1836,6 +2214,20 @@ void run_mbvollv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->mbvol->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     plug->mbvol->PERIOD = nframes;
 
@@ -1883,7 +2275,7 @@ void run_mbvollv2(LV2_Handle handle, uint32_t nframes)
     plug->mbvol->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->mbvol->outvolume, nframes);
+    wetdry_mix(plug, plug->mbvol->outvolume, nframes);
 
     return;
 }
@@ -1894,7 +2286,8 @@ LV2_Handle init_mutrolv2(const LV2_Descriptor *descriptor,double sample_freq, co
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 19;
-    plug->effectindex = 25;
+    plug->effectindex = IMUTRO;
+    plug->prev_bypass = 0;
 
 
     plug->mutro = new RyanWah(0,0,sample_freq);
@@ -1908,6 +2301,20 @@ void run_mutrolv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->mutro->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     plug->mutro->PERIOD = nframes;
 
@@ -1950,7 +2357,7 @@ void run_mutrolv2(LV2_Handle handle, uint32_t nframes)
     plug->mutro->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->mutro->outvolume, nframes);
+    wetdry_mix(plug, plug->mutro->outvolume, nframes);
 
     return;
 }
@@ -1961,7 +2368,8 @@ LV2_Handle init_echoverselv2(const LV2_Descriptor *descriptor,double sample_freq
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 10;
-    plug->effectindex = 26;
+    plug->effectindex = IECHOVERSE;
+    plug->prev_bypass = 0;
 
     plug->echoverse = new RBEcho(0,0,sample_freq);
 
@@ -1974,6 +2382,20 @@ void run_echoverselv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->echoverse->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     //check and set changed parameters
     i=0;
@@ -2019,7 +2441,7 @@ void run_echoverselv2(LV2_Handle handle, uint32_t nframes)
     plug->echoverse->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->echoverse->outvolume, nframes);
+    wetdry_mix(plug, plug->echoverse->outvolume, nframes);
 
     return;
 }
@@ -2030,7 +2452,8 @@ LV2_Handle init_coillv2(const LV2_Descriptor *descriptor,double sample_freq, con
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 7;
-    plug->effectindex = 27;
+    plug->effectindex = ICOIL;
+    plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
 
@@ -2045,6 +2468,20 @@ void run_coillv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->coil->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     //check and set changed parameters
     i=0;
@@ -2081,7 +2518,8 @@ LV2_Handle init_shelflv2(const LV2_Descriptor *descriptor,double sample_freq, co
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 5;
-    plug->effectindex = 28;
+    plug->effectindex = ISHELF;
+    plug->prev_bypass = 0;
 
     plug->shelf = new ShelfBoost(0,0,sample_freq);
 
@@ -2094,6 +2532,20 @@ void run_shelflv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->shelf->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     //check and set changed parameters
     for(i=0; i<plug->nparams; i++)
@@ -2124,7 +2576,8 @@ LV2_Handle init_voclv2(const LV2_Descriptor *descriptor,double sample_freq, cons
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 7;
-    plug->effectindex = 29;
+    plug->effectindex = IVOC;
+    plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
 
@@ -2140,6 +2593,20 @@ void run_voclv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->voc->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     //check and set changed parameters
     i=0;
@@ -2172,7 +2639,7 @@ void run_voclv2(LV2_Handle handle, uint32_t nframes)
     plug->voc->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->voc->outvolume, nframes);
+    wetdry_mix(plug, plug->voc->outvolume, nframes);
 
     //and set VU meter
     *plug->param_p[VOCODER_VU_LEVEL] = plug->voc->vulevel;
@@ -2186,7 +2653,8 @@ LV2_Handle init_suslv2(const LV2_Descriptor *descriptor,double sample_freq, cons
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 2;
-    plug->effectindex = 30;
+    plug->effectindex = ISUS;
+    plug->prev_bypass = 0;
 
 
     plug->sus = new Sustainer(0,0,sample_freq);
@@ -2200,6 +2668,20 @@ void run_suslv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->eq->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     //check and set changed parameters
     for(i=0; i<plug->nparams; i++)
@@ -2231,7 +2713,8 @@ LV2_Handle init_seqlv2(const LV2_Descriptor *descriptor,double sample_freq, cons
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 15;
-    plug->effectindex = 31;
+    plug->effectindex = ISEQ;
+    plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
 
@@ -2247,6 +2730,20 @@ void run_seqlv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->seq->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     //check and set changed parameters
     for(i=0; i<10; i++)
@@ -2279,7 +2776,7 @@ void run_seqlv2(LV2_Handle handle, uint32_t nframes)
     plug->seq->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->seq->outvolume, nframes);
+    wetdry_mix(plug, plug->seq->outvolume, nframes);
 
     return;
 }
@@ -2290,7 +2787,8 @@ LV2_Handle init_shiftlv2(const LV2_Descriptor *descriptor,double sample_freq, co
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 10;
-    plug->effectindex = 32;
+    plug->effectindex = ISHIFT;
+    plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
 
@@ -2306,6 +2804,20 @@ void run_shiftlv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->shift->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     //check and set changed parameters
     i=0;
@@ -2339,7 +2851,7 @@ void run_shiftlv2(LV2_Handle handle, uint32_t nframes)
     plug->shift->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->shift->outvolume, nframes);
+    wetdry_mix(plug, plug->shift->outvolume, nframes);
 
     return;
 }
@@ -2350,7 +2862,8 @@ LV2_Handle init_stomplv2(const LV2_Descriptor *descriptor,double sample_freq, co
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 6;
-    plug->effectindex = 33;
+    plug->effectindex = ISTOMP;
+    plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
 
@@ -2366,6 +2879,20 @@ void run_stomplv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->stomp->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     //check and set changed parameters
     for(i=0; i<plug->nparams; i++)
@@ -2397,7 +2924,8 @@ LV2_Handle init_stomp_fuzzlv2(const LV2_Descriptor *descriptor,double sample_fre
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 5;
-    plug->effectindex = 34;
+    plug->effectindex = IFUZZ;
+    plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
 
@@ -2414,7 +2942,8 @@ LV2_Handle init_revtronlv2(const LV2_Descriptor *descriptor,double sample_freq, 
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 14;
-    plug->effectindex = 35;
+    plug->effectindex = IREVTRON;
+    plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
     if(!plug->scheduler || !plug->urid_map)
@@ -2438,6 +2967,20 @@ void run_revtronlv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->revtron->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     //check and set changed parameters
     for(i=0; i<4; i++)//skip user
@@ -2548,7 +3091,7 @@ void run_revtronlv2(LV2_Handle handle, uint32_t nframes)
     plug->revtron->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->revtron->outvolume, nframes);
+    wetdry_mix(plug, plug->revtron->outvolume, nframes);
 
     return;
 }
@@ -2657,7 +3200,8 @@ LV2_Handle init_echotronlv2(const LV2_Descriptor *descriptor,double sample_freq,
     RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
 
     plug->nparams = 13;
-    plug->effectindex = 36;
+    plug->effectindex = IECHOTRON;
+    plug->prev_bypass = 0;
 
     getFeatures(plug,host_features);
     if(!plug->scheduler || !plug->urid_map)
@@ -2681,6 +3225,20 @@ void run_echotronlv2(LV2_Handle handle, uint32_t nframes)
     int val;
 
     RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->echotron->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
 
     //check and set changed parameters
     i=0;
@@ -2808,7 +3366,7 @@ void run_echotronlv2(LV2_Handle handle, uint32_t nframes)
     plug->echotron->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->echotron->outvolume, nframes);
+    wetdry_mix(plug, plug->echotron->outvolume, nframes);
 
     return;
 }
@@ -2912,8 +3470,456 @@ static const void* echotron_extension_data(const char* uri)
 }
 
 
+//////// stereo harmonizer /////////
+LV2_Handle init_sharmnomidlv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 11;
+    plug->effectindex = ISHARM_NM;
+    plug->prev_bypass = 0;
+
+    getFeatures(plug,host_features);
+
+    //magic numbers: shift qual 4, downsample 5, up qual 4, down qual 2,
+    plug->sharm = new StereoHarm(0,0,4,5,4,2, plug->period_max, sample_freq);
+    plug->noteID = new Recognize(0,0,.6, sample_freq, 440.0);//.6 is default trigger value
+    plug->chordID = new RecChord();
+
+
+
+    return plug;
+}
+
+void run_sharmnomidlv2(LV2_Handle handle, uint32_t nframes)
+{
+    int i;
+    int val;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->sharm->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
+
+    //check and set changed parameters
+    i = 0;
+    val = (int)*plug->param_p[i];// 0 wet/dry
+    if(plug->sharm->getpar(i) != val)
+    {
+        plug->sharm->changepar(i,val);
+    }
+    i++;
+    val = (int)*plug->param_p[i] + 64;// 1 gain l
+    if(plug->sharm->getpar(i) != val)
+    {
+        plug->sharm->changepar(i,val);
+    }
+    i++;
+    val = (int)*plug->param_p[i] + 12;// 2 interval l
+    if(plug->sharm->getpar(i) != val)
+    {
+        plug->sharm->changepar(i,val);
+    }
+    i++;
+    val = (int)*plug->param_p[i];// 3 chroma l
+    if(plug->sharm->getpar(i) != val)
+    {
+        plug->sharm->changepar(i,val);
+    }
+    i++;
+    val = (int)*plug->param_p[i] + 64;// 4 gain r
+    if(plug->sharm->getpar(i) != val)
+    {
+        plug->sharm->changepar(i,val);
+    }
+    i++;
+    val = (int)*plug->param_p[i] + 12;// 5 interval r
+    if(plug->sharm->getpar(i) != val)
+    {
+        plug->sharm->changepar(i,val);
+    }
+    for(i++; i<10; i++) // 6-11
+    {
+        val = (int)*plug->param_p[i];
+        if(plug->sharm->getpar(i) != val)
+        {
+            plug->sharm->changepar(i,val);
+        }
+    }
+// skip midi mode, not implementing midi here
+//    val = (int)*plug->param_p[i];// 10 midi mode
+//    if(plug->aphase->getpar(i) != val)
+//    {
+//        plug->aphase->changepar(i,val);
+//        if(!val) plug->harm->changepar(3,plug->harm->getpar(3));
+//    }
+    val = (int)*plug->param_p[i];// 11 lr cr.
+    if(plug->sharm->getpar(i+1) != val)
+    {
+        plug->sharm->changepar(i+1,val);
+    }
+    /*
+    see Chord() in rkr.fl
+    harmonizer, need recChord and recNote.
+    see process.C ln 1507
+    */
+
+    //TODO may need to make sure input is over some threshold
+    if(plug->sharm->mira && plug->sharm->PSELECT)
+    {
+        plug->noteID->schmittFloat(plug->input_l_p,plug->input_r_p,nframes);
+        if(plug->noteID->reconota != -1 && plug->noteID->reconota != plug->noteID->last)
+        {
+            if(plug->noteID->afreq > 0.0)
+            {
+                plug->chordID->Vamos(1,plug->sharm->Pintervall - 12,plug->noteID->reconota);
+                plug->chordID->Vamos(2,plug->sharm->Pintervalr - 12,plug->noteID->reconota);
+                plug->sharm->r_ratiol = plug->chordID->r__ratio[1];//pass the found ratio
+                plug->sharm->r_ratior = plug->chordID->r__ratio[2];//pass the found ratio
+            }
+        }
+    }
+    //now set out ports and global period size
+    plug->sharm->efxoutl = plug->output_l_p;
+    plug->sharm->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->sharm->out(plug->input_l_p,plug->input_r_p,nframes);
+
+    //and for whatever reason we have to do the wet/dry mix ourselves
+    wetdry_mix(plug, plug->sharm->outvolume, nframes);
+
+    return;
+}
+
+#if(0)
+//////// harmonizer /////////
+LV2_Handle init_harmlv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 11;
+    plug->effectindex = IHARM;
+    plug->prev_bypass = 0;
+
+    getFeatures(plug,host_features);
+
+    //magic numbers: shift qual 4, downsample 5, up qual 4, down qual 2,
+    plug->harm = new Harmonizer(0,0,4,5,4,2, plug->period_max, sample_freq);
+    plug->noteID = new Recognize(0,0,.6, sample_freq, 440.0);//.6 is default trigger value
+    plug->chordID = new RecChord();
+
+
+
+    return plug;
+}
+
+void run_harmlv2(LV2_Handle handle, uint32_t nframes)
+{
+    int i;
+    int val;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->harm->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
+
+    //check and set changed parameters
+    i = 0;
+    val = (int)*plug->param_p[i];// 0 wet/dry
+    if(plug->harm->getpar(i) != val)
+    {
+        plug->harm->changepar(i,val);
+    }
+    for(i++; i<3; i++) //1-2
+    {
+        val = (int)*plug->param_p[i] + 64;
+        if(plug->harm->getpar(i+1) != val)
+        {
+            plug->harm->changepar(i+1,val);
+        }
+    }
+    val = (int)*plug->param_p[i] + 12;// 3 interval
+    if(plug->harm->getpar(i) != val)
+    {
+        plug->harm->changepar(i,val);
+    }
+    i++;
+    val = (int)*plug->param_p[i];//4 filter freq
+    if(plug->harm->getpar(i) != val)
+    {
+        plug->harm->changepar(i,val);
+    }
+    i++;
+    val = (int)*plug->param_p[i];//5 select mode
+    if(plug->harm->getpar(i) != val)
+    {
+        plug->harm->changepar(i,val);
+        plug->chordID->cleanup();
+        if(!val) plug->harm->changepar(3,plug->harm->getpar(3));
+    }
+    for(i++; i<8; i++) //6-7
+    {
+        val = (int)*plug->param_p[i];
+        if(plug->harm->getpar(i) != val)
+        {
+            plug->harm->changepar(i,val);
+            plug->chordID->ctipo = plug->harm->getpar(7);//set chord type
+            plug->chordID->fundi = plug->harm->getpar(6);//set root note
+            plug->chordID->cc = 1;//mark chord has changed
+        }
+    }
+    for(; i<10; i++) // 8-9
+    {
+        val = (int)*plug->param_p[i] + 64;
+        if(plug->harm->getpar(i+1) != val)
+        {
+            plug->harm->changepar(i+1,val);
+        }
+    }
+    val = (int)*plug->param_p[i];// 10 midi mode
+    if(plug->aphase->getpar(i) != val)
+    {
+        plug->aphase->changepar(i,val);
+    }
+    /*
+    see Chord() in rkr.fl
+    harmonizer, need recChord and recNote.
+    see process.C ln 1507
+    */
+
+    if(val)//midi mode
+    {
+    	//get midi inputs
+    	//Not sample accurate at this time
+        LV2_ATOM_SEQUENCE_FOREACH( plug->atom_in_p, ev)
+        {
+            if (ev->body.type == plug->URIDs.midi_MidiEvent)
+            {
+                uint8_t* msg = (uint8_t*)&ev->body;
+                if(msg[0] == 0x90)//note on channel 1
+                {
+                    if(msg[2] == 0)
+                    {
+                        msg[0] = 0x80;
+                    }
+                    else
+                    {
+                        for(i=0;i<POLY;i++)
+                        {
+                            if(!plug->chordID->note_active[i])
+                            {
+                                plug->chordID->note_active[i] = 1;
+                                plug->chordID->rnote[i] = msg[1];
+                                plug->chordID->MiraChord ();
+                                i = POLY:
+                            }
+                        }
+                    }
+                }
+                if(msg[0] == 0x80)//note off channel 1
+                {
+                    for(i=0;i<POLY;i++)
+                    {
+                        if(plug->chordID->note_active[i] && plug->chordID->rnote[i] == msg[1])
+                        {
+                            plug->chordID->note_active[i] = 0;
+                            i = POLY;
+                        }
+                    }
+                }
+             }//atom is object
+        }//each atom in sequence
+    }
+    //TODO may need to make sure input is over some threshold
+    if(plug->harm->mira && plug->harm->PSELECT)
+    {
+        plug->noteID->schmittFloat(plug->input_l_p,plug->input_r_p,nframes);
+        if(plug->noteID->reconota != -1 && plug->noteID->reconota != plug->noteID->last)
+        {
+            if(plug->noteID->afreq > 0.0)
+            {
+                plug->chordID->Vamos(0,plug->harm->Pinterval - 12,plug->noteID->reconota);
+                plug->harm->r_ratio = plug->chordID->r__ratio[0];//pass the found ratio
+            }
+        }
+    }
+
+    //now set out ports and global period size
+    plug->harm->efxoutl = plug->output_l_p;
+    plug->harm->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->harm->out(plug->input_l_p,plug->input_r_p,nframes);
+
+    //and for whatever reason we have to do the wet/dry mix ourselves
+    wetdry_mix(plug, plug->harm->outvolume, nframes);
+
+    return;
+}
+#endif
+
+///// MB comp /////////
+LV2_Handle init_mbcomplv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 13;
+    plug->effectindex = IMBCOMP;
+    plug->prev_bypass = 0;
+
+    getFeatures(plug,host_features);
+
+    plug->mbcomp = new CompBand(0,0, sample_freq, plug->period_max);
+
+    return plug;
+}
+
+void run_mbcomplv2(LV2_Handle handle, uint32_t nframes)
+{
+    int i;
+    int val;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->mbcomp->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
+    //check and set changed parameters
+    for(i=0; i<plug->nparams; i++)
+    {
+        val = (int)*plug->param_p[i];
+        if(plug->mbcomp->getpar(i) != val)
+        {
+            plug->mbcomp->changepar(i,val);
+        }
+    }
+
+    //now set out ports
+    plug->mbcomp->efxoutl = plug->output_l_p;
+    plug->mbcomp->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->mbcomp->out(plug->output_l_p,plug->output_r_p,nframes);
+
+    //and for whatever reason we have to do the wet/dry mix ourselves
+    wetdry_mix(plug, plug->mbcomp->outvolume, nframes);
+
+    return;
+}
+
+///// OptTrem /////////
+LV2_Handle init_otremlv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 6;
+    plug->effectindex = IOPTTREM;
+    plug->prev_bypass = 0;
+
+    getFeatures(plug,host_features);
+
+
+    plug->otrem = new Opticaltrem(0,0, sample_freq);
+
+    return plug;
+}
+
+void run_otremlv2(LV2_Handle handle, uint32_t nframes)
+{
+    int i;
+    int val;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p)
+    {
+    	if(plug->prev_bypass)
+    		plug->otrem->cleanup();
+    	plug->prev_bypass = 1;
+
+    	//copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+    plug->prev_bypass = 0;
+
+
+    //LFO effects require period be set before setting other params
+    plug->otrem->PERIOD = nframes;
+
+    //check and set changed parameters
+    for(i=0; i<4; i++)//0-4
+    {
+        val = (int)*plug->param_p[i];
+        if(plug->otrem->getpar(i) != val)
+        {
+            plug->otrem->changepar(i,val);
+        }
+    }
+    for(; i<6; i++)//4-5 pan and st del
+    {
+        val = (int)*plug->param_p[i]+64;
+        if(plug->otrem->getpar(i) != val)
+        {
+            plug->otrem->changepar(i,val);
+        }
+    }
+    val = (int)*plug->param_p[i];//6 invert
+    if(plug->otrem->getpar(i) != val)
+    {
+        plug->otrem->changepar(i,val);
+    }
+
+    //optotrem does it inline
+    memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+    memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+
+    //now set out ports
+    plug->otrem->efxoutl = plug->output_l_p;
+    plug->otrem->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->otrem->out(plug->output_l_p,plug->output_r_p,nframes);
+
+    return;
+}
+
 /////////////////////////////////
-///////// END OF FX /////////////
+//       END OF FX
 /////////////////////////////////
 
 
@@ -2923,118 +3929,126 @@ void cleanup_rkrlv2(LV2_Handle handle)
     RKRLV2* plug = (RKRLV2*)handle;
     switch(plug->effectindex)
     {
-    case 0:
-    case 11:
+    case IEQ:
+    case IEQP:
         delete plug->eq;//eql, eqp, cabinet
         break;
-    case 1:
+    case ICOMP:
         delete plug->comp;
         break;
-    case 2:
+    case IDIST:
         delete plug->dist;
         break;
-    case 3:
+    case IECHO:
         delete plug->echo;
         break;
-    case 4:
+    case ICHORUS:
         delete plug->chorus;
         break;
-    case 5:
+    case IAPHASE:
         delete plug->aphase;
         break;
-    case 6:
+    case IHARM_NM:
         delete plug->harm;
         delete plug->noteID;
         delete plug->chordID;
         break;
-    case 7:
+    case IEXCITER:
         delete plug->exciter;
         break;
-    case 8:
+    case IPAN:
         delete plug->pan;
         break;
-    case 9:
+    case IAWAH:
         delete plug->alien;
         break;
-    case 10:
+    case IREV:
         delete plug->reve;
         break;
-    case 12:
+    case ICAB:
         delete plug->cab;
         break;
-    case 13:
+    case IMDEL:
         delete plug->mdel;
         break;
-    case 14:
+    case IWAH:
         delete plug->wah;
         break;
-    case 15:
+    case IDERE:
         delete plug->dere;
         break;
-    case 16:
+    case IVALVE:
         delete plug->valve;
         break;
-    case 17:
+    case IDFLANGE:
         delete plug->dflange;
         break;
-    case 18:
+    case IRING:
         delete plug->noteID;
         delete plug->ring;
         break;
-    case 19:
+    case IMBDIST:
         delete plug->mbdist;
         break;
-    case 20:
+    case IARPIE:
         delete plug->arp;
         break;
-    case 21:
+    case IEXPAND:
         delete plug->expand;
         break;
-    case 22:
+    case ISHUFF:
         delete plug->shuf;
         break;
-    case 23:
+    case ISYNTH:
         delete plug->synth;
         break;
-    case 24:
+    case IMBVOL:
         delete plug->mbvol;
         break;
-    case 25:
+    case IMUTRO:
         delete plug->mutro;
         break;
-    case 26:
+    case IECHOVERSE:
         delete plug->echoverse;
         break;
-    case 27:
+    case ICOIL:
         delete plug->coil;
         break;
-    case 28:
+    case ISHELF:
         delete plug->shelf;
         break;
-    case 29:
+    case IVOC:
         delete plug->voc;
         break;
-    case 30:
+    case ISUS:
         delete plug->sus;
         break;
-    case 31:
+    case ISEQ:
         delete plug->seq;
         break;
-    case 32:
+    case ISHIFT:
         delete plug->shift;
         break;
-    case 33:
-    case 34:
+    case ISTOMP:
+    case IFUZZ:
         delete plug->stomp;
         break;
-    case 35:
+    case IREVTRON:
         delete plug->revtron;
         delete plug->rvbfile;
         break;
-    case 36:
+    case IECHOTRON:
         delete plug->echotron;
         delete plug->dlyfile;
         break;
+    case ISHARM_NM:
+    	delete plug->sharm;
+        delete plug->noteID;
+        delete plug->chordID;
+    	break;
+    case IMBCOMP:
+    	delete plug->mbcomp;
+    	break;
     }
     free(plug);
 }
@@ -3056,11 +4070,14 @@ void connect_rkrlv2_ports_w_atom(LV2_Handle handle, uint32_t port, void *data)
     case OUTR:
         plug->output_r_p = (float*)data;
         break;
-    case PARAM0:
+    case BYPASS:
         plug->atom_in_p = (const LV2_Atom_Sequence*)data;
         break;
-    case PARAM1:
+    case PARAM0:
         plug->atom_out_p = (LV2_Atom_Sequence*)data;
+        break;
+    case PARAM1:
+        plug->bypass_p = (float*)data;
         break;
     case PARAM2:
         plug->param_p[0] = (float*)data;
@@ -3141,6 +4158,9 @@ void connect_rkrlv2_ports(LV2_Handle handle, uint32_t port, void *data)
     case OUTR:
         plug->output_r_p = (float*)data;
         break;
+    case BYPASS:
+        plug->bypass_p = (float*)data;
+        break;
     case PARAM0:
         plug->param_p[0] = (float*)data;
         break;
@@ -3205,6 +4225,11 @@ void connect_rkrlv2_ports(LV2_Handle handle, uint32_t port, void *data)
         puts("UNKNOWN PORT YO!!");
     }
 }
+
+
+/////////////////////////////////
+//    Plugin Descriptors
+////////////////////////////////
 
 static const LV2_Descriptor eqlv2_descriptor=
 {
@@ -3651,85 +4676,124 @@ static const LV2_Descriptor echotronlv2_descriptor=
     echotron_extension_data
 };
 
+static const LV2_Descriptor sharmnomidlv2_descriptor=
+{
+    SHARMNOMIDLV2_URI,
+    init_sharmnomidlv2,
+    connect_rkrlv2_ports,
+    0,//activate
+    run_sharmnomidlv2,
+    0,//deactivate
+    cleanup_rkrlv2
+};
+
+static const LV2_Descriptor mbcomplv2_descriptor=
+{
+    MBCOMPLV2_URI,
+    init_mbcomplv2,
+    connect_rkrlv2_ports,
+    0,//activate
+    run_mbcomplv2,
+    0,//deactivate
+    cleanup_rkrlv2
+};
+
+static const LV2_Descriptor otremlv2_descriptor=
+{
+    OPTTREMLV2_URI,
+    init_otremlv2,
+    connect_rkrlv2_ports,
+    0,//activate
+    run_otremlv2,
+    0,//deactivate
+    cleanup_rkrlv2
+};
+
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor* lv2_descriptor(uint32_t index)
 {
     switch (index)
     {
-    case 0:
+    case IEQ:
         return &eqlv2_descriptor ;
-    case 1:
+    case ICOMP:
         return &complv2_descriptor ;
-    case 2:
+    case IDIST:
         return &distlv2_descriptor ;
-    case 3:
+    case IECHO:
         return &echolv2_descriptor ;
-    case 4:
+    case ICHORUS:
         return &choruslv2_descriptor ;
-    case 5:
+    case IAPHASE:
         return &aphaselv2_descriptor ;
-    case 6:
+    case IHARM_NM:
         return &harmnomidlv2_descriptor ;
-    case 7:
+    case IEXCITER:
         return &exciterlv2_descriptor ;
-    case 8:
+    case IPAN:
         return &panlv2_descriptor ;
-    case 9:
+    case IAWAH:
         return &alienlv2_descriptor ;
-    case 10:
+    case IREV:
         return &revelv2_descriptor ;
-    case 11:
+    case IEQP:
         return &eqplv2_descriptor ;
-    case 12:
+    case ICAB:
         return &cablv2_descriptor ;
-    case 13:
+    case IMDEL:
         return &mdellv2_descriptor ;
-    case 14:
+    case IWAH:
         return &wahlv2_descriptor ;
-    case 15:
+    case IDERE:
         return &derelv2_descriptor ;
-    case 16:
+    case IVALVE:
         return &valvelv2_descriptor ;
-    case 17:
+    case IDFLANGE:
         return &dflangelv2_descriptor ;
-    case 18:
+    case IRING:
         return &ringlv2_descriptor ;
-    case 19:
+    case IMBDIST:
         return &mbdistlv2_descriptor ;
-    case 20:
+    case IARPIE:
         return &arplv2_descriptor ;
-    case 21:
+    case IEXPAND:
         return &expandlv2_descriptor ;
-    case 22:
+    case ISHUFF:
         return &shuflv2_descriptor ;
-    case 23:
+    case ISYNTH:
         return &synthlv2_descriptor ;
-    case 24:
+    case IMBVOL:
         return &mbvollv2_descriptor ;
-    case 25:
+    case IMUTRO:
         return &mutrolv2_descriptor ;
-    case 26:
+    case IECHOVERSE:
         return &echoverselv2_descriptor ;
-    case 27:
+    case ICOIL:
         return &coillv2_descriptor ;
-    case 28:
+    case ISHELF:
         return &shelflv2_descriptor ;
-    case 29:
+    case IVOC:
         return &voclv2_descriptor ;
-    case 30:
+    case ISUS:
         return &suslv2_descriptor ;
-    case 31:
+    case ISEQ:
         return &seqlv2_descriptor ;
-    case 32:
+    case ISHIFT:
         return &shiftlv2_descriptor ;
-    case 33:
+    case ISTOMP:
         return &stomplv2_descriptor ;
-    case 34:
+    case IFUZZ:
         return &stompfuzzlv2_descriptor ;
-    case 35:
+    case IREVTRON:
         return &revtronlv2_descriptor ;
-    case 36:
+    case IECHOTRON:
         return &echotronlv2_descriptor ;
+    case ISHARM_NM:
+    	return &sharmnomidlv2_descriptor ;
+    case IMBCOMP:
+    	return &mbcomplv2_descriptor ;
+    case IOPTTREM:
+    	return &otremlv2_descriptor ;
     default:
         return 0;
     }

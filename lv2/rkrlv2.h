@@ -38,6 +38,12 @@
 #define STOMPFUZZLV2_URI "http://rakarrack.sourceforge.net/effects.html#StompBox_fuzz"
 #define REVTRONLV2_URI "http://rakarrack.sourceforge.net/effects.html#Reverbtron"
 #define ECHOTRONLV2_URI "http://rakarrack.sourceforge.net/effects.html#Echotron"
+#define SHARMNOMIDLV2_URI "http://rakarrack.sourceforge.net/effects.html#StereoHarm_no_mid"
+#define HARMLV2_URI "http://rakarrack.sourceforge.net/effects.html#har"
+#define MBCOMPLV2_URI "http://rakarrack.sourceforge.net/effects.html#CompBand"
+#define OPTTREMLV2_URI "http://rakarrack.sourceforge.net/effects.html#Otrem"
+#define VIBELV2_URI "http://rakarrack.sourceforge.net/effects.html#Vibe"
+#define INFLV2_URI "http://rakarrack.sourceforge.net/effects.html#Infinity"
 
 #define RVBFILE_URI "http://rakarrack.sourceforge.net/effects.html#Reverbtron:rvbfile"
 #define DLYFILE_URI "http://rakarrack.sourceforge.net/effects.html#Echotron:dlyfile"
@@ -48,6 +54,7 @@ enum RKRLV2_ports_
     INR,
     OUTL,
     OUTR,
+    BYPASS,
     PARAM0,
     PARAM1,
     PARAM2,
@@ -69,6 +76,54 @@ enum RKRLV2_ports_
     PARAM18,
     DBG,
     EXTRA
+};
+
+
+//just make sure these line up with the order in manifest.ttl
+enum RKRLV2_effects_
+{
+	IEQ =0,
+	ICOMP,
+	IDIST,
+	IECHO,
+	ICHORUS,
+	IAPHASE,
+	IHARM_NM,
+	IEXCITER,
+	IPAN,
+	IAWAH,
+	IREV,//10
+	IEQP,
+	ICAB,
+	IMDEL,
+	IWAH,
+	IDERE,
+	IVALVE,
+	IDFLANGE,
+	IRING,
+	IMBDIST,
+	IARPIE,//20
+	IEXPAND,
+	ISHUFF,
+	ISYNTH,
+	IMBVOL,
+	IMUTRO,
+	IECHOVERSE,
+	ICOIL,
+	ISHELF,
+	IVOC,
+	ISUS,//30
+	ISEQ,
+	ISHIFT,
+	ISTOMP,
+	IFUZZ,
+	IREVTRON,
+	IECHOTRON,
+	ISHARM_NM,
+	IMBCOMP,
+	IOPTTREM,
+	IVIBE,
+	IINF
 };
 
 #endif

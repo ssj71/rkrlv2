@@ -56,6 +56,16 @@
         lv2:port [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 4 ;
+                lv2:symbol "BYPASS" ;
+                lv2:name "Bypass" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 1 ;
+                lv2:portProperty lv2:integer ;
+                lv2:portProperty lv2:toggled ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 5 ;
                 lv2:symbol "GAIN" ;
                 lv2:name "Gain" ;
                 lv2:default 0 ;
@@ -64,7 +74,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 5 ;
+                lv2:index 6 ;
                 lv2:symbol "Q" ;
                 lv2:name "Q" ;
                 lv2:default 0 ;
@@ -73,7 +83,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 6 ;
+                lv2:index 7 ;
                 lv2:symbol "HZ31" ;
                 lv2:name "31 Hz" ;
                 lv2:default 0 ;
@@ -82,7 +92,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 7 ;
+                lv2:index 8 ;
                 lv2:symbol "HZ63" ;
                 lv2:name "63 Hz" ;
                 lv2:default 0 ;
@@ -91,7 +101,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 8 ;
+                lv2:index 9 ;
                 lv2:symbol "HZ125" ;
                 lv2:name "125 Hz" ;
                 lv2:default 0 ;
@@ -100,7 +110,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 9 ;
+                lv2:index 10 ;
                 lv2:symbol "HZ250" ;
                 lv2:name "250 Hz" ;
                 lv2:default 0 ;
@@ -109,7 +119,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 10 ;
+                lv2:index 11 ;
                 lv2:symbol "HZ500" ;
                 lv2:name "500 Hz" ;
                 lv2:default 0 ;
@@ -118,7 +128,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 11 ;
+                lv2:index 12 ;
                 lv2:symbol "KHZ1" ;
                 lv2:name "1 kHz" ;
                 lv2:default 0 ;
@@ -127,7 +137,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 12 ;
+                lv2:index 13 ;
                 lv2:symbol "KHZ2" ;
                 lv2:name "2 kHz" ;
                 lv2:default 0 ;
@@ -136,7 +146,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 13 ;
+                lv2:index 14 ;
                 lv2:symbol "KHZ4" ;
                 lv2:name "4 kHz" ;
                 lv2:default 0 ;
@@ -145,7 +155,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 14 ;
+                lv2:index 15 ;
                 lv2:symbol "KHZ8" ;
                 lv2:name "8 kHz" ;
                 lv2:default 0 ;
@@ -154,7 +164,7 @@
                 lv2:portProperty lv2:integer ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
-                lv2:index 15 ;
+                lv2:index 16 ;
                 lv2:symbol "KHZ16" ;
                 lv2:name "16 kHz" ;
                 lv2:default 0 ;

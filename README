@@ -53,11 +53,11 @@ EFFECTS (X - done, W - won't do, + - done with missing features)
 [X] Sustainer 
 [X] Sequence 
 [X] Shifter 
-[X] StompBox - this will be broken up into the various stomps
+[X] StompBox 
 [X] Reverbtron 
-[X] Echotron - this has been requested, considering
-[W] StereoHarm - this seems like it's of limited use in plugin form, just use 2 instances of the mono version
-[ ] CompBand 
+[X] Echotron 
+[+] StereoHarm - no midi
+[X] CompBand 
 [ ] Opticaltrem 
 [ ] Vibe 
 [ ] Infinity
