@@ -72,7 +72,7 @@ typedef struct _RKRLV2
     uint8_t file_changed;
     uint8_t prev_bypass;
     RvbFile* rvbfile;//file for reverbtron
-    DlyFile* dlyfile;//file for reverbtron
+    DlyFile* dlyfile;//file for echotron
 
     //ports
     float *input_l_p;
@@ -164,7 +164,7 @@ enum other_ports
 
 // A few helper functions taken from the RKR object
 void
-wetdry_mix (float inl[], float inr[], float outl[], float outr[], float mix, uint32_t period)
+wetdry_mix (RKRLV2* plug, float mix, uint32_t period)
 {
     unsigned int i;
     float v1, v2;
@@ -187,10 +187,25 @@ wetdry_mix (float inl[], float inr[], float outl[], float outr[], float mix, uin
 
     for (i = 0; i < period; i++)
     {
-        outl[i] = inl[i] * v2 + outl[i] * v1;
-        outr[i] = inr[i] * v2 + outr[i] * v1;
+        plug->output_l_p[i] = plug->input_r_p[i] * v2 + plug->output_l_p[i] * v1;
+        plug->output_r_p[i] = plug->input_r_p[i] * v2 + plug->output_r_p[i] * v1;
     };
 
+}
+
+void
+xfade_out (RKRLV2* plug, uint32_t period)
+{
+	unsigned int i;
+	float v = 0;
+	float step = 1/(float)period;
+	//just a linear fade since it's (hopefully correlated)
+    for (i = 0; i < period; i++)
+    {
+    	plug->output_l_p[i] = (1-v)*plug->output_l_p[i] + v*plug->input_l_p[i];
+    	plug->output_r_p[i] = (1-v)*plug->output_r_p[i] + v*plug->input_r_p[i];
+    	v+=step;
+    }
 }
 
 //TODO: make this return error is required feature not supported
@@ -474,7 +489,7 @@ void run_distlv2(LV2_Handle handle, uint32_t nframes)
     plug->dist->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->dist->outvolume, nframes);
+    wetdry_mix(plug, plug->dist->outvolume, nframes);
 
     return;
 }
@@ -556,7 +571,7 @@ void run_echolv2(LV2_Handle handle, uint32_t nframes)
     plug->echo->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->echo->outvolume, nframes);
+    wetdry_mix(plug, plug->echo->outvolume, nframes);
 
     return;
 }
@@ -651,7 +666,7 @@ void run_choruslv2(LV2_Handle handle, uint32_t nframes)
     plug->chorus->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->chorus->outvolume, nframes);
+    wetdry_mix(plug, plug->chorus->outvolume, nframes);
 
     return;
 }
@@ -737,7 +752,7 @@ void run_aphaselv2(LV2_Handle handle, uint32_t nframes)
     plug->aphase->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->aphase->outvolume, nframes);
+    wetdry_mix(plug, plug->aphase->outvolume, nframes);
 
     return;
 }
@@ -871,8 +886,7 @@ void run_harmnomidlv2(LV2_Handle handle, uint32_t nframes)
     plug->harm->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p,
-               plug->harm->outvolume, nframes);
+    wetdry_mix(plug, plug->harm->outvolume, nframes);
 
     return;
 }
@@ -1020,7 +1034,7 @@ void run_panlv2(LV2_Handle handle, uint32_t nframes)
     plug->pan->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->pan->outvolume, nframes);
+    wetdry_mix(plug, plug->pan->outvolume, nframes);
 
     return;
 }
@@ -1106,7 +1120,7 @@ void run_alienlv2(LV2_Handle handle, uint32_t nframes)
     plug->alien->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->alien->outvolume, nframes);
+    wetdry_mix(plug, plug->alien->outvolume, nframes);
 
     return;
 }
@@ -1186,7 +1200,7 @@ void run_revelv2(LV2_Handle handle, uint32_t nframes)
     plug->reve->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->reve->outvolume, nframes);
+    wetdry_mix(plug, plug->reve->outvolume, nframes);
 
     return;
 }
@@ -1422,7 +1436,7 @@ void run_mdellv2(LV2_Handle handle, uint32_t nframes)
     plug->mdel->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->mdel->outvolume, nframes);
+    wetdry_mix(plug, plug->mdel->outvolume, nframes);
 
 
     return;
@@ -1510,7 +1524,7 @@ void run_wahlv2(LV2_Handle handle, uint32_t nframes)
     plug->wah->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->wah->outvolume, nframes);
+    wetdry_mix(plug, plug->wah->outvolume, nframes);
 
     return;
 }
@@ -1583,7 +1597,7 @@ void run_derelv2(LV2_Handle handle, uint32_t nframes)
     plug->dere->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->dere->outvolume, nframes);
+    wetdry_mix(plug, plug->dere->outvolume, nframes);
 
     return;
 }
@@ -1655,7 +1669,7 @@ void run_valvelv2(LV2_Handle handle, uint32_t nframes)
     plug->valve->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->valve->outvolume, nframes);
+    wetdry_mix(plug, plug->valve->outvolume, nframes);
 
     return;
 }
@@ -1823,8 +1837,7 @@ void run_ringlv2(LV2_Handle handle, uint32_t nframes)
     plug->ring->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p,
-               plug->ring->outvolume, nframes);
+    wetdry_mix(plug, plug->ring->outvolume, nframes);
 
     return;
 }
@@ -1898,7 +1911,7 @@ void run_mbdistlv2(LV2_Handle handle, uint32_t nframes)
     plug->mbdist->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->mbdist->outvolume, nframes);
+    wetdry_mix(plug, plug->mbdist->outvolume, nframes);
 
     return;
 }
@@ -1980,7 +1993,7 @@ void run_arplv2(LV2_Handle handle, uint32_t nframes)
     plug->arp->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->arp->outvolume, nframes);
+    wetdry_mix(plug, plug->arp->outvolume, nframes);
 
     return;
 }
@@ -2099,7 +2112,7 @@ void run_shuflv2(LV2_Handle handle, uint32_t nframes)
     plug->shuf->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->shuf->outvolume, nframes);
+    wetdry_mix(plug, plug->shuf->outvolume, nframes);
 
     return;
 }
@@ -2174,7 +2187,7 @@ void run_synthlv2(LV2_Handle handle, uint32_t nframes)
     plug->synth->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->synth->outvolume, nframes);
+    wetdry_mix(plug, plug->synth->outvolume, nframes);
 
     return;
 }
@@ -2262,7 +2275,7 @@ void run_mbvollv2(LV2_Handle handle, uint32_t nframes)
     plug->mbvol->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->mbvol->outvolume, nframes);
+    wetdry_mix(plug, plug->mbvol->outvolume, nframes);
 
     return;
 }
@@ -2344,7 +2357,7 @@ void run_mutrolv2(LV2_Handle handle, uint32_t nframes)
     plug->mutro->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->mutro->outvolume, nframes);
+    wetdry_mix(plug, plug->mutro->outvolume, nframes);
 
     return;
 }
@@ -2428,7 +2441,7 @@ void run_echoverselv2(LV2_Handle handle, uint32_t nframes)
     plug->echoverse->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->echoverse->outvolume, nframes);
+    wetdry_mix(plug, plug->echoverse->outvolume, nframes);
 
     return;
 }
@@ -2626,7 +2639,7 @@ void run_voclv2(LV2_Handle handle, uint32_t nframes)
     plug->voc->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->voc->outvolume, nframes);
+    wetdry_mix(plug, plug->voc->outvolume, nframes);
 
     //and set VU meter
     *plug->param_p[VOCODER_VU_LEVEL] = plug->voc->vulevel;
@@ -2763,7 +2776,7 @@ void run_seqlv2(LV2_Handle handle, uint32_t nframes)
     plug->seq->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->seq->outvolume, nframes);
+    wetdry_mix(plug, plug->seq->outvolume, nframes);
 
     return;
 }
@@ -2838,7 +2851,7 @@ void run_shiftlv2(LV2_Handle handle, uint32_t nframes)
     plug->shift->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->shift->outvolume, nframes);
+    wetdry_mix(plug, plug->shift->outvolume, nframes);
 
     return;
 }
@@ -3078,7 +3091,7 @@ void run_revtronlv2(LV2_Handle handle, uint32_t nframes)
     plug->revtron->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->revtron->outvolume, nframes);
+    wetdry_mix(plug, plug->revtron->outvolume, nframes);
 
     return;
 }
@@ -3353,7 +3366,7 @@ void run_echotronlv2(LV2_Handle handle, uint32_t nframes)
     plug->echotron->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p, plug->echotron->outvolume, nframes);
+    wetdry_mix(plug, plug->echotron->outvolume, nframes);
 
     return;
 }
@@ -3585,8 +3598,7 @@ void run_sharmnomidlv2(LV2_Handle handle, uint32_t nframes)
     plug->sharm->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p,
-               plug->sharm->outvolume, nframes);
+    wetdry_mix(plug, plug->sharm->outvolume, nframes);
 
     return;
 }
@@ -3763,8 +3775,7 @@ void run_harmlv2(LV2_Handle handle, uint32_t nframes)
     plug->harm->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p,
-               plug->harm->outvolume, nframes);
+    wetdry_mix(plug, plug->harm->outvolume, nframes);
 
     return;
 }
@@ -3824,8 +3835,7 @@ void run_mbcomplv2(LV2_Handle handle, uint32_t nframes)
     plug->mbcomp->out(plug->output_l_p,plug->output_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
-    wetdry_mix(plug->input_l_p, plug->input_r_p, plug->output_l_p, plug->output_r_p,
-               plug->mbcomp->outvolume, nframes);
+    wetdry_mix(plug, plug->mbcomp->outvolume, nframes);
 
     return;
 }
@@ -3909,7 +3919,7 @@ void run_otremlv2(LV2_Handle handle, uint32_t nframes)
 }
 
 /////////////////////////////////
-///////// END OF FX /////////////
+//       END OF FX
 /////////////////////////////////
 
 
@@ -4218,7 +4228,7 @@ void connect_rkrlv2_ports(LV2_Handle handle, uint32_t port, void *data)
 
 
 /////////////////////////////////
-///    Plugin Descriptors
+//    Plugin Descriptors
 ////////////////////////////////
 
 static const LV2_Descriptor eqlv2_descriptor=

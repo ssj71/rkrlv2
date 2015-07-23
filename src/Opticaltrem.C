@@ -79,7 +79,7 @@ void
 Opticaltrem::out (float *smpsl, float *smpsr, uint32_t period)
 {
 
-    int i;
+    unsigned int i;
     float lfol, lfor, xl, xr, fxl, fxr;
     float rdiff, ldiff;
     lfo->effectlfoout (&lfol, &lfor);
