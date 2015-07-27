@@ -93,7 +93,7 @@
             lv2:designation lv2:control ;
     ] ;
     lv2:port [
-            lv2:InputPort, lv2:ControlPort ;
+            a lv2:InputPort, lv2:ControlPort ;
             lv2:index 6 ;
             lv2:symbol "BYPASS" ;
             lv2:name "Bypass" ;

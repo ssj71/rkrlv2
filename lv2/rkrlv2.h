@@ -122,7 +122,7 @@ enum RKRLV2_effects_
 	ISHARM_NM,
 	IMBCOMP,
 	IOPTTREM,
-	IVIBE,
+	IVIBE,//40
 	IINF
 };
 
