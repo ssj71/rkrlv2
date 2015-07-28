@@ -9,7 +9,7 @@ set(CMAKE_CXX_FLAGS "-Wall -g")
 
 # check for our various libraries
 find_package(PkgConfig)
-pkg_check_modules(LV2 REQUIRED lv2>=.0.1.0)
+pkg_check_modules(LV2 REQUIRED lv2>=1.10.0)
 pkg_check_modules(SAMPLERATE REQUIRED samplerate>=0.1.5)
 pkg_check_modules(FFTW  REQUIRED fftw3)
 
