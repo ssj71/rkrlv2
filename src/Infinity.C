@@ -26,15 +26,16 @@
 #include "Infinity.h"
 #include <stdio.h>
 
-Infinity::Infinity (float * efxoutl_, float * efxoutr_)
+Infinity::Infinity (float * efxoutl_, float * efxoutr_, double sample_rate)
 {
     efxoutl = efxoutl_;
     efxoutr = efxoutr_;
+    fSAMPLE_RATE = sample_rate;
 
     int i;
     for (i = 0; i<NUM_INF_BANDS; i++) {
-        filterl[i] = new RBFilter (0, 80.0f, 70.0f, 1.0f);
-        filterr[i] = new RBFilter (0, 80.0f, 70.0f, 1.0f);
+        filterl[i] = new RBFilter (0, 80.0f, 70.0f, 1.0f, sample_rate);
+        filterr[i] = new RBFilter (0, 80.0f, 70.0f, 1.0f, sample_rate);
         rbandstate[i].level = 1.0f;
         rbandstate[i].vol = 1.0f;
         lphaser[i].gain = 0.5f;
@@ -79,6 +80,10 @@ Infinity::Infinity (float * efxoutl_, float * efxoutr_)
 
 Infinity::~Infinity ()
 {
+    for (int i = 0; i<NUM_INF_BANDS; i++) {
+    	delete filterl[i];
+    	delete filterr[i];
+    }
 };
 
 float inline
@@ -180,9 +185,9 @@ Infinity::oscillator()
  * Apply the effect
  */
 void
-Infinity::out (float * smpsl, float * smpsr)
+Infinity::out (float * smpsl, float * smpsr, uint32_t period)
 {
-    int i, j;
+    unsigned int i, j;
     float tmpr, tmpl;
 
     for (i = 0; i<period; i++)  {
@@ -346,6 +351,7 @@ Infinity::setpreset (int npreset)
 {
     const int PRESET_SIZE = 18;
     const int NUM_PRESETS = 10;
+    int pdata[PRESET_SIZE];
     int presets[NUM_PRESETS][PRESET_SIZE] = {
         //Basic
         {64, 64, 64, 64, 64, 64, 64, 64, 64, 700, 20, 80, 60, 0, 1, 0, 0, 1 },
@@ -371,7 +377,7 @@ Infinity::setpreset (int npreset)
     };
 
     if(npreset>NUM_PRESETS-1) {
-        Fpre->ReadPreset(46,npreset-NUM_PRESETS+1);
+        Fpre->ReadPreset(46,npreset-NUM_PRESETS+1,pdata);
         for (int n = 0; n < PRESET_SIZE; n++)
             changepar (n, pdata[n]);
     } else {

@@ -1,0 +1,286 @@
+@prefix doap:  <http://usefulinc.com/ns/doap#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix units: <http://lv2plug.in/ns/extensions/units#> .
+@prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+
+@prefix lv2:   <http://lv2plug.in/ns/lv2core#> .
+@prefix ui:   <http://lv2plug.in/ns/extensions/ui#> .
+
+# <http://rakarrack.sourceforge.net/effects.html#Infinity_ui>
+# 	a ui:X11UI ;
+# 	ui:binary <rkrlv2_ui.so> ;
+# 	lv2:extensionData ui:idleInterface;
+# 	.
+
+<http://rakarrack.sourceforge.net/effects.html#Infinity>
+        a lv2:Plugin, lv2:ModulationPlugin ;
+        doap:name "rkr Infinity" ;
+        doap:description "Infinite Ascending/Descending Phaser";
+        doap:license <http://opensource.org/licenses/GPL-2.0> ;
+        doap:maintainer [
+                foaf:name "Rakarrack Team" ;
+                foaf:homepage <http://rakarrack.sourceforge.net>;
+                foaf:mbox <mailto:ssjackson71@gmail.com> ;
+        ] ;
+        lv2:minorVersion 0 ;
+        lv2:microVersion 0 ;
+        rdfs:comment "This is the audio equivalent of a barber pole effect, with 8 filter bands continuously sweeping up or down. This has enough flexibility to create effects anywhere from subtle to insane." ;
+        lv2:optionalFeature lv2:hardRTCapable ;
+#        ui:ui  <http://rakarrack.sourceforge.net/effects.html#Infinity_ui> ;
+
+        lv2:port [
+                a lv2:InputPort, lv2:AudioPort ;
+                lv2:index 0 ;
+                lv2:symbol "INPUT_L" ;
+                lv2:name "Audio In L" ;
+        ] ;
+        lv2:port [
+                a lv2:InputPort, lv2:AudioPort ;
+                lv2:index 1 ;
+                lv2:symbol "INPUT_R" ;
+                lv2:name "Audio In R" ;
+        ] ;
+        lv2:port [
+                a lv2:OutputPort, lv2:AudioPort ;
+                lv2:index 2 ;
+                lv2:symbol "OUTPUT_L" ;
+                lv2:name "Audio Out L" ;
+        ] ;
+        lv2:port [
+                a lv2:OutputPort, lv2:AudioPort ;
+                lv2:index 3 ;
+                lv2:symbol "OUTPUT_R" ;
+                lv2:name "Audio Out R" ;
+        ] ;
+
+        lv2:port [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 4 ;
+                lv2:symbol "BYPASS" ;
+                lv2:name "Bypass" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 1 ;
+                lv2:portProperty lv2:integer ;
+                lv2:portProperty lv2:toggled ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 5 ;
+                lv2:symbol "WETDRY" ;
+                lv2:name "Wet/Dry" ;
+                lv2:default 64 ;
+                lv2:minimum 0 ;
+                lv2:maximum 127 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 6 ;
+                lv2:symbol "B1" ;
+                lv2:name "Band 1 Gain" ;
+                lv2:default 64 ;
+                lv2:minimum -64 ;
+                lv2:maximum 64 ;
+                lv2:portProperty lv2:integer ;
+                units:unit units:bpm ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 7 ;
+                lv2:symbol "B2" ;
+                lv2:name "Band 2 Gain" ;
+                lv2:default -64 ;
+                lv2:minimum -64 ;
+                lv2:maximum 64 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 8 ;
+                lv2:symbol "B3" ;
+                lv2:name "Band 3 Gain" ;
+                lv2:default 64 ;
+                lv2:minimum -64 ;
+                lv2:maximum 64 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 9 ;
+                lv2:symbol "B4" ;
+                lv2:name "Band 4 Gain" ;
+                lv2:default -64 ;
+                lv2:minimum -64 ;
+                lv2:maximum 64 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 10 ;
+                lv2:symbol "B5" ;
+                lv2:name "Band 5 Gain" ;
+                lv2:default 64 ;
+                lv2:minimum -64 ;
+                lv2:maximum 64 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 11 ;
+                lv2:symbol "B6" ;
+                lv2:name "Band 6 Gain" ;
+                lv2:default -64 ;
+                lv2:minimum -64 ;
+                lv2:maximum 64 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 12 ;
+                lv2:symbol "B7" ;
+                lv2:name "Band 7 Gain" ;
+                lv2:default 64 ;
+                lv2:minimum -64 ;
+                lv2:maximum 64 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 13 ;
+                lv2:symbol "B8" ;
+                lv2:name "Band 8 Gain" ;
+                lv2:default -64 ;
+                lv2:minimum -64 ;
+                lv2:maximum 64 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 14 ;
+                lv2:symbol "RES" ;
+                lv2:name "Resonance" ;
+                lv2:default 0 ;
+                lv2:minimum -1000 ;
+                lv2:maximum 1000 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 15 ;
+                lv2:symbol "START" ;
+                lv2:name "Sweep Start" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 127 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 16 ;
+                lv2:symbol "END" ;
+                lv2:name "Sweep End" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 127 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 17 ;
+                lv2:symbol "TEMPO" ;
+                lv2:name "Tempo" ;
+                lv2:default 14 ;
+                lv2:minimum 1 ;
+                lv2:maximum 600 ;
+                lv2:portProperty lv2:integer ;
+                units:unit units:bpm ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 18 ;
+                lv2:symbol "STDF" ;
+                lv2:name "Sweep L/R Delay" ;
+                lv2:default 0 ;
+                lv2:minimum -64 ;
+                lv2:maximum 64 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 19 ;
+                lv2:symbol "SUBD" ;
+                lv2:name "Sweep Tempo Subdivision" ;
+                lv2:default 0 ;
+                lv2:minimum -16 ;
+                lv2:maximum 16 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 20 ;
+                lv2:symbol "AUTOPAN" ;
+                lv2:name "AutoPan Amount" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 127 ;
+                lv2:portProperty lv2:integer ;
+                rdfs:comment "If stages is larger than 8 then this controls a doppler effect." ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 21 ;
+                lv2:symbol "REV" ;
+                lv2:name "Reverse Left Channel Sweep" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 1 ;
+                lv2:portProperty lv2:integer ;
+                lv2:portProperty lv2:toggled ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 22 ;
+                lv2:symbol "STAGE" ;
+                lv2:name "Stages" ;
+                lv2:default 4 ;
+                lv2:minimum 1 ;
+                lv2:maximum 12 ;
+                lv2:portProperty lv2:integer ;
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Infinity:preset:basic>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Infinity> ;
+        rdfs:seeAlso <inf_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#Infinity:preset:rising_comb>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Infinity> ;
+        rdfs:seeAlso <inf_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#Infinity:preset:falling_comb>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Infinity> ;
+        rdfs:seeAlso <inf_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#Infinity:preset:laser>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Infinity> ;
+        rdfs:seeAlso <inf_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#Infinity:preset:doppler>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Infinity> ;
+        rdfs:seeAlso <inf_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#Infinity:preset:detune>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Infinity> ;
+        rdfs:seeAlso <inf_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#Infinity:preset:dizzy_sailor>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Infinity> ;
+        rdfs:seeAlso <inf_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#Infinity:preset:stereo_phaser>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Infinity> ;
+        rdfs:seeAlso <inf_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#Infinity:preset:corkscrew>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Infinity> ;
+        rdfs:seeAlso <inf_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#Infinity:preset:freeqeevox>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Infinity> ;
+        rdfs:seeAlso <inf_presets.ttl> .
+

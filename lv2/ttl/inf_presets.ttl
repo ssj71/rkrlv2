@@ -1,0 +1,619 @@
+@prefix atom: <http://lv2plug.in/ns/ext/atom#> .
+@prefix lv2: <http://lv2plug.in/ns/lv2core#> .
+@prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix state: <http://lv2plug.in/ns/ext/state#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+<http://rakarrack.sourceforge.net/effects.html#Infinity:preset:basic>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Infinity> ;
+	rdfs:label "Basic" ;
+    lv2:port [
+        lv2:symbol "WETDRY" ;
+        pset:value 64.0
+    ], [
+        lv2:symbol "B1" ;
+        pset:value 64.0
+    ], [
+        lv2:symbol "B2" ;
+        pset:value 64.0
+    ], [
+        lv2:symbol "B3" ;
+        pset:value 64.0
+    ], [
+        lv2:symbol "B4" ;
+        pset:value 64.0
+    ], [
+        lv2:symbol "B5" ;
+        pset:value 64.0
+    ], [
+       lv2:symbol "B6" ;
+        pset:value 64.0
+    ], [
+       lv2:symbol "B7" ;
+        pset:value 64.0
+    ], [
+       lv2:symbol "B8" ;
+        pset:value 64.0
+    ], [
+       lv2:symbol "RES" ;
+        pset:value 700.0
+    ], [
+       lv2:symbol "START" ;
+        pset:value 20.0
+    ], [
+       lv2:symbol "END" ;
+        pset:value 80.0
+    ], [
+       lv2:symbol "TEMPO" ;
+        pset:value 60.0
+    ], [
+       lv2:symbol "STDF" ;
+        pset:value 0.0
+    ], [
+       lv2:symbol "SUBD" ;
+        pset:value 1.0
+    ], [
+       lv2:symbol "AUTOPAN" ;
+        pset:value 0.0
+    ], [
+       lv2:symbol "REV" ;
+        pset:value 0.0
+    ], [
+       lv2:symbol "STAGE" ;
+        pset:value 1.0
+    ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Infinity:preset:rising_comb>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Infinity> ;
+	rdfs:label "Rising Comb" ;
+    lv2:port [
+        lv2:symbol "WETDRY" ;
+        pset:value 64.0
+    ], [
+        lv2:symbol "B1" ;
+        pset:value 64.0
+    ], [
+        lv2:symbol "B2" ;
+        pset:value -64.0
+    ], [
+        lv2:symbol "B3" ;
+        pset:value 64.0
+    ], [
+        lv2:symbol "B4" ;
+        pset:value -64.0
+    ], [
+        lv2:symbol "B5" ;
+        pset:value 64.0
+    ], [
+       lv2:symbol "B6" ;
+        pset:value -64.0
+    ], [
+       lv2:symbol "B7" ;
+        pset:value 64.0
+    ], [
+       lv2:symbol "B8" ;
+        pset:value -64.0
+    ], [
+       lv2:symbol "RES" ;
+        pset:value 600.0
+    ], [
+       lv2:symbol "START" ;
+        pset:value 0.0
+    ], [
+       lv2:symbol "END" ;
+        pset:value 127.0
+    ], [
+       lv2:symbol "TEMPO" ;
+        pset:value 32.0
+    ], [
+       lv2:symbol "STDF" ;
+        pset:value 0.0
+    ], [
+       lv2:symbol "SUBD" ;
+        pset:value 16.0
+    ], [
+       lv2:symbol "AUTOPAN" ;
+        pset:value 0.0
+    ], [
+       lv2:symbol "REV" ;
+        pset:value 0.0
+    ], [
+       lv2:symbol "STAGE" ;
+        pset:value 1.0
+    ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Infinity:preset:falling_comb>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Infinity> ;
+	rdfs:label "Falling Comb" ;
+    lv2:port [
+        lv2:symbol "WETDRY" ;
+        pset:value 64.0
+    ], [
+        lv2:symbol "B1" ;
+        pset:value 64.0
+    ], [
+        lv2:symbol "B2" ;
+        pset:value -64.0
+    ], [
+        lv2:symbol "B3" ;
+        pset:value 64.0
+    ], [
+        lv2:symbol "B4" ;
+        pset:value -64.0
+    ], [
+        lv2:symbol "B5" ;
+        pset:value 64.0
+    ], [
+       lv2:symbol "B6" ;
+        pset:value -64.0
+    ], [
+       lv2:symbol "B7" ;
+        pset:value 64.0
+    ], [
+       lv2:symbol "B8" ;
+        pset:value -64.0
+    ], [
+       lv2:symbol "RES" ;
+        pset:value 600.0
+    ], [
+       lv2:symbol "START" ;
+        pset:value 127.0
+    ], [
+       lv2:symbol "END" ;
+        pset:value 0.0
+    ], [
+       lv2:symbol "TEMPO" ;
+        pset:value 32.0
+    ], [
+       lv2:symbol "STDF" ;
+        pset:value 0.0
+    ], [
+       lv2:symbol "SUBD" ;
+        pset:value 16.0
+    ], [
+       lv2:symbol "AUTOPAN" ;
+        pset:value 0.0
+    ], [
+       lv2:symbol "REV" ;
+        pset:value 0.0
+    ], [
+       lv2:symbol "STAGE" ;
+        pset:value 1.0
+    ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Infinity:preset:laser>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Infinity> ;
+	rdfs:label "Laser" ;
+    lv2:port [
+        lv2:symbol "WETDRY" ;
+        pset:value 0.0
+    ], [
+        lv2:symbol "B1" ;
+        pset:value 64.0
+    ], [
+        lv2:symbol "B2" ;
+        pset:value -64.0
+    ], [
+        lv2:symbol "B3" ;
+        pset:value 64.0
+    ], [
+        lv2:symbol "B4" ;
+        pset:value -64.0
+    ], [
+        lv2:symbol "B5" ;
+        pset:value 64.0
+    ], [
+       lv2:symbol "B6" ;
+        pset:value -64.0
+    ], [
+       lv2:symbol "B7" ;
+        pset:value 64.0
+    ], [
+       lv2:symbol "B8" ;
+        pset:value -64.0
+    ], [
+       lv2:symbol "RES" ;
+        pset:value 600.0
+    ], [
+       lv2:symbol "START" ;
+        pset:value 127.0
+    ], [
+       lv2:symbol "END" ;
+        pset:value 2.0
+    ], [
+       lv2:symbol "TEMPO" ;
+        pset:value 70.0
+    ], [
+       lv2:symbol "STDF" ;
+        pset:value 0.0
+    ], [
+       lv2:symbol "SUBD" ;
+        pset:value 1.0
+    ], [
+       lv2:symbol "AUTOPAN" ;
+        pset:value 0.0
+    ], [
+       lv2:symbol "REV" ;
+        pset:value 0.0
+    ], [
+       lv2:symbol "STAGE" ;
+        pset:value 1.0
+    ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Infinity:preset:doppler>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Infinity> ;
+	rdfs:label "Doppler" ;
+    lv2:port [
+        lv2:symbol "WETDRY" ;
+        pset:value 0.0
+    ], [
+        lv2:symbol "B1" ;
+        pset:value 64.0
+    ], [
+        lv2:symbol "B2" ;
+        pset:value -64.0
+    ], [
+        lv2:symbol "B3" ;
+        pset:value 64.0
+    ], [
+        lv2:symbol "B4" ;
+        pset:value -64.0
+    ], [
+        lv2:symbol "B5" ;
+        pset:value 64.0
+    ], [
+       lv2:symbol "B6" ;
+        pset:value -64.0
+    ], [
+       lv2:symbol "B7" ;
+        pset:value 64.0
+    ], [
+       lv2:symbol "B8" ;
+        pset:value -64.0
+    ], [
+       lv2:symbol "RES" ;
+        pset:value -564.0
+    ], [
+       lv2:symbol "START" ;
+        pset:value 0.0
+    ], [
+       lv2:symbol "END" ;
+        pset:value 127.0
+    ], [
+       lv2:symbol "TEMPO" ;
+        pset:value 150.0
+    ], [
+       lv2:symbol "STDF" ;
+        pset:value -31.0
+    ], [
+       lv2:symbol "SUBD" ;
+        pset:value 2.0
+    ], [
+       lv2:symbol "AUTOPAN" ;
+        pset:value 99.0
+    ], [
+       lv2:symbol "REV" ;
+        pset:value 0.0
+    ], [
+       lv2:symbol "STAGE" ;
+        pset:value 10.0
+    ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Infinity:preset:detune>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Infinity> ;
+    rdfs:label "Detune" ;
+    lv2:port [
+        lv2:symbol "WETDRY" ;
+        pset:value 0.0
+    ], [
+        lv2:symbol "B1" ;
+        pset:value 64.0
+    ], [
+        lv2:symbol "B2" ;
+        pset:value -64.0
+    ], [
+        lv2:symbol "B3" ;
+        pset:value 64.0
+    ], [
+        lv2:symbol "B4" ;
+        pset:value -64.0
+    ], [
+        lv2:symbol "B5" ;
+        pset:value 64.0
+    ], [
+       lv2:symbol "B6" ;
+        pset:value -64.0
+    ], [
+       lv2:symbol "B7" ;
+        pset:value 64.0
+    ], [
+       lv2:symbol "B8" ;
+        pset:value -64.0
+    ], [
+       lv2:symbol "RES" ;
+        pset:value -564.0
+    ], [
+       lv2:symbol "START" ;
+        pset:value 0.0
+    ], [
+       lv2:symbol "END" ;
+        pset:value 127.0
+    ], [
+       lv2:symbol "TEMPO" ;
+        pset:value 60.0
+    ], [
+       lv2:symbol "STDF" ;
+        pset:value -48.0
+    ], [
+       lv2:symbol "SUBD" ;
+        pset:value -1.0
+    ], [
+       lv2:symbol "AUTOPAN" ;
+        pset:value 0.0
+    ], [
+       lv2:symbol "REV" ;
+        pset:value 0.0
+    ], [
+       lv2:symbol "STAGE" ;
+        pset:value 10.0
+    ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Infinity:preset:dizzy_sailor>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Infinity> ;
+    rdfs:label "Dizzy Sailor" ;
+    lv2:port [
+        lv2:symbol "WETDRY" ;
+        pset:value 0.0
+    ], [
+        lv2:symbol "B1" ;
+        pset:value 64.0
+    ], [
+        lv2:symbol "B2" ;
+        pset:value -64.0
+    ], [
+        lv2:symbol "B3" ;
+        pset:value 64.0
+    ], [
+        lv2:symbol "B4" ;
+        pset:value -64.0
+    ], [
+        lv2:symbol "B5" ;
+        pset:value 64.0
+    ], [
+       lv2:symbol "B6" ;
+        pset:value -64.0
+    ], [
+       lv2:symbol "B7" ;
+        pset:value 64.0
+    ], [
+       lv2:symbol "B8" ;
+        pset:value -64.0
+    ], [
+       lv2:symbol "RES" ;
+        pset:value -564.0
+    ], [
+       lv2:symbol "START" ;
+        pset:value 0.0
+    ], [
+       lv2:symbol "END" ;
+        pset:value 127.0
+    ], [
+       lv2:symbol "TEMPO" ;
+        pset:value 60.0
+    ], [
+       lv2:symbol "STDF" ;
+        pset:value -48.0
+    ], [
+       lv2:symbol "SUBD" ;
+        pset:value -1.0
+    ], [
+       lv2:symbol "AUTOPAN" ;
+        pset:value 110.0
+    ], [
+       lv2:symbol "REV" ;
+        pset:value 0.0
+    ], [
+       lv2:symbol "STAGE" ;
+        pset:value 10.0
+    ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Infinity:preset:stereo_phaser>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Infinity> ;
+    rdfs:label "Stereo Phaser" ;
+    lv2:port [
+        lv2:symbol "WETDRY" ;
+        pset:value 42.0
+    ], [
+        lv2:symbol "B1" ;
+        pset:value 64.0
+    ], [
+        lv2:symbol "B2" ;
+        pset:value 0.0
+    ], [
+        lv2:symbol "B3" ;
+        pset:value 64.0
+    ], [
+        lv2:symbol "B4" ;
+        pset:value 0.0
+    ], [
+        lv2:symbol "B5" ;
+        pset:value 64.0
+    ], [
+       lv2:symbol "B6" ;
+        pset:value 0.0
+    ], [
+       lv2:symbol "B7" ;
+        pset:value 64.0
+    ], [
+       lv2:symbol "B8" ;
+        pset:value 0.0
+    ], [
+       lv2:symbol "RES" ;
+        pset:value 91.0
+    ], [
+       lv2:symbol "START" ;
+        pset:value 0.0
+    ], [
+       lv2:symbol "END" ;
+        pset:value 127.0
+    ], [
+       lv2:symbol "TEMPO" ;
+        pset:value 60.0
+    ], [
+       lv2:symbol "STDF" ;
+        pset:value 32.0
+    ], [
+       lv2:symbol "SUBD" ;
+        pset:value 16.0
+    ], [
+       lv2:symbol "AUTOPAN" ;
+        pset:value 92.0
+    ], [
+       lv2:symbol "REV" ;
+        pset:value 1.0
+    ], [
+       lv2:symbol "STAGE" ;
+        pset:value 6.0
+    ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Infinity:preset:corkscrew>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Infinity> ;
+    rdfs:label "Corkscrew" ;
+    lv2:port [
+        lv2:symbol "WETDRY" ;
+        pset:value 64.0
+    ], [
+        lv2:symbol "B1" ;
+        pset:value 64.0
+    ], [
+        lv2:symbol "B2" ;
+        pset:value 0.0
+    ], [
+        lv2:symbol "B3" ;
+        pset:value -64.0
+    ], [
+        lv2:symbol "B4" ;
+        pset:value 0.0
+    ], [
+        lv2:symbol "B5" ;
+        pset:value 64.0
+    ], [
+       lv2:symbol "B6" ;
+        pset:value 0.0
+    ], [
+       lv2:symbol "B7" ;
+        pset:value -64.0
+    ], [
+       lv2:symbol "B8" ;
+        pset:value 0.0
+    ], [
+       lv2:symbol "RES" ;
+        pset:value 120.0
+    ], [
+       lv2:symbol "START" ;
+        pset:value 0.0
+    ], [
+       lv2:symbol "END" ;
+        pset:value 127.0
+    ], [
+       lv2:symbol "TEMPO" ;
+        pset:value 120.0
+    ], [
+       lv2:symbol "STDF" ;
+        pset:value -16.0
+    ], [
+       lv2:symbol "SUBD" ;
+        pset:value 15.0
+    ], [
+       lv2:symbol "AUTOPAN" ;
+        pset:value 67.0
+    ], [
+       lv2:symbol "REV" ;
+        pset:value 1.0
+    ], [
+       lv2:symbol "STAGE" ;
+        pset:value 4.0
+    ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Infinity:preset:freeqeevox>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Infinity> ;
+    rdfs:label "FreeqeeVox" ;
+    lv2:port [
+        lv2:symbol "WETDRY" ;
+        pset:value 0.0
+    ], [
+        lv2:symbol "B1" ;
+        pset:value 64.0
+    ], [
+        lv2:symbol "B2" ;
+        pset:value -64.0
+    ], [
+        lv2:symbol "B3" ;
+        pset:value 64.0
+    ], [
+        lv2:symbol "B4" ;
+        pset:value -64.0
+    ], [
+        lv2:symbol "B5" ;
+        pset:value 64.0
+    ], [
+       lv2:symbol "B6" ;
+        pset:value -64.0
+    ], [
+       lv2:symbol "B7" ;
+        pset:value 64.0
+    ], [
+       lv2:symbol "B8" ;
+        pset:value -64.0
+    ], [
+       lv2:symbol "RES" ;
+        pset:value -164.0
+    ], [
+       lv2:symbol "START" ;
+        pset:value 0.0
+    ], [
+       lv2:symbol "END" ;
+        pset:value 127.0
+    ], [
+       lv2:symbol "TEMPO" ;
+        pset:value 556.0
+    ], [
+       lv2:symbol "STDF" ;
+        pset:value -16.0
+    ], [
+       lv2:symbol "SUBD" ;
+        pset:value -3.0
+    ], [
+       lv2:symbol "AUTOPAN" ;
+        pset:value 0.0
+    ], [
+       lv2:symbol "REV" ;
+        pset:value 0.0
+    ], [
+       lv2:symbol "STAGE" ;
+        pset:value 8.0
+    ] ;
+	.
+

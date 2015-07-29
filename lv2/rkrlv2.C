@@ -151,7 +151,7 @@ typedef struct _RKRLV2
     CompBand* mbcomp; 	//38
     Opticaltrem* otrem; //39
     Vibe* vibe;			//40
-//    Infinity* inf;		//41
+    Infinity* inf;		//41
 } RKRLV2;
 
 enum other_ports
@@ -3556,9 +3556,6 @@ LV2_Handle init_otremlv2(const LV2_Descriptor *descriptor,double sample_freq, co
     plug->effectindex = IOPTTREM;
     plug->prev_bypass = 1;
 
-    getFeatures(plug,host_features);
-
-
     plug->otrem = new Opticaltrem(0,0, sample_freq);
 
     return plug;
@@ -3630,8 +3627,6 @@ LV2_Handle init_vibelv2(const LV2_Descriptor *descriptor,double sample_freq, con
     plug->effectindex = IVIBE;
     plug->prev_bypass = 1;
 
-    getFeatures(plug,host_features);
-
     plug->vibe = new Vibe(0,0, sample_freq);
 
     return plug;
@@ -3702,6 +3697,60 @@ void run_vibelv2(LV2_Handle handle, uint32_t nframes)
 
     //and for whatever reason we have to do the wet/dry mix ourselves
     wetdry_mix(plug, plug->vibe->outvolume, nframes);
+
+    xfade_check(plug,nframes);
+    return;
+}
+
+///// Infinity /////////
+LV2_Handle init_inflv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 18;
+    plug->effectindex = IINF;
+    plug->prev_bypass = 1;
+
+    plug->inf = new Infinity(0,0, sample_freq);
+
+    return plug;
+}
+
+void run_inflv2(LV2_Handle handle, uint32_t nframes)
+{
+    int i;
+    int val;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p && plug->prev_bypass)
+    {
+        plug->inf->cleanup();
+        //copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+
+    //check and set changed parameters
+    for(i=0; i<plug->nparams; i++)//0-17
+    {
+        val = (int)*plug->param_p[i];
+        if(plug->inf->getpar(i) != val)
+        {
+            plug->inf->changepar(i,val);
+        }
+    }
+
+    //now set out ports
+    plug->inf->efxoutl = plug->output_l_p;
+    plug->inf->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->inf->out(plug->output_l_p,plug->output_r_p,nframes);
+
+    //and for whatever reason we have to do the wet/dry mix ourselves
+    wetdry_mix(plug, plug->inf->outvolume, nframes);
 
     xfade_check(plug,nframes);
     return;
@@ -3845,7 +3894,7 @@ void cleanup_rkrlv2(LV2_Handle handle)
     	delete plug->vibe;
     	break;
     case IINF:
-//    	delete plug->inf;
+    	delete plug->inf;
     	break;
     }
     free(plug);
@@ -4518,6 +4567,17 @@ static const LV2_Descriptor vibelv2_descriptor=
     cleanup_rkrlv2
 };
 
+static const LV2_Descriptor inflv2_descriptor=
+{
+    INFLV2_URI,
+    init_inflv2,
+    connect_rkrlv2_ports,
+    0,//activate
+    run_inflv2,
+    0,//deactivate
+    cleanup_rkrlv2
+};
+
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor* lv2_descriptor(uint32_t index)
 {
@@ -4605,6 +4665,8 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
     	return &otremlv2_descriptor ;
     case IVIBE:
     	return &vibelv2_descriptor ;
+    case IINF:
+    	return &inflv2_descriptor ;
     default:
         return 0;
     }

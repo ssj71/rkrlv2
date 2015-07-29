@@ -79,6 +79,7 @@ Vibe::Vibe (float * efxoutl_, float * efxoutr_, double sample_rate)
 
 Vibe::~Vibe ()
 {
+	delete lfo;
 }
 
 
