@@ -201,3 +201,8 @@
         a lv2:Plugin, lv2:ModulatorPlugin ;
         lv2:binary <rkrlv2.so> ;
         rdfs:seeAlso <otrem.ttl> .
+# 40 
+<http://rakarrack.sourceforge.net/effects.html#Vibe>
+        a lv2:Plugin, lv2:ModulatorPlugin ;
+        lv2:binary <rkrlv2.so> ;
+        rdfs:seeAlso <vibe.ttl> .

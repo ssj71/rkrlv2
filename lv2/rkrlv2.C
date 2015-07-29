@@ -151,7 +151,7 @@ typedef struct _RKRLV2
     CompBand* mbcomp; 	//38
     Opticaltrem* otrem; //39
     Vibe* vibe;			//40
-    Infinity* inf;		//41
+//    Infinity* inf;		//41
 } RKRLV2;
 
 enum other_ports
@@ -3621,6 +3621,92 @@ void run_otremlv2(LV2_Handle handle, uint32_t nframes)
     return;
 }
 
+///// Vibe /////////
+LV2_Handle init_vibelv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 11;
+    plug->effectindex = IVIBE;
+    plug->prev_bypass = 1;
+
+    getFeatures(plug,host_features);
+
+    plug->vibe = new Vibe(0,0, sample_freq);
+
+    return plug;
+}
+
+void run_vibelv2(LV2_Handle handle, uint32_t nframes)
+{
+    int i;
+    int val;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p && plug->prev_bypass)
+    {
+        plug->vibe->cleanup();
+        //copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+
+    //LFO effects require period be set before setting other params
+    plug->vibe->PERIOD = nframes;
+
+    //check and set changed parameters
+    for(i=0; i<4; i++)//0-4
+    {
+        val = (int)*plug->param_p[i];
+        if(plug->vibe->getpar(i) != val)
+        {
+            plug->vibe->changepar(i,val);
+        }
+    }
+    for(; i<6; i++)//4-5 pan and st del
+    {
+        val = (int)*plug->param_p[i]+64;
+        if(plug->vibe->getpar(i) != val)
+        {
+            plug->vibe->changepar(i,val);
+        }
+    }
+    val = (int)*plug->param_p[i];//6 wet/dry
+    if(plug->vibe->getpar(i) != val)
+    {
+        plug->vibe->changepar(i,val);
+    }
+    i++;
+    val = (int)*plug->param_p[i]+64;//7 FB
+    if(plug->vibe->getpar(i) != val)
+    {
+        plug->vibe->changepar(i,val);
+    }
+    for(i++; i<plug->nparams; i++)//8-11 the rest
+    {
+        val = (int)*plug->param_p[i]+64;
+        if(plug->vibe->getpar(i) != val)
+        {
+            plug->vibe->changepar(i,val);
+        }
+    }
+
+    //now set out ports
+    plug->vibe->efxoutl = plug->output_l_p;
+    plug->vibe->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->vibe->out(plug->output_l_p,plug->output_r_p,nframes);
+
+    //and for whatever reason we have to do the wet/dry mix ourselves
+    wetdry_mix(plug, plug->vibe->outvolume, nframes);
+
+    xfade_check(plug,nframes);
+    return;
+}
+
 /////////////////////////////////
 //       END OF FX
 /////////////////////////////////
@@ -3751,6 +3837,15 @@ void cleanup_rkrlv2(LV2_Handle handle)
     	break;
     case IMBCOMP:
     	delete plug->mbcomp;
+    	break;
+    case IOPTTREM:
+    	delete plug->otrem;
+    	break;
+    case IVIBE:
+    	delete plug->vibe;
+    	break;
+    case IINF:
+//    	delete plug->inf;
     	break;
     }
     free(plug);
@@ -4412,6 +4507,17 @@ static const LV2_Descriptor otremlv2_descriptor=
     cleanup_rkrlv2
 };
 
+static const LV2_Descriptor vibelv2_descriptor=
+{
+    VIBELV2_URI,
+    init_vibelv2,
+    connect_rkrlv2_ports,
+    0,//activate
+    run_vibelv2,
+    0,//deactivate
+    cleanup_rkrlv2
+};
+
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor* lv2_descriptor(uint32_t index)
 {
@@ -4497,6 +4603,8 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
     	return &mbcomplv2_descriptor ;
     case IOPTTREM:
     	return &otremlv2_descriptor ;
+    case IVIBE:
+    	return &vibelv2_descriptor ;
     default:
         return 0;
     }

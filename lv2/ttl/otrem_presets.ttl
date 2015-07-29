@@ -38,6 +38,7 @@
 <http://rakarrack.sourceforge.net/effects.html#Otrem:preset:trem_2>
         a pset:Preset ;
         lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Otrem> ;
+        rdfs:label "Trem. 2" ;
         lv2:port [
                 lv2:symbol "DEPTH" ;
                 pset:value 45.0
@@ -65,6 +66,7 @@
 <http://rakarrack.sourceforge.net/effects.html#Otrem:preset:hard_pan>
         a pset:Preset ;
         lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Otrem> ;
+        rdfs:label "Hard Pan" ;
         lv2:port [
                 lv2:symbol "DEPTH" ;
                 pset:value 127.0
@@ -92,6 +94,7 @@
 <http://rakarrack.sourceforge.net/effects.html#Otrem:preset:soft_pan>
         a pset:Preset ;
         lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Otrem> ;
+        rdfs:label "Soft Pan" ;
         lv2:port [
                 lv2:symbol "DEPTH" ;
                 pset:value 45.0
@@ -119,6 +122,7 @@
 <http://rakarrack.sourceforge.net/effects.html#Otrem:preset:ramp_down>
         a pset:Preset ;
         lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Otrem> ;
+        rdfs:label "Ramp Down" ;
         lv2:port [
                 lv2:symbol "DEPTH" ;
                 pset:value 65.0
@@ -146,6 +150,7 @@
 <http://rakarrack.sourceforge.net/effects.html#Otrem:preset:hard_ramp>
         a pset:Preset ;
         lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Otrem> ;
+        rdfs:label "Hard Ramp" ;
         lv2:port [
                 lv2:symbol "DEPTH" ;
                 pset:value 127.0

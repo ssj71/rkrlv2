@@ -34,10 +34,10 @@ class Vibe
 
 public:
 
-    Vibe (float * efxoutl_, float * efxoutr_);
+    Vibe (float * efxoutl_, float * efxoutr_, double sample_rate);
     ~Vibe ();
 
-    void out (float * smpsl, float * smpsr);
+    void out (float * smpsl, float * smpsr, uint32_t period);
     void setvolume(int value);
     void setpanning(int value);
     void setpreset (int npreset);
@@ -48,6 +48,7 @@ public:
     float outvolume;
     float *efxoutl;
     float *efxoutr;
+    uint32_t PERIOD;
 
 private:
     int Pwidth;
@@ -63,7 +64,7 @@ private:
     float rpanning, lpanning;
     float flrcross, fcross;
     float fb;
-    EffectLFO lfo;
+    EffectLFO* lfo;
 
     float Ra, Rb, b, dTC, dRCl, dRCr, lampTC, ilampTC, minTC, alphal, alphar, stepl, stepr, oldstepl, oldstepr;
     float fbr, fbl;
@@ -72,6 +73,9 @@ private:
     float cperiod;
     float gl, oldgl;
     float gr, oldgr;
+
+    float cSAMPLE_RATE;
+    float fSAMPLE_RATE;
 
     class fparams
     {

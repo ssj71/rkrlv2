@@ -1,0 +1,329 @@
+@prefix atom: <http://lv2plug.in/ns/ext/atom#> .
+@prefix lv2: <http://lv2plug.in/ns/lv2core#> .
+@prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix state: <http://lv2plug.in/ns/ext/state#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+<http://rakarrack.sourceforge.net/effects.html#Vibe:preset:classic>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Vibe> ;
+        rdfs:label "Classic" ;
+        lv2:port [
+           lv2:symbol "WIDTH" ;
+           pset:value 35.0
+        ], [
+           lv2:symbol "TEMPO" ;
+           pset:value 120.0
+        ], [
+           lv2:symbol "RND" ;
+           pset:value 10.0
+        ], [
+           lv2:symbol "TYPE" ;
+           pset:value 0.0
+        ], [
+           lv2:symbol "STDL" ;
+           pset:value 0.0
+        ], [
+           lv2:symbol "PAN" ;
+           pset:value 0.0
+        ], [
+           lv2:symbol "WETDRY" ;
+           pset:value 64.0
+        ], [
+           lv2:symbol "FB" ;
+           pset:value 0.0
+        ], [
+           lv2:symbol "DEPTH" ;
+           pset:value 3.0
+        ], [
+           lv2:symbol "LRCR" ;
+           pset:value 64.0
+        ], [
+           lv2:symbol "STEREO" ;
+           pset:value 0.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Vibe:preset:stereo_classic>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Vibe> ;
+        rdfs:label "Stereo Classic" ;
+        lv2:port [
+           lv2:symbol "WIDTH" ;
+           pset:value 35.0
+        ], [
+           lv2:symbol "TEMPO" ;
+           pset:value 120.0
+        ], [
+           lv2:symbol "RND" ;
+           pset:value 10.0
+        ], [
+           lv2:symbol "TYPE" ;
+           pset:value 0.0
+        ], [
+           lv2:symbol "STDL" ;
+           pset:value -16.0
+        ], [
+           lv2:symbol "PAN" ;
+           pset:value 0.0
+        ], [
+           lv2:symbol "WETDRY" ;
+           pset:value 64.0
+        ], [
+           lv2:symbol "FB" ;
+           pset:value 0.0
+        ], [
+           lv2:symbol "DEPTH" ;
+           pset:value 3.0
+        ], [
+           lv2:symbol "LRCR" ;
+           pset:value 64.0
+        ], [
+           lv2:symbol "STEREO" ;
+           pset:value 1.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Vibe:preset:wide_vibe>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Vibe> ;
+        rdfs:label "Wide Vibe" ;
+        lv2:port [
+           lv2:symbol "WIDTH" ;
+           pset:value 127.0
+        ], [
+           lv2:symbol "TEMPO" ;
+           pset:value 80.0
+        ], [
+           lv2:symbol "RND" ;
+           pset:value 10.0
+        ], [
+           lv2:symbol "TYPE" ;
+           pset:value 0.0
+        ], [
+           lv2:symbol "STDL" ;
+           pset:value -64.0
+        ], [
+           lv2:symbol "PAN" ;
+           pset:value 0.0
+        ], [
+           lv2:symbol "WETDRY" ;
+           pset:value 64.0
+        ], [
+           lv2:symbol "FB" ;
+           pset:value 0.0
+        ], [
+           lv2:symbol "DEPTH" ;
+           pset:value 0.0
+        ], [
+           lv2:symbol "LRCR" ;
+           pset:value 64.0
+        ], [
+           lv2:symbol "STEREO" ;
+           pset:value 1.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Vibe:preset:classic_chorus>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Vibe> ;
+        rdfs:label "Classic Chorus" ;
+        lv2:port [
+           lv2:symbol "WIDTH" ;
+           pset:value 35.0
+        ], [
+           lv2:symbol "TEMPO" ;
+           pset:value 360.0
+        ], [
+           lv2:symbol "RND" ;
+           pset:value 10.0
+        ], [
+           lv2:symbol "TYPE" ;
+           pset:value 0.0
+        ], [
+           lv2:symbol "STDL" ;
+           pset:value -16.0
+        ], [
+           lv2:symbol "PAN" ;
+           pset:value 0.0
+        ], [
+           lv2:symbol "WETDRY" ;
+           pset:value 0.0
+        ], [
+           lv2:symbol "FB" ;
+           pset:value 0.0
+        ], [
+           lv2:symbol "DEPTH" ;
+           pset:value 3.0
+        ], [
+           lv2:symbol "LRCR" ;
+           pset:value 64.0
+        ], [
+           lv2:symbol "STEREO" ;
+           pset:value 0.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Vibe:preset:vibe_chorus>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Vibe> ;
+        rdfs:label "Vibe Chorus" ;
+        lv2:port [
+           lv2:symbol "WIDTH" ;
+           pset:value 75.0
+        ], [
+           lv2:symbol "TEMPO" ;
+           pset:value 330.0
+        ], [
+           lv2:symbol "RND" ;
+           pset:value 10.0
+        ], [
+           lv2:symbol "TYPE" ;
+           pset:value 0.0
+        ], [
+           lv2:symbol "STDL" ;
+           pset:value -14.0
+        ], [
+           lv2:symbol "PAN" ;
+           pset:value 0.0
+        ], [
+           lv2:symbol "WETDRY" ;
+           pset:value 0.0
+        ], [
+           lv2:symbol "FB" ;
+           pset:value 0.0
+        ], [
+           lv2:symbol "DEPTH" ;
+           pset:value 17.0
+        ], [
+           lv2:symbol "LRCR" ;
+           pset:value 64.0
+        ], [
+           lv2:symbol "STEREO" ;
+           pset:value 0.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Vibe:preset:lush_chorus>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Vibe> ;
+        rdfs:label "Lush Chorus" ;
+        lv2:port [
+           lv2:symbol "WIDTH" ;
+           pset:value 55.0
+        ], [
+           lv2:symbol "TEMPO" ;
+           pset:value 260.0
+        ], [
+           lv2:symbol "RND" ;
+           pset:value 10.0
+        ], [
+           lv2:symbol "TYPE" ;
+           pset:value 0.0
+        ], [
+           lv2:symbol "STDL" ;
+           pset:value 0.0
+        ], [
+           lv2:symbol "PAN" ;
+           pset:value 6.0
+        ], [
+           lv2:symbol "WETDRY" ;
+           pset:value 0.0
+        ], [
+           lv2:symbol "FB" ;
+           pset:value -15.0
+        ], [
+           lv2:symbol "DEPTH" ;
+           pset:value 20.0
+        ], [
+           lv2:symbol "LRCR" ;
+           pset:value 48.0
+        ], [
+           lv2:symbol "STEREO" ;
+           pset:value 0.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Vibe:preset:sick_phaser>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Vibe> ;
+        rdfs:label "Sick Phaser" ;
+        lv2:port [
+           lv2:symbol "WIDTH" ;
+           pset:value 110.0
+        ], [
+           lv2:symbol "TEMPO" ;
+           pset:value 75.0
+        ], [
+           lv2:symbol "RND" ;
+           pset:value 10.0
+        ], [
+           lv2:symbol "TYPE" ;
+           pset:value 0.0
+        ], [
+           lv2:symbol "STDL" ;
+           pset:value -32.0
+        ], [
+           lv2:symbol "PAN" ;
+           pset:value 0.0
+        ], [
+           lv2:symbol "WETDRY" ;
+           pset:value 64.0
+        ], [
+           lv2:symbol "FB" ;
+           pset:value -50.0
+        ], [
+           lv2:symbol "DEPTH" ;
+           pset:value 0.0
+        ], [
+           lv2:symbol "LRCR" ;
+           pset:value 30.0
+        ], [
+           lv2:symbol "STEREO" ;
+           pset:value 1.0
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#Vibe:preset:warble>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#Vibe> ;
+        rdfs:label "Warble" ;
+        lv2:port [
+           lv2:symbol "WIDTH" ;
+           pset:value 127.0
+        ], [
+           lv2:symbol "TEMPO" ;
+           pset:value 360.0
+        ], [
+           lv2:symbol "RND" ;
+           pset:value 10.0
+        ], [
+           lv2:symbol "TYPE" ;
+           pset:value 0.0
+        ], [
+           lv2:symbol "STDL" ;
+           pset:value -64.0
+        ], [
+           lv2:symbol "PAN" ;
+           pset:value 0.0
+        ], [
+           lv2:symbol "WETDRY" ;
+           pset:value 0.0
+        ], [
+           lv2:symbol "FB" ;
+           pset:value -64.0
+        ], [
+           lv2:symbol "DEPTH" ;
+           pset:value 0.0
+        ], [
+           lv2:symbol "LRCR" ;
+           pset:value 37.0
+        ], [
+           lv2:symbol "STEREO" ;
+           pset:value 0.0
+        ] ;
+	.
+

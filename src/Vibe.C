@@ -26,10 +26,13 @@
 #include <math.h>
 #include "Vibe.h"
 
-Vibe::Vibe (float * efxoutl_, float * efxoutr_)
+Vibe::Vibe (float * efxoutl_, float * efxoutr_, double sample_rate)
 {
     efxoutl = efxoutl_;
     efxoutr = efxoutr_;
+
+    cSAMPLE_RATE = 1.f/sample_rate;
+    fSAMPLE_RATE = sample_rate;
 
 //Swing was measured on operating device of: 10K to 250k.
 //400K is reported to sound better for the "low end" (high resistance)
@@ -65,7 +68,9 @@ Vibe::Vibe (float * efxoutl_, float * efxoutr_)
     gl = 0.0f;
     gr = 0.0f;
     for(int jj = 0; jj<8; jj++) oldcvolt[jj] = 0.0f;
-    cperiod = 1.0f/fPERIOD;
+    lfo = new EffectLFO(sample_rate);
+    PERIOD = 256;//best guess until we know better
+
 
     init_vibes();
     cleanup();
@@ -85,10 +90,10 @@ Vibe::cleanup ()
 };
 
 void
-Vibe::out (float *smpsl, float *smpsr)
+Vibe::out (float *smpsl, float *smpsr, uint32_t period)
 {
 
-    int i,j;
+    unsigned int i,j;
     float lfol, lfor, xl, xr, fxl, fxr;
     //float vbe,vin;
     float cvolt, ocvolt, evolt, input;
@@ -97,7 +102,7 @@ Vibe::out (float *smpsl, float *smpsr)
 
     input = cvolt = ocvolt = evolt = 0.0f;
 
-    lfo.effectlfoout (&lfol, &lfor);
+    lfo->effectlfoout (&lfol, &lfor);
 
     lfol = fdepth + lfol*fwidth;
     if (lfol > 1.0f)
@@ -406,9 +411,6 @@ Vibe::modulate(float ldrl, float ldrr)
     Rv = 4700.0f + ldrl;
     R1pRv = R1 + Rv;
 
-    int lrchoice;
-    if(Pstereo) lrchoice = 8;
-    else lrchoice = 4;
 
     for(int i =0; i<8; i++) {
         if(i==4) {
@@ -494,6 +496,7 @@ Vibe::setpreset (int npreset)
 {
     const int PRESET_SIZE = 11;
     const int NUM_PRESETS = 8;
+    int pdata[PRESET_SIZE];
     int presets[NUM_PRESETS][PRESET_SIZE] = {
         //Classic
         {35, 120, 10, 0, 64, 64, 64, 64, 3, 64, 0},
@@ -515,7 +518,7 @@ Vibe::setpreset (int npreset)
     };
 
     if(npreset>NUM_PRESETS-1) {
-        Fpre->ReadPreset(45,npreset-NUM_PRESETS+1);
+        Fpre->ReadPreset(45,npreset-NUM_PRESETS+1, pdata);
         for (int n = 0; n < PRESET_SIZE; n++)
             changepar (n, pdata[n]);
     } else {
@@ -536,20 +539,20 @@ Vibe::changepar (int npar, int value)
         fwidth = ((float) Pwidth)/90.0f;
         break;
     case 1:
-        lfo.Pfreq = value;
-        lfo.updateparams ();
+        lfo->Pfreq = value;
+        lfo->updateparams (PERIOD);
         break;
     case 2:
-        lfo.Prandomness = value;
-        lfo.updateparams ();
+        lfo->Prandomness = value;
+        lfo->updateparams (PERIOD);
         break;
     case 3:
-        lfo.PLFOtype = value;
-        lfo.updateparams ();
+        lfo->PLFOtype = value;
+        lfo->updateparams (PERIOD);
         break;
     case 4:
-        lfo.Pstereo = value;
-        lfo.updateparams ();
+        lfo->Pstereo = value;
+        lfo->updateparams (PERIOD);
         break;
     case 5: // pan
         setpanning(value);
@@ -589,16 +592,16 @@ Vibe::getpar (int npar)
         return (Pwidth);
         break;
     case 1:
-        return (lfo.Pfreq);
+        return (lfo->Pfreq);
         break;
     case 2:
-        return (lfo.Prandomness);
+        return (lfo->Prandomness);
         break;
     case 3:
-        return (lfo.PLFOtype);
+        return (lfo->PLFOtype);
         break;
     case 4:
-        return (lfo.Pstereo);
+        return (lfo->Pstereo);
         break;
     case 5:
         return (Ppanning); //pan

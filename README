@@ -58,8 +58,8 @@ EFFECTS (X - done, W - won't do, + - done with missing features)
 [X] Echotron 
 [+] StereoHarm - no midi
 [X] CompBand 
-[ ] Opticaltrem 
-[ ] Vibe 
+[X] Opticaltrem 
+[X] Vibe 
 [ ] Infinity
 
 __fx in preset bank 1__
