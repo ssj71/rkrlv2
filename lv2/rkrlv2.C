@@ -3691,7 +3691,7 @@ void run_vibelv2(LV2_Handle handle, uint32_t nframes)
     }
     for(i++; i<plug->nparams; i++)//8-11 the rest
     {
-        val = (int)*plug->param_p[i]+64;
+        val = (int)*plug->param_p[i];
         if(plug->vibe->getpar(i) != val)
         {
             plug->vibe->changepar(i,val);
