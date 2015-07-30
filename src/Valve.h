@@ -81,6 +81,7 @@ private:
     float fdist;
     float inputvol;
 
+    float* interpbuf; //buffer for filters
     AnalogFilter *lpfl, *lpfr, *hpfl, *hpfr;
     class HarmEnhancer *harm;
     class FPreset *Fpre;

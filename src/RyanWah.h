@@ -32,7 +32,7 @@
 class RyanWah
 {
 public:
-    RyanWah (float * efxoutl_, float * efxoutr_, double sample_rate);
+    RyanWah (float * efxoutl_, float * efxoutr_, double sample_rate, uint32_t intermediate_bufsize);
     ~RyanWah ();
     void out (float * smpsl, float * smpsr, uint32_t period);
 
@@ -87,6 +87,7 @@ private:
     EffectLFO *lfo;		//lfo-ul RyanWah
     class RBFilter *filterl, *filterr;
     class AnalogFilter *sidechain_filter;
+    float* interpbuf; //buffer for filters
 
     class FPreset *Fpre;
 

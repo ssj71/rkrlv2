@@ -26,11 +26,11 @@
 #include <stdio.h>
 #include "FormantFilter.h"
 
-FormantFilter::FormantFilter (FilterParams * pars)
+FormantFilter::FormantFilter (FilterParams * pars, float* interpbuf)
 {
     numformants = pars->Pnumformants;
     for (unsigned int i = 0; i < numformants; i++)
-        formant[i] = new AnalogFilter (4 /*BPF*/, 1000.0f, 10.0f, pars->Pstages, pars->fSAMPLE_RATE);
+        formant[i] = new AnalogFilter (4 /*BPF*/, 1000.0f, 10.0f, pars->Pstages, pars->fSAMPLE_RATE, interpbuf);
     cleanup ();
     inbuffer = new float[pars->intermediate_bufsize];
     tmpbuf = new float[pars->intermediate_bufsize];

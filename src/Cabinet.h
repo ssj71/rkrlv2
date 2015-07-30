@@ -28,7 +28,7 @@
 class Cabinet
 {
 public:
-    Cabinet (float * efxoutl_, float * efxoutr_, double sample_frequency);
+    Cabinet (float * efxoutl_, float * efxoutr_, double sample_frequency, uint32_t intermediate_bufsize);
     ~Cabinet ();
     void cleanup();
     void out (float * smpsl, float * smpsr, uint32_t period);

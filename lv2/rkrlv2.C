@@ -248,11 +248,7 @@ void getFeatures(RKRLV2* plug, const LV2_Feature * const* host_features)
     plug->scheduler = 0;
     plug->urid_map = 0;
     for(i=0; host_features[i]; i++)
-    {
-        if(!strcmp(host_features[i]->URI,LV2_OPTIONS__options))
-        {
-            LV2_Options_Option* option;
-            option = (LV2_Options_Option*)host_features[i]->data;
+    { if(!strcmp(host_features[i]->URI,LV2_OPTIONS__options)) { LV2_Options_Option* option; option = (LV2_Options_Option*)host_features[i]->data;
             for(j=0; option[j].key; j++)
             {
                 if(option[j].key == plug->URIDs.bufsz_max)
@@ -293,7 +289,6 @@ void getFeatures(RKRLV2* plug, const LV2_Feature * const* host_features)
     }
 }
 
-
 /////////////////////////////////////////
 //      EFFECTS
 ////////////////////////////////////////
@@ -307,7 +302,9 @@ LV2_Handle init_eqlv2(const LV2_Descriptor *descriptor,double sample_freq, const
     plug->effectindex = IEQ;
     plug->prev_bypass = 1;
 
-    plug->eq = new EQ(0,0,sample_freq);
+    getFeatures(plug,host_features);
+
+    plug->eq = new EQ(0,0,sample_freq, plug->period_max);
 
     //eq has a bunch of setup stuff. Why isn't this in the EQ initalizer?
     for (int i = 0; i <= 45; i += 5)
@@ -781,7 +778,7 @@ LV2_Handle init_harmnomidlv2(const LV2_Descriptor *descriptor,double sample_freq
 
     //magic numbers: shift qual 4, downsample 5, up qual 4, down qual 2,
     plug->harm = new Harmonizer(0,0,4,5,4,2, plug->period_max, sample_freq);
-    plug->noteID = new Recognize(0,0,.6, sample_freq, 440.0);//.6 is default trigger value
+    plug->noteID = new Recognize(0,0,.6, sample_freq, 440.0, plug->period_max);//.6 is default trigger value
     plug->chordID = new RecChord();
 
 
@@ -1208,7 +1205,9 @@ LV2_Handle init_eqplv2(const LV2_Descriptor *descriptor,double sample_freq, cons
     plug->effectindex = IEQP;
     plug->prev_bypass = 1;
 
-    plug->eq = new EQ(0,0,sample_freq);
+    getFeatures(plug,host_features);
+
+    plug->eq = new EQ(0,0,sample_freq, plug->period_max);
 
     //eq has a bunch of setup stuff. Why isn't this in the EQ initalizer?
     for (int i = 0; i <= 10; i += 5)
@@ -1295,7 +1294,9 @@ LV2_Handle init_cablv2(const LV2_Descriptor *descriptor,double sample_freq, cons
     plug->effectindex = ICAB;
     plug->prev_bypass = 1;
 
-    plug->cab = new Cabinet(0,0,sample_freq);
+    getFeatures(plug,host_features);
+
+    plug->cab = new Cabinet(0,0,sample_freq, plug->period_max);
 
     return plug;
 }
@@ -1432,7 +1433,9 @@ LV2_Handle init_wahlv2(const LV2_Descriptor *descriptor,double sample_freq, cons
     plug->effectindex = IWAH;
     plug->prev_bypass = 1;
 
-    plug->wah = new DynamicFilter(0,0,sample_freq);
+    getFeatures(plug,host_features);
+
+    plug->wah = new DynamicFilter(0,0,sample_freq, plug->period_max);
 
     return plug;
 }
@@ -1719,9 +1722,11 @@ LV2_Handle init_ringlv2(const LV2_Descriptor *descriptor,double sample_freq, con
     plug->effectindex = IRING;
     plug->prev_bypass = 1;
 
+    getFeatures(plug,host_features);
+
     //magic numbers: shift qual 4, downsample 5, up qual 4, down qual 2,
     plug->ring = new Ring(0,0, sample_freq);
-    plug->noteID = new Recognize(0,0,.6, sample_freq, 440.0);//.6 is default trigger value
+    plug->noteID = new Recognize(0,0,.6, sample_freq, 440.0, plug->period_max);//.6 is default trigger value
 
     return plug;
 }
@@ -1959,7 +1964,9 @@ LV2_Handle init_expandlv2(const LV2_Descriptor *descriptor,double sample_freq, c
     plug->effectindex = IEXPAND;
     plug->prev_bypass = 1;
 
-    plug->expand = new Expander(0,0, sample_freq);
+    getFeatures(plug,host_features);
+
+    plug->expand = new Expander(0,0, sample_freq, plug->period_max);
 
     return plug;
 }
@@ -2225,8 +2232,9 @@ LV2_Handle init_mutrolv2(const LV2_Descriptor *descriptor,double sample_freq, co
     plug->effectindex = IMUTRO;
     plug->prev_bypass = 1;
 
+    getFeatures(plug,host_features);
 
-    plug->mutro = new RyanWah(0,0,sample_freq);
+    plug->mutro = new RyanWah(0,0,sample_freq, plug->period_max);
 
     return plug;
 }
@@ -2445,7 +2453,9 @@ LV2_Handle init_shelflv2(const LV2_Descriptor *descriptor,double sample_freq, co
     plug->effectindex = ISHELF;
     plug->prev_bypass = 1;
 
-    plug->shelf = new ShelfBoost(0,0,sample_freq);
+    getFeatures(plug,host_features);
+
+    plug->shelf = new ShelfBoost(0,0,sample_freq, plug->period_max);
 
     return plug;
 }
@@ -3108,7 +3118,7 @@ LV2_Handle init_echotronlv2(const LV2_Descriptor *descriptor,double sample_freq,
     }
     lv2_atom_forge_init(&plug->forge, plug->urid_map);
 
-    plug->echotron = new Echotron(0,0, sample_freq);
+    plug->echotron = new Echotron(0,0, sample_freq, plug->period_max);
     plug->echotron->changepar(4,1);//set to user selected files
     plug->dlyfile = new DlyFile;
 
@@ -3375,7 +3385,7 @@ LV2_Handle init_sharmnomidlv2(const LV2_Descriptor *descriptor,double sample_fre
 
     //magic numbers: shift qual 4, downsample 5, up qual 4, down qual 2,
     plug->sharm = new StereoHarm(0,0,4,5,4,2, plug->period_max, sample_freq);
-    plug->noteID = new Recognize(0,0,.6, sample_freq, 440.0);//.6 is default trigger value
+    plug->noteID = new Recognize(0,0,.6, sample_freq, 440.0, plug->period_max);//.6 is default trigger value
     plug->chordID = new RecChord();
 
 
@@ -3711,7 +3721,9 @@ LV2_Handle init_inflv2(const LV2_Descriptor *descriptor,double sample_freq, cons
     plug->effectindex = IINF;
     plug->prev_bypass = 1;
 
-    plug->inf = new Infinity(0,0, sample_freq);
+    getFeatures(plug,host_features);
+
+    plug->inf = new Infinity(0,0, sample_freq, plug->period_max);
 
     return plug;
 }

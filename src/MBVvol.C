@@ -47,18 +47,19 @@ MBVvol::MBVvol (float * efxoutl_, float * efxoutr_, double sample_rate, uint32_t
     highr = (float *) malloc (sizeof (float) * intermediate_bufsize);
 
 
-    lpf1l = new AnalogFilter (2, 500.0f, .7071f, 0, sample_rate);
-    lpf1r = new AnalogFilter (2, 500.0f, .7071f, 0, sample_rate);
-    hpf1l = new AnalogFilter (3, 500.0f, .7071f, 0, sample_rate);
-    hpf1r = new AnalogFilter (3, 500.0f, .7071f, 0, sample_rate);
-    lpf2l = new AnalogFilter (2, 2500.0f, .7071f, 0, sample_rate);
-    lpf2r = new AnalogFilter (2, 2500.0f, .7071f, 0, sample_rate);
-    hpf2l = new AnalogFilter (3, 2500.0f, .7071f, 0, sample_rate);
-    hpf2r = new AnalogFilter (3, 2500.0f, .7071f, 0, sample_rate);
-    lpf3l = new AnalogFilter (2, 5000.0f, .7071f, 0, sample_rate);
-    lpf3r = new AnalogFilter (2, 5000.0f, .7071f, 0, sample_rate);
-    hpf3l = new AnalogFilter (3, 5000.0f, .7071f, 0, sample_rate);
-    hpf3r = new AnalogFilter (3, 5000.0f, .7071f, 0, sample_rate);
+    interpbuf = new float[intermediate_bufsize];
+    lpf1l = new AnalogFilter (2, 500.0f, .7071f, 0, sample_rate, interpbuf);
+    lpf1r = new AnalogFilter (2, 500.0f, .7071f, 0, sample_rate, interpbuf);
+    hpf1l = new AnalogFilter (3, 500.0f, .7071f, 0, sample_rate, interpbuf);
+    hpf1r = new AnalogFilter (3, 500.0f, .7071f, 0, sample_rate, interpbuf);
+    lpf2l = new AnalogFilter (2, 2500.0f, .7071f, 0, sample_rate, interpbuf);
+    lpf2r = new AnalogFilter (2, 2500.0f, .7071f, 0, sample_rate, interpbuf);
+    hpf2l = new AnalogFilter (3, 2500.0f, .7071f, 0, sample_rate, interpbuf);
+    hpf2r = new AnalogFilter (3, 2500.0f, .7071f, 0, sample_rate, interpbuf);
+    lpf3l = new AnalogFilter (2, 5000.0f, .7071f, 0, sample_rate, interpbuf);
+    lpf3r = new AnalogFilter (2, 5000.0f, .7071f, 0, sample_rate, interpbuf);
+    hpf3l = new AnalogFilter (3, 5000.0f, .7071f, 0, sample_rate, interpbuf);
+    hpf3r = new AnalogFilter (3, 5000.0f, .7071f, 0, sample_rate, interpbuf);
 
     lfo1 = new EffectLFO(sample_rate);
     lfo2 = new EffectLFO(sample_rate);
@@ -96,6 +97,7 @@ MBVvol::~MBVvol ()
     delete lpf3r;
     delete hpf3l;
     delete hpf3r;
+    delete[] interpbuf;
 };
 
 /*

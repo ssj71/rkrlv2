@@ -36,7 +36,7 @@
 
 
 
-Recognize::Recognize (float *efxoutl_, float *efxoutr_, float trig, double sample_rate, float tune)
+Recognize::Recognize (float *efxoutl_, float *efxoutr_, float trig, double sample_rate, float tune, uint32_t intermediate_bufsize)
 {
 
     efxoutl = efxoutl_;
@@ -55,11 +55,11 @@ Recognize::Recognize (float *efxoutl_, float *efxoutr_, float trig, double sampl
     Sus->changepar(1,64);
     Sus->changepar(2,127);
 
-
-    lpfl = new AnalogFilter (2, 3000, 1, 0, sample_rate);
-    lpfr = new AnalogFilter (2, 3000, 1, 0, sample_rate);
-    hpfl = new AnalogFilter (3, 300, 1, 0, sample_rate);
-    hpfr = new AnalogFilter (3, 300, 1, 0, sample_rate);
+    interpbuf = new float[intermediate_bufsize];
+    lpfl = new AnalogFilter (2, 3000, 1, 0, sample_rate, interpbuf);
+    lpfr = new AnalogFilter (2, 3000, 1, 0, sample_rate, interpbuf);
+    hpfl = new AnalogFilter (3, 300, 1, 0, sample_rate, interpbuf);
+    hpfr = new AnalogFilter (3, 300, 1, 0, sample_rate, interpbuf);
 
     reconota = last = -1;
 
@@ -77,6 +77,7 @@ Recognize::~Recognize ()
 	delete lpfr;
 	delete hpfl;
 	delete hpfr;
+	delete[] interpbuf;
 }
 
 

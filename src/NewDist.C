@@ -48,27 +48,28 @@ NewDist::NewDist (float * efxoutl_, float * efxoutr_, double sample_rate, uint32
     	octoutl[i] = octoutr[i] = 0;
     }
 
-    lpfl = new AnalogFilter (2, 22000, 1, 0, sample_rate);
-    lpfr = new AnalogFilter (2, 22000, 1, 0, sample_rate);
-    hpfl = new AnalogFilter (3, 20, 1, 0, sample_rate);
-    hpfr = new AnalogFilter (3, 20, 1, 0, sample_rate);
-    blockDCl = new AnalogFilter (2, 75.0f, 1, 0, sample_rate);
-    blockDCr = new AnalogFilter (2, 75.0f, 1, 0, sample_rate);
+    interpbuf = new float[intermediate_bufsize];
+    lpfl = new AnalogFilter (2, 22000, 1, 0, sample_rate, interpbuf);
+    lpfr = new AnalogFilter (2, 22000, 1, 0, sample_rate, interpbuf);
+    hpfl = new AnalogFilter (3, 20, 1, 0, sample_rate, interpbuf);
+    hpfr = new AnalogFilter (3, 20, 1, 0, sample_rate, interpbuf);
+    blockDCl = new AnalogFilter (2, 75.0f, 1, 0, sample_rate, interpbuf);
+    blockDCr = new AnalogFilter (2, 75.0f, 1, 0, sample_rate, interpbuf);
     wshapel = new Waveshaper(sample_rate, wave_res, wave_upq, wave_dnq, intermediate_bufsize);
     wshaper = new Waveshaper(sample_rate, wave_res, wave_upq, wave_dnq, intermediate_bufsize);
 
     blockDCl->setfreq (75.0f);
     blockDCr->setfreq (75.0f);
 
-    DCl = new AnalogFilter (3, 30, 1, 0, sample_rate);
-    DCr = new AnalogFilter (3, 30, 1, 0, sample_rate);
+    DCl = new AnalogFilter (3, 30, 1, 0, sample_rate, interpbuf);
+    DCr = new AnalogFilter (3, 30, 1, 0, sample_rate, interpbuf);
     DCl->setfreq (30.0f);
     DCr->setfreq (30.0f);
 
 
 
 
-    filterpars = new FilterParams (0, 64, 64, sample_rate);
+    filterpars = new FilterParams (0, 64, 64, sample_rate, intermediate_bufsize);
 
     filterpars->Pcategory = 2;
     filterpars->Ptype = 0;
@@ -113,6 +114,26 @@ NewDist::NewDist (float * efxoutl_, float * efxoutr_, double sample_rate, uint32
 
 NewDist::~NewDist ()
 {
+    free(octoutl);
+    free(octoutr);
+
+    delete[] interpbuf;
+    delete lpfl;
+    delete lpfr;
+    delete hpfl;
+    delete hpfr;
+    delete blockDCl;
+    delete blockDCr;
+    delete wshapel;
+    delete wshaper;
+
+    delete DCl;
+    delete DCr;
+
+    delete filterpars;
+    delete filterl;
+    delete filterr;
+
 };
 
 /*

@@ -97,6 +97,7 @@ private:
     int avflag;
 
     class RBFilter *filterl, *filterr, *modfilterl, *modfilterr, *rmsfilter, *peaklpfilter, *peakhpfilter, *peaklpfilter2;
+    float* interpbuf;
 
     Resample *U_Resample;
     Resample *D_Resample;

@@ -42,10 +42,11 @@ Shuffle::Shuffle (float * efxoutl_, float * efxoutr_, double sample_rate, uint32
     inputr = (float *) malloc (sizeof (float) * intermediate_bufsize);
 
 
-    lr = new AnalogFilter (6, 300.0f, .3f, 0, sample_rate);
-    hr = new AnalogFilter (6, 8000.0f,.3f, 0, sample_rate);
-    mlr = new AnalogFilter (6, 1200.0f,.3f, 0, sample_rate);
-    mhr = new AnalogFilter (6, 2400.0f,.3f, 0, sample_rate);
+    interpbuf = new float[intermediate_bufsize];
+    lr = new AnalogFilter (6, 300.0f, .3f, 0, sample_rate,interpbuf);
+    hr = new AnalogFilter (6, 8000.0f,.3f, 0, sample_rate,interpbuf);
+    mlr = new AnalogFilter (6, 1200.0f,.3f, 0, sample_rate,interpbuf);
+    mhr = new AnalogFilter (6, 2400.0f,.3f, 0, sample_rate,interpbuf);
 
 
     //default values
@@ -64,6 +65,7 @@ Shuffle::~Shuffle ()
 {
 	free(inputl);
 	free(inputr);
+	delete[] interpbuf;
 	delete lr;
 	delete hr;
 	delete mlr;

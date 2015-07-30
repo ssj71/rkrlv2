@@ -27,7 +27,7 @@
 #include "SVFilter.h"
 
 SVFilter::SVFilter (unsigned char Ftype, float Ffreq, float Fq,
-                    unsigned char Fstages, double sample_rate)
+                    unsigned char Fstages, double sample_rate, float *interpbuf)
 {
     stages = Fstages;
     type = Ftype;
@@ -42,6 +42,7 @@ SVFilter::SVFilter (unsigned char Ftype, float Ffreq, float Fq,
         stages = MAX_FILTER_STAGES;
     cleanup ();
     setfreq_and_q (Ffreq, Fq);
+    ismp = interpbuf;
 };
 
 SVFilter::~SVFilter ()
@@ -172,10 +173,8 @@ void
 SVFilter::filterout (float * smp, uint32_t period)
 {
     unsigned int i;
-    float *ismp = NULL;
 
     if (needsinterpolation != 0) {
-        ismp = new float[period];
         for (i = 0; i < period; i++)
             ismp[i] = smp[i];
         for (i = 0; i < stages + 1; i++)
@@ -191,7 +190,6 @@ SVFilter::filterout (float * smp, uint32_t period)
             float x = (float) i / fPERIOD;
             smp[i] = ismp[i] * (1.0f - x) + smp[i] * x;
         };
-        delete (ismp);
         needsinterpolation = 0;
     };
 

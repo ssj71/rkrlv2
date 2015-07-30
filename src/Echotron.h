@@ -58,12 +58,13 @@ public:
     int fLength;
     char Filename[128];
 
+
 };
 
 class Echotron
 {
 public:
-    Echotron (float * efxoutl_, float * efxoutr_, double sample_rate);
+    Echotron (float * efxoutl_, float * efxoutr_, double sample_rate, uint32_t intermediate_bufsize);
     ~Echotron ();
     void out (float * smpsl, float * smpr, uint32_t period);
     void setpreset (int npreset);
@@ -164,6 +165,7 @@ private:
     float fSAMPLE_RATE;
 
     class AnalogFilter *lpfl, *lpfr;	//filters
+    float* interpbuf; //buffer for filters
 
     struct {
         float sfreq, sq,sLP,sBP,sHP, sStg;

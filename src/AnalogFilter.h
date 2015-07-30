@@ -31,8 +31,10 @@
 class AnalogFilter:public Filter_
 {
 public:
+//    AnalogFilter (unsigned char Ftype, float Ffreq, float Fq,
+//                  unsigned char Fstages, double samplerate);
     AnalogFilter (unsigned char Ftype, float Ffreq, float Fq,
-                  unsigned char Fstages, double samplerate);
+                  unsigned char Fstages, double samplerate, float* interpbuf);//interpbuf MUST be array equal or larger than period
     ~AnalogFilter ();
     void filterout (float * smp, uint32_t period);
     float filterout_s (float smp);
@@ -83,6 +85,8 @@ private:
     float oldc[3], oldd[3];	//old coefficients(used only if some filter paremeters changes very fast, and it needs interpolation)
 
     float xd[3], yd[3];	//used if the filter is applied more times
+
+    float* ismp; //buffer for interpolating filter
 
     float ifSAMPLE_RATE;
 

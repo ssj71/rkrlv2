@@ -31,7 +31,7 @@ class RBFilter:public Filter_
 {
 public:
     RBFilter (int Ftype, float Ffreq, float Fq,
-              int Fstages, double sample_rate);
+              int Fstages, double sample_rate, float* interpbuf);
     ~RBFilter ();
     void filterout (float * smp, uint32_t period);
     float filterout_s (float smp);
@@ -80,7 +80,7 @@ private:
 
     float fSAMPLE_RATE;
 
-
+    float* ismp;//buffer for interpolation
 
 };
 

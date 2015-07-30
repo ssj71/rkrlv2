@@ -32,8 +32,6 @@ Harmonizer::Harmonizer (float *efxoutl_, float *efxoutr_, long int Quality, int 
 		uint16_t intermediate_bufsize, double sample_rate)
 {
 
-
-
     efxoutl = efxoutl_;
     efxoutr = efxoutr_;
     hq = Quality;
@@ -59,7 +57,8 @@ Harmonizer::Harmonizer (float *efxoutl_, float *efxoutr_, long int Quality, int 
     D_Resample = new Resample(uq);
 
 
-    pl = new AnalogFilter (6, 22000, 1, 0, sample_rate);
+    interpbuf = new float[intermediate_bufsize];
+    pl = new AnalogFilter (6, 22000, 1, 0, sample_rate, interpbuf);
 
     PS = new PitchShifter (window, hq, nfSAMPLE_RATE);
     PS->ratio = 1.0f;
@@ -86,6 +85,7 @@ Harmonizer::~Harmonizer ()
 	delete D_Resample;
 	delete pl;
 	delete PS;
+	delete[] interpbuf;
 
 };
 

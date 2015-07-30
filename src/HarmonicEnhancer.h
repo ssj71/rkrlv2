@@ -63,6 +63,7 @@ private:
 
     AnalogFilter *hpfl, *hpfr;
     AnalogFilter *lpfl, *lpfr;
+    float* interpbuf; //buffer for filters
 
     class Compressor *limiter;
 

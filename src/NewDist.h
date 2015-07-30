@@ -87,6 +87,7 @@ private:
 
 
     //Parametrii reali
+    float* interpbuf;//buffer for filters
     AnalogFilter *lpfl, *lpfr, *hpfl, *hpfr, *blockDCl, *blockDCr, *DCl, *DCr;
     class Waveshaper *wshapel, *wshaper;
 

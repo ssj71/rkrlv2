@@ -129,6 +129,7 @@ private:
     class Resample *D_Resample;
 
 
+    float* interpbuf; //buffer for filters
     class AnalogFilter *lpfl, *lpfr;	//filters
 
     class FPreset *Fpre;

@@ -27,7 +27,7 @@
 #include "AnalogFilter.h"
 #include <stdio.h>
 
-RyanWah::RyanWah (float * efxoutl_, float * efxoutr_, double sample_rate)
+RyanWah::RyanWah (float * efxoutl_, float * efxoutr_, double sample_rate, uint32_t intermediate_bufsize)
 {
     efxoutl = efxoutl_;
     efxoutr = efxoutr_;
@@ -62,10 +62,11 @@ RyanWah::RyanWah (float * efxoutl_, float * efxoutr_, double sample_rate)
 
     Fstages = 1;
     Ftype = 1;
-    filterl = new RBFilter (0, 80.0f, 70.0f, 1, sample_rate);
-    filterr = new RBFilter (0, 80.0f, 70.0f, 1, sample_rate);
+    interpbuf = new float[intermediate_bufsize];
+    filterl = new RBFilter (0, 80.0f, 70.0f, 1, sample_rate,interpbuf);
+    filterr = new RBFilter (0, 80.0f, 70.0f, 1, sample_rate,interpbuf);
     
-    sidechain_filter = new AnalogFilter (1, 630.0, 1.0, 1, sample_rate);
+    sidechain_filter = new AnalogFilter (1, 630.0, 1.0, 1, sample_rate,interpbuf);
     setpreset (Ppreset);
 
     cleanup ();
@@ -77,6 +78,7 @@ RyanWah::~RyanWah ()
 	delete filterl;
 	delete filterr;
 	delete sidechain_filter;
+	delete[] interpbuf;
 };
 
 

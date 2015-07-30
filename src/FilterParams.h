@@ -32,7 +32,7 @@
 class FilterParams
 {
 public:
-    FilterParams (unsigned char Ptype_, unsigned char Pfreq, unsigned char Pq_, double sample_rate);
+    FilterParams (unsigned char Ptype_, unsigned char Pfreq, unsigned char Pq_, double sample_ratei, uint32_t intermediate_bufsize);
     ~FilterParams ();
 
     void defaults ();

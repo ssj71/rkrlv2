@@ -27,7 +27,7 @@
 #include "RBFilter.h"
 
 RBFilter::RBFilter (int Ftype, float Ffreq, float Fq,
-                    int Fstages, double sample_rate)
+                    int Fstages, double sample_rate, float* interpbuf)
 {
     stages = Fstages;
     type = Ftype;
@@ -51,6 +51,7 @@ RBFilter::RBFilter (int Ftype, float Ffreq, float Fq,
     float cSAMPLE_RATE = 1/sample_rate;
     a_smooth_tc = cSAMPLE_RATE/(cSAMPLE_RATE + 0.01f);  //10ms time constant for averaging coefficients
     b_smooth_tc = 1.0f - a_smooth_tc;
+    ismp = interpbuf;
 };
 
 RBFilter::~RBFilter ()
@@ -257,16 +258,13 @@ void
 RBFilter::filterout (float * smp, uint32_t period)
 {
     unsigned int i;
-    float *ismp = NULL;
 
     if (needsinterpolation != 0) {
-        ismp = new float[period];
         for (i = 0; i < period; i++)
             ismp[i] = smp[i];
         for (i = 0; i < stages + 1; i++)
             singlefilterout (ismp, st[i], ipar, period);
 
-        delete (ismp);
         needsinterpolation = 0;
     };
 

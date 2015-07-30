@@ -31,7 +31,7 @@ class SVFilter:public Filter_
 {
 public:
     SVFilter (unsigned char Ftype, float Ffreq, float Fq,
-              unsigned char Fstages, double sample_rate);
+              unsigned char Fstages, double sample_rate, float* interpbuf);//interpbuf MUST be an array equal or larger to period
     ~SVFilter ();
     void filterout (float * smp, uint32_t period);
     void setfreq (float frequency);
@@ -65,6 +65,7 @@ private:
     float q;			//Q factor (resonance or Q factor)
     float gain;		//the gain of the filter (if are shelf/peak) filters
     float fSAMPLE_RATE;
+    float * ismp;  //buffer used if filter interpolates
 
 };
 

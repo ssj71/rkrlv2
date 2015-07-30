@@ -53,16 +53,17 @@ MBDist::MBDist (float * efxoutl_, float * efxoutr_, double sample_rate, uint32_t
     }
 
 
-    lpf1l = new AnalogFilter (2, 500.0f, .7071f, 0, sample_rate);
-    lpf1r = new AnalogFilter (2, 500.0f, .7071f, 0, sample_rate);
-    hpf1l = new AnalogFilter (3, 500.0f, .7071f, 0, sample_rate);
-    hpf1r = new AnalogFilter (3, 500.0f, .7071f, 0, sample_rate);
-    lpf2l = new AnalogFilter (2, 2500.0f, .7071f, 0, sample_rate);
-    lpf2r = new AnalogFilter (2, 2500.0f, .7071f, 0, sample_rate);
-    hpf2l = new AnalogFilter (3, 2500.0f, .7071f, 0, sample_rate);
-    hpf2r = new AnalogFilter (3, 2500.0f, .7071f, 0, sample_rate);
-    DCl = new AnalogFilter (3, 30, 1, 0, sample_rate);
-    DCr = new AnalogFilter (3, 30, 1, 0, sample_rate);
+    interpbuf = new float[intermediate_bufsize];
+    lpf1l = new AnalogFilter (2, 500.0f, .7071f, 0, sample_rate, interpbuf);
+    lpf1r = new AnalogFilter (2, 500.0f, .7071f, 0, sample_rate, interpbuf);
+    hpf1l = new AnalogFilter (3, 500.0f, .7071f, 0, sample_rate, interpbuf);
+    hpf1r = new AnalogFilter (3, 500.0f, .7071f, 0, sample_rate, interpbuf);
+    lpf2l = new AnalogFilter (2, 2500.0f, .7071f, 0, sample_rate, interpbuf);
+    lpf2r = new AnalogFilter (2, 2500.0f, .7071f, 0, sample_rate, interpbuf);
+    hpf2l = new AnalogFilter (3, 2500.0f, .7071f, 0, sample_rate, interpbuf);
+    hpf2r = new AnalogFilter (3, 2500.0f, .7071f, 0, sample_rate, interpbuf);
+    DCl = new AnalogFilter (3, 30, 1, 0, sample_rate, interpbuf);
+    DCr = new AnalogFilter (3, 30, 1, 0, sample_rate, interpbuf);
     DCl->setfreq (30.0f);
     DCr->setfreq (30.0f);
 
@@ -96,6 +97,32 @@ MBDist::MBDist (float * efxoutl_, float * efxoutr_, double sample_rate, uint32_t
 
 MBDist::~MBDist ()
 {
+    free(lowl);
+    free(lowr);
+    free(midl);
+    free(midr);
+    free(highl);
+    free(highr);
+
+    delete interpbuf;
+    delete lpf1l;
+    delete lpf1r;
+    delete hpf1l;
+    delete hpf1r;
+    delete lpf2l;
+    delete lpf2r;
+    delete hpf2l;
+    delete hpf2r;
+    delete DCl;
+    delete DCr;
+
+    delete mbwshape1l;
+    delete mbwshape2l;
+    delete mbwshape3l;
+
+    delete mbwshape1r;
+    delete mbwshape2r;
+    delete mbwshape3r;
 };
 
 /*

@@ -77,8 +77,9 @@ Reverb::Reverb (float * efxoutl_, float * efxoutr_, double samplerate, uint16_t 
         ap[i] = NULL;
     };
 
-    lpf =  new AnalogFilter (2, 22000, 1, 0, samplerate);;
-    hpf =  new AnalogFilter (3, 20, 1, 0, samplerate);
+    interpbuf = new float[intermediate_bufsize];
+    lpf =  new AnalogFilter (2, 22000, 1, 0, samplerate, interpbuf);
+    hpf =  new AnalogFilter (3, 20, 1, 0, samplerate, interpbuf);
     idelay = NULL;
 
     setpreset (Ppreset);
@@ -88,6 +89,10 @@ Reverb::Reverb (float * efxoutl_, float * efxoutr_, double samplerate, uint16_t 
 
 Reverb::~Reverb ()
 {
+	delete lpf;
+	delete hpf;
+	delete[] interpbuf;
+	delete[] inputbuf;
 };
 
 /*

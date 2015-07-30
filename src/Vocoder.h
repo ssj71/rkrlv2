@@ -94,6 +94,7 @@ private:
     } *filterbank;
 
     AnalogFilter *vhp, *vlp;
+    float* interpbuf; //buffer for filters
 
     Resample *U_Resample;
     Resample *D_Resample;

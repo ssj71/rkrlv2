@@ -77,6 +77,8 @@ private:
     class Waveshaper *dwshapel, *dwshaper;
     class FPreset *Fpre;
 
+    float * interpbuf;//buffer for filters
+
 };
 
 

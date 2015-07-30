@@ -73,10 +73,11 @@ CoilCrafter::CoilCrafter (float * efxoutl_, float * efxoutr_, double sample_rate
 
     harm = new HarmEnhancer (rm, 2500.0f,4400.0f,1.0f,sample_rate,intermediate_bufsize);
 
-    RB1l =  new AnalogFilter(2,2000.0f,1.0f,0,sample_rate);
-    RB1r =  new AnalogFilter(2,2000.0f,1.0f,0,sample_rate);
-    RB2l =  new AnalogFilter(2,2000.0f,1.0f,0,sample_rate);
-    RB2r =  new AnalogFilter(2,2000.0f,1.0f,0,sample_rate);
+    interpbuf = new float[intermediate_bufsize];
+    RB1l =  new AnalogFilter(2,2000.0f,1.0f,0,sample_rate, interpbuf);
+    RB1r =  new AnalogFilter(2,2000.0f,1.0f,0,sample_rate, interpbuf);
+    RB2l =  new AnalogFilter(2,2000.0f,1.0f,0,sample_rate, interpbuf);
+    RB2r =  new AnalogFilter(2,2000.0f,1.0f,0,sample_rate, interpbuf);
 
 
     cleanup ();
@@ -91,6 +92,7 @@ CoilCrafter::~CoilCrafter ()
 	delete RB1r;
 	delete RB2l;
 	delete RB2r;
+	delete interpbuf;
 };
 
 /*

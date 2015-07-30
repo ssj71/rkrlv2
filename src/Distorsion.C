@@ -43,16 +43,17 @@ Distorsion::Distorsion (float * efxoutl_, float * efxoutr_, double samplerate,
     	octoutl[i] = octoutr[i] = 0;
     }
 
-    lpfl = new AnalogFilter (2, 22000, 1, 0, samplerate);
-    lpfr = new AnalogFilter (2, 22000, 1, 0, samplerate);
-    hpfl = new AnalogFilter (3, 20, 1, 0, samplerate);
-    hpfr = new AnalogFilter (3, 20, 1, 0, samplerate);
-    blockDCl = new AnalogFilter (2, 440.0f, 1, 0, samplerate);
-    blockDCr = new AnalogFilter (2, 440.0f, 1, 0, samplerate);
+    interpbuf = new float[intermediate_bufsize];
+    lpfl = new AnalogFilter (2, 22000, 1, 0, samplerate, interpbuf);
+    lpfr = new AnalogFilter (2, 22000, 1, 0, samplerate, interpbuf);
+    hpfl = new AnalogFilter (3, 20, 1, 0, samplerate, interpbuf);
+    hpfr = new AnalogFilter (3, 20, 1, 0, samplerate, interpbuf);
+    blockDCl = new AnalogFilter (2, 440.0f, 1, 0, samplerate, interpbuf);
+    blockDCr = new AnalogFilter (2, 440.0f, 1, 0, samplerate, interpbuf);
     blockDCl->setfreq (75.0f);
     blockDCr->setfreq (75.0f);
-    DCl = new AnalogFilter (3, 30, 1, 0, samplerate);
-    DCr = new AnalogFilter (3, 30, 1, 0, samplerate);
+    DCl = new AnalogFilter (3, 30, 1, 0, samplerate, interpbuf);
+    DCr = new AnalogFilter (3, 30, 1, 0, samplerate, interpbuf);
     DCl->setfreq (30.0f);
     DCr->setfreq (30.0f);
 
@@ -96,6 +97,7 @@ Distorsion::~Distorsion ()
 	delete DCr;
 	delete dwshapel;
 	delete dwshaper;
+	delete[] interpbuf;
 };
 
 /*

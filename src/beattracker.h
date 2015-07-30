@@ -76,6 +76,7 @@ private:
     int bpm_change_cntr;
 
     float fSAMPLE_RATE;
+    float* interpbuf;//buffer for filters
 
     void calc_tempo();   //called by detect() on every beat detected
 };

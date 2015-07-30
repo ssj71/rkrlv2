@@ -28,7 +28,7 @@
 
 
 AnalogFilter::AnalogFilter (unsigned char Ftype, float Ffreq, float Fq,
-                            unsigned char Fstages, double samplerate)
+                            unsigned char Fstages, double samplerate, float* interpbuf)
 {
 
     iSAMPLE_RATE=(int)samplerate;
@@ -57,7 +57,7 @@ AnalogFilter::AnalogFilter (unsigned char Ftype, float Ffreq, float Fq,
     d[0] = 0;			//this is not used
     outgain = 1.0;
 
-
+    ismp = interpbuf;
 };
 
 AnalogFilter::~AnalogFilter ()
@@ -431,9 +431,7 @@ void
 AnalogFilter::filterout (float * smp, uint32_t period)
 {
     unsigned int i;
-    float *ismp = NULL;	//used if it needs interpolation
     if (needsinterpolation != 0) {
-        ismp = new float[period];//TODO: should not allocate in RT
         for (i = 0; i < period; i++)
             ismp[i] = smp[i];
         for (i = 0; i < stages + 1; i++)
@@ -448,7 +446,6 @@ AnalogFilter::filterout (float * smp, uint32_t period)
             float x = (float) i / (float)period;
             smp[i] = ismp[i] * (1.0f - x) + smp[i] * x;
         };
-        delete (ismp);
         needsinterpolation = 0;
     };
 
