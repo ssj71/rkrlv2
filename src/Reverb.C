@@ -291,14 +291,9 @@ Reverb::setidelay (int Pidelay)
     this->Pidelay = Pidelay;
     delay = powf (50.0f * (float)Pidelay / 127.0f, 2.0f) - 1.0f;
 
-//    if (idelay != NULL)
-//        delete (idelay);
-//    idelay = NULL;
-
     idelaylen = lrintf (fSAMPLE_RATE * delay / 1000.0f);
     if (idelaylen > 1) {
         idelayk = 0;
-        //idelay = new float[idelaylen];//TODO: remove alloc
         for (int i = 0; i < idelaylen; i++)
             idelay[i] = 0.0;
     };
@@ -366,9 +361,6 @@ Reverb::settype (int Ptype)
         comblen[i] = lrintf(tmp);
         combk[i] = 0;
         lpcomb[i] = 0;
-//        if (comb[i] != NULL)
-//            delete comb[i];
-//        comb[i] = new float[comblen[i]];//TODO: remove alloc
     };
 
     for (int i = 0; i < REV_APS * 2; i++) {
@@ -384,9 +376,6 @@ Reverb::settype (int Ptype)
             tmp = 10;
         aplen[i] = lrintf(tmp);
         apk[i] = 0;
-//        if (ap[i] != NULL)
-//            delete ap[i];
-//        ap[i] = new float[aplen[i]];//TODO: remove alloc in process thread
     };
     settime (Ptime);
     cleanup ();

@@ -128,6 +128,68 @@ def efxorder2lvindex(x)
         46 : 47, # inf
     }[x]
 
+#remap stuff
+
+#!/usr/bin/env python3
+#def remap((efxindex,paramindex))
+#    return{
+
+#    }[(efxindex,paramindex)]
+
+
+def remap((efx,param))
+    # returns (index,name,symbol,offset)
+    return{
+        (0,-1) : (), # eq1
+        (0,0)  : 
+        1 : 9, # comp
+        2 : 6, # dist
+        3 : 5, # overdrive
+        4 : 1, # echo
+        5 : 2, # chorus
+        6 : 4, # phaser
+        7 : 3, # flanger
+        8 : 0, # reverb
+        9 : 8, # paramEq
+        10 : 11, # Wha
+        11 : 12, # alien
+        12 : 13, # cab
+        13 : 14, # pan
+        14 : 15, # harm
+        15 : 16, # music del
+        16 : 17, # gate
+        17 : 18, # derelict
+        18 : 19, # aphasor
+        19 : 20, # valve
+        20 : 21, # dflange
+        21 : 22, # ring
+        22 : 23, # exciter
+        23 : 24, # mbdist
+        24 : 25, # arp
+        25 : 26, # expander
+        26 : 27, # shuffle
+        27 : 28, # synth
+        28 : 29, # mbvol
+        29 : 30, # convol
+        30 : 31, # looper
+        31 : 32, # mutro
+        32 : 33, # echoverse
+        33 : 34, # coil
+        34 : 35, # shelf
+        35 : 36, # vocoder
+        36 : 37, # sust
+        37 : 38, # seq
+        38 : 39, # shifter
+        39 : 40, # stomp
+        40 : 41, # reverbtron
+        41 : 42, # echotron
+        42 : 43, # stereoharm
+        43 : 44, # compband
+        44 : 44, # otrem
+        45 : 46, # vibe
+        46 : 47, # inf
+    }[x]
+
 # Bank[i].lv[0][19] = Reverb_Bypass; 
 # Bank[i].lv[1][19] = Echo_Bypass;
 # Bank[i].lv[2][19] = Chorus_Bypass;
