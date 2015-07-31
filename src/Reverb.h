@@ -134,7 +134,6 @@ private:
     float* interpbuf; //buffer for filters
     class AnalogFilter *lpf, *hpf;	//filters
     class FPreset *Fpre;
-
 };
 
 

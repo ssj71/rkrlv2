@@ -63,24 +63,33 @@ Reverb::Reverb (float * efxoutl_, float * efxoutr_, double samplerate, uint16_t 
 
     fSAMPLE_RATE = samplerate;
 
+    //max comb length
+    unsigned int tmp = lrintf(220023.0*samplerate/44100.0);
+
     for (int i = 0; i < REV_COMBS * 2; i++) {
         comblen[i] = 800 + (int) (RND * 1400);
         combk[i] = 0;
         lpcomb[i] = 0;
         combfb[i] = -0.97f;
-        comb[i] = NULL;
+        comb[i] = new float[tmp];//set to make length so we don't need to reallocate ever
     };
+
+    //max ap length
+    tmp = lrintf(100023.0*samplerate/44100.0);
 
     for (int i = 0; i < REV_APS * 2; i++) {
         aplen[i] = 500 + (int) (RND * 500);
         apk[i] = 0;
-        ap[i] = NULL;
+        ap[i] = new float[tmp]; //set to max length
     };
 
     interpbuf = new float[intermediate_bufsize];
     lpf =  new AnalogFilter (2, 22000, 1, 0, samplerate, interpbuf);
     hpf =  new AnalogFilter (3, 20, 1, 0, samplerate, interpbuf);
-    idelay = NULL;
+
+    //max delay length
+    tmp = lrintf(2.5*samplerate);
+    idelay = new float[tmp]; //set to max length
 
     setpreset (Ppreset);
     cleanup ();			//do not call this before the comb initialisation
@@ -93,6 +102,13 @@ Reverb::~Reverb ()
 	delete hpf;
 	delete[] interpbuf;
 	delete[] inputbuf;
+    for (int i = 0; i < REV_COMBS * 2; i++) {
+        delete[] comb[i];
+    }
+    for (int i = 0; i < REV_APS * 2; i++) {
+        delete[] ap[i];
+    }
+    delete[] idelay;
 };
 
 /*
@@ -275,14 +291,14 @@ Reverb::setidelay (int Pidelay)
     this->Pidelay = Pidelay;
     delay = powf (50.0f * (float)Pidelay / 127.0f, 2.0f) - 1.0f;
 
-    if (idelay != NULL)
-        delete (idelay);
-    idelay = NULL;
+//    if (idelay != NULL)
+//        delete (idelay);
+//    idelay = NULL;
 
     idelaylen = lrintf (fSAMPLE_RATE * delay / 1000.0f);
     if (idelaylen > 1) {
         idelayk = 0;
-        idelay = new float[idelaylen];
+        //idelay = new float[idelaylen];//TODO: remove alloc
         for (int i = 0; i < idelaylen; i++)
             idelay[i] = 0.0;
     };
@@ -350,9 +366,9 @@ Reverb::settype (int Ptype)
         comblen[i] = lrintf(tmp);
         combk[i] = 0;
         lpcomb[i] = 0;
-        if (comb[i] != NULL)
-            delete comb[i];
-        comb[i] = new float[comblen[i]];
+//        if (comb[i] != NULL)
+//            delete comb[i];
+//        comb[i] = new float[comblen[i]];//TODO: remove alloc
     };
 
     for (int i = 0; i < REV_APS * 2; i++) {
@@ -368,9 +384,9 @@ Reverb::settype (int Ptype)
             tmp = 10;
         aplen[i] = lrintf(tmp);
         apk[i] = 0;
-        if (ap[i] != NULL)
-            delete ap[i];
-        ap[i] = new float[aplen[i]];
+//        if (ap[i] != NULL)
+//            delete ap[i];
+//        ap[i] = new float[aplen[i]];//TODO: remove alloc in process thread
     };
     settime (Ptime);
     cleanup ();
