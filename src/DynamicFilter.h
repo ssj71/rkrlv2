@@ -32,7 +32,7 @@
 class DynamicFilter
 {
 public:
-    DynamicFilter (float * efxoutl_, float * efxoutr_, double sample_rate);
+    DynamicFilter (float * efxoutl_, float * efxoutr_, double sample_rate, uint32_t intermediate_bufsize);
     ~DynamicFilter ();
     void out (float * smpsl, float * smpsr, uint32_t period);
 

@@ -72,8 +72,9 @@ Reverbtron::Reverbtron (float * efxoutl_, float * efxoutr_, double sample_rate,
     idelay = 0.0f;
     decay = f_exp(-1.0f/(0.2f*nfSAMPLE_RATE));  //0.2 seconds
 
-    lpfl =  new AnalogFilter (0, 800, 1, 0, sample_rate);;
-    lpfr =  new AnalogFilter (0, 800, 1, 0, sample_rate);;
+    interpbuf = new float[intermediate_bufsize];
+    lpfl =  new AnalogFilter (0, 800, 1, 0, sample_rate, interpbuf);
+    lpfr =  new AnalogFilter (0, 800, 1, 0, sample_rate, interpbuf);
 
     lpfl->setSR(nSAMPLE_RATE);
     lpfr->setSR(nSAMPLE_RATE);
@@ -99,6 +100,7 @@ Reverbtron::~Reverbtron ()
     free(hrtf);
     free(imdelay);
 
+    delete[] interpbuf;
     delete lpfl;
     delete lpfr;
 

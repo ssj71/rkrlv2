@@ -32,7 +32,7 @@
 #define DATADIR "/usr/local/share/rakarrack"
 #endif
 
-Echotron::Echotron (float * efxoutl_, float * efxoutr_, double sample_rate)
+Echotron::Echotron (float * efxoutl_, float * efxoutr_, double sample_rate, uint32_t intermediate_bufsize)
 {
     efxoutl = efxoutl_;
     efxoutr = efxoutr_;
@@ -68,8 +68,9 @@ Echotron::Echotron (float * efxoutl_, float * efxoutr_, double sample_rate)
 
     offset = 0;
 
-    lpfl =  new AnalogFilter (0, 800, 1, 0, sample_rate);
-    lpfr =  new AnalogFilter (0, 800, 1, 0, sample_rate);
+    interpbuf = new float[intermediate_bufsize];
+    lpfl =  new AnalogFilter (0, 800, 1, 0, sample_rate, interpbuf);
+    lpfr =  new AnalogFilter (0, 800, 1, 0, sample_rate, interpbuf);
 
     float center, qq;
     for (int i = 0; i < ECHOTRON_MAXFILTERS; i++) {
@@ -81,8 +82,8 @@ Echotron::Echotron (float * efxoutl_, float * efxoutr_, double sample_rate)
         filterbank[i].sBP = -1.0f;
         filterbank[i].sHP = 0.5f;
         filterbank[i].sStg = 1.0f;
-        filterbank[i].l = new RBFilter (0, center, qq, 0, sample_rate);
-        filterbank[i].r = new RBFilter (0, center, qq, 0, sample_rate);
+        filterbank[i].l = new RBFilter (0, center, qq, 0, sample_rate, interpbuf);
+        filterbank[i].r = new RBFilter (0, center, qq, 0, sample_rate, interpbuf);
 
         filterbank[i].l->setmix (1,filterbank[i].sLP , filterbank[i].sBP,filterbank[i].sHP);
         filterbank[i].r->setmix (1,filterbank[i].sLP , filterbank[i].sBP,filterbank[i].sHP);
@@ -102,6 +103,7 @@ Echotron::~Echotron ()
     	delete filterbank[i].l;
     	delete filterbank[i].r;
     }
+    delete[] interpbuf;
 };
 
 /*

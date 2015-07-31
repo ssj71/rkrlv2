@@ -28,17 +28,18 @@
 #include "Expander.h"
 
 
-Expander::Expander (float * efxoutl_, float * efxoutr_, double sample_rate)
+Expander::Expander (float * efxoutl_, float * efxoutr_, double sample_rate, uint32_t intermediate_bufsize)
 {
 
     efxoutl = efxoutl_;
     efxoutr = efxoutr_;
 
 
-    lpfl = new AnalogFilter (2, 22000, 1, 0, sample_rate);
-    lpfr = new AnalogFilter (2, 22000, 1, 0, sample_rate);
-    hpfl = new AnalogFilter (3, 20, 1, 0, sample_rate);
-    hpfr = new AnalogFilter (3, 20, 1, 0, sample_rate);
+    interpbuf = new float[intermediate_bufsize];
+    lpfl = new AnalogFilter (2, 22000, 1, 0, sample_rate, interpbuf);
+    lpfr = new AnalogFilter (2, 22000, 1, 0, sample_rate, interpbuf);
+    hpfl = new AnalogFilter (3, 20, 1, 0, sample_rate, interpbuf);
+    hpfr = new AnalogFilter (3, 20, 1, 0, sample_rate, interpbuf);
 
     env = 0.0;
     oldgain = 0.0;
@@ -52,6 +53,11 @@ Expander::Expander (float * efxoutl_, float * efxoutr_, double sample_rate)
 
 Expander::~Expander ()
 {
+	delete[] interpbuf;
+	delete lpfl;
+	delete lpfr;
+	delete hpfl;
+	delete hpfr;
 }
 
 

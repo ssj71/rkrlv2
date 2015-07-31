@@ -102,6 +102,7 @@ private:
 
 
     AnalogFilter *pl;
+    float* interpbuf; //buffer for filters
 
     class Resample *U_Resample;
     class Resample *D_Resample;

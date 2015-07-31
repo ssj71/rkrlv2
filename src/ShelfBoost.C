@@ -25,7 +25,7 @@
 
 
 
-ShelfBoost::ShelfBoost (float * efxoutl_, float * efxoutr_, double sample_rate)
+ShelfBoost::ShelfBoost (float * efxoutl_, float * efxoutr_, double sample_rate, uint32_t intermediate_bufsize)
 {
     efxoutl = efxoutl_;
     efxoutr = efxoutr_;
@@ -36,8 +36,9 @@ ShelfBoost::ShelfBoost (float * efxoutl_, float * efxoutr_, double sample_rate)
     Pvolume = 50;
     Pstereo = 0;
 
-    RB1l =  new AnalogFilter(7,3200.0f,0.5f,0,sample_rate);
-    RB1r =  new AnalogFilter(7,3200.0f,0.5f,0,sample_rate);
+    interpbuf = new float[intermediate_bufsize];
+    RB1l =  new AnalogFilter(7,3200.0f,0.5f,0,sample_rate, interpbuf);
+    RB1r =  new AnalogFilter(7,3200.0f,0.5f,0,sample_rate, interpbuf);
 
 
     cleanup ();
@@ -49,6 +50,7 @@ ShelfBoost::~ShelfBoost ()
 {
 	delete RB1l;
 	delete RB1r;
+	delete[] interpbuf;
 };
 
 /*

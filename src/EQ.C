@@ -27,11 +27,13 @@
 #include <math.h>
 #include "EQ.h"
 
-EQ::EQ (float * efxoutl_, float * efxoutr_, double samplerate)
+EQ::EQ (float * efxoutl_, float * efxoutr_, double samplerate, uint32_t intermediate_bufsize)
 {
 
     efxoutl = efxoutl_;
     efxoutr = efxoutr_;
+
+    interpbuf = new float[intermediate_bufsize];
 
     for (int i = 0; i < MAX_EQ_BANDS; i++) {
         filter[i].Ptype = 0;
@@ -39,8 +41,8 @@ EQ::EQ (float * efxoutl_, float * efxoutr_, double samplerate)
         filter[i].Pgain = 64;
         filter[i].Pq = 64;
         filter[i].Pstages = 0;
-        filter[i].l = new AnalogFilter (6, 1000.0f, 1.0f, 0, samplerate);
-        filter[i].r = new AnalogFilter (6, 1000.0f, 1.0f, 0, samplerate);
+        filter[i].l = new AnalogFilter (6, 1000.0f, 1.0f, 0, samplerate, interpbuf);
+        filter[i].r = new AnalogFilter (6, 1000.0f, 1.0f, 0, samplerate, interpbuf);
     };
     //default values
     Ppreset = 0;
@@ -52,6 +54,12 @@ EQ::EQ (float * efxoutl_, float * efxoutr_, double samplerate)
 
 EQ::~EQ ()
 {
+    for (int i = 0; i < MAX_EQ_BANDS; i++) {
+    	delete filter[i].l;
+    	delete filter[i].r;
+    }
+    delete[] interpbuf;
+
 };
 
 /*

@@ -82,6 +82,7 @@ private:
     float volL,volML,volMH,volH;
     AnalogFilter  *lr, *hr;
     AnalogFilter  *mlr,*mhr;
+    float* interpbuf; //buffer for filters
 
     class FPreset *Fpre;
 

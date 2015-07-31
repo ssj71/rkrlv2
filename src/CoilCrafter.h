@@ -73,6 +73,7 @@ private:
     class HarmEnhancer *harm;
     class AnalogFilter *RB1l, *RB1r;
     class AnalogFilter *RB2l,*RB2r;
+    float* interpbuf;
 
     class FPreset *Fpre;
 

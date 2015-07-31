@@ -39,7 +39,7 @@ class Expander
 
 public:
 
-    Expander (float * efxoutl_, float * efxoutr_, double sample_rate);
+    Expander (float * efxoutl_, float * efxoutr_, double sample_rate, uint32_t intermediate_bufsize);
     ~Expander ();
 
     void out (float * smps_l, float * smps_r, uint32_t period);
@@ -88,7 +88,7 @@ private:
     float level;
 
 
-
+    float* interpbuf; //buffer for filters
     AnalogFilter *lpfl, *lpfr, *hpfl, *hpfr;
 
     class FPreset *Fpre;

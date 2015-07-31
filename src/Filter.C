@@ -32,18 +32,20 @@ Filter::Filter (FilterParams * pars)
 
     category = pars->Pcategory;
 
+    interpbuf = new float[pars->intermediate_bufsize];
+
     switch (category) {
     case 1:
-        filter = new FormantFilter (pars);
+        filter = new FormantFilter (pars, interpbuf);
         break;
     case 2:
-        filter = new SVFilter(Ftype, 1000.0f, pars->getq (), Fstages, pars->fSAMPLE_RATE);
+        filter = new SVFilter(Ftype, 1000.0f, pars->getq (), Fstages, pars->fSAMPLE_RATE, interpbuf);
         filter->outgain = dB2rap (pars->getgain ());
         if (filter->outgain > 1.0f)
             filter->outgain = sqrtf (filter->outgain);
         break;
     default:
-        filter = new AnalogFilter (Ftype, 1000.0f, pars->getq (), Fstages, pars->fSAMPLE_RATE);
+        filter = new AnalogFilter (Ftype, 1000.0f, pars->getq (), Fstages, pars->fSAMPLE_RATE, interpbuf);
         if ((Ftype >= 6) && (Ftype <= 8))
             filter->setgain (pars->getgain ());
         else
@@ -54,6 +56,7 @@ Filter::Filter (FilterParams * pars)
 
 Filter::~Filter ()
 {
+	delete[] interpbuf;
 };
 
 void

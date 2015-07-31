@@ -80,20 +80,21 @@ Vocoder::Vocoder (float * efxoutl_, float * efxoutr_, float *auxresampled_,int b
     D_Resample = new Resample(uq);
 
 
+    interpbuf = new float[intermediate_bufsize];
     for (int i = 0; i < VOC_BANDS; i++) {
         center = (float) i * 20000.0f/((float) VOC_BANDS);
         qq = 60.0f;
 
-        filterbank[i].l = new AnalogFilter (4, center, qq, 0, sample_rate);
+        filterbank[i].l = new AnalogFilter (4, center, qq, 0, sample_rate, interpbuf);
         filterbank[i].l->setSR(nSAMPLE_RATE);
-        filterbank[i].r = new AnalogFilter (4, center, qq, 0, sample_rate);
+        filterbank[i].r = new AnalogFilter (4, center, qq, 0, sample_rate, interpbuf);
         filterbank[i].r->setSR(nSAMPLE_RATE);
-        filterbank[i].aux = new AnalogFilter (4, center, qq, 0, sample_rate);
+        filterbank[i].aux = new AnalogFilter (4, center, qq, 0, sample_rate, interpbuf);
         filterbank[i].aux->setSR(nSAMPLE_RATE);
     };
 
-    vlp = new AnalogFilter (2, 4000.0f, 1.0f, 1, sample_rate);
-    vhp = new AnalogFilter (3, 200.0f, 0.707f, 1, sample_rate);
+    vlp = new AnalogFilter (2, 4000.0f, 1.0f, 1, sample_rate, interpbuf);
+    vhp = new AnalogFilter (3, 200.0f, 0.707f, 1, sample_rate, interpbuf);
 
     vlp->setSR(nSAMPLE_RATE);
     vhp->setSR(nSAMPLE_RATE);
@@ -114,6 +115,7 @@ Vocoder::~Vocoder ()
     delete A_Resample;
     delete U_Resample;
     delete D_Resample;
+    delete[] interpbuf;
     for (int i = 0; i < VOC_BANDS; i++) {
     	delete filterbank[i].l;
     	delete filterbank[i].r;

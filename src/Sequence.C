@@ -62,14 +62,15 @@ Sequence::Sequence (float * efxoutl_, float * efxoutr_, long int Quality, int DS
     subdiv = 2;
     lmod = 0.5f;
     rmod = 0.5f;
-    filterl = new RBFilter (0, 80.0f, 40.0f, 2,sample_rate);
-    filterr = new RBFilter (0, 80.0f, 40.0f, 2,sample_rate);
-    modfilterl = new RBFilter (0, 15.0f, 0.5f, 1,sample_rate);
-    modfilterr = new RBFilter (0, 15.0f, 0.5f, 1,sample_rate);
-    rmsfilter = new RBFilter (0, 15.0f, 0.15f, 1,sample_rate);
-    peaklpfilter = new RBFilter (0, 25.0f, 0.5f, 0,sample_rate);
-    peaklpfilter2 = new RBFilter (0, 25.0f, 0.5f, 0,sample_rate);
-    peakhpfilter = new RBFilter (1, 45.0f, 0.5f, 0,sample_rate);
+    interpbuf = new float[intermediate_bufsize];
+    filterl = new RBFilter (0, 80.0f, 40.0f, 2,sample_rate, interpbuf);
+    filterr = new RBFilter (0, 80.0f, 40.0f, 2,sample_rate, interpbuf);
+    modfilterl = new RBFilter (0, 15.0f, 0.5f, 1,sample_rate, interpbuf);
+    modfilterr = new RBFilter (0, 15.0f, 0.5f, 1,sample_rate, interpbuf);
+    rmsfilter = new RBFilter (0, 15.0f, 0.15f, 1,sample_rate, interpbuf);
+    peaklpfilter = new RBFilter (0, 25.0f, 0.5f, 0,sample_rate, interpbuf);
+    peaklpfilter2 = new RBFilter (0, 25.0f, 0.5f, 0,sample_rate, interpbuf);
+    peakhpfilter = new RBFilter (1, 45.0f, 0.5f, 0,sample_rate, interpbuf);
 
 //Trigger Filter Settings
     peakpulse = peak = envrms = 0.0f;
@@ -121,6 +122,7 @@ Sequence::~Sequence ()
     delete ldelay;
     delete rdelay;
     delete PS;
+    delete[] interpbuf;
 };
 
 /*

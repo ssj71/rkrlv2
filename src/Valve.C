@@ -34,10 +34,11 @@ Valve::Valve (float * efxoutl_, float * efxoutr_, double sample_rate, uint32_t i
     efxoutl = efxoutl_;
     efxoutr = efxoutr_;
 
-    lpfl = new AnalogFilter (2, 22000.0f, 1.0f, 0, sample_rate);
-    lpfr = new AnalogFilter (2, 22000.0f, 1.0f, 0, sample_rate);
-    hpfl = new AnalogFilter (3, 20.0f, 1.0f, 0, sample_rate);
-    hpfr = new AnalogFilter (3, 20.0f, 1.0f, 0, sample_rate);
+    interpbuf = new float[intermediate_bufsize];
+    lpfl = new AnalogFilter (2, 22000.0f, 1.0f, 0, sample_rate, interpbuf);
+    lpfr = new AnalogFilter (2, 22000.0f, 1.0f, 0, sample_rate, interpbuf);
+    hpfl = new AnalogFilter (3, 20.0f, 1.0f, 0, sample_rate, interpbuf);
+    hpfr = new AnalogFilter (3, 20.0f, 1.0f, 0, sample_rate, interpbuf);
     harm = new HarmEnhancer (rm, 20.0f,20000.0f,1.0f, sample_rate, intermediate_bufsize);
 
 
@@ -75,6 +76,7 @@ Valve::Valve (float * efxoutl_, float * efxoutr_, double sample_rate, uint32_t i
 
 Valve::~Valve ()
 {
+	delete[] interpbuf;
 	delete lpfl;
 	delete lpfr;
 	delete hpfl;

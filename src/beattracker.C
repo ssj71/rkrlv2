@@ -4,10 +4,11 @@
 beattracker:: beattracker (double sample_rate, uint32_t intermediate_bufsize)
 {
 
-    rmsfilter = new RBFilter (0, 15.0f, 0.15f, 1, sample_rate);
-    peaklpfilter = new RBFilter (0, 25.0f, 0.5f, 0, sample_rate);
-    peaklpfilter2 = new RBFilter (0, 25.0f, 0.5f, 0, sample_rate);
-    peakhpfilter = new RBFilter (1, 45.0f, 0.5f, 0, sample_rate);
+	interpbuf = new float[intermediate_bufsize];
+    rmsfilter = new RBFilter (0, 15.0f, 0.15f, 1, sample_rate, interpbuf);
+    peaklpfilter = new RBFilter (0, 25.0f, 0.5f, 0, sample_rate, interpbuf);
+    peaklpfilter2 = new RBFilter (0, 25.0f, 0.5f, 0, sample_rate, interpbuf);
+    peakhpfilter = new RBFilter (1, 45.0f, 0.5f, 0, sample_rate, interpbuf);
 
     index = (int *) malloc (sizeof (int) * intermediate_bufsize);
 
@@ -37,6 +38,7 @@ beattracker::~beattracker ()
 	delete peaklpfilter;
 	delete peaklpfilter2;
 	delete peakhpfilter;
+	delete[] interpbuf;
 	free(index);
 };
 

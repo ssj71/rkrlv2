@@ -24,9 +24,9 @@
 
 #include "Cabinet.h"
 
-Cabinet::Cabinet(float * efxoutl_, float * efxoutr_, double sample_frequency)
+Cabinet::Cabinet(float * efxoutl_, float * efxoutr_, double sample_frequency, uint32_t intermediate_bufsize)
 {
-    eq = new EQ(efxoutl_, efxoutr_, sample_frequency);
+    eq = new EQ(efxoutl_, efxoutr_, sample_frequency, intermediate_bufsize);
     Cabinet_Preset = 0;
     eq->efxoutl = efxoutl;
     eq->efxoutr = efxoutr;

@@ -37,26 +37,27 @@ StompBox::StompBox (float * efxoutl_, float * efxoutr_, double sample_rate, uint
     Pvolume = 50;
 
     //left channel filters
-    linput = new AnalogFilter (1, 80.0f, 1.0f, 0, sample_rate);  //  AnalogFilter (unsigned char Ftype, float Ffreq, float Fq,unsigned char Fstages);
-    lpre1 = new AnalogFilter (1, 630.0f, 1.0f, 0, sample_rate);   // LPF = 0, HPF = 1
-    lpre2 = new AnalogFilter (1, 220.0f, 1.0f, 0, sample_rate);
-    lpost = new AnalogFilter (0, 720.0f, 1.0f, 0, sample_rate);
-    ltonehg = new AnalogFilter (1, 1500.0f, 1.0f, 0, sample_rate);
-    ltonemd = new AnalogFilter (4, 1000.0f, 1.0f, 0, sample_rate);
-    ltonelw = new AnalogFilter (0, 500.0f, 1.0, 0, sample_rate);
+    interpbuf = new float[intermediate_bufsize];
+    linput = new AnalogFilter (1, 80.0f, 1.0f, 0, sample_rate, interpbuf);  //  AnalogFilter (unsigned char Ftype, float Ffreq, float Fq,unsigned char Fstages);
+    lpre1 = new AnalogFilter (1, 630.0f, 1.0f, 0, sample_rate, interpbuf);   // LPF = 0, HPF = 1
+    lpre2 = new AnalogFilter (1, 220.0f, 1.0f, 0, sample_rate, interpbuf);
+    lpost = new AnalogFilter (0, 720.0f, 1.0f, 0, sample_rate, interpbuf);
+    ltonehg = new AnalogFilter (1, 1500.0f, 1.0f, 0, sample_rate, interpbuf);
+    ltonemd = new AnalogFilter (4, 1000.0f, 1.0f, 0, sample_rate, interpbuf);
+    ltonelw = new AnalogFilter (0, 500.0f, 1.0, 0, sample_rate, interpbuf);
 
     //Right channel filters
-    rinput = new AnalogFilter (1, 80.0f, 1.0f, 0, sample_rate);  //  AnalogFilter (unsigned char Ftype, float Ffreq, float Fq,unsigned char Fstages);
-    rpre1 = new AnalogFilter (1, 630.0f, 1.0f, 0, sample_rate);   // , sample_rateLPF = 0, HPF = 1
-    rpre2 = new AnalogFilter (1, 220.0f, 1.0f, 0, sample_rate);
-    rpost = new AnalogFilter (0, 720.0f, 1.0f, 0, sample_rate);
-    rtonehg = new AnalogFilter (1, 1500.0f, 1.0f, 0, sample_rate);
-    rtonemd = new AnalogFilter (4, 1000.0f, 1.0f, 0, sample_rate);
-    rtonelw = new AnalogFilter (0, 500.0f, 1.0f, 0, sample_rate);
+    rinput = new AnalogFilter (1, 80.0f, 1.0f, 0, sample_rate, interpbuf);  //  AnalogFilter (unsigned char Ftype, float Ffreq, float Fq,unsigned char Fstages);
+    rpre1 = new AnalogFilter (1, 630.0f, 1.0f, 0, sample_rate, interpbuf);   // , sample_rateLPF = 0, HPF = 1
+    rpre2 = new AnalogFilter (1, 220.0f, 1.0f, 0, sample_rate, interpbuf);
+    rpost = new AnalogFilter (0, 720.0f, 1.0f, 0, sample_rate, interpbuf);
+    rtonehg = new AnalogFilter (1, 1500.0f, 1.0f, 0, sample_rate, interpbuf);
+    rtonemd = new AnalogFilter (4, 1000.0f, 1.0f, 0, sample_rate, interpbuf);
+    rtonelw = new AnalogFilter (0, 500.0f, 1.0f, 0, sample_rate, interpbuf);
 
     //Anti-aliasing for between stages
-    ranti = new AnalogFilter (0, 6000.0f, 0.707f, 1, sample_rate);
-    lanti = new AnalogFilter (0, 6000.0f, 0.707f, 1, sample_rate);
+    ranti = new AnalogFilter (0, 6000.0f, 0.707f, 1, sample_rate, interpbuf);
+    lanti = new AnalogFilter (0, 6000.0f, 0.707f, 1, sample_rate, interpbuf);
 
     rwshape = new Waveshaper(sample_rate,wave_res,wave_upq,wave_dnq,intermediate_bufsize);
     lwshape = new Waveshaper(sample_rate,wave_res,wave_upq,wave_dnq,intermediate_bufsize);
@@ -78,6 +79,7 @@ StompBox::~StompBox ()
     delete ltonemd;
     delete ltonelw;
 
+    delete[] interpbuf;
     //Right channel filters
     delete rinput;
     delete rpre1;

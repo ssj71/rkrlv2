@@ -48,6 +48,7 @@ private:
     unsigned char category;
 
     Filter_ * filter;
+    float	* interpbuf;//buffer for analog filter interpolation
 };
 
 

@@ -21,7 +21,7 @@
 class Recognize
 {
 public:
-    Recognize (float * efxoutl_, float * efxoutr_, float trig, double sample_rate, float tune);
+    Recognize (float * efxoutl_, float * efxoutr_, float trig, double sample_rate, float tune, uint32_t intermediate_bufsize);
     ~Recognize ();
 
     void schmittFloat (float *indatal, float *indatar, uint32_t period);
@@ -52,6 +52,7 @@ private:
     int blockSize;
 
     AnalogFilter *lpfl, *lpfr, *hpfl, *hpfr;
+    float* interpbuf; //buffer for filters
 
     class Sustainer *Sus;
 

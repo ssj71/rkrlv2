@@ -60,6 +60,7 @@ private:
     float gain, pre1gain, pre2gain, lowb, midb, highb, volume;
     float LG, MG, HG, RGP2, RGPST, pgain;
 
+    float* interpbuf; //buffer for filters
     AnalogFilter *linput, *lpre1, *lpre2, *lpost, *ltonehg, *ltonemd, *ltonelw;
     AnalogFilter *rinput, *rpre1, *rpre2, *rpost, *rtonehg, *rtonemd, *rtonelw;
     AnalogFilter *ranti, *lanti;

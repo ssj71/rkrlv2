@@ -34,7 +34,7 @@
 class FormantFilter:public Filter_
 {
 public:
-    FormantFilter (class FilterParams * pars);
+    FormantFilter (class FilterParams * pars, float* interpbuf);//interpbuff MUST be an array greater or equal to period
     ~FormantFilter ();
     void filterout (float * smp, uint32_t period);
     void setfreq (float frequency);

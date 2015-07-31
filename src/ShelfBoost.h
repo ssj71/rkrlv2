@@ -27,7 +27,7 @@
 class ShelfBoost
 {
 public:
-    ShelfBoost (float * efxoutl_, float * efxoutr_, double sample_rate);
+    ShelfBoost (float * efxoutl_, float * efxoutr_, double sample_rate, uint32_t intermediate_bufsize);
     ~ShelfBoost ();
     void out (float * smpsl, float * smpr, uint32_t period);
     void setpreset (int npreset);
@@ -56,6 +56,7 @@ private:
     float freq1,q1,gain,u_gain;
 
     class AnalogFilter *RB1l, *RB1r;
+    float* interpbuf; //buffer for filters
 
     class FPreset *Fpre;
 
