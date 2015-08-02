@@ -3,11 +3,7 @@
 #spencer jackson
 # this generates a template for a function that will map the rkr bank data to carla preset data
 
-
-import argparse
 import os
-import struct
-import re
 
 print("#!/usr/bin/env python3")
 print()

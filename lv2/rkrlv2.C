@@ -745,9 +745,9 @@ void run_aphaselv2(LV2_Handle handle, uint32_t nframes)
     for(i++; i<plug->nparams; i++)
     {
         val = (int)*plug->param_p[i];
-        if(plug->aphase->getpar(i+1) != val)
+        if(plug->aphase->getpar(i) != val)
         {
-            plug->aphase->changepar(i+1,val);
+            plug->aphase->changepar(i,val);
         }
     }
 
@@ -933,7 +933,7 @@ void run_exciterlv2(LV2_Handle handle, uint32_t nframes)
     for(i=0; i<plug->nparams; i++)
     {
         val = (int)*plug->param_p[i];
-        if(plug->exciter->getpar(i) != val)//this effect is 1 indexed
+        if(plug->exciter->getpar(i) != val)
         {
             plug->exciter->changepar(i,val);
         }
@@ -1016,9 +1016,9 @@ void run_panlv2(LV2_Handle handle, uint32_t nframes)
     for(i++; i<plug->nparams; i++) //6-8
     {
         val = (int)*plug->param_p[i];
-        if(plug->pan->getpar(i+1) != val)
+        if(plug->pan->getpar(i) != val)
         {
-            plug->pan->changepar(i+1,val);
+            plug->pan->changepar(i,val);
         }
     }
 
@@ -1099,9 +1099,9 @@ void run_alienlv2(LV2_Handle handle, uint32_t nframes)
     for(i++; i<plug->nparams; i++) //6-10
     {
         val = (int)*plug->param_p[i];
-        if(plug->alien->getpar(i+1) != val)
+        if(plug->alien->getpar(i) != val)
         {
-            plug->alien->changepar(i+1,val);
+            plug->alien->changepar(i,val);
         }
     }
 
@@ -1485,7 +1485,7 @@ void run_wahlv2(LV2_Handle handle, uint32_t nframes)
     {
         plug->wah->changepar(i,val);
     }
-    for(i++; i<plug->nparams; i++) // 6-11
+    for(i++; i<plug->nparams; i++) // 6-10
     {
         val = (int)*plug->param_p[i];
         if(plug->wah->getpar(i) != val)
@@ -2119,9 +2119,9 @@ void run_synthlv2(LV2_Handle handle, uint32_t nframes)
     for(i++; i<plug->nparams; i++) //6-10
     {
         val = (int)*plug->param_p[i];
-        if(plug->synth->getpar(i+1) != val)
+        if(plug->synth->getpar(i) != val)
         {
-            plug->synth->changepar(i+1,val);
+            plug->synth->changepar(i,val);
         }
     }
 
