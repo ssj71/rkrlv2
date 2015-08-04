@@ -58,6 +58,46 @@ def makePlugFooter(f):
 def makeCarlaPresetFooter(f):
     f.write("</CARLA-PROJECT>")
 
+def makeRvbData(f,v) 
+    p = {
+        0 : "Chamber.rvb" ,
+        1 : "Concrete_Stairwell.rvb" ,
+        2 : "Hall.rvb" ,
+        3 : "Med_Hall.rvb" ,
+        4 : "Large_Room.rvb" ,
+        5 : "Large_Hall.rvb" ,
+        6 : "Guitar_Ambience.rvb" ,
+        7 : "Studio.rvb" ,
+        8 : "Twilight.rvb" ,
+        9 : "Santa_Lucia.rvb" ,
+    }
+    f.write("   <CustomData>\n")
+    f.write("    <Type>http://lv2plug.in/ns/ext/atom#Path</Type>\n")
+    f.write("    <Key>http://rakarrack.sourceforge.net/effects.html#Reverbtron:rvbfile</Key>\n")
+    f.write("    <Value>" + p[v] + "</Value>\n")
+    f.write("   </CustomData>\n")
+
+def makeDlyData(f,v) 
+    p = {
+        0 : "SwingPong.dly" ,
+        1 : "Short_Delays.dly" ,
+        2 : "Flange_plus_Echo.dly" ,
+        3 : "Comb.dly" ,
+        4 : "EchoFlange.dly" ,
+        5 : "Filtered_Echo.dly" ,
+        6 : "Notch-Wah.dly" ,
+        7 : "Multi-Chorus.dly" ,
+        8 : "PingPong.dly" ,
+        9 : "90-Shifter.dly" ,
+        10 : "Basic_LR_Delay.dly" ,
+        11 : "PingPong.dly" ,
+    }
+    f.write("   <CustomData>\n")
+    f.write("    <Type>http://lv2plug.in/ns/ext/atom#Path</Type>\n")
+    f.write("    <Key>http://rakarrack.sourceforge.net/effects.html#Echotron:dlyfile</Key>\n")
+    f.write("    <Value>" + p[v] + "</Value>\n")
+    f.write("   </CustomData>\n")
+
 def efxorder2structindex(x):
     return{
         0 : 7, # eq1
