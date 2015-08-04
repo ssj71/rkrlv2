@@ -28,7 +28,7 @@ for fn in files:
     p = data.find("<http://rakarrack") # first one is GUI
     p = data.find("<http://rakarrack",p)
     n = data.find("\n",p);
-    uri = data[p:n]
+    uri = data[p+1:n-1]# disclude <>
     #name
     p = data.find("doap:name ",p)
     p = data.find("\"",p)
