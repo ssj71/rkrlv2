@@ -631,11 +631,11 @@ def remap(efxindex, paramindex):
          (40, 1) : (2, 'Fade', 'FADE', 0) ,
          (40, 2) : (3, 'Safe', 'SAFE', 0) ,
          (40, 3) : (4, 'Length', 'LENGTH', 0) ,
-         (40, 4) : (0, 'SKIP', 'SKIP', 0) ,
+         (40, 4) : (0, 'SKIP', 'SKIP', 0) ,#user file
          (40, 5) : (5, 'Initial Delay', 'DELAY', 0) ,
          (40, 6) : (6, 'Dampening', 'DAMP', 0) ,
          (40, 7) : (7, 'Level', 'LEVEL', 0) ,
-         (40, 8) : (0, 'SKIP', 'SKIP', 0) ,
+         (40, 8) : (0, 'SKIP', 'SKIP', 0) ,#file Number
          (40, 9) : (8, 'Time Stretch', 'STRETCH', 0) ,
          (40, 10) : (9, 'Feedback', 'FB', 0) ,
          (40, 11) : (10, 'Pan', 'PAN', 64) ,
@@ -654,7 +654,7 @@ def remap(efxindex, paramindex):
          (41, 5) : (5, 'TEMPO', 'TEMPO', 0) ,
          (41, 6) : (6, 'Dampening', 'DAMP', 0) ,
          (41, 7) : (7, 'Left/Right Crossover', 'LRC', 64) ,
-         (41, 8) : (0, 'SPECIAL', 'SPECIAL', 0) ,#file number
+         (41, 8) : (0, 'SKIP', 'SKIP', 0) ,#file number
          (41, 9) : (8, 'LFO L/R Delay', 'STDF', 0) ,
          (41, 10) : (9, 'Feedback', 'FB', 0) ,
          (41, 11) : (10, 'Pan', 'PAN', 64) ,

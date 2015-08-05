@@ -29,7 +29,7 @@
         rdfs:comment "A very configurable waveshaping distortion module with resonance control of the filters for extra color." ;
         lv2:optionalFeature lv2:hardRTCapable,
             <http://lv2plug.in/ns/ext/urid#map>,
-            <http://lv2plug.in/ns/ext/bufsz#maxBlockLength>;
+            <http://lv2plug.in/ns/ext/bufsz#boundedBlockLength>;
 #        ui:ui  <http://rakarrack.sourceforge.net/effects.html#dere_ui> ;
 
         lv2:port [

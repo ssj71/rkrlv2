@@ -58,7 +58,7 @@ def makePlugFooter(f):
 def makeCarlaPresetFooter(f):
     f.write("</CARLA-PROJECT>")
 
-def makeRvbData(f,v) 
+def makeRvbData(f,v):
     p = {
         0 : "Chamber.rvb" ,
         1 : "Concrete_Stairwell.rvb" ,
@@ -74,10 +74,10 @@ def makeRvbData(f,v)
     f.write("   <CustomData>\n")
     f.write("    <Type>http://lv2plug.in/ns/ext/atom#Path</Type>\n")
     f.write("    <Key>http://rakarrack.sourceforge.net/effects.html#Reverbtron:rvbfile</Key>\n")
-    f.write("    <Value>" + p[v] + "</Value>\n")
+    f.write("    <Value>/usr/share/rkr.lv2/" + p[v] + "</Value>\n")
     f.write("   </CustomData>\n")
 
-def makeDlyData(f,v) 
+def makeDlyData(f,v):
     p = {
         0 : "SwingPong.dly" ,
         1 : "Short_Delays.dly" ,
@@ -95,7 +95,7 @@ def makeDlyData(f,v)
     f.write("   <CustomData>\n")
     f.write("    <Type>http://lv2plug.in/ns/ext/atom#Path</Type>\n")
     f.write("    <Key>http://rakarrack.sourceforge.net/effects.html#Echotron:dlyfile</Key>\n")
-    f.write("    <Value>" + p[v] + "</Value>\n")
+    f.write("    <Value>/usr/share/rkr.lv2/" + p[v] + "</Value>\n")
     f.write("   </CustomData>\n")
 
 def efxorder2structindex(x):
@@ -209,7 +209,7 @@ def readBankFile(filename):
 
         #open file
         ofname = b[0].decode("utf-8")
-        ofname = ofname.split('\0',1)[0] + ".carxp"
+        ofname = "../presets/" + ofname.split('\0',1)[0] + ".carxp"
         of = open(ofname,'w')
 
         #print header
@@ -221,8 +221,14 @@ def readBankFile(filename):
             params = b[k:k+21]
             if (not params[19] or j==30): #skip bypassed or looper TODO: add gate
                 continue
-            if (j==16 or j == 30):
-                print(" WARNING: gate or convo not done")
+            if (j==16):
+                print(" WARNING: gate not done")
+                continue
+            if (j == 29):
+                print(" WARNING: convo not done")
+                continue
+            if (j == 30):
+                print(" WARNING: looper not done")
                 continue
             #print(j, rkrremap.remap(j,-1))
             makePlugHeader(of,rkrremap.remap(j,-1))
@@ -240,6 +246,10 @@ def readBankFile(filename):
                     makePort(of,data,params[k])
                 k += 1
                 data = rkrremap.remap(j,k)
+            if (j == 40):
+                makeRvbData(of,params[8])
+            if (j == 41):
+                makeDlyData(of,params[8])
             makePlugFooter(of)
         makeCarlaPresetFooter(of)
         of.close() 

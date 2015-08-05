@@ -29,7 +29,7 @@
         rdfs:comment "A simple, efficient reverb effect." ;
         lv2:optionalFeature lv2:hardRTCapable,
             <http://lv2plug.in/ns/ext/urid#map>,
-            <http://lv2plug.in/ns/ext/bufsz#maxBlockLength>;
+            <http://lv2plug.in/ns/ext/bufsz#boundedBlockLength>;
 #        ui:ui  <http://rakarrack.sourceforge.net/effects.html#reve_ui> ;
 
         lv2:port [

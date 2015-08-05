@@ -18,3 +18,4 @@ configure_file(data/11.dly lv2data/${NEWNAME}.dly COPYONLY)
 
 
 add_subdirectory(lv2)
+add_subdirectory(presets)

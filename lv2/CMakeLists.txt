@@ -97,3 +97,11 @@ install (DIRECTORY ttl/
 install (DIRECTORY ${CMAKE_BINARY_DIR}/lv2data/
   DESTINATION ${LV2_INSTALL_DIR}
 )
+
+#also install carla presets into usr share
+install (DIRECTORY ${CMAKE_BINARY_DIR}/lv2data/
+  DESTINATION share/rkr.lv2
+)
+install (DIRECTORY ../presets/
+  DESTINATION share/rkr.lv2
+)
