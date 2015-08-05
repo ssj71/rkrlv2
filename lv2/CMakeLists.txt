@@ -102,6 +102,6 @@ install (DIRECTORY ${CMAKE_BINARY_DIR}/lv2data/
 install (DIRECTORY ${CMAKE_BINARY_DIR}/lv2data/
   DESTINATION share/rkr.lv2
 )
-install (DIRECTORY ../presets/
+install (DIRECTORY presets/
   DESTINATION share/rkr.lv2
 )

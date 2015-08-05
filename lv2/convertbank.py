@@ -42,6 +42,8 @@ def makeBypassPort(f):
     f.write("\n")
 
 def makePort(f,d,v):
+    if not d[0]:
+        return
     f.write("   <Parameter>\n")
     f.write("    <Index>" + str(d[0]) + "</Index>\n")
     f.write("    <Name>" + d[1] + "</Name>\n")
@@ -209,7 +211,7 @@ def readBankFile(filename):
 
         #open file
         ofname = b[0].decode("utf-8")
-        ofname = "../presets/" + ofname.split('\0',1)[0] + ".carxp"
+        ofname = "presets/" + ofname.split('\0',1)[0] + ".carxp"
         of = open(ofname,'w')
 
         #print header
@@ -226,7 +228,6 @@ def readBankFile(filename):
                 continue
             if (j == 29):
                 print(" WARNING: convo not done")
-                continue
             if (j == 30):
                 print(" WARNING: looper not done")
                 continue
@@ -239,6 +240,7 @@ def readBankFile(filename):
                 if data[0] == 0:
                    if data[1] == "SPECIAL":
                       sd = rkrremap.remap_special(j,k,params[k])
+                      #print("  ", j, k, params[k], sd)
                       for n in range(sd[0]):
                         makePort(of,rkrremap.remap(j,sd[2*n+1]),sd[2*n+2])
                    #else skipped

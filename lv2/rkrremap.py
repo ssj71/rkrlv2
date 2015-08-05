@@ -19,7 +19,6 @@ def remap_special(efxindex, paramindex, value):
             9 : (4, 12,0 ,13,3 ,14,3 ,15,0 ) ,
             10 : (4,12,0 ,13,3 ,14,3 ,15,1 ) ,
         }[value]
-    return (0,)        
  #convo files
  #0{"Marshall JCM200", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 10, 0},
  #1"Fender Superchamp", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 10, 0},
@@ -43,7 +42,7 @@ def remap_special(efxindex, paramindex, value):
  #8"Jazz-Chorus", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 10, 0},
  #9"Vox-Bright", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 10, 0},
  #10"Marshall-I", 0,  0, 0, 0, FL_NORMAL_LABEL, 0, 10, 0},
-    if (efxindex,paramindex) == (29,1): #convolutron approximated by cab preset
+    if (efxindex,paramindex) == (29,8): #convolutron approximated by cab preset
         return{
             0 : (1, 10,10) ,
             1 : (1, 10,1) ,
@@ -57,12 +56,13 @@ def remap_special(efxindex, paramindex, value):
         }[value]
     if (efxindex,paramindex) == (31,17): #mutron "mode"
         return{
-            0 : (2, 21,0, 22,0) ,
-            1 : (2, 21,1, 22,0) ,
-            2 : (2, 21,0, 22,1) ,
-            3 : (2, 21,1, 22,1) ,
-            4 : (2, 21,0, 22,0) ,
+            0 : (2, 20,0, 21,0) ,
+            1 : (2, 20,1, 21,0) ,
+            2 : (2, 20,0, 21,1) ,
+            3 : (2, 20,1, 21,1) ,
+            4 : (2, 20,0, 21,0) ,
         }[value]
+    return (0,)        
 
 def remap(efxindex, paramindex):
     return{
@@ -489,14 +489,14 @@ def remap(efxindex, paramindex):
 
          #convo
          (29, -1) : ('rkr Cabinet', 'http://rakarrack.sourceforge.net/effects.html#cabe') ,
-         (29, 0) : (1, 'SKIP', 'SKIP', 0) ,
-         (29, 1) : (1, 'SKIP', 'SKIP', 0) ,
-         (29, 2) : (1, 'SKIP', 'SKIP', 0) ,
-         (29, 3) : (1, 'SKIP', 'SKIP', 0) ,
-         (29, 4) : (1, 'SKIP', 'SKIP', 0) ,
-         (29, 5) : (1, 'SKIP', 'SKIP', 0) ,
-         (29, 6) : (1, 'SKIP', 'SKIP', 0) ,
-         (29, 7) : (1, 'SKIP', 'SKIP', 0) ,
+         (29, 0) : (0, 'SKIP', 'SKIP', 0) ,
+         (29, 1) : (0, 'SKIP', 'SKIP', 0) ,
+         (29, 2) : (0, 'SKIP', 'SKIP', 0) ,
+         (29, 3) : (0, 'SKIP', 'SKIP', 0) ,
+         (29, 4) : (0, 'SKIP', 'SKIP', 0) ,
+         (29, 5) : (0, 'SKIP', 'SKIP', 0) ,
+         (29, 6) : (0, 'SKIP', 'SKIP', 0) ,
+         (29, 7) : (0, 'SKIP', 'SKIP', 0) ,
          (29, 8) : (0, 'SPECIAL', 'SPECIAL', 0) ,
          (29, 9) : (-1,) ,
          (29, 10) : (2, 'Preset', 'PRESET', 0) ,
