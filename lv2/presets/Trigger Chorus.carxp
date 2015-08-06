@@ -1,0 +1,285 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE CARLA-PROJECT>
+<CARLA-PROJECT VERSION='2.0'>
+<!-- converted by a rkrlv2 script -->
+
+
+ <!-- rkr Shuffle -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Shuffle</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#Shuffle</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>64</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Gain</Name>
+    <Symbol>LGAIN</Symbol>
+    <Value>13</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Gain</Name>
+    <Symbol>M1GAIN</Symbol>
+    <Value>19</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Gain</Name>
+    <Symbol>M2GAIN</Symbol>
+    <Value>-21</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Gain</Name>
+    <Symbol>HGAIN</Symbol>
+    <Value>22</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Frequency</Name>
+    <Symbol>LFREQ</Symbol>
+    <Value>350</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Frequency</Name>
+    <Symbol>M1FREQ</Symbol>
+    <Value>1200</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Frequency</Name>
+    <Symbol>M2FREQ</Symbol>
+    <Value>2000</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Frequency</Name>
+    <Symbol>HFREQ</Symbol>
+    <Value>6000</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Width</Name>
+    <Symbol>Q</Symbol>
+    <Value>-21</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>11</Index>
+    <Name>Filtered Band</Name>
+    <Symbol>BAND</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Shifter -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Shifter</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#Shifter</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>64</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Pan</Name>
+    <Symbol>PAN</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Gain</Name>
+    <Symbol>GAIN</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Attack</Name>
+    <Symbol>ATACK</Symbol>
+    <Value>250</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Decay</Name>
+    <Symbol>DECAY</Symbol>
+    <Value>100</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Thresold</Name>
+    <Symbol>THRESH</Symbol>
+    <Value>-10</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Interval</Name>
+    <Symbol>INT</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Shift Down</Name>
+    <Symbol>DN</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Mode</Name>
+    <Symbol>MODE</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Interval</Name>
+    <Symbol>WHAMMY</Symbol>
+    <Value>25</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Echo -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Echo</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#echo</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>67</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Panning</Name>
+    <Symbol>PAN</Symbol>
+    <Value>139</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Delay</Name>
+    <Symbol>DELAY</Symbol>
+    <Value>955</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Left/Right Delay Offset</Name>
+    <Symbol>LR_DELAY</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Left/Right Crossover</Name>
+    <Symbol>LRCr</Symbol>
+    <Value>30</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Feedback</Name>
+    <Symbol>FEEDBACK</Symbol>
+    <Value>59</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Damping</Name>
+    <Symbol>DAMP</Symbol>
+    <Value>10</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Reverse</Name>
+    <Symbol>REV</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Direct</Name>
+    <Symbol>DIRECT</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+</CARLA-PROJECT>

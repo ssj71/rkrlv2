@@ -1,0 +1,434 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE CARLA-PROJECT>
+<CARLA-PROJECT VERSION='2.0'>
+<!-- converted by a rkrlv2 script -->
+
+
+ <!-- rkr Parametric EQ -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Parametric EQ</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#eqp</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Gain</Name>
+    <Symbol>GAIN</Symbol>
+    <Value>88</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Frequency</Name>
+    <Symbol>LFREQ</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Gain</Name>
+    <Symbol>LGAIN</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Width</Name>
+    <Symbol>LQ</Symbol>
+    <Value>139</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Frequency</Name>
+    <Symbol>MFREQ</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Gain</Name>
+    <Symbol>MGAIN</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Width</Name>
+    <Symbol>MQ</Symbol>
+    <Value>177</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Frequency</Name>
+    <Symbol>HFREQ</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Gain</Name>
+    <Symbol>HGAIN</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Width</Name>
+    <Symbol>HQ</Symbol>
+    <Value>96</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Sequence -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Sequence</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#Sequence</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Step 1</Name>
+    <Symbol>S0</Symbol>
+    <Value>8</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Step 2</Name>
+    <Symbol>S2</Symbol>
+    <Value>40</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Step 3</Name>
+    <Symbol>S3</Symbol>
+    <Value>66</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Step 4</Name>
+    <Symbol>S4</Symbol>
+    <Value>92</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Step 5</Name>
+    <Symbol>S5</Symbol>
+    <Value>105</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Step 6</Name>
+    <Symbol>S6</Symbol>
+    <Value>82</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Step 7</Name>
+    <Symbol>S7</Symbol>
+    <Value>54</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Step 8</Name>
+    <Symbol>S8</Symbol>
+    <Value>15</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>32</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Tempo</Name>
+    <Symbol>TEMPO</Symbol>
+    <Value>140</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>11</Index>
+    <Name>Q</Name>
+    <Symbol>Q</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>12</Index>
+    <Name>Amplitude/Alt. Mode</Name>
+    <Symbol>AMP</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>13</Index>
+    <Name>Right Channel Step Lag</Name>
+    <Symbol>LAG</Symbol>
+    <Value>4</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>14</Index>
+    <Name>Modulation Mode</Name>
+    <Symbol>MODE</Symbol>
+    <Value>4</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>15</Index>
+    <Name>Step Adjustment Range</Name>
+    <Symbol>RANGE</Symbol>
+    <Value>8</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr VaryBand -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr VaryBand</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#VaryBand</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>32</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Tempo</Name>
+    <Symbol>TEMPO1</Symbol>
+    <Value>70</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>LFO Type</Name>
+    <Symbol>TYPE1</Symbol>
+    <Value>5</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>LFO L/R Delay</Name>
+    <Symbol>STDL1</Symbol>
+    <Value>64</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Tempo</Name>
+    <Symbol>TEMPO2</Symbol>
+    <Value>280</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>LFO Type</Name>
+    <Symbol>TYPE2</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>LFO L/R Delay</Name>
+    <Symbol>STDL2</Symbol>
+    <Value>191</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Low/Mid1 Crossover</Name>
+    <Symbol>LMCR</Symbol>
+    <Value>400</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Mid1/Mid2 Crossover</Name>
+    <Symbol>MMCR</Symbol>
+    <Value>1000</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Mid2/High Crossover</Name>
+    <Symbol>MHCR</Symbol>
+    <Value>4162</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>11</Index>
+    <Name>Low Band Volume</Name>
+    <Symbol>LB</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>12</Index>
+    <Name>Mid Band 1 Volume</Name>
+    <Symbol>M1B</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>13</Index>
+    <Name>Mid Band 2 Volume</Name>
+    <Symbol>M2B</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>14</Index>
+    <Name>High Band Volume</Name>
+    <Symbol>HB</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Pan -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Pan</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#pan</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>96</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Panning</Name>
+    <Symbol>PAN</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Tempo</Name>
+    <Symbol>TEMPO</Symbol>
+    <Value>35</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Randomness</Name>
+    <Symbol>RND</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>LFO Type</Name>
+    <Symbol>TYPE</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>LFO L/R Delay</Name>
+    <Symbol>STDL</Symbol>
+    <Value>191</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Extra Stereo Amount</Name>
+    <Symbol>EXTRA_AMOUNT</Symbol>
+    <Value>96</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Autopan</Name>
+    <Symbol>AUTO</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Extra Stereo Enable</Name>
+    <Symbol>EXTRA_ON</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+</CARLA-PROJECT>

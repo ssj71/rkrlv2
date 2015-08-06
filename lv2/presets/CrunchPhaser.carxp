@@ -1,0 +1,227 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE CARLA-PROJECT>
+<CARLA-PROJECT VERSION='2.0'>
+<!-- converted by a rkrlv2 script -->
+
+
+ <!-- rkr Distorsion -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Distorsion</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#dist</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Panning</Name>
+    <Symbol>PAN</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Left/Right Crossover</Name>
+    <Symbol>LRCr</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Drive</Name>
+    <Symbol>DRIVE</Symbol>
+    <Value>87</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Level</Name>
+    <Symbol>LEVEL</Symbol>
+    <Value>37</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Type</Name>
+    <Symbol>TYPE</Symbol>
+    <Value>14</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Negate (Polarity Switch)</Name>
+    <Symbol>NEG</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Lowpass Filter</Name>
+    <Symbol>LPF</Symbol>
+    <Value>2564</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Highpass Filter</Name>
+    <Symbol>HPF</Symbol>
+    <Value>157</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Stereo</Name>
+    <Symbol>STEREO</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>11</Index>
+    <Name>Prefilter</Name>
+    <Symbol>PREFILTER</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>12</Index>
+    <Name>Suboctave</Name>
+    <Symbol>OCT</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Analog Phaser -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Analog Phaser</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#aphas</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>64</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Distort</Name>
+    <Symbol>DISTORT</Symbol>
+    <Value>20</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Tempo</Name>
+    <Symbol>TEMPO</Symbol>
+    <Value>14</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Randomness</Name>
+    <Symbol>RND</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>LFO Type</Name>
+    <Symbol>TYPE</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>LFO L/R Delay</Name>
+    <Symbol>STDL</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Width</Name>
+    <Symbol>WIDTH</Symbol>
+    <Value>110</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Feedback</Name>
+    <Symbol>FB</Symbol>
+    <Value>104</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Stages</Name>
+    <Symbol>STAGES</Symbol>
+    <Value>4</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Mismatch</Name>
+    <Symbol>MISMATCH</Symbol>
+    <Value>10</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>11</Index>
+    <Name>Subtract</Name>
+    <Symbol>SUB</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>12</Index>
+    <Name>Phase Depth</Name>
+    <Symbol>DEPTH</Symbol>
+    <Value>64</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>13</Index>
+    <Name>Hyper</Name>
+    <Symbol>HYPER</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+</CARLA-PROJECT>

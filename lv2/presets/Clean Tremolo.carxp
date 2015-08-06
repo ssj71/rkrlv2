@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE CARLA-PROJECT>
+<CARLA-PROJECT VERSION='2.0'>
+<!-- converted by a rkrlv2 script -->
+
+
+ <!-- rkr Cabinet -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Cabinet</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#cabe</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Preset</Name>
+    <Symbol>PRESET</Symbol>
+    <Value>10</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Pan -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Pan</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#pan</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Panning</Name>
+    <Symbol>PAN</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Tempo</Name>
+    <Symbol>TEMPO</Symbol>
+    <Value>340</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Randomness</Name>
+    <Symbol>RND</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>LFO Type</Name>
+    <Symbol>TYPE</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>LFO L/R Delay</Name>
+    <Symbol>STDL</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Extra Stereo Amount</Name>
+    <Symbol>EXTRA_AMOUNT</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Autopan</Name>
+    <Symbol>AUTO</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Extra Stereo Enable</Name>
+    <Symbol>EXTRA_ON</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+</CARLA-PROJECT>

@@ -1,0 +1,169 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE CARLA-PROJECT>
+<CARLA-PROJECT VERSION='2.0'>
+<!-- converted by a rkrlv2 script -->
+
+
+ <!-- rkr Sustainer -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Sustainer</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#Sustainer</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Gain</Name>
+    <Symbol>GAIN</Symbol>
+    <Value>35</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Sustain</Name>
+    <Symbol>SUS</Symbol>
+    <Value>113</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Echotron -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Echotron</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#Echotron</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>79</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Filter Depth</Name>
+    <Symbol>DEPTH</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>LFO Width</Name>
+    <Symbol>WIDTH</Symbol>
+    <Value>42</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Number of Taps</Name>
+    <Symbol>LENGTH</Symbol>
+    <Value>7</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>TEMPO</Name>
+    <Symbol>TEMPO</Symbol>
+    <Value>60</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Dampening</Name>
+    <Symbol>DAMP</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Left/Right Crossover</Name>
+    <Symbol>LRC</Symbol>
+    <Value>125</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>LFO L/R Delay</Name>
+    <Symbol>STDF</Symbol>
+    <Value>32</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Feedback</Name>
+    <Symbol>FB</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Pan</Name>
+    <Symbol>PAN</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>11</Index>
+    <Name>Modulate Delays</Name>
+    <Symbol>MD</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>12</Index>
+    <Name>Modulate Filters</Name>
+    <Symbol>MF</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>13</Index>
+    <Name>LFO Type</Name>
+    <Symbol>LFOTYPE</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>14</Index>
+    <Name>Activate Filters</Name>
+    <Symbol>AF</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Path</Type>
+    <Key>http://rakarrack.sourceforge.net/effects.html#Echotron:dlyfile</Key>
+    <Value>/usr/share/rkr.lv2/Multi-Chorus.dly</Value>
+   </CustomData>
+  </Data>
+ </Plugin>
+</CARLA-PROJECT>

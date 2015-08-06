@@ -1,0 +1,285 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE CARLA-PROJECT>
+<CARLA-PROJECT VERSION='2.0'>
+<!-- converted by a rkrlv2 script -->
+
+
+ <!-- rkr Echo -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Echo</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#echo</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>81</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Panning</Name>
+    <Symbol>PAN</Symbol>
+    <Value>124</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Delay</Name>
+    <Symbol>DELAY</Symbol>
+    <Value>472</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Left/Right Delay Offset</Name>
+    <Symbol>LR_DELAY</Symbol>
+    <Value>164</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Left/Right Crossover</Name>
+    <Symbol>LRCr</Symbol>
+    <Value>127</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Feedback</Name>
+    <Symbol>FEEDBACK</Symbol>
+    <Value>67</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Damping</Name>
+    <Symbol>DAMP</Symbol>
+    <Value>36</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Reverse</Name>
+    <Symbol>REV</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Direct</Name>
+    <Symbol>DIRECT</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Analog Phaser -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Analog Phaser</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#aphas</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>64</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Tempo</Name>
+    <Symbol>TEMPO</Symbol>
+    <Value>10</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Randomness</Name>
+    <Symbol>RND</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>LFO Type</Name>
+    <Symbol>TYPE</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>LFO L/R Delay</Name>
+    <Symbol>STDL</Symbol>
+    <Value>152</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Width</Name>
+    <Symbol>WIDTH</Symbol>
+    <Value>40</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Feedback</Name>
+    <Symbol>FB</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Stages</Name>
+    <Symbol>STAGES</Symbol>
+    <Value>3</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>11</Index>
+    <Name>Subtract</Name>
+    <Symbol>SUB</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>12</Index>
+    <Name>Phase Depth</Name>
+    <Symbol>DEPTH</Symbol>
+    <Value>20</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr StereoHarmonizer (no midi) -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr StereoHarmonizer (no midi)</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#StereoHarm</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>64</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Left Gain</Name>
+    <Symbol>GAINL</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Left Interval</Name>
+    <Symbol>INTL</Symbol>
+    <Value>24</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Left Chroma</Name>
+    <Symbol>CHRML</Symbol>
+    <Value>280</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Right Gain</Name>
+    <Symbol>GAINR</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Right Interval</Name>
+    <Symbol>INTR</Symbol>
+    <Value>24</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Right Chroma</Name>
+    <Symbol>CHR</Symbol>
+    <Value>-280</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Select Chord Mode</Name>
+    <Symbol>SELECT</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Note</Name>
+    <Symbol>NOTE</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Chord</Name>
+    <Symbol>CHORD</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>11</Index>
+    <Name>Left/Right Crossover</Name>
+    <Symbol>LRC</Symbol>
+    <Value>64</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+</CARLA-PROJECT>

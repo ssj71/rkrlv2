@@ -1,0 +1,313 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE CARLA-PROJECT>
+<CARLA-PROJECT VERSION='2.0'>
+<!-- converted by a rkrlv2 script -->
+
+
+ <!-- rkr Distorsion -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Distorsion</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#dist</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>84</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Panning</Name>
+    <Symbol>PAN</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Left/Right Crossover</Name>
+    <Symbol>LRCr</Symbol>
+    <Value>35</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Drive</Name>
+    <Symbol>DRIVE</Symbol>
+    <Value>27</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Level</Name>
+    <Symbol>LEVEL</Symbol>
+    <Value>34</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Type</Name>
+    <Symbol>TYPE</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Negate (Polarity Switch)</Name>
+    <Symbol>NEG</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Lowpass Filter</Name>
+    <Symbol>LPF</Symbol>
+    <Value>824</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Highpass Filter</Name>
+    <Symbol>HPF</Symbol>
+    <Value>21</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Stereo</Name>
+    <Symbol>STEREO</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>11</Index>
+    <Name>Prefilter</Name>
+    <Symbol>PREFILTER</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>12</Index>
+    <Name>Suboctave</Name>
+    <Symbol>OCT</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Distorsion -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Distorsion</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#dist</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>84</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Panning</Name>
+    <Symbol>PAN</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Left/Right Crossover</Name>
+    <Symbol>LRCr</Symbol>
+    <Value>35</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Drive</Name>
+    <Symbol>DRIVE</Symbol>
+    <Value>56</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Level</Name>
+    <Symbol>LEVEL</Symbol>
+    <Value>23</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Type</Name>
+    <Symbol>TYPE</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Negate (Polarity Switch)</Name>
+    <Symbol>NEG</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Lowpass Filter</Name>
+    <Symbol>LPF</Symbol>
+    <Value>4200</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Highpass Filter</Name>
+    <Symbol>HPF</Symbol>
+    <Value>21</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Stereo</Name>
+    <Symbol>STEREO</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>11</Index>
+    <Name>Prefilter</Name>
+    <Symbol>PREFILTER</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>12</Index>
+    <Name>Suboctave</Name>
+    <Symbol>OCT</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Reverb -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Reverb</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#reve</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>111</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Panning</Name>
+    <Symbol>PAN</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Time</Name>
+    <Symbol>TIME</Symbol>
+    <Value>10</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Initial Delay</Name>
+    <Symbol>IDEL</Symbol>
+    <Value>26</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Initial Delay Feedback</Name>
+    <Symbol>IDELFB</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Lowpass Filter</Name>
+    <Symbol>LPF</Symbol>
+    <Value>1223</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Highpass Filter</Name>
+    <Symbol>HPF</Symbol>
+    <Value>21</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Damping</Name>
+    <Symbol>DAMP</Symbol>
+    <Value>77</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Type</Name>
+    <Symbol>TYPE</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Room Size</Name>
+    <Symbol>RS</Symbol>
+    <Value>45</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+</CARLA-PROJECT>

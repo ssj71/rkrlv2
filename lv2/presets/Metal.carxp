@@ -1,0 +1,387 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE CARLA-PROJECT>
+<CARLA-PROJECT VERSION='2.0'>
+<!-- converted by a rkrlv2 script -->
+
+
+ <!-- rkr Sustainer -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Sustainer</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#Sustainer</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Gain</Name>
+    <Symbol>GAIN</Symbol>
+    <Value>48</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Sustain</Name>
+    <Symbol>SUS</Symbol>
+    <Value>100</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr StompBox -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr StompBox</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#StompBox</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Level</Name>
+    <Symbol>LEVEL</Symbol>
+    <Value>48</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>High</Name>
+    <Symbol>HI</Symbol>
+    <Value>2</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Mid</Name>
+    <Symbol>MID</Symbol>
+    <Value>2</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Low</Name>
+    <Symbol>LO</Symbol>
+    <Value>2</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Gain</Name>
+    <Symbol>GAIN</Symbol>
+    <Value>8</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Mode</Name>
+    <Symbol>MODE</Symbol>
+    <Value>6</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Sequence -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Sequence</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#Sequence</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Step 1</Name>
+    <Symbol>S0</Symbol>
+    <Value>9</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Step 2</Name>
+    <Symbol>S2</Symbol>
+    <Value>35</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Step 3</Name>
+    <Symbol>S3</Symbol>
+    <Value>60</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Step 4</Name>
+    <Symbol>S4</Symbol>
+    <Value>67</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Step 5</Name>
+    <Symbol>S5</Symbol>
+    <Value>67</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Step 6</Name>
+    <Symbol>S6</Symbol>
+    <Value>62</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Step 7</Name>
+    <Symbol>S7</Symbol>
+    <Value>46</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Step 8</Name>
+    <Symbol>S8</Symbol>
+    <Value>16</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>80</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Tempo</Name>
+    <Symbol>TEMPO</Symbol>
+    <Value>100</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>11</Index>
+    <Name>Q</Name>
+    <Symbol>Q</Symbol>
+    <Value>152</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>12</Index>
+    <Name>Amplitude/Alt. Mode</Name>
+    <Symbol>AMP</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>13</Index>
+    <Name>Right Channel Step Lag</Name>
+    <Symbol>LAG</Symbol>
+    <Value>4</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>14</Index>
+    <Name>Modulation Mode</Name>
+    <Symbol>MODE</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>15</Index>
+    <Name>Step Adjustment Range</Name>
+    <Symbol>RANGE</Symbol>
+    <Value>8</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Shelf Boost -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Shelf Boost</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#ShelfBoost</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Gain</Name>
+    <Symbol>GAIN</Symbol>
+    <Value>48</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Presence</Name>
+    <Symbol>PRES</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Tone</Name>
+    <Symbol>TONE</Symbol>
+    <Value>9600</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Stereo</Name>
+    <Symbol>STEREO</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Level</Name>
+    <Symbol>LEVEL</Symbol>
+    <Value>48</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Reverb -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Reverb</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#reve</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>64</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Panning</Name>
+    <Symbol>PAN</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Time</Name>
+    <Symbol>TIME</Symbol>
+    <Value>18</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Initial Delay</Name>
+    <Symbol>IDEL</Symbol>
+    <Value>8</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Initial Delay Feedback</Name>
+    <Symbol>IDELFB</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Lowpass Filter</Name>
+    <Symbol>LPF</Symbol>
+    <Value>4800</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Highpass Filter</Name>
+    <Symbol>HPF</Symbol>
+    <Value>200</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Damping</Name>
+    <Symbol>DAMP</Symbol>
+    <Value>64</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Type</Name>
+    <Symbol>TYPE</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Room Size</Name>
+    <Symbol>RS</Symbol>
+    <Value>72</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+</CARLA-PROJECT>

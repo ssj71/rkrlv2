@@ -1,0 +1,264 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE CARLA-PROJECT>
+<CARLA-PROJECT VERSION='2.0'>
+<!-- converted by a rkrlv2 script -->
+
+
+ <!-- rkr Expander -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Expander</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#Expander</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Threshold</Name>
+    <Symbol>THRESHOLD</Symbol>
+    <Value>37</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Shape</Name>
+    <Symbol>SHAPE</Symbol>
+    <Value>24</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Attack Time</Name>
+    <Symbol>ATTACK</Symbol>
+    <Value>46</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Release Time</Name>
+    <Symbol>RELEASE</Symbol>
+    <Value>8050</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Lowpass Filter</Name>
+    <Symbol>LPF</Symbol>
+    <Value>80</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Highpass Filter</Name>
+    <Symbol>HPF</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Output Gain</Name>
+    <Symbol>OUTPUT</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr StompBox -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr StompBox</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#StompBox</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Level</Name>
+    <Symbol>LEVEL</Symbol>
+    <Value>44</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>High</Name>
+    <Symbol>HI</Symbol>
+    <Value>64</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Mid</Name>
+    <Symbol>MID</Symbol>
+    <Value>-1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Low</Name>
+    <Symbol>LO</Symbol>
+    <Value>23</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Gain</Name>
+    <Symbol>GAIN</Symbol>
+    <Value>9</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Mode</Name>
+    <Symbol>MODE</Symbol>
+    <Value>4</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr VaryBand -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr VaryBand</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#VaryBand</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Tempo</Name>
+    <Symbol>TEMPO1</Symbol>
+    <Value>140</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>LFO Type</Name>
+    <Symbol>TYPE1</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>LFO L/R Delay</Name>
+    <Symbol>STDL1</Symbol>
+    <Value>96</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Tempo</Name>
+    <Symbol>TEMPO2</Symbol>
+    <Value>80</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>LFO Type</Name>
+    <Symbol>TYPE2</Symbol>
+    <Value>4</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>LFO L/R Delay</Name>
+    <Symbol>STDL2</Symbol>
+    <Value>64</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Low/Mid1 Crossover</Name>
+    <Symbol>LMCR</Symbol>
+    <Value>465</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Mid1/Mid2 Crossover</Name>
+    <Symbol>MMCR</Symbol>
+    <Value>1764</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Mid2/High Crossover</Name>
+    <Symbol>MHCR</Symbol>
+    <Value>3309</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>11</Index>
+    <Name>Low Band Volume</Name>
+    <Symbol>LB</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>12</Index>
+    <Name>Mid Band 1 Volume</Name>
+    <Symbol>M1B</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>13</Index>
+    <Name>Mid Band 2 Volume</Name>
+    <Symbol>M2B</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>14</Index>
+    <Name>High Band Volume</Name>
+    <Symbol>HB</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+</CARLA-PROJECT>

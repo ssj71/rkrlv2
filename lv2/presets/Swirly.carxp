@@ -1,0 +1,406 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE CARLA-PROJECT>
+<CARLA-PROJECT VERSION='2.0'>
+<!-- converted by a rkrlv2 script -->
+
+
+ <!-- rkr Analog Phaser -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Analog Phaser</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#aphas</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>104</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Distort</Name>
+    <Symbol>DISTORT</Symbol>
+    <Value>80</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Tempo</Name>
+    <Symbol>TEMPO</Symbol>
+    <Value>5</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Randomness</Name>
+    <Symbol>RND</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>LFO Type</Name>
+    <Symbol>TYPE</Symbol>
+    <Value>4</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>LFO L/R Delay</Name>
+    <Symbol>STDL</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Width</Name>
+    <Symbol>WIDTH</Symbol>
+    <Value>110</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Feedback</Name>
+    <Symbol>FB</Symbol>
+    <Value>152</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Stages</Name>
+    <Symbol>STAGES</Symbol>
+    <Value>5</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Mismatch</Name>
+    <Symbol>MISMATCH</Symbol>
+    <Value>10</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>11</Index>
+    <Name>Subtract</Name>
+    <Symbol>SUB</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>12</Index>
+    <Name>Phase Depth</Name>
+    <Symbol>DEPTH</Symbol>
+    <Value>97</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>13</Index>
+    <Name>Hyper</Name>
+    <Symbol>HYPER</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Echo -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Echo</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#echo</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>48</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Panning</Name>
+    <Symbol>PAN</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Delay</Name>
+    <Symbol>DELAY</Symbol>
+    <Value>924</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Left/Right Delay Offset</Name>
+    <Symbol>LR_DELAY</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Left/Right Crossover</Name>
+    <Symbol>LRCr</Symbol>
+    <Value>23</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Feedback</Name>
+    <Symbol>FEEDBACK</Symbol>
+    <Value>59</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Damping</Name>
+    <Symbol>DAMP</Symbol>
+    <Value>90</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Reverse</Name>
+    <Symbol>REV</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Direct</Name>
+    <Symbol>DIRECT</Symbol>
+    <Value>92</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Flanger/Chorus -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Flanger/Chorus</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#chor</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>57</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Panning</Name>
+    <Symbol>PAN</Symbol>
+    <Value>122</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Tempo</Name>
+    <Symbol>TEMPO</Symbol>
+    <Value>9</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Randomness</Name>
+    <Symbol>RND</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>LFO Type</Name>
+    <Symbol>TYPE</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>LFO L/R Delay</Name>
+    <Symbol>WIDTH</Symbol>
+    <Value>133</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Depth</Name>
+    <Symbol>DEPTH</Symbol>
+    <Value>82</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Delay</Name>
+    <Symbol>DELAY</Symbol>
+    <Value>35</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Feedback</Name>
+    <Symbol>FB</Symbol>
+    <Value>56</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Left/Right Crossover</Name>
+    <Symbol>LRCR</Symbol>
+    <Value>127</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>11</Index>
+    <Name>Subtract</Name>
+    <Symbol>SUB</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>12</Index>
+    <Name>Intense</Name>
+    <Symbol>INTENSE</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Parametric EQ -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Parametric EQ</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#eqp</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Gain</Name>
+    <Symbol>GAIN</Symbol>
+    <Value>93</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Frequency</Name>
+    <Symbol>LFREQ</Symbol>
+    <Value>133</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Gain</Name>
+    <Symbol>LGAIN</Symbol>
+    <Value>87</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Width</Name>
+    <Symbol>LQ</Symbol>
+    <Value>1141</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Frequency</Name>
+    <Symbol>MFREQ</Symbol>
+    <Value>106</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Gain</Name>
+    <Symbol>MGAIN</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Width</Name>
+    <Symbol>MQ</Symbol>
+    <Value>8175</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Frequency</Name>
+    <Symbol>HFREQ</Symbol>
+    <Value>138</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Gain</Name>
+    <Symbol>HGAIN</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Width</Name>
+    <Symbol>HQ</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+</CARLA-PROJECT>

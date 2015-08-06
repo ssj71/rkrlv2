@@ -1,0 +1,269 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE CARLA-PROJECT>
+<CARLA-PROJECT VERSION='2.0'>
+<!-- converted by a rkrlv2 script -->
+
+
+ <!-- rkr Sustainer -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Sustainer</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#Sustainer</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Gain</Name>
+    <Symbol>GAIN</Symbol>
+    <Value>88</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Sustain</Name>
+    <Symbol>SUS</Symbol>
+    <Value>67</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Vibe -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Vibe</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#Vibe</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Width</Name>
+    <Symbol>WIDTH</Symbol>
+    <Value>67</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Tempo</Name>
+    <Symbol>TEMPO</Symbol>
+    <Value>260</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Randomness</Name>
+    <Symbol>RND</Symbol>
+    <Value>10</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>LFO Type</Name>
+    <Symbol>TYPE</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>LFO L/R Delay</Name>
+    <Symbol>STDL</Symbol>
+    <Value>112</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Pan</Name>
+    <Symbol>PAN</Symbol>
+    <Value>134</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>20</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Feedback</Name>
+    <Symbol>FB</Symbol>
+    <Value>99</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Depth</Name>
+    <Symbol>DEPTH</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Left/Right Crossover</Name>
+    <Symbol>LRCR</Symbol>
+    <Value>48</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>11</Index>
+    <Name>Stereo</Name>
+    <Symbol>STEREO</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Reverbtron -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Reverbtron</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#Reverbtron</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>64</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Fade</Name>
+    <Symbol>FADE</Symbol>
+    <Value>25</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Safe</Name>
+    <Symbol>SAFE</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Length</Name>
+    <Symbol>LENGTH</Symbol>
+    <Value>24</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Initial Delay</Name>
+    <Symbol>DELAY</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Dampening</Name>
+    <Symbol>DAMP</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Level</Name>
+    <Symbol>LEVEL</Symbol>
+    <Value>72</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Time Stretch</Name>
+    <Symbol>STRETCH</Symbol>
+    <Value>2</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Feedback</Name>
+    <Symbol>FB</Symbol>
+    <Value>-29</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Pan</Name>
+    <Symbol>PAN</Symbol>
+    <Value>132</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>11</Index>
+    <Name>Extra Stereo</Name>
+    <Symbol>ES</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>12</Index>
+    <Name>Shuffle</Name>
+    <Symbol>SH</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>13</Index>
+    <Name>Lowpass Filter</Name>
+    <Symbol>LPF</Symbol>
+    <Value>20000</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>14</Index>
+    <Name>Diffusion</Name>
+    <Symbol>DIFFUSE</Symbol>
+    <Value>88</Value>
+   </Parameter>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Path</Type>
+    <Key>http://rakarrack.sourceforge.net/effects.html#Reverbtron:rvbfile</Key>
+    <Value>/usr/share/rkr.lv2/Chamber.rvb</Value>
+   </CustomData>
+  </Data>
+ </Plugin>
+</CARLA-PROJECT>

@@ -1,0 +1,455 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE CARLA-PROJECT>
+<CARLA-PROJECT VERSION='2.0'>
+<!-- converted by a rkrlv2 script -->
+
+
+ <!-- rkr Expander -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Expander</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#Expander</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Threshold</Name>
+    <Symbol>THRESHOLD</Symbol>
+    <Value>30</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Shape</Name>
+    <Symbol>SHAPE</Symbol>
+    <Value>50</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Attack Time</Name>
+    <Symbol>ATTACK</Symbol>
+    <Value>50</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Release Time</Name>
+    <Symbol>RELEASE</Symbol>
+    <Value>1441</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Lowpass Filter</Name>
+    <Symbol>LPF</Symbol>
+    <Value>157</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Highpass Filter</Name>
+    <Symbol>HPF</Symbol>
+    <Value>50</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Output Gain</Name>
+    <Symbol>OUTPUT</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Compressor -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Compressor</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#comp</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Threshold</Name>
+    <Symbol>THRESHOLD</Symbol>
+    <Value>4</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>RATIO</Name>
+    <Symbol>RATIO</Symbol>
+    <Value>-8</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Output Gain</Name>
+    <Symbol>OUTPUT</Symbol>
+    <Value>20</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Attack Time</Name>
+    <Symbol>ATTACK</Symbol>
+    <Value>120</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Release Time</Name>
+    <Symbol>RELEASE</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Auto Output</Name>
+    <Symbol>AUTOOUT</Symbol>
+    <Value>10</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Knee</Name>
+    <Symbol>KNEE</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Stereo</Name>
+    <Symbol>STEREO</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Peak</Name>
+    <Symbol>PEAK</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Coil Crafter -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Coil Crafter</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#CoilCrafter</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Gain</Name>
+    <Symbol>GAIN</Symbol>
+    <Value>10</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Origin Pickup Frequency</Name>
+    <Symbol>F1</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Origin Pickup Resonance</Name>
+    <Symbol>Q1</Symbol>
+    <Value>6</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Destination Pickup Frequency</Name>
+    <Symbol>F2</Symbol>
+    <Value>4400</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Destination Pickup Resonance</Name>
+    <Symbol>Q2</Symbol>
+    <Value>42</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Tone</Name>
+    <Symbol>TONE</Symbol>
+    <Value>3300</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Neck Pickup</Name>
+    <Symbol>MODE</Symbol>
+    <Value>17</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Echotron -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Echotron</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#Echotron</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>20</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Filter Depth</Name>
+    <Symbol>DEPTH</Symbol>
+    <Value>129</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>LFO Width</Name>
+    <Symbol>WIDTH</Symbol>
+    <Value>34</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Number of Taps</Name>
+    <Symbol>LENGTH</Symbol>
+    <Value>2</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>TEMPO</Name>
+    <Symbol>TEMPO</Symbol>
+    <Value>63</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Dampening</Name>
+    <Symbol>DAMP</Symbol>
+    <Value>3</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Left/Right Crossover</Name>
+    <Symbol>LRC</Symbol>
+    <Value>105</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>LFO L/R Delay</Name>
+    <Symbol>STDF</Symbol>
+    <Value>96</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Feedback</Name>
+    <Symbol>FB</Symbol>
+    <Value>-13</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Pan</Name>
+    <Symbol>PAN</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>11</Index>
+    <Name>Modulate Delays</Name>
+    <Symbol>MD</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>12</Index>
+    <Name>Modulate Filters</Name>
+    <Symbol>MF</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>13</Index>
+    <Name>LFO Type</Name>
+    <Symbol>LFOTYPE</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>14</Index>
+    <Name>Activate Filters</Name>
+    <Symbol>AF</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Path</Type>
+    <Key>http://rakarrack.sourceforge.net/effects.html#Echotron:dlyfile</Key>
+    <Value>/usr/share/rkr.lv2/SwingPong.dly</Value>
+   </CustomData>
+  </Data>
+ </Plugin>
+
+ <!-- rkr Parametric EQ -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Parametric EQ</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#eqp</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Gain</Name>
+    <Symbol>GAIN</Symbol>
+    <Value>136</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Frequency</Name>
+    <Symbol>LFREQ</Symbol>
+    <Value>135</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Gain</Name>
+    <Symbol>LGAIN</Symbol>
+    <Value>102</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Width</Name>
+    <Symbol>LQ</Symbol>
+    <Value>1141</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Frequency</Name>
+    <Symbol>MFREQ</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Gain</Name>
+    <Symbol>MGAIN</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Width</Name>
+    <Symbol>MQ</Symbol>
+    <Value>10644</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Frequency</Name>
+    <Symbol>HFREQ</Symbol>
+    <Value>133</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Gain</Name>
+    <Symbol>HGAIN</Symbol>
+    <Value>102</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Width</Name>
+    <Symbol>HQ</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+</CARLA-PROJECT>

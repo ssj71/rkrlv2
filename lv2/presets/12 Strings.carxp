@@ -1,0 +1,213 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE CARLA-PROJECT>
+<CARLA-PROJECT VERSION='2.0'>
+<!-- converted by a rkrlv2 script -->
+
+
+ <!-- rkr Shifter -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Shifter</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#Shifter</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>94</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Pan</Name>
+    <Symbol>PAN</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Gain</Name>
+    <Symbol>GAIN</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Attack</Name>
+    <Symbol>ATACK</Symbol>
+    <Value>165</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Decay</Name>
+    <Symbol>DECAY</Symbol>
+    <Value>383</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Thresold</Name>
+    <Symbol>THRESH</Symbol>
+    <Value>-54</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Interval</Name>
+    <Symbol>INT</Symbol>
+    <Value>12</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Shift Down</Name>
+    <Symbol>DN</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Mode</Name>
+    <Symbol>MODE</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Interval</Name>
+    <Symbol>WHAMMY</Symbol>
+    <Value>126</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Exciter -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Exciter</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#Exciter</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Gain</Name>
+    <Symbol>GAIN</Symbol>
+    <Value>64</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>1st Harmonic</Name>
+    <Symbol>HAR1</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>2nd Harmonic</Name>
+    <Symbol>HAR2</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>3rd Harmonic</Name>
+    <Symbol>HAR3</Symbol>
+    <Value>-31</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>4th Harmonic</Name>
+    <Symbol>HAR4</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>5th Harmonic</Name>
+    <Symbol>HAR5</Symbol>
+    <Value>29</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>6th Harmonic</Name>
+    <Symbol>HAR6</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>7th Harmonic</Name>
+    <Symbol>HAR7</Symbol>
+    <Value>-28</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>8th Harmonic</Name>
+    <Symbol>HAR8</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>9th Harmonic</Name>
+    <Symbol>HAR9</Symbol>
+    <Value>22</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>11</Index>
+    <Name>10th Harmonic</Name>
+    <Symbol>HAR10</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>12</Index>
+    <Name>Low-Pass Filter Cutoff</Name>
+    <Symbol>LPF</Symbol>
+    <Value>12538</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>13</Index>
+    <Name>High-Pass Filter Cutoff</Name>
+    <Symbol>HPF</Symbol>
+    <Value>5106</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+</CARLA-PROJECT>

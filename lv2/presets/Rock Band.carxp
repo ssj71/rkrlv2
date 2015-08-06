@@ -1,0 +1,648 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE CARLA-PROJECT>
+<CARLA-PROJECT VERSION='2.0'>
+<!-- converted by a rkrlv2 script -->
+
+
+ <!-- rkr Parametric EQ -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Parametric EQ</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#eqp</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Gain</Name>
+    <Symbol>GAIN</Symbol>
+    <Value>284</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Frequency</Name>
+    <Symbol>LFREQ</Symbol>
+    <Value>144</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Gain</Name>
+    <Symbol>LGAIN</Symbol>
+    <Value>80</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Width</Name>
+    <Symbol>LQ</Symbol>
+    <Value>3548</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Frequency</Name>
+    <Symbol>MFREQ</Symbol>
+    <Value>136</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Gain</Name>
+    <Symbol>MGAIN</Symbol>
+    <Value>86</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Width</Name>
+    <Symbol>MQ</Symbol>
+    <Value>7700</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Frequency</Name>
+    <Symbol>HFREQ</Symbol>
+    <Value>136</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Gain</Name>
+    <Symbol>HGAIN</Symbol>
+    <Value>76</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Width</Name>
+    <Symbol>HQ</Symbol>
+    <Value>80</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Sustainer -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Sustainer</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#Sustainer</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Gain</Name>
+    <Symbol>GAIN</Symbol>
+    <Value>48</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Sustain</Name>
+    <Symbol>SUS</Symbol>
+    <Value>72</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Exciter -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Exciter</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#Exciter</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Gain</Name>
+    <Symbol>GAIN</Symbol>
+    <Value>72</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>1st Harmonic</Name>
+    <Symbol>HAR1</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>2nd Harmonic</Name>
+    <Symbol>HAR2</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>3rd Harmonic</Name>
+    <Symbol>HAR3</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>4th Harmonic</Name>
+    <Symbol>HAR4</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>5th Harmonic</Name>
+    <Symbol>HAR5</Symbol>
+    <Value>20</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>6th Harmonic</Name>
+    <Symbol>HAR6</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>7th Harmonic</Name>
+    <Symbol>HAR7</Symbol>
+    <Value>-20</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>8th Harmonic</Name>
+    <Symbol>HAR8</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>9th Harmonic</Name>
+    <Symbol>HAR9</Symbol>
+    <Value>20</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>11</Index>
+    <Name>10th Harmonic</Name>
+    <Symbol>HAR10</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>12</Index>
+    <Name>Low-Pass Filter Cutoff</Name>
+    <Symbol>LPF</Symbol>
+    <Value>4744</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>13</Index>
+    <Name>High-Pass Filter Cutoff</Name>
+    <Symbol>HPF</Symbol>
+    <Value>120</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr DistBand -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr DistBand</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#DistBand</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Panning</Name>
+    <Symbol>PAN</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Left/Right Crossover</Name>
+    <Symbol>LRCr</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Drive</Name>
+    <Symbol>DRIVE</Symbol>
+    <Value>32</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Level</Name>
+    <Symbol>LEVEL</Symbol>
+    <Value>64</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Low Band Type</Name>
+    <Symbol>TYPEL</Symbol>
+    <Value>22</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Mid Band Type</Name>
+    <Symbol>TYPEM</Symbol>
+    <Value>19</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>High Band Type</Name>
+    <Symbol>TYPEH</Symbol>
+    <Value>26</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Low Gain</Name>
+    <Symbol>LVOL</Symbol>
+    <Value>64</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Mid Gain</Name>
+    <Symbol>MVOL</Symbol>
+    <Value>32</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>11</Index>
+    <Name>High Gain</Name>
+    <Symbol>HVOL</Symbol>
+    <Value>32</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>12</Index>
+    <Name>Negate (Polarity Switch)</Name>
+    <Symbol>NEG</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>13</Index>
+    <Name>Low/Mid Crossover</Name>
+    <Symbol>LMCR</Symbol>
+    <Value>400</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>14</Index>
+    <Name>Mid/High Crossover</Name>
+    <Symbol>MHCR</Symbol>
+    <Value>1200</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>15</Index>
+    <Name>Stereo</Name>
+    <Symbol>STEREO</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Shelf Boost -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Shelf Boost</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#ShelfBoost</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Gain</Name>
+    <Symbol>GAIN</Symbol>
+    <Value>32</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Presence</Name>
+    <Symbol>PRES</Symbol>
+    <Value>29</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Tone</Name>
+    <Symbol>TONE</Symbol>
+    <Value>10692</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Stereo</Name>
+    <Symbol>STEREO</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Level</Name>
+    <Symbol>LEVEL</Symbol>
+    <Value>48</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Pan -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Pan</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#pan</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>64</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Panning</Name>
+    <Symbol>PAN</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Tempo</Name>
+    <Symbol>TEMPO</Symbol>
+    <Value>115</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Randomness</Name>
+    <Symbol>RND</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>LFO Type</Name>
+    <Symbol>TYPE</Symbol>
+    <Value>5</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>LFO L/R Delay</Name>
+    <Symbol>STDL</Symbol>
+    <Value>64</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Extra Stereo Amount</Name>
+    <Symbol>EXTRA_AMOUNT</Symbol>
+    <Value>32</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Autopan</Name>
+    <Symbol>AUTO</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Extra Stereo Enable</Name>
+    <Symbol>EXTRA_ON</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Reverbtron -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Reverbtron</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#Reverbtron</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>64</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Fade</Name>
+    <Symbol>FADE</Symbol>
+    <Value>11</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Safe</Name>
+    <Symbol>SAFE</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Length</Name>
+    <Symbol>LENGTH</Symbol>
+    <Value>100</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Initial Delay</Name>
+    <Symbol>DELAY</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Dampening</Name>
+    <Symbol>DAMP</Symbol>
+    <Value>68</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Level</Name>
+    <Symbol>LEVEL</Symbol>
+    <Value>22</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Time Stretch</Name>
+    <Symbol>STRETCH</Symbol>
+    <Value>-7</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Feedback</Name>
+    <Symbol>FB</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Pan</Name>
+    <Symbol>PAN</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>11</Index>
+    <Name>Extra Stereo</Name>
+    <Symbol>ES</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>12</Index>
+    <Name>Shuffle</Name>
+    <Symbol>SH</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>13</Index>
+    <Name>Lowpass Filter</Name>
+    <Symbol>LPF</Symbol>
+    <Value>20000</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>14</Index>
+    <Name>Diffusion</Name>
+    <Symbol>DIFFUSE</Symbol>
+    <Value>8</Value>
+   </Parameter>
+
+   <CustomData>
+    <Type>http://lv2plug.in/ns/ext/atom#Path</Type>
+    <Key>http://rakarrack.sourceforge.net/effects.html#Reverbtron:rvbfile</Key>
+    <Value>/usr/share/rkr.lv2/Large_Hall.rvb</Value>
+   </CustomData>
+  </Data>
+ </Plugin>
+</CARLA-PROJECT>

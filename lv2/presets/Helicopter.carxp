@@ -1,0 +1,506 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE CARLA-PROJECT>
+<CARLA-PROJECT VERSION='2.0'>
+<!-- converted by a rkrlv2 script -->
+
+
+ <!-- rkr Expander -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Expander</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#Expander</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Threshold</Name>
+    <Symbol>THRESHOLD</Symbol>
+    <Value>37</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Shape</Name>
+    <Symbol>SHAPE</Symbol>
+    <Value>24</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Attack Time</Name>
+    <Symbol>ATTACK</Symbol>
+    <Value>46</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Release Time</Name>
+    <Symbol>RELEASE</Symbol>
+    <Value>8050</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Lowpass Filter</Name>
+    <Symbol>LPF</Symbol>
+    <Value>76</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Highpass Filter</Name>
+    <Symbol>HPF</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Output Gain</Name>
+    <Symbol>OUTPUT</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr StompBox -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr StompBox</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#StompBox</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Level</Name>
+    <Symbol>LEVEL</Symbol>
+    <Value>55</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>High</Name>
+    <Symbol>HI</Symbol>
+    <Value>27</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Mid</Name>
+    <Symbol>MID</Symbol>
+    <Value>10</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Low</Name>
+    <Symbol>LO</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Gain</Name>
+    <Symbol>GAIN</Symbol>
+    <Value>18</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Mode</Name>
+    <Symbol>MODE</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Valve -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Valve</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#valve</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Panning</Name>
+    <Symbol>PAN</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Left/Right Crossover</Name>
+    <Symbol>LRCr</Symbol>
+    <Value>64</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Drive</Name>
+    <Symbol>DRIVE</Symbol>
+    <Value>30</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Level</Name>
+    <Symbol>LEVEL</Symbol>
+    <Value>67</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Negate (Polarity Switch)</Name>
+    <Symbol>NEG</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Lowpass Filter</Name>
+    <Symbol>LPF</Symbol>
+    <Value>3327</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Highpass Filter</Name>
+    <Symbol>HPF</Symbol>
+    <Value>20</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Stereo</Name>
+    <Symbol>STEREO</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Prefilter</Name>
+    <Symbol>PREFILTER</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>11</Index>
+    <Name>Distortion</Name>
+    <Symbol>DIST</Symbol>
+    <Value>46</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>12</Index>
+    <Name>Extra Distortion</Name>
+    <Symbol>ED</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>13</Index>
+    <Name>Presence</Name>
+    <Symbol>PRES</Symbol>
+    <Value>67</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr VaryBand -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr VaryBand</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#VaryBand</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>32</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Tempo</Name>
+    <Symbol>TEMPO1</Symbol>
+    <Value>3</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>LFO Type</Name>
+    <Symbol>TYPE1</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>LFO L/R Delay</Name>
+    <Symbol>STDL1</Symbol>
+    <Value>117</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Tempo</Name>
+    <Symbol>TEMPO2</Symbol>
+    <Value>6</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>LFO Type</Name>
+    <Symbol>TYPE2</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>LFO L/R Delay</Name>
+    <Symbol>STDL2</Symbol>
+    <Value>136</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Low/Mid1 Crossover</Name>
+    <Symbol>LMCR</Symbol>
+    <Value>269</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Mid1/Mid2 Crossover</Name>
+    <Symbol>MMCR</Symbol>
+    <Value>1509</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Mid2/High Crossover</Name>
+    <Symbol>MHCR</Symbol>
+    <Value>3309</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>11</Index>
+    <Name>Low Band Volume</Name>
+    <Symbol>LB</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>12</Index>
+    <Name>Mid Band 1 Volume</Name>
+    <Symbol>M1B</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>13</Index>
+    <Name>Mid Band 2 Volume</Name>
+    <Symbol>M2B</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>14</Index>
+    <Name>High Band Volume</Name>
+    <Symbol>HB</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Dual Flange -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Dual Flange</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#Dual_Flange</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>-64</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Pan</Name>
+    <Symbol>PAN</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Left/Right Crossover</Name>
+    <Symbol>LRC</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Depth</Name>
+    <Symbol>DEPTH</Symbol>
+    <Value>107</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Sweep Width</Name>
+    <Symbol>WIDTH</Symbol>
+    <Value>2291</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Offset Delays</Name>
+    <Symbol>OFFS</Symbol>
+    <Value>98</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Feedback</Name>
+    <Symbol>FB</Symbol>
+    <Value>3</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Lowpass Filter</Name>
+    <Symbol>LPF</Symbol>
+    <Value>12371</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Subtract</Name>
+    <Symbol>SUB</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Sweep Through Zero</Name>
+    <Symbol>THZ</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>11</Index>
+    <Name>Tempo</Name>
+    <Symbol>TEMPO</Symbol>
+    <Value>3</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>12</Index>
+    <Name>LFO L/R Delay</Name>
+    <Symbol>STDL</Symbol>
+    <Value>64</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>13</Index>
+    <Name>LFO Type</Name>
+    <Symbol>TYPE</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>14</Index>
+    <Name>Randomness</Name>
+    <Symbol>RND</Symbol>
+    <Value>10</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>15</Index>
+    <Name>Intense</Name>
+    <Symbol>INTENSE</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+</CARLA-PROJECT>

@@ -1,0 +1,506 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE CARLA-PROJECT>
+<CARLA-PROJECT VERSION='2.0'>
+<!-- converted by a rkrlv2 script -->
+
+
+ <!-- rkr Ring -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Ring</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#Ring</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>-14</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Pan</Name>
+    <Symbol>PAN</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Left/Right Crossover</Name>
+    <Symbol>LRCr</Symbol>
+    <Value>-128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Level</Name>
+    <Symbol>LEVEL</Symbol>
+    <Value>127</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Depth</Name>
+    <Symbol>DEPTH</Symbol>
+    <Value>38</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Frequency</Name>
+    <Symbol>FREQ</Symbol>
+    <Value>698</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Stereo</Name>
+    <Symbol>STEREO</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Sine</Name>
+    <Symbol>SIN</Symbol>
+    <Value>95</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Triangle</Name>
+    <Symbol>TRI</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Sawtooth</Name>
+    <Symbol>SAW</Symbol>
+    <Value>73</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>11</Index>
+    <Name>Square</Name>
+    <Symbol>SQUARE</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>12</Index>
+    <Name>Input Gain</Name>
+    <Symbol>INPUT</Symbol>
+    <Value>85</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>13</Index>
+    <Name>Auto-Frequency</Name>
+    <Symbol>AFREQ</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Harmonizer (no midi) -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Harmonizer (no midi)</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#har_no_mid</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>64</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Pan</Name>
+    <Symbol>PAN</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Gain</Name>
+    <Symbol>GAIN</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Interval</Name>
+    <Symbol>INT</Symbol>
+    <Value>29</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Filter Frequency</Name>
+    <Symbol>FREQ</Symbol>
+    <Value>64</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Select Chord Mode</Name>
+    <Symbol>SELECT</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Note</Name>
+    <Symbol>NOTE</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Chord</Name>
+    <Symbol>CHORD</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Filter Gain</Name>
+    <Symbol>FGAIN</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Filter Q</Name>
+    <Symbol>FQ</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr CompBand -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr CompBand</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#CompBand</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>64</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Low Band Ratio</Name>
+    <Symbol>LR</Symbol>
+    <Value>8</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Mid Band 1 Ratio</Name>
+    <Symbol>M1R</Symbol>
+    <Value>2</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Mid Band 2 Ratio</Name>
+    <Symbol>M2R</Symbol>
+    <Value>2</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>High Band Ratio</Name>
+    <Symbol>HR</Symbol>
+    <Value>4</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Low Band Threshold</Name>
+    <Symbol>LT</Symbol>
+    <Value>6</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Mid Band 1 Threshold</Name>
+    <Symbol>M1T</Symbol>
+    <Value>10</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Mid Band 2 Threshold</Name>
+    <Symbol>M2T</Symbol>
+    <Value>9</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>High Threshold</Name>
+    <Symbol>HT</Symbol>
+    <Value>-12</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Low/Mid1 Crossover</Name>
+    <Symbol>LMCR</Symbol>
+    <Value>691</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>11</Index>
+    <Name>Mid1/Mid2 Crossover</Name>
+    <Symbol>MMCR</Symbol>
+    <Value>1063</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>12</Index>
+    <Name>Mid2/High Crossover</Name>
+    <Symbol>MHCR</Symbol>
+    <Value>7189</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>13</Index>
+    <Name>Gain</Name>
+    <Symbol>GAIN</Symbol>
+    <Value>64</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Reverb -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Reverb</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#reve</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>96</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Panning</Name>
+    <Symbol>PAN</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Time</Name>
+    <Symbol>TIME</Symbol>
+    <Value>18</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Initial Delay</Name>
+    <Symbol>IDEL</Symbol>
+    <Value>16</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Initial Delay Feedback</Name>
+    <Symbol>IDELFB</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Lowpass Filter</Name>
+    <Symbol>LPF</Symbol>
+    <Value>6218</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Highpass Filter</Name>
+    <Symbol>HPF</Symbol>
+    <Value>220</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Damping</Name>
+    <Symbol>DAMP</Symbol>
+    <Value>78</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Type</Name>
+    <Symbol>TYPE</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Room Size</Name>
+    <Symbol>RS</Symbol>
+    <Value>83</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Pan -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Pan</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#pan</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>32</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Panning</Name>
+    <Symbol>PAN</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Tempo</Name>
+    <Symbol>TEMPO</Symbol>
+    <Value>50</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Randomness</Name>
+    <Symbol>RND</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>LFO Type</Name>
+    <Symbol>TYPE</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>LFO L/R Delay</Name>
+    <Symbol>STDL</Symbol>
+    <Value>64</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Extra Stereo Amount</Name>
+    <Symbol>EXTRA_AMOUNT</Symbol>
+    <Value>96</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Autopan</Name>
+    <Symbol>AUTO</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Extra Stereo Enable</Name>
+    <Symbol>EXTRA_ON</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+</CARLA-PROJECT>

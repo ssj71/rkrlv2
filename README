@@ -12,6 +12,9 @@ and execute:
  make
  sudo make install
 
+This will also install carla project files. These project files are the plugin
+equivalent of the preset banks in the standalone rakarrack version. These must be in
+/usr/share/rkr.lv2/ for reverbtron or echotron to work properly. 
 
 EFFECTS (X - done, W - won't do, + - done with missing features)
 [X] Lineal EQ

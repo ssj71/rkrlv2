@@ -1,0 +1,234 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE CARLA-PROJECT>
+<CARLA-PROJECT VERSION='2.0'>
+<!-- converted by a rkrlv2 script -->
+
+
+ <!-- rkr Shifter -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Shifter</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#Shifter</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Pan</Name>
+    <Symbol>PAN</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Gain</Name>
+    <Symbol>GAIN</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Attack</Name>
+    <Symbol>ATACK</Symbol>
+    <Value>900</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Decay</Name>
+    <Symbol>DECAY</Symbol>
+    <Value>200</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Thresold</Name>
+    <Symbol>THRESH</Symbol>
+    <Value>-11</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Interval</Name>
+    <Symbol>INT</Symbol>
+    <Value>3</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Shift Down</Name>
+    <Symbol>DN</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Mode</Name>
+    <Symbol>MODE</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Interval</Name>
+    <Symbol>WHAMMY</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Synthfilter -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Synthfilter</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#Synthfilter</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>20</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Distort</Name>
+    <Symbol>DIST</Symbol>
+    <Value>69</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Tempo</Name>
+    <Symbol>TEMPO</Symbol>
+    <Value>88</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Randomness</Name>
+    <Symbol>RND</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>LFO Type</Name>
+    <Symbol>TYPE</Symbol>
+    <Value>6</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>LFO L/R Delay</Name>
+    <Symbol>STDL</Symbol>
+    <Value>64</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Width</Name>
+    <Symbol>WIDTH</Symbol>
+    <Value>76</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Feedback</Name>
+    <Symbol>FB</Symbol>
+    <Value>-50</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Lowpass Stages</Name>
+    <Symbol>LSTAGES</Symbol>
+    <Value>6</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Highpass Stages</Name>
+    <Symbol>HSTAGES</Symbol>
+    <Value>2</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>11</Index>
+    <Name>Subtract Output</Name>
+    <Symbol>SUB</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>12</Index>
+    <Name>Depth</Name>
+    <Symbol>DEPTH</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>13</Index>
+    <Name>Envelope Sensitivity</Name>
+    <Symbol>SENSE</Symbol>
+    <Value>19</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>14</Index>
+    <Name>Attack Time</Name>
+    <Symbol>ATIME</Symbol>
+    <Value>114</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>15</Index>
+    <Name>Release Time</Name>
+    <Symbol>RTIME</Symbol>
+    <Value>221</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>16</Index>
+    <Name>HPF/LPF Offset</Name>
+    <Symbol>OFFSET</Symbol>
+    <Value>127</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+</CARLA-PROJECT>

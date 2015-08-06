@@ -1,0 +1,427 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE CARLA-PROJECT>
+<CARLA-PROJECT VERSION='2.0'>
+<!-- converted by a rkrlv2 script -->
+
+
+ <!-- rkr EQ -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr EQ</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#eql</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Gain</Name>
+    <Symbol>GAIN</Symbol>
+    <Value>135</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Q</Name>
+    <Symbol>Q</Symbol>
+    <Value>132</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>31 Hz</Name>
+    <Symbol>HZ31</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>63 Hz</Name>
+    <Symbol>HZ63</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>125 Hz</Name>
+    <Symbol>HZ125</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>250 Hz</Name>
+    <Symbol>HZ250</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>500 Hz</Name>
+    <Symbol>HZ500</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>1 kHz</Name>
+    <Symbol>KHZ1</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>2 kHz</Name>
+    <Symbol>KHZ2</Symbol>
+    <Value>130</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>4 kHz</Name>
+    <Symbol>KHZ4</Symbol>
+    <Value>133</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>11</Index>
+    <Name>8 kHz</Name>
+    <Symbol>KHZ8</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>12</Index>
+    <Name>16 kHz</Name>
+    <Symbol>KHZ16</Symbol>
+    <Value>104</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr Compressor -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr Compressor</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#comp</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Threshold</Name>
+    <Symbol>THRESHOLD</Symbol>
+    <Value>2</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>RATIO</Name>
+    <Symbol>RATIO</Symbol>
+    <Value>-13</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Output Gain</Name>
+    <Symbol>OUTPUT</Symbol>
+    <Value>20</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>Attack Time</Name>
+    <Symbol>ATTACK</Symbol>
+    <Value>120</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>Release Time</Name>
+    <Symbol>RELEASE</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Auto Output</Name>
+    <Symbol>AUTOOUT</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Knee</Name>
+    <Symbol>KNEE</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Stereo</Name>
+    <Symbol>STEREO</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Peak</Name>
+    <Symbol>PEAK</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr OpticalTrem -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr OpticalTrem</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#Otrem</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Depth</Name>
+    <Symbol>DEPTH</Symbol>
+    <Value>26</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Tempo</Name>
+    <Symbol>TEMPO</Symbol>
+    <Value>2</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Randomness</Name>
+    <Symbol>RND</Symbol>
+    <Value>4</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>LFO Type</Name>
+    <Symbol>TYPE</Symbol>
+    <Value>3</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>LFO L/R Delay</Name>
+    <Symbol>STDF</Symbol>
+    <Value>68</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>Panning</Name>
+    <Symbol>PAN</Symbol>
+    <Value>32</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Invert</Name>
+    <Symbol>INV</Symbol>
+    <Value>24</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+
+ <!-- rkr MuTroMojo -->
+ <Plugin>
+  <Info>
+   <Type>LV2</Type>
+   <Name>rkr MuTroMojo</Name>
+   <URI>http://rakarrack.sourceforge.net/effects.html#MuTroMojo</URI>
+  </Info>
+
+  <Data>
+   <Active>Yes</Active>
+   <ControlChannel>1</ControlChannel>
+   <Options>0x0</Options>
+
+   <Parameter>
+    <Index>0</Index>
+    <Name>Bypass</Name>
+    <Symbol>BYPASS</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>1</Index>
+    <Name>Wet/Dry</Name>
+    <Symbol>WETDRY</Symbol>
+    <Value>16</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>2</Index>
+    <Name>Resonance</Name>
+    <Symbol>Q</Symbol>
+    <Value>10</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>3</Index>
+    <Name>Tempo</Name>
+    <Symbol>TEMPO</Symbol>
+    <Value>60</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>4</Index>
+    <Name>LFO Randomness</Name>
+    <Symbol>RND</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>5</Index>
+    <Name>LFO Type</Name>
+    <Symbol>TYPE</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>6</Index>
+    <Name>LFO L/R Delay</Name>
+    <Symbol>STDL</Symbol>
+    <Value>128</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>7</Index>
+    <Name>Depth</Name>
+    <Symbol>DEPTH</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>8</Index>
+    <Name>Envelope Sensitivity</Name>
+    <Symbol>SENSE</Symbol>
+    <Value>29</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>9</Index>
+    <Name>Wah</Name>
+    <Symbol>WAH</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>10</Index>
+    <Name>Envelope Smoothing</Name>
+    <Symbol>SMOOTH</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>11</Index>
+    <Name>Lowpass Level</Name>
+    <Symbol>LP</Symbol>
+    <Value>-16</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>12</Index>
+    <Name>Bandpass Level</Name>
+    <Symbol>BP</Symbol>
+    <Value>40</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>13</Index>
+    <Name>Highpass Level</Name>
+    <Symbol>HP</Symbol>
+    <Value>-3</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>14</Index>
+    <Name>Filter Stages</Name>
+    <Symbol>STAGES</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>15</Index>
+    <Name>Sweep Range</Name>
+    <Symbol>RANGE</Symbol>
+    <Value>2000</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>16</Index>
+    <Name>Starting Frequency</Name>
+    <Symbol>MINFREQ</Symbol>
+    <Value>450</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>17</Index>
+    <Name>Modulate Resonance</Name>
+    <Symbol>VARIQ</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>18</Index>
+    <Name>Analog Gain Mode</Name>
+    <Symbol>QMODE</Symbol>
+    <Value>1</Value>
+   </Parameter>
+
+   <Parameter>
+    <Index>19</Index>
+    <Name>Exponential Wah</Name>
+    <Symbol>AMODE</Symbol>
+    <Value>0</Value>
+   </Parameter>
+
+  </Data>
+ </Plugin>
+</CARLA-PROJECT>
