@@ -22,7 +22,7 @@ while s > 0:
     n = data.find(".ttl> .",p);
     p += 9
     name = data[p:n]
-    print(name)
+    print(name, end=", ")
 
     #next plugin
     s = data.find("<http://rakarrack",n) 
@@ -38,4 +38,5 @@ while s > 0:
     of.write(data[s:n+3])
 
     of.close()
+print("")
 f.close()
