@@ -8,13 +8,13 @@ SET( DLY x;SwingPong;Short_Delays;Flange_plus_Echo;Comb;EchoFlange;Filtered_Echo
 
 foreach(INDX RANGE 1 10)
     list(GET RVB ${INDX} NEWNAME)
-    configure_file(data/${INDX}.rvb lv2data/${NEWNAME}.rvb COPYONLY)
+    configure_file(data/${INDX}.rvb rvbdata/${NEWNAME}.rvb COPYONLY)
     list(GET DLY ${INDX} NEWNAME)
-    configure_file(data/${INDX}.dly lv2data/${NEWNAME}.dly COPYONLY)
+    configure_file(data/${INDX}.dly dlydata/${NEWNAME}.dly COPYONLY)
 endforeach(INDX)
 # 1 more dly file 
 list(GET DLY 11 NEWNAME)
-configure_file(data/11.dly lv2data/${NEWNAME}.dly COPYONLY)
+configure_file(data/11.dly dlydata/${NEWNAME}.dly COPYONLY)
 
 
 add_subdirectory(lv2)

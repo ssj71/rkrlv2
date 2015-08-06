@@ -141,32 +141,47 @@ foreach(INDX RANGE 0 1 )
     install(TARGETS ${NAME}lv2
       LIBRARY
       DESTINATION ${LV2_INSTALL_DIR}/rkr.lv2
-#      CONFIGURATIONS Debug
     )
 
     install (FILES ttl/${NAME}.ttl
       DESTINATION ${LV2_INSTALL_DIR}/rkr.lv2
-#      CONFIGURATIONS Debug
     )
 
 endforeach(INDX)
 
-    install (FILES ttl/manifest.ttl
-      DESTINATION ${LV2_INSTALL_DIR}/rkr.lv2
-#      CONFIGURATIONS Debug
-    )
+install (FILES ttl/manifest.ttl
+  DESTINATION ${LV2_INSTALL_DIR}/rkr.lv2
+)
 
-#TODO make this only install into reverbtron and echotron bundles
-#install (DIRECTORY ${CMAKE_BINARY_DIR}/lv2data/
-#  DESTINATION ${LV2_INSTALL_DIR}/rkr.lv2
-#)
+#extra files for single bundle
+install (DIRECTORY ${CMAKE_BINARY_DIR}/rvbdata/
+  DESTINATION ${LV2_INSTALL_DIR}/rkr.lv2
+)
 
-#TODO: intall only if monolithic bundle selected?
-#also install carla presets into usr share
+install (DIRECTORY ${CMAKE_BINARY_DIR}/dlydata/
+  DESTINATION ${LV2_INSTALL_DIR}/rkr.lv2
+)
 
-#install (DIRECTORY ${CMAKE_BINARY_DIR}/lv2data/
-#  DESTINATION share/rkr.lv2
-#)
-#install (DIRECTORY presets/
-#  DESTINATION share/rkr.lv2
-#)
+#separate bundles
+install (FILES ${CMAKE_BINARY_DIR}/rvbdata/
+  DESTINATION ${LV2_INSTALL_DIR}/rkr_reverbtron.lv2
+  CONFIGURATIONS Debug
+  COMPONENT separate
+)
+
+install (FILES ${CMAKE_BINARY_DIR}/dlydata/
+  DESTINATION ${LV2_INSTALL_DIR}/rkr_echotron.lv2
+  CONFIGURATIONS Debug
+  COMPONENT separate
+)
+
+#also install carla presets into usr share 
+install (DIRECTORY ${CMAKE_BINARY_DIR}/rvbdata/
+  DESTINATION share/rkr.lv2
+)
+install (DIRECTORY ${CMAKE_BINARY_DIR}/dlydata/
+  DESTINATION share/rkr.lv2
+)
+install (DIRECTORY presets/
+  DESTINATION share/rkr.lv2
+)
