@@ -92,6 +92,19 @@ void run_eqlv2(LV2_Handle handle, uint32_t nframes)
     return;
 }
 
+static void cleanup_rkrlv2(LV2_Handle handle)
+{
+    RKRLV2* plug = (RKRLV2*)handle;
+    switch(plug->effectindex)
+    {
+    case IEQ:
+    case IEQP:
+        delete plug->eq;//eql, eqp, cabinet
+        break;
+    }
+    free(plug);
+}
+
 static const LV2_Descriptor eqlv2_descriptor=
 {
     EQLV2_URI,
