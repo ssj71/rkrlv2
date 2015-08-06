@@ -19,6 +19,20 @@ link_directories (${LV2_LIBRARY_DIRS} ${SAMPLERATE_LIBRARY_DIRS} ${FFTW_LIBRARY_
 # make sure corresponding ttl and source files match these prefixes
 SET( PLUGS eql;comp;dist;echo;chorus;aphas;reve;eqp;wha;alienwah;cab;pan;harm_no_midi;mdel;dere;valve;dual_flange;ring;exciter;distband;arpie;expander;shuffle;synthfilter;varyband;mutromojo;echoverse;coilcrafter;shelfboost;vocoder;sustain;sequence;shifter;stomp;reverbtron;echotron;stereoharm_no_midi;compband;otrem;vibe;inf )
 
+#run python script that generates manifest in passed in directory (bypass with switch)
+add_custom_target(manifests ALL 
+    COMMAND python3 manifestcrunch.py
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/lv2
+    ) 
+
+add_custom_target(install-separate
+  ${CMAKE_COMMAND} 
+  -D "BUILD_TYPE=Debug"
+  -D "CMAKE_INSTALL_COMPONENT=separate"
+  -P "${PROJECT_BINARY_DIR}/cmake_install.cmake"
+)
+
+
 # config libraries
 
 add_library(eqllv2 SHARED
@@ -92,16 +106,10 @@ add_library(complv2 SHARED
 #  ../src/Infinity.C
 #)
 
-#run python script that generates manifest in passed in directory (bypass with switch)
-add_custom_target(manifests ALL 
-    COMMAND python3 manifestcrunch.py
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/lv2
-    )
-    
-
-
 foreach(INDX RANGE 0 1 )
     list(GET PLUGS ${INDX} NAME)
+
+    add_dependencies(install-separate ${NAME}lv2)
 
     set_target_properties(${NAME}lv2 PROPERTIES PREFIX "")
 
@@ -109,28 +117,44 @@ foreach(INDX RANGE 0 1 )
 
     target_link_libraries(${NAME}lv2 ${LV2_LIBRARIES} ${SAMPLERATE_LIBRARIES} ${FFTW_LIBRARIES} )
 
-    # config install
-    #TODO add switch so you can install all in 1 dir
-
-
-IF(CMAKE_BUILD_TYPE MATCHES DEBUG)
-    message("debug mode")
-ENDIF(CMAKE_BUILD_TYPE MATCHES DEBUG)
-
-install(TARGETS ${NAME}lv2
+    # config install 
+    #install for separate bundles
+    install(TARGETS ${NAME}lv2
       LIBRARY
       DESTINATION ${LV2_INSTALL_DIR}/rkr_${NAME}.lv2
+      CONFIGURATIONS Debug
+      COMPONENT separate
     )
 
     install (FILES ttl/${NAME}.ttl
       DESTINATION ${LV2_INSTALL_DIR}/rkr_${NAME}.lv2
+      CONFIGURATIONS Debug
+      COMPONENT separate
     )
     install (FILES ttl/manifests/${NAME}/manifest.ttl
       DESTINATION ${LV2_INSTALL_DIR}/rkr_${NAME}.lv2
+      CONFIGURATIONS Debug
+      COMPONENT separate
     )
     
+    #install for all in 1 bundle
+    install(TARGETS ${NAME}lv2
+      LIBRARY
+      DESTINATION ${LV2_INSTALL_DIR}/rkr.lv2
+#      CONFIGURATIONS Debug
+    )
+
+    install (FILES ttl/${NAME}.ttl
+      DESTINATION ${LV2_INSTALL_DIR}/rkr.lv2
+#      CONFIGURATIONS Debug
+    )
 
 endforeach(INDX)
+
+    install (FILES ttl/manifest.ttl
+      DESTINATION ${LV2_INSTALL_DIR}/rkr.lv2
+#      CONFIGURATIONS Debug
+    )
 
 #TODO make this only install into reverbtron and echotron bundles
 #install (DIRECTORY ${CMAKE_BINARY_DIR}/lv2data/
