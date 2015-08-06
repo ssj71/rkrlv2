@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 2.6)
 
 project (rkrlv2)
 
-set(LV2_INSTALL_DIR lib/lv2/rkr.lv2 ) # CACHE PATH "Specifies where the LV2 libraries should be installed")
+set(LV2_INSTALL_DIR lib/lv2 ) # CACHE PATH "Specifies where the LV2 libraries should be installed")
 set(CMAKE_CXX_FLAGS "-Wall -g -O2 -Wl,-no-undefined")
 
 # check for our various libraries
@@ -16,19 +16,31 @@ pkg_check_modules(FFTW  REQUIRED fftw3)
 include_directories (${LV2_INCLUDE_DIRS} ${SAMPLERATE_INCLUDE_DIRS} ${FFTW_INCLUDE_DIRS} ../src)
 link_directories (${LV2_LIBRARY_DIRS} ${SAMPLERATE_LIBRARY_DIRS} ${FFTW_LIBRARY_DIRS} )
 
+# make sure corresponding ttl and source files match these prefixes
+SET( PLUGS eql;comp;dist;echo;chorus;aphas;reve;eqp;wha;alienwah;cab;pan;harm_no_midi;mdel;dere;valve;dual_flange;ring;exciter;distband;arpie;expander;shuffle;synthfilter;varyband;mutromojo;echoverse;coilcrafter;shelfboost;vocoder;sustain;sequence;shifter;stomp;reverbtron;echotron;stereoharm_no_midi;compband;otrem;vibe;inf )
 
 # config libraries
 
-add_library(rkrlv2 SHARED
+add_library(eqllv2 SHARED
 #  rkrlv2.C
   eqllv2.C
   ../src/EQ.C
   ../src/AnalogFilter.C
-#  ../src/Compressor.C
-#  ../src/Distorsion.C
-#  ../src/Waveshaper.C
-#  ../src/Resample.C
-#  ../src/FPreset.C
+)
+add_library(complv2 SHARED
+  complv2.C
+  ../src/Compressor.C
+  ../src/FPreset.C
+)
+add_library(distlv2 SHARED
+  distlv2.C
+  ../src/Distorsion.C
+  ../src/Waveshaper.C
+  ../src/Resample.C
+  ../src/FPreset.C
+  ../src/AnalogFilter.C
+)
+
 #  ../src/Echo.C
 #  ../src/delayline.C
 #  ../src/Chorus.C
@@ -78,27 +90,36 @@ add_library(rkrlv2 SHARED
 #  ../src/Opticaltrem.C
 #  ../src/Vibe.C
 #  ../src/Infinity.C
-)
+#)
 
-set_target_properties(rkrlv2 PROPERTIES PREFIX "")
+foreach(INDX RANGE 0 1 )
+    list(GET PLUG ${INDX} NAME)
 
-set_target_properties(rkrlv2 PROPERTIES BUILD_WITH_INSTALL_RPATH TRUE)
+    set_target_properties(${NAME}lv2 PROPERTIES PREFIX "")
 
-target_link_libraries(rkrlv2 ${LV2_LIBRARIES} ${SAMPLERATE_LIBRARIES} ${FFTW_LIBRARIES} )
+    set_target_properties(${NAME}lv2 PROPERTIES BUILD_WITH_INSTALL_RPATH TRUE)
+
+    target_link_libraries(${NAME}lv2 ${LV2_LIBRARIES} ${SAMPLERATE_LIBRARIES} ${FFTW_LIBRARIES} )
 
 # config install
-install(TARGETS rkrlv2
-  LIBRARY
-  DESTINATION ${LV2_INSTALL_DIR}
-)
+    #TODO add switch so you can install all in 1 dir
+    install(TARGETS ${NAME}lv2
+      LIBRARY
+      DESTINATION ${LV2_INSTALL_DIR}/rkr_${NAME}.lv2
+    )
 
-install (DIRECTORY ttl/
-  DESTINATION ${LV2_INSTALL_DIR}
-)
+    install (DIRECTORY ttl/
+      DESTINATION ${LV2_INSTALL_DIR}/rkr_${NAME}.lv2
+    )
+
+endforeach(INDX)
+
+#TODO make this only install into reverbtron and echotron bundles
 install (DIRECTORY ${CMAKE_BINARY_DIR}/lv2data/
-  DESTINATION ${LV2_INSTALL_DIR}
+  DESTINATION ${LV2_INSTALL_DIR}/rkr.lv2
 )
 
+#TODO: intall only if monolithic bundle selected?
 #also install carla presets into usr share
 install (DIRECTORY ${CMAKE_BINARY_DIR}/lv2data/
   DESTINATION share/rkr.lv2
