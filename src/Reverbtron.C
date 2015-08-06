@@ -360,22 +360,39 @@ Reverbtron::loadfile(char* filename)
 
 //Name
     memset(wbuf,0, sizeof(wbuf));
-    fgets(wbuf,sizeof wbuf,fs);
+    if(fgets(wbuf,sizeof wbuf,fs) == NULL) {
+        f = loaddefault();
+        error = 1;
+        return(f);
+    }
 
 // Subsample Compresion Skip
     memset(wbuf,0, sizeof(wbuf));
-    fgets(wbuf,sizeof wbuf,fs);
+    if(fgets(wbuf,sizeof wbuf,fs) == NULL) {
+        f = loaddefault();
+        error = 1;
+        return(f);
+    }
+
     sscanf(wbuf,"%f,%f\n",&compresion,&quality);
 
 //Length
     memset(wbuf,0,sizeof(wbuf));
-    fgets(wbuf,sizeof wbuf,fs);
+    if (fgets(wbuf,sizeof wbuf,fs) == NULL) {
+        f = loaddefault();
+        error = 1;
+        return(f);
+    }
     sscanf(wbuf, "%d\n", &f.data_length);
     if(f.data_length>2000) f.data_length = 2000;
 //Time Data
     for(i=0; i<f.data_length; i++) {
         memset(wbuf,0, sizeof(wbuf));
-        fgets(wbuf,sizeof wbuf,fs);
+        if(fgets(wbuf,sizeof wbuf,fs) == NULL) {
+            f = loaddefault();
+            error = 1;
+            return(f);
+        }
         sscanf(wbuf,"%f,%f\n",&f.ftime[i],&f.tdata[i]);
     }
 

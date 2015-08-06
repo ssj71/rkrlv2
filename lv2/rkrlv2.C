@@ -82,7 +82,7 @@ typedef struct _RKRLV2
     float *bypass_p;
     const LV2_Atom_Sequence* atom_in_p;
     LV2_Atom_Sequence* atom_out_p;
-    float *param_p[16];
+    float *param_p[20];
     float *dbg_p;
 
     //various "advanced" lv2 stuffs

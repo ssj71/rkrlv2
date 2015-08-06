@@ -132,6 +132,7 @@ Vibe::out (float *smpsl, float *smpsr, uint32_t period)
         dalphal = 1.0f - cSAMPLE_RATE/(0.5f*dRCl + cSAMPLE_RATE);     //different attack & release character
         xl = CNST_E + stepl*b;
         fxl = f_exp(Ra/logf(xl));
+        fxr = fxl;
 
         //Right Lamp
         if(Pstereo) {
