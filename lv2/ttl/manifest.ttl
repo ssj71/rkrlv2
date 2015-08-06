@@ -14,200 +14,200 @@
 # 2
 <http://rakarrack.sourceforge.net/effects.html#dist>
         a lv2:Plugin, lv2:DistortionPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <distlv2.so> ;
         rdfs:seeAlso <dist.ttl> .
 # 3
 <http://rakarrack.sourceforge.net/effects.html#eco>
         a lv2:Plugin, lv2:ReverbPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <echolv2.so> ;
         rdfs:seeAlso <echo.ttl> .
 # 4
 <http://rakarrack.sourceforge.net/effects.html#chor>
         a lv2:Plugin, lv2:ChorusPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <choruslv2.so> ;
         rdfs:seeAlso <chorus.ttl> .
 # 5
 <http://rakarrack.sourceforge.net/effects.html#aphas>
         a lv2:Plugin, lv2:PhaserPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <aphaslv2.so> ;
         rdfs:seeAlso <aphas.ttl> .
 # 6
 <http://rakarrack.sourceforge.net/effects.html#har_no_mid>
         a lv2:Plugin, lv2:PitchPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <harm_no_midilv2.so> ;
         rdfs:seeAlso <harm_no_midi.ttl> .
 # 7
 <http://rakarrack.sourceforge.net/effects.html#Exciter>
         a lv2:Plugin, lv2:DistortionPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <exciterlv2.so> ;
         rdfs:seeAlso <exciter.ttl> .
 # 8
 <http://rakarrack.sourceforge.net/effects.html#pan>
         a lv2:Plugin, lv2:SpatialPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <panlv2.so> ;
         rdfs:seeAlso <pan.ttl> .
 # 9
 <http://rakarrack.sourceforge.net/effects.html#awha>
         a lv2:Plugin, lv2:PhaserPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <alienwahlv2.so> ;
         rdfs:seeAlso <alienwah.ttl> .
 # 10
 <http://rakarrack.sourceforge.net/effects.html#reve>
         a lv2:Plugin, lv2:ReverbPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <revelv2.so> ;
         rdfs:seeAlso <reve.ttl> .
 # 11
 <http://rakarrack.sourceforge.net/effects.html#eqp>
         a lv2:Plugin, lv2:ParaEQPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <eqplv2.so> ;
         rdfs:seeAlso <eqp.ttl> .
 # 12
 <http://rakarrack.sourceforge.net/effects.html#cabe>
         a lv2:Plugin, lv2:FilterPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <cablv2.so> ;
         rdfs:seeAlso <cab.ttl> .
 # 13
 <http://rakarrack.sourceforge.net/effects.html#delm>
         a lv2:Plugin, lv2:DelayPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <mdellv2.so> ;
         rdfs:seeAlso <mdel.ttl> .
 # 14
 <http://rakarrack.sourceforge.net/effects.html#wha>
         a lv2:Plugin, lv2:FilterPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <whalv2.so> ;
         rdfs:seeAlso <wha.ttl> .
 # 15
 <http://rakarrack.sourceforge.net/effects.html#dere>
         a lv2:Plugin, lv2:DistortionPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <derelv2.so> ;
         rdfs:seeAlso <dere.ttl> .
 # 16
 <http://rakarrack.sourceforge.net/effects.html#Valve>
         a lv2:Plugin, lv2:DistortionPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <valvelv2.so> ;
         rdfs:seeAlso <valve.ttl> .
 # 17
 <http://rakarrack.sourceforge.net/effects.html#Dual_Flange>
         a lv2:Plugin, lv2:FlangerPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <dual_flangelv2.so> ;
         rdfs:seeAlso <dual_flange.ttl> .
 # 18 
 <http://rakarrack.sourceforge.net/effects.html#Ring>
         a lv2:Plugin, lv2:ModulatorPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <ringlv2.so> ;
         rdfs:seeAlso <ring.ttl> .
 # 19 
 <http://rakarrack.sourceforge.net/effects.html#DistBand>
         a lv2:Plugin, lv2:DistortionPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <distbandlv2.so> ;
         rdfs:seeAlso <distband.ttl> .
 # 20 
 <http://rakarrack.sourceforge.net/effects.html#Arpie>
         a lv2:Plugin, lv2:DelayPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <arpielv2.so> ;
         rdfs:seeAlso <arpie.ttl> .
 # 21 
 <http://rakarrack.sourceforge.net/effects.html#Expander>
         a lv2:Plugin, lv2:ExpanderPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <expanderlv2.so> ;
         rdfs:seeAlso <expander.ttl> .
 # 22 
 <http://rakarrack.sourceforge.net/effects.html#Shuffle>
         a lv2:Plugin, lv2:SpatialPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <shufflelv2.so> ;
         rdfs:seeAlso <shuffle.ttl> .
 # 23 
 <http://rakarrack.sourceforge.net/effects.html#Synthfilter>
         a lv2:Plugin, lv2:FilterPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <synthfilterlv2.so> ;
         rdfs:seeAlso <synthfilter.ttl> .
 # 24 
 <http://rakarrack.sourceforge.net/effects.html#VaryBand>
         a lv2:Plugin, lv2:ModulatorPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <varybandlv2.so> ;
         rdfs:seeAlso <varyband.ttl> .
 # 25 
 <http://rakarrack.sourceforge.net/effects.html#MuTroMojo>
         a lv2:Plugin, lv2:FilterPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <mutromojolv2.so> ;
         rdfs:seeAlso <mutromojo.ttl> .
 # 26 
 <http://rakarrack.sourceforge.net/effects.html#Echoverse>
         a lv2:Plugin, lv2:ReverbPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <echoverselv2.so> ;
         rdfs:seeAlso <echoverse.ttl> . 
 # 27 
 <http://rakarrack.sourceforge.net/effects.html#CoilCrafter>
         a lv2:Plugin, lv2:FilterPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <coilcrafterlv2.so> ;
         rdfs:seeAlso <coilcrafter.ttl> .
 # 28 
 <http://rakarrack.sourceforge.net/effects.html#ShelfBoost>
         a lv2:Plugin, lv2:FilterPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <shelfboostlv2.so> ;
         rdfs:seeAlso <shelfboost.ttl> .
 # 29 
 <http://rakarrack.sourceforge.net/effects.html#Vocoder>
         a lv2:Plugin, lv2:ModulatorPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <vocoderlv2.so> ;
         rdfs:seeAlso <vocoder.ttl> .
 # 30 
 <http://rakarrack.sourceforge.net/effects.html#Sustainer>
         a lv2:Plugin, lv2:CompressorPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <sustainlv2.so> ;
         rdfs:seeAlso <sustain.ttl> .
 # 31 
 <http://rakarrack.sourceforge.net/effects.html#Sequence>
         a lv2:Plugin, lv2:FilterPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <sequencelv2.so> ;
         rdfs:seeAlso <sequence.ttl> .
 # 32 
 <http://rakarrack.sourceforge.net/effects.html#Shifter>
         a lv2:Plugin, lv2:PitchPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <shifterlv2.so> ;
         rdfs:seeAlso <shifter.ttl> .
 # 33 
 <http://rakarrack.sourceforge.net/effects.html#StompBox>
         a lv2:Plugin, lv2:DistortionPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <stomplv2.so> ;
         rdfs:seeAlso <stomp.ttl> .
 # 34 
 <http://rakarrack.sourceforge.net/effects.html#StompBox_fuzz>
         a lv2:Plugin, lv2:DistortionPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <stomplv2.so> ;
         rdfs:seeAlso <stompfuzz.ttl> .
 # 35 
 <http://rakarrack.sourceforge.net/effects.html#Reverbtron>
         a lv2:Plugin, lv2:ReverbPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <reverbtronlv2.so> ;
         rdfs:seeAlso <reverbtron.ttl> .
 # 36 
 <http://rakarrack.sourceforge.net/effects.html#Echotron>
         a lv2:Plugin, lv2:DelayPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <echotronlv2.so> ;
         rdfs:seeAlso <echotron.ttl> .
 # 37 
 <http://rakarrack.sourceforge.net/effects.html#StereoHarm_no_mid>
         a lv2:Plugin, lv2:PitchPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <stereoharm_no_midilv2.so> ;
         rdfs:seeAlso <stereoharm_no_midi.ttl> .
 # 38 
 <http://rakarrack.sourceforge.net/effects.html#CompBand>
         a lv2:Plugin, lv2:CompressorPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <compbandlv2.so> ;
         rdfs:seeAlso <compband.ttl> .
 # 39 
 <http://rakarrack.sourceforge.net/effects.html#Otrem>
         a lv2:Plugin, lv2:ModulatorPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <otremlv2.so> ;
         rdfs:seeAlso <otrem.ttl> .
 # 40 
 <http://rakarrack.sourceforge.net/effects.html#Vibe>
         a lv2:Plugin, lv2:ModulatorPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <vibelv2.so> ;
         rdfs:seeAlso <vibe.ttl> .
 # 41 
 <http://rakarrack.sourceforge.net/effects.html#Infinity>
         a lv2:Plugin, lv2:ModulatorPlugin ;
-        lv2:binary <rkrlv2.so> ;
+        lv2:binary <inflv2.so> ;
         rdfs:seeAlso <inf.ttl> .
