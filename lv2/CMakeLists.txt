@@ -92,6 +92,14 @@ add_library(complv2 SHARED
 #  ../src/Infinity.C
 #)
 
+#run python script that generates manifest in passed in directory (bypass with switch)
+add_custom_target(manifests ALL 
+    COMMAND python3 manifestcrunch.py
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/lv2
+    )
+    
+
+
 foreach(INDX RANGE 0 1 )
     list(GET PLUGS ${INDX} NAME)
 
@@ -103,14 +111,24 @@ foreach(INDX RANGE 0 1 )
 
     # config install
     #TODO add switch so you can install all in 1 dir
-    install(TARGETS ${NAME}lv2
+
+
+IF(CMAKE_BUILD_TYPE MATCHES DEBUG)
+    message("debug mode")
+ENDIF(CMAKE_BUILD_TYPE MATCHES DEBUG)
+
+install(TARGETS ${NAME}lv2
       LIBRARY
       DESTINATION ${LV2_INSTALL_DIR}/rkr_${NAME}.lv2
     )
 
-    install (DIRECTORY ttl/
+    install (FILES ttl/${NAME}.ttl
       DESTINATION ${LV2_INSTALL_DIR}/rkr_${NAME}.lv2
     )
+    install (FILES ttl/manifests/${NAME}/manifest.ttl
+      DESTINATION ${LV2_INSTALL_DIR}/rkr_${NAME}.lv2
+    )
+    
 
 endforeach(INDX)
 
