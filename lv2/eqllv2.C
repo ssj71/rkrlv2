@@ -97,9 +97,8 @@ static void cleanup_rkrlv2(LV2_Handle handle)
     RKRLV2* plug = (RKRLV2*)handle;
     switch(plug->effectindex)
     {
-    case IEQ:
-    case IEQP:
-        delete plug->eq;//eql, eqp, cabinet
+    case 0:
+        delete plug->eq;
         break;
     }
     free(plug);
@@ -122,7 +121,8 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
 {
     switch (index)
     {
-    case IEQ:
+    case 0:
+    case IEQP:
         return &eqlv2_descriptor ;
     default:
         return 0;

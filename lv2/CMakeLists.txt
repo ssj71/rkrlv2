@@ -32,14 +32,14 @@ add_library(complv2 SHARED
   ../src/Compressor.C
   ../src/FPreset.C
 )
-add_library(distlv2 SHARED
-  distlv2.C
-  ../src/Distorsion.C
-  ../src/Waveshaper.C
-  ../src/Resample.C
-  ../src/FPreset.C
-  ../src/AnalogFilter.C
-)
+#add_library(distlv2 SHARED
+#  distlv2.C
+#  ../src/Distorsion.C
+#  ../src/Waveshaper.C
+#  ../src/Resample.C
+#  ../src/FPreset.C
+#  ../src/AnalogFilter.C
+#)
 
 #  ../src/Echo.C
 #  ../src/delayline.C
@@ -93,7 +93,7 @@ add_library(distlv2 SHARED
 #)
 
 foreach(INDX RANGE 0 1 )
-    list(GET PLUG ${INDX} NAME)
+    list(GET PLUGS ${INDX} NAME)
 
     set_target_properties(${NAME}lv2 PROPERTIES PREFIX "")
 
@@ -101,7 +101,7 @@ foreach(INDX RANGE 0 1 )
 
     target_link_libraries(${NAME}lv2 ${LV2_LIBRARIES} ${SAMPLERATE_LIBRARIES} ${FFTW_LIBRARIES} )
 
-# config install
+    # config install
     #TODO add switch so you can install all in 1 dir
     install(TARGETS ${NAME}lv2
       LIBRARY
@@ -115,15 +115,16 @@ foreach(INDX RANGE 0 1 )
 endforeach(INDX)
 
 #TODO make this only install into reverbtron and echotron bundles
-install (DIRECTORY ${CMAKE_BINARY_DIR}/lv2data/
-  DESTINATION ${LV2_INSTALL_DIR}/rkr.lv2
-)
+#install (DIRECTORY ${CMAKE_BINARY_DIR}/lv2data/
+#  DESTINATION ${LV2_INSTALL_DIR}/rkr.lv2
+#)
 
 #TODO: intall only if monolithic bundle selected?
 #also install carla presets into usr share
-install (DIRECTORY ${CMAKE_BINARY_DIR}/lv2data/
-  DESTINATION share/rkr.lv2
-)
-install (DIRECTORY presets/
-  DESTINATION share/rkr.lv2
-)
+
+#install (DIRECTORY ${CMAKE_BINARY_DIR}/lv2data/
+#  DESTINATION share/rkr.lv2
+#)
+#install (DIRECTORY presets/
+#  DESTINATION share/rkr.lv2
+#)
