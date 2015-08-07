@@ -16,60 +16,15 @@ This will also install carla project files. These project files are the plugin
 equivalent of the preset banks in the standalone rakarrack version. These must be in
 /usr/share/rkr.lv2/ for reverbtron or echotron to work properly. 
 
-EFFECTS (X - done, W - won't do, + - done with missing features)
-[X] Lineal EQ
-[X] Compressor
-[X] Distortion 
-[W] Overdrive - exact same engine as distortion, but has fewer controls, presets were added to dist.
-[X] Echo 
-[X] Chorus 
-[W] Phaser - I'm not planning to do this, but it's negotiable. I'm only interested in the analog phaser version
-[X] Analog Phaser 
-[W] Flanger - this is identical to the chorus, presets from this will be included there
-[X] Reverb 
-[X] Parametric EQ 
-[X] Cabinet Emulation - created new class for it 
-[X] AutoPan/Stereo Expander 
-[+] Harmonizer - still need to do midi mode version
-[X] Musical Delay 
-[W] Noise Gate - Direct copy of Steve Harris's Gate ladspa plugin
-[X] WahWah 
-[X] AlienWah 
-[X] Derelict 
-[X] Valve 
-[X] Dual Flange 
-[X] Ring 
-[X] Exciter 
-[X] DistBand 
-[X] Arpie 
-[X] Expander 
-[X] Shuffle 
-[X] Synthfilter 
-[X] VaryBand 
-[W] Convolotron - these require special input files, adding complexity. other excellent lv2 convolution engines already exist
-[W] Looper - other good lv2 loopers exist
-[X] MuTroMojo 
-[X] Echoverse 
-[X] CoilCrafter 
-[X] ShelfBoost 
-[X] Vocoder 
-[X] Sustainer 
-[X] Sequence 
-[X] Shifter 
-[X] StompBox 
-[X] Reverbtron 
-[X] Echotron 
-[+] StereoHarm - no midi
-[X] CompBand 
-[X] Opticaltrem 
-[X] Vibe 
-[X] Infinity
+If you want to install the lv2 plugins as individual bundles (opposed to one single 
+bundle) use the command:
 
-__fx in preset bank 1__
-stompbox
-echotron
-reverbtron
+sudo make install-separate
 
+If you don't know whether you want that, then it really doesn't matter and just use
+the default install. 
+
+For more details on which effects were ported, see lv2/README.
 
 Here is the original rakarrack README:
 
