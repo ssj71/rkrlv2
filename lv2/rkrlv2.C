@@ -450,7 +450,7 @@ LV2_Handle init_distlv2(const LV2_Descriptor *descriptor,double sample_freq, con
     getFeatures(plug,host_features);
 
     plug->dist = new Distorsion(0,0, sample_freq, plug->period_max, /*oversampling*/2,
-                                /*up interpolation method*/0, /*down interpolation method*/2);
+                                /*up interpolation method*/4, /*down interpolation method*/2);
 
     return plug;
 }
@@ -1520,7 +1520,7 @@ LV2_Handle init_derelv2(const LV2_Descriptor *descriptor,double sample_freq, con
     getFeatures(plug,host_features);
 
     plug->dere = new NewDist(0,0, sample_freq, plug->period_max, /*oversampling*/2,
-                             /*up interpolation method*/0, /*down interpolation method*/2);
+                             /*up interpolation method*/4, /*down interpolation method*/2);
 
     return plug;
 }
@@ -1820,7 +1820,7 @@ LV2_Handle init_mbdistlv2(const LV2_Descriptor *descriptor,double sample_freq, c
     getFeatures(plug,host_features);
 
     plug->mbdist = new MBDist(0,0, sample_freq, plug->period_max, /*oversampling*/2,
-                              /*up interpolation method*/0, /*down interpolation method*/2);
+                              /*up interpolation method*/4, /*down interpolation method*/2);
 
     return plug;
 }
@@ -2782,7 +2782,7 @@ LV2_Handle init_stomplv2(const LV2_Descriptor *descriptor,double sample_freq, co
     getFeatures(plug,host_features);
 
     plug->stomp = new StompBox(0,0, sample_freq, plug->period_max, /*oversampling*/2,
-                               /*up interpolation method*/0, /*down interpolation method*/2);
+                               /*up interpolation method*/4, /*down interpolation method*/2);
 
     return plug;
 }
@@ -2840,7 +2840,7 @@ LV2_Handle init_stomp_fuzzlv2(const LV2_Descriptor *descriptor,double sample_fre
     getFeatures(plug,host_features);
 
     plug->stomp = new StompBox(0,0, sample_freq, plug->period_max, /*oversampling*/2,
-                               /*up interpolation method*/0, /*down interpolation method*/2);
+                               /*up interpolation method*/4, /*down interpolation method*/2);
     plug->stomp->changepar(5,7);//set to fuzz
 
     return plug;
