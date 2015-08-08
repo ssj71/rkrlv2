@@ -118,22 +118,22 @@ StereoHarm::out (float *smpsl, float *smpsr, uint32_t period)
 
 
     if(DS_state != 0) {
-        memcpy(templ, smpsl,sizeof(float)*period);
-        memcpy(tempr, smpsr,sizeof(float)*period);
-        U_Resample->out(templ,tempr,smpsl,smpsr,period,u_up);
+//        memcpy(templ, smpsl,sizeof(float)*period);
+//        memcpy(tempr, smpsr,sizeof(float)*period);
+        U_Resample->out(smpsl,smpsr,templ,tempr,period,u_up);
     }
 
 
     for (i = 0; i < nPERIOD; i++) {
 
 
-        outil[i] = smpsl[i] * (1.0f - lrcross) + smpsr[i] * lrcross;
+        outil[i] = templ[i] * (1.0f - lrcross) + tempr[i] * lrcross;
         if (outil[i] > 1.0)
             outil[i] = 1.0f;
         if (outil[i] < -1.0)
             outil[i] = -1.0f;
 
-        outir[i] = smpsr[i] * (1.0f - lrcross) + smpsl[i] * lrcross;
+        outir[i] = tempr[i] * (1.0f - lrcross) + templ[i] * lrcross;
         if (outir[i] > 1.0)
             outir[i] = 1.0f;
         if (outir[i] < -1.0)

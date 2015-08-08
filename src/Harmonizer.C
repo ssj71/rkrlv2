@@ -116,8 +116,6 @@ Harmonizer::out (float *smpsl, float *smpsr, uint32_t period)
     	adjust(DS_state,period);//readjust now that we know period size
     }
     if((DS_state != 0) && (Pinterval !=12)) {
-//        memcpy(smpsl,templ, sizeof(float)*period);
-//        memcpy(smpsr,tempr, sizeof(float)*period);
         U_Resample->out(smpsl,smpsr,templ,tempr,period,u_up);
     }
 
@@ -141,7 +139,7 @@ Harmonizer::out (float *smpsl, float *smpsr, uint32_t period)
     if((DS_state != 0) && (Pinterval != 12)) {
         D_Resample->mono_out(outo,templ,nPERIOD,u_down,period);
     } else {
-        memcpy(smpsl, templ,sizeof(float)*period);
+        memcpy(templ,smpsl, sizeof(float)*period);
     }
 
     applyfilters (templ,period);
