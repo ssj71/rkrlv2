@@ -812,9 +812,9 @@ void run_harmnomidlv2(LV2_Handle handle, uint32_t nframes)
     for(i++; i<3; i++) //1-2
     {
         val = (int)*plug->param_p[i] + 64;
-        if(plug->harm->getpar(i+1) != val)
+        if(plug->harm->getpar(i) != val)
         {
-            plug->harm->changepar(i+1,val);
+            plug->harm->changepar(i,val);
         }
     }
     val = (int)*plug->param_p[i] + 12;// 3 interval
@@ -850,9 +850,9 @@ void run_harmnomidlv2(LV2_Handle handle, uint32_t nframes)
     for(; i<10; i++) // 8-9
     {
         val = (int)*plug->param_p[i] + 64;
-        if(plug->harm->getpar(i+1) != val)
+        if(plug->harm->getpar(i) != val)
         {
-            plug->harm->changepar(i+1,val);
+            plug->harm->changepar(i,val);
         }
     }
 // midi mode, not implementing midi here
