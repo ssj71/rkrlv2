@@ -67,7 +67,7 @@ LV2_Handle init_distlv2(const LV2_Descriptor *descriptor,double sample_freq, con
     getFeatures(plug,host_features);
 
     plug->dist = new Distorsion(0,0, sample_freq, plug->period_max, /*oversampling*/2,
-                                /*up interpolation method*/0, /*down interpolation method*/2);
+                                /*up interpolation method*/4, /*down interpolation method*/2);
 
     return plug;
 }
@@ -429,9 +429,9 @@ void run_harmnomidlv2(LV2_Handle handle, uint32_t nframes)
     for(i++; i<3; i++) //1-2
     {
         val = (int)*plug->param_p[i] + 64;
-        if(plug->harm->getpar(i+1) != val)
+        if(plug->harm->getpar(i) != val)
         {
-            plug->harm->changepar(i+1,val);
+            plug->harm->changepar(i,val);
         }
     }
     val = (int)*plug->param_p[i] + 12;// 3 interval
@@ -467,9 +467,9 @@ void run_harmnomidlv2(LV2_Handle handle, uint32_t nframes)
     for(; i<10; i++) // 8-9
     {
         val = (int)*plug->param_p[i] + 64;
-        if(plug->harm->getpar(i+1) != val)
+        if(plug->harm->getpar(i) != val)
         {
-            plug->harm->changepar(i+1,val);
+            plug->harm->changepar(i,val);
         }
     }
 // midi mode, not implementing midi here
@@ -1137,7 +1137,7 @@ LV2_Handle init_derelv2(const LV2_Descriptor *descriptor,double sample_freq, con
     getFeatures(plug,host_features);
 
     plug->dere = new NewDist(0,0, sample_freq, plug->period_max, /*oversampling*/2,
-                             /*up interpolation method*/0, /*down interpolation method*/2);
+                             /*up interpolation method*/4, /*down interpolation method*/2);
 
     return plug;
 }
@@ -1437,7 +1437,7 @@ LV2_Handle init_mbdistlv2(const LV2_Descriptor *descriptor,double sample_freq, c
     getFeatures(plug,host_features);
 
     plug->mbdist = new MBDist(0,0, sample_freq, plug->period_max, /*oversampling*/2,
-                              /*up interpolation method*/0, /*down interpolation method*/2);
+                              /*up interpolation method*/4, /*down interpolation method*/2);
 
     return plug;
 }
@@ -2399,7 +2399,7 @@ LV2_Handle init_stomplv2(const LV2_Descriptor *descriptor,double sample_freq, co
     getFeatures(plug,host_features);
 
     plug->stomp = new StompBox(0,0, sample_freq, plug->period_max, /*oversampling*/2,
-                               /*up interpolation method*/0, /*down interpolation method*/2);
+                               /*up interpolation method*/4, /*down interpolation method*/2);
 
     return plug;
 }
@@ -2457,7 +2457,7 @@ LV2_Handle init_stomp_fuzzlv2(const LV2_Descriptor *descriptor,double sample_fre
     getFeatures(plug,host_features);
 
     plug->stomp = new StompBox(0,0, sample_freq, plug->period_max, /*oversampling*/2,
-                               /*up interpolation method*/0, /*down interpolation method*/2);
+                               /*up interpolation method*/4, /*down interpolation method*/2);
     plug->stomp->changepar(5,7);//set to fuzz
 
     return plug;

@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 2.6)
 project (rkrlv2)
 
 set(LV2_INSTALL_DIR lib/lv2 ) # CACHE PATH "Specifies where the LV2 libraries should be installed")
-set(CMAKE_CXX_FLAGS "-Wall -g -O2 -Wl,-no-undefined")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wl,-no-undefined -O3 -msse -msse2 -mfpmath=sse -ffast-math")
 
 # check for our various libraries
 find_package(PkgConfig)

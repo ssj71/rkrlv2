@@ -116,14 +116,12 @@ Harmonizer::out (float *smpsl, float *smpsr, uint32_t period)
     	adjust(DS_state,period);//readjust now that we know period size
     }
     if((DS_state != 0) && (Pinterval !=12)) {
-        memcpy(templ, smpsl,sizeof(float)*period);
-        memcpy(tempr, smpsr,sizeof(float)*period);
-        U_Resample->out(templ,tempr,smpsl,smpsr,period,u_up);
+        U_Resample->out(smpsl,smpsr,templ,tempr,period,u_up);
     }
 
 
     for (i = 0; i < nPERIOD; i++) {
-        outi[i] = (smpsl[i] + smpsr[i])*.5;
+        outi[i] = (templ[i] + tempr[i])*.5;
         if (outi[i] > 1.0)
             outi[i] = 1.0f;
         if (outi[i] < -1.0)
@@ -136,22 +134,19 @@ Harmonizer::out (float *smpsl, float *smpsr, uint32_t period)
 
     if (Pinterval != 12) {
         PS->smbPitchShift (PS->ratio, nPERIOD, window, hq, nfSAMPLE_RATE, outi, outo);
+    }
 
-        if((DS_state != 0) && (Pinterval != 12)) {
-            D_Resample->mono_out(outo,templ,nPERIOD,u_down,period);
-        } else {
-            memcpy(templ, outo,sizeof(float)*period);
-        }
+    if((DS_state != 0) && (Pinterval != 12)) {
+        D_Resample->mono_out(outo,templ,nPERIOD,u_down,period);
+    } else {
+        memcpy(templ,smpsl, sizeof(float)*period);
+    }
 
+    applyfilters (templ,period);
 
-
-        applyfilters (templ,period);
-
-        for (i = 0; i < (signed int)period; i++) {
-            efxoutl[i] = templ[i] * gain * panning;
-            efxoutr[i] = templ[i] * gain * (1.0f - panning);
-        }
-
+    for (i = 0; i < (signed int)period; i++) {
+        efxoutl[i] = templ[i] * gain * panning;
+        efxoutr[i] = templ[i] * gain * (1.0f - panning);
     }
 
 };

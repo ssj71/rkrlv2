@@ -564,10 +564,10 @@ Waveshaper::waveshapesmps (int n, float * smps, int type,
 
     };
 
-    //if(Wave_res_amount>= 0) {
+    if(Wave_res_amount> 0) {
         D_Resample->mono_out(temps,smps,nn,u_down,n);
-    //} else
-    //    memcpy(smps,temps,sizeof(float)*n);
+    } else
+        memcpy(smps,temps,sizeof(float)*n);
 
 
 };
