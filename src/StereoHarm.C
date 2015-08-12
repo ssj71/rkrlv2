@@ -29,21 +29,16 @@
 
 
 StereoHarm::StereoHarm (float *efxoutl_, float *efxoutr_, long int Quality, int DS, int uq, int dq, uint32_t intermediate_bufsize, double sample_rate)
-{
-
-
-
+{ 
     efxoutl = efxoutl_;
     efxoutr = efxoutr_;
     hq = Quality;
     SAMPLE_RATE = (unsigned int)sample_rate;
     adjust(DS, intermediate_bufsize);
+    nPERIOD = lrintf(intermediate_bufsize*nRATIO);
 
     templ = (float *) malloc (sizeof (float) * intermediate_bufsize);
     tempr = (float *) malloc (sizeof (float) * intermediate_bufsize);
-
-
-
 
     outil = (float *) malloc (sizeof (float) * nPERIOD);
     outir = (float *) malloc (sizeof (float) * nPERIOD);
@@ -116,6 +111,9 @@ StereoHarm::out (float *smpsl, float *smpsr, uint32_t period)
 
     unsigned int i;
 
+    nPERIOD = lrintf(period*nRATIO);
+    u_up= (double)nPERIOD / (double)period;
+    u_down= (double)period / (double)nPERIOD;
 
     if(DS_state != 0) {
 //        memcpy(templ, smpsl,sizeof(float)*period);
@@ -287,20 +285,21 @@ StereoHarm::adjust(int DS, uint32_t period)
 
     DS_state=DS;
     float fSAMPLE_RATE = SAMPLE_RATE;
-    float fPERIOD = period;
 
 
     switch(DS) {
 
     case 0:
-        nPERIOD = period;
+        //nPERIOD = period;
+        nRATIO = 1;
         nSAMPLE_RATE = SAMPLE_RATE;
         nfSAMPLE_RATE = fSAMPLE_RATE;
         window = 2048;
         break;
 
     case 1:
-        nPERIOD = lrintf(fPERIOD*96000.0f/fSAMPLE_RATE);
+        //nPERIOD = lrintf(fPERIOD*96000.0f/fSAMPLE_RATE);
+        nRATIO = 96000.0f/fSAMPLE_RATE;
         nSAMPLE_RATE = 96000;
         nfSAMPLE_RATE = 96000.0f;
         window = 2048;
@@ -308,56 +307,64 @@ StereoHarm::adjust(int DS, uint32_t period)
 
 
     case 2:
-        nPERIOD = lrintf(fPERIOD*48000.0f/fSAMPLE_RATE);
+        //nPERIOD = lrintf(fPERIOD*48000.0f/fSAMPLE_RATE);
+        nRATIO = 48000.0f/fSAMPLE_RATE;
         nSAMPLE_RATE = 48000;
         nfSAMPLE_RATE = 48000.0f;
         window = 2048;
         break;
 
     case 3:
-        nPERIOD = lrintf(fPERIOD*44100.0f/fSAMPLE_RATE);
+        //nPERIOD = lrintf(fPERIOD*44100.0f/fSAMPLE_RATE);
+        nRATIO = 44100.0f/fSAMPLE_RATE;
         nSAMPLE_RATE = 44100;
         nfSAMPLE_RATE = 44100.0f;
         window = 2048;
         break;
 
     case 4:
-        nPERIOD = lrintf(fPERIOD*32000.0f/fSAMPLE_RATE);
+        //nPERIOD = lrintf(fPERIOD*32000.0f/fSAMPLE_RATE);
+        nRATIO = 32000.0f/fSAMPLE_RATE;
         nSAMPLE_RATE = 32000;
         nfSAMPLE_RATE = 32000.0f;
         window = 2048;
         break;
 
     case 5:
-        nPERIOD = lrintf(fPERIOD*22050.0f/fSAMPLE_RATE);
+        //nPERIOD = lrintf(fPERIOD*22050.0f/fSAMPLE_RATE);
+        nRATIO = 22050.0f/fSAMPLE_RATE;
         nSAMPLE_RATE = 22050;
         nfSAMPLE_RATE = 22050.0f;
         window = 1024;
         break;
 
     case 6:
-        nPERIOD = lrintf(fPERIOD*16000.0f/fSAMPLE_RATE);
+        //nPERIOD = lrintf(fPERIOD*16000.0f/fSAMPLE_RATE);
+        nRATIO = 16000.0f/fSAMPLE_RATE;
         nSAMPLE_RATE = 16000;
         nfSAMPLE_RATE = 16000.0f;
         window = 1024;
         break;
 
     case 7:
-        nPERIOD = lrintf(fPERIOD*12000.0f/fSAMPLE_RATE);
+        //nPERIOD = lrintf(fPERIOD*12000.0f/fSAMPLE_RATE);
+        nRATIO = 12000.0f/fSAMPLE_RATE;
         nSAMPLE_RATE = 12000;
         nfSAMPLE_RATE = 12000.0f;
         window = 512;
         break;
 
     case 8:
-        nPERIOD = lrintf(fPERIOD*8000.0f/fSAMPLE_RATE);
+        //nPERIOD = lrintf(fPERIOD*8000.0f/fSAMPLE_RATE);
+        nRATIO = 8000.0f/fSAMPLE_RATE;
         nSAMPLE_RATE = 8000;
         nfSAMPLE_RATE = 8000.0f;
         window = 512;
         break;
 
     case 9:
-        nPERIOD = lrintf(fPERIOD*4000.0f/fSAMPLE_RATE);
+        //nPERIOD = lrintf(fPERIOD*4000.0f/fSAMPLE_RATE);
+        nRATIO = 4000.0f/fSAMPLE_RATE;
         nSAMPLE_RATE = 4000;
         nfSAMPLE_RATE = 4000.0f;
         window = 256;

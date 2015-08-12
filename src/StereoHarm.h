@@ -54,6 +54,7 @@ public:
     int mira;
     int DS_state;
     unsigned int nPERIOD;
+    float nRATIO;
     int nSAMPLE_RATE;
     unsigned int SAMPLE_RATE;
     long window;
