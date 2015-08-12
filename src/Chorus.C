@@ -182,9 +182,13 @@ Chorus::out (float * smpsl, float * smpsr, uint32_t period)
             };
 
 
+        //for (i = 0; i < period; i++) {
+            //efxoutl[i] *= panning;
+            //efxoutr[i] *= (1.0f - panning);
+        //};
         for (i = 0; i < period; i++) {
-            efxoutl[i] *= panning;
-            efxoutr[i] *= (1.0f - panning);
+            efxoutl[i] *= (1.0f - panning);
+            efxoutr[i] *= panning;
         };
 
     } //end awesome_mode test
