@@ -316,7 +316,7 @@ wetdry_mix (RKRLV2* plug, float mix, uint32_t period)
     for (i = 0; i < period; i++)
     {
         plug->output_l_p[i] = plug->input_r_p[i] * v2 + plug->output_l_p[i] * v1;
-        plug->output_r_p[i] = plug->input_r_p[i] * v2 + plug->output_r_p[i] * v1;
+        plug->output_r_p[i] = plug->input_l_p[i] * v2 + plug->output_r_p[i] * v1;
     };
 
 }

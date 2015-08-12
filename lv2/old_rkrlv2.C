@@ -49,6 +49,27 @@ typedef struct _RKRLV2
     Infinity* inf;		//41
 } RKRLV2;
 
+//this finds the peak value
+int
+have_signal(float* efxoutl, float* efxoutr, uint32_t period)
+{
+    float tmp;
+    uint32_t i;
+    float il_sum = 1e-12f;
+    float ir_sum = 1e-12f;
+    for (i = 0; i <= period; i++) {
+
+        tmp = fabsf (efxoutl[i]);
+        if (tmp > il_sum) il_sum = tmp;
+        tmp = fabsf (efxoutr[i]);
+        if (tmp > ir_sum) ir_sum = tmp;
+    }
+
+
+    if ((il_sum+ir_sum) > 0.0004999f)  return  1;
+    else  return 0;
+}
+
 /////////////////////////////////////////
 //      EFFECTS
 ////////////////////////////////////////
@@ -487,6 +508,7 @@ void run_harmnomidlv2(LV2_Handle handle, uint32_t nframes)
 
     //TODO may need to make sure input is over some threshold
     if(plug->harm->mira && plug->harm->PSELECT)
+//        && have_signal( plug->input_l_p, plug->input_r_p, nframes))
     {
         plug->noteID->schmittFloat(plug->input_l_p,plug->input_r_p,nframes);
         if(plug->noteID->reconota != -1 && plug->noteID->reconota != plug->noteID->last)
