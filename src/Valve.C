@@ -247,8 +247,10 @@ Valve::out (float * smpsl, float * smpsr, uint32_t period)
         lout = l;
         rout = r;
 
-        efxoutl[i] = lout * 2.0f * level * panning;
-        efxoutr[i] = rout * 2.0f * level * (1.0f -panning);
+        //efxoutl[i] = lout * 2.0f * level * panning;
+        //efxoutr[i] = rout * 2.0f * level * (1.0f -panning);
+        efxoutl[i] = lout * 2.0f * level * (1.0f -panning);
+        efxoutr[i] = rout * 2.0f * level * panning;
 
     };
 

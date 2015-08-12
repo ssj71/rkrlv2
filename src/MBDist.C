@@ -217,9 +217,11 @@ MBDist::out (float * smpsl, float * smpsr, uint32_t period)
 
         l = lout * (1.0f - lrcross) + rout * lrcross;
         r = rout * (1.0f - lrcross) + lout * lrcross;
-
-        efxoutl[i] = l * 2.0f * level * panning;
-        efxoutr[i] = r * 2.0f * level * (1.0f -panning);
+        
+        //efxoutl[i] = l * 2.0f * level * panning;
+        //efxoutr[i] = r * 2.0f * level * (1.0f - panning);
+        efxoutl[i] = l * 2.0f * level * (1.0f - panning);
+        efxoutr[i] = r * 2.0f * level * panning;
 
     };
 

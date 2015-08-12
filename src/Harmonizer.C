@@ -144,9 +144,13 @@ Harmonizer::out (float *smpsl, float *smpsr, uint32_t period)
 
     applyfilters (templ,period);
 
+    //for (i = 0; i < (signed int)period; i++) {
+        //efxoutl[i] = templ[i] * gain * panning;
+        //efxoutr[i] = templ[i] * gain * (1.0f - panning);
+    //}
     for (i = 0; i < (signed int)period; i++) {
-        efxoutl[i] = templ[i] * gain * panning;
-        efxoutr[i] = templ[i] * gain * (1.0f - panning);
+        efxoutl[i] = templ[i] * gain * (1.0f - panning);
+        efxoutr[i] = templ[i] * gain * panning;
     }
 
 };
