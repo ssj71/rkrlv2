@@ -165,12 +165,15 @@ StereoHarm::out (float *smpsl, float *smpsr, uint32_t period)
     }
 
 
+    //for (i = 0; i < period; i++) {
+        //efxoutl[i] = templ[i] * gainl;
+        //efxoutr[i] = tempr[i] * gainr;
+        
+    //}
     for (i = 0; i < period; i++) {
-        efxoutl[i] = templ[i] * gainl;
-        efxoutr[i] = tempr[i] * gainr;
+        efxoutl[i] = templ[i] * gainl * (1.0f - lrcross) + tempr[i] * gainr * lrcross;
+        efxoutr[i] = tempr[i] * gainr * (1.0f - lrcross) + templ[i] * gainl * lrcross;
     }
-
-
 
 };
 

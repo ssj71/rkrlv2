@@ -139,8 +139,10 @@ RBEcho::out (float * smpsl, float * smpsr, uint32_t period)
         }
 
 
-        lfeedback = lpanning * fb * ldl;
-        rfeedback = rpanning * fb * rdl;
+        //lfeedback = lpanning * fb * ldl;
+        //rfeedback = rpanning * fb * rdl;
+        lfeedback = rpanning * fb * ldl;
+        rfeedback = lpanning * fb * rdl;
 
         if(Pes) {
             ldl *= cosf(lrcross);
@@ -158,8 +160,10 @@ RBEcho::out (float * smpsl, float * smpsr, uint32_t period)
 
 
         }
-        efxoutl[i] = (ipingpong*ldl + pingpong *ldelay->delay_simple(0.0f, ltime, 2, 0, 0)) * lpanning;
-        efxoutr[i] = (ipingpong*rdl + pingpong *rdelay->delay_simple(0.0f, rtime, 2, 0, 0)) * rpanning;
+        //efxoutl[i] = (ipingpong*ldl + pingpong *ldelay->delay_simple(0.0f, ltime, 2, 0, 0)) * lpanning;
+        //efxoutr[i] = (ipingpong*rdl + pingpong *rdelay->delay_simple(0.0f, rtime, 2, 0, 0)) * rpanning;
+        efxoutl[i] = (ipingpong*ldl + pingpong *ldelay->delay_simple(0.0f, ltime, 2, 0, 0)) * rpanning;
+        efxoutr[i] = (ipingpong*rdl + pingpong *rdelay->delay_simple(0.0f, rtime, 2, 0, 0)) * lpanning;
 
     };
 
