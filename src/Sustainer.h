@@ -35,7 +35,7 @@ public:
     void out (float * smpsl, float * smpr, uint32_t period);
     void changepar (int npar, int value);
     int getpar (int npar);
-    void setpreset (int npreset,int pdata[]);
+    void setpreset (int npreset);
 
     int Ppreset;
 
