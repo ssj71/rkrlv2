@@ -27,33 +27,32 @@
 #include "Resample.h"
 
 
-Resample::Resample(unsigned int quality, double from, double to)
+Resample::Resample(int type)
 {
-	r = new Resampler();
-	unsigned int a,b;
-	a = lrint(from);
-	b = lrint(to);
-	r->setup(a,b,2,quality+16);
+    statel = src_new(type , 1 , &errorl);
+    stater = src_new(type , 1 , &errorr);
+
 }
 
 
 Resample::~Resample()
 {
-	delete r;
+	src_delete(statel);
+	src_delete(stater);
 };
 
 void
 Resample::cleanup()
 {
-    r.reset();
-    r.reset();
+    src_reset(statel);
+    src_reset(stater);
 
 };
 
 
 
 void
-Resample::out(float *inl, float *inr, float *outl, float *outr, int frames)
+Resample::out(float *inl, float *inr, float *outl, float *outr, int frames, double ratio)
 {
 
 
