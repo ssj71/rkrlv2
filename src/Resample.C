@@ -29,55 +29,71 @@
 
 Resample::Resample(unsigned int quality, double from, double to)
 {
-	rl = new Resampler();
-	rr = new Resampler();
+	r = new Resampler();
 	unsigned int a,b;
 	a = lrint(from);
 	b = lrint(to);
-	rl->setup(a,b,1,quality+16);
-	rr->setup(a,b,1,quality+16);
+	r->setup(a,b,2,quality+16);
 }
 
 
 Resample::~Resample()
 {
-	delete rl;
-	delete rr;
+	delete r;
 };
 
 void
 Resample::cleanup()
 {
-    rl->reset();
-    rr->reset();
+    r.reset();
+    r.reset();
+
 };
 
 
 
 void
-Resample::out(float *inl, float *inr, float *outl, float *outr, int i_frames, int o_frames)
+Resample::out(float *inl, float *inr, float *outl, float *outr, int frames)
 {
-	rl->inp_count = i_frames;
-	rl->inp_data = inl;
-	rl->out_data = outl;
-	rl->out_count = o_frames;
-	rl->process();
 
-	rr->inp_count = i_frames;
-	rr->inp_data = inl;
-	rr->out_data = outl;
-	rr->out_count = o_frames;
-	rr->process();
+
+    long int o_frames = lrint((double)frames*ratio);
+    srcinfol.data_in = inl;
+    srcinfol.input_frames = frames;
+    srcinfol.data_out = outl;
+    srcinfol.output_frames = o_frames;
+    srcinfol.src_ratio = ratio;
+    srcinfol.end_of_input = 0;
+
+    srcinfor.data_in = inr;
+    srcinfor.input_frames = frames;
+    srcinfor.data_out = outr;
+    srcinfor.output_frames = o_frames;
+    srcinfor.src_ratio = ratio;
+    srcinfor.end_of_input = 0;
+
+    errorl = src_process(statel, &srcinfol);
+    errorr = src_process(stater, &srcinfor);
+
 
 }
 
 
 void
-Resample::mono_out(float *inl, float *outl, int i_frames, int o_frames)
+Resample::mono_out(float *inl, float *outl, int frames, double ratio, int o_frames)
 {
-	rl->inp_count = i_frames;
-	rl->inp_data = inl;
-	rl->out_data = outl;
-	rl->out_count = o_frames;
-	rl->process();
+
+    srcinfol.data_in = inl;
+    srcinfol.input_frames = frames;
+    srcinfol.data_out = outl;
+    srcinfol.output_frames = o_frames;
+    srcinfol.src_ratio = ratio;
+    srcinfol.end_of_input = 0;
+
+    errorl = src_process(statel, &srcinfol);
+
 }
+
+
+
+
