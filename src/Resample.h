@@ -33,15 +33,16 @@
 
 class Resample
 {
-	//quality is in range [0,80]
+	//quality is in range [0,80] 80 highest
     Resample(unsigned int quality=16, double from, double to);
 
     void cleanup();
-    void out(float *inl, float *inr, float *outl, float *outr, int frames, double ratio);
-    void mono_out(float *inl, float *outl, int frames, double ratio, int o_frames);
+    void out(float *inl, float *inr, float *outl, float *outr, int i_frames, int o_frames);
+    void mono_out(float *inl, float *outl, int i_frames, int o_frames);
 
 private:
-    Resampler* r;
+    Resampler* rl;
+    Resampler* rr;
 #if(0)
 public:
     Resample(int type);

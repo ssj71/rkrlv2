@@ -53,8 +53,8 @@ Harmonizer::Harmonizer (float *efxoutl_, float *efxoutr_, long int Quality, int 
     	outi[i] = outo[i] = 0;
     }
 
-    U_Resample = new Resample(dq);
-    D_Resample = new Resample(uq);
+    U_Resample = new Resample(dq, sample_rate, nSAMPLE_RATE);
+    D_Resample = new Resample(uq, nSAMPLE_RATE, sample_rate);
 
 
     interpbuf = new float[intermediate_bufsize];
@@ -116,7 +116,7 @@ Harmonizer::out (float *smpsl, float *smpsr, uint32_t period)
     	adjust(DS_state,period);//readjust now that we know period size
     }
     if((DS_state != 0) && (Pinterval !=12)) {
-        U_Resample->out(smpsl,smpsr,templ,tempr,period,u_up);
+        U_Resample->out(smpsl,smpsr,templ,tempr,period,nPERIOD);
     }
 
 
@@ -137,7 +137,7 @@ Harmonizer::out (float *smpsl, float *smpsr, uint32_t period)
     }
 
     if((DS_state != 0) && (Pinterval != 12)) {
-        D_Resample->mono_out(outo,templ,nPERIOD,u_down,period);
+        D_Resample->mono_out(outo,templ,nPERIOD,period);
     } else {
         memcpy(templ,smpsl, sizeof(float)*period);
     }
@@ -321,8 +321,6 @@ Harmonizer::adjust(int DS, uint32_t period)
         window = 256;
         break;
     }
-    u_up= (double)nPERIOD / (double)period;
-    u_down= (double)period / (double)nPERIOD;
 }
 
 

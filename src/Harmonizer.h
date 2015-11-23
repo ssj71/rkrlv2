@@ -59,8 +59,6 @@ public:
 
     long int hq;
 
-    double u_up;
-    double u_down;
     float nfSAMPLE_RATE;
 
 
