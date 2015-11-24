@@ -5,6 +5,7 @@
 @prefix units: <http://lv2plug.in/ns/extensions/units#> .
 @prefix pprops: <http://lv2plug.in/ns/ext/port-props#> .
 @prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+@prefix mod:   <http://moddevices.com/ns/mod#>.
 
 @prefix lv2:   <http://lv2plug.in/ns/lv2core#> .
 @prefix ui:   <http://lv2plug.in/ns/extensions/ui#> .
@@ -18,13 +19,9 @@
 <http://rakarrack.sourceforge.net/effects.html#StompBox>
         a lv2:Plugin, lv2:DistortionPlugin ;
         doap:name "rkr StompBox" ;
+        mod:brand "Rakarrack";
         doap:description "Distortion Pedal Emulator";
-        doap:license <http://opensource.org/licenses/gpl-2.0> ;
-        doap:maintainer [
-                foaf:name "Rakarrack Team" ;
-                foaf:homepage <http://rakarrack.sourceforge.net>;
-                foaf:mbox <mailto:ssjackson71@gmail.com> ;
-        ] ;
+        lv2:project <http://rakarrack.sourceforge.net/effects.html>;
         lv2:minorVersion 0 ;
         lv2:microVersion 0 ;
         rdfs:comment "Physically-informed distortion stompbox emulation with 8 different distortion-character modes. Intended to allow quick dialing-in to the tone you want." ;

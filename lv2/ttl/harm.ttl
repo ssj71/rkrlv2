@@ -19,18 +19,13 @@
         a lv2:Plugin, lv2:PitchPlugin ;
         doap:name "rkr Harmonizer" ;
         doap:description "Harmonizing Pitch Shifter";
-        doap:license <http://opensource.org/licenses/gpl-2.0> ;
-        doap:maintainer [
-                foaf:name "Rakarrack Team" ;
-                foaf:homepage <http://rakarrack.sourceforge.net>;
-                foaf:mbox <mailto:ssjackson71@gmail.com> ;
-        ] ;
+        lv2:project <http://rakarrack.sourceforge.net/effects.html>;
         lv2:minorVersion 0 ;
         lv2:microVersion 0 ;
         rdfs:comment "Pitch shifter that harmonizes with your dry signal. This works best for monophonic sounds (a single note at a time). Also allows selection of root and chord for intelligent harmonies. Midi input can be used to select the harmoization notes." ;
         lv2:optionalFeature lv2:hardRTCapable,
             <http://lv2plug.in/ns/ext/urid#map>,
-            <http://lv2plug.in/ns/ext/bufsz#boundedBlockLength>;
+            <http://lv2plug.in/ns/ext/buf-size#boundedBlockLength>;
 #        ui:ui  <http://rakarrack.sourceforge.net/effects.html#har_ui> ;
 
         lv2:port [

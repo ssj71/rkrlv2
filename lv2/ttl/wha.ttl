@@ -5,6 +5,7 @@
 @prefix units: <http://lv2plug.in/ns/extensions/units#> .
 @prefix pprops: <http://lv2plug.in/ns/ext/port-props#> .
 @prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+@prefix mod:   <http://moddevices.com/ns/mod#>.
 
 @prefix lv2:   <http://lv2plug.in/ns/lv2core#> .
 @prefix ui:   <http://lv2plug.in/ns/extensions/ui#> .
@@ -18,13 +19,9 @@
 <http://rakarrack.sourceforge.net/effects.html#wha>
         a lv2:Plugin, lv2:FilterPlugin ;
         doap:name "rkr WahWah" ;
+        mod:brand "Rakarrack";
         doap:description "Envelope/LFO Controlled Wah";
-        doap:license <http://opensource.org/licenses/gpl-2.0> ;
-        doap:maintainer [
-                foaf:name "Rakarrack Team" ;
-                foaf:homepage <http://rakarrack.sourceforge.net>;
-                foaf:mbox <mailto:ssjackson71@gmail.com> ;
-        ] ;
+        lv2:project <http://rakarrack.sourceforge.net/effects.html>;
         lv2:minorVersion 0 ;
         lv2:microVersion 0 ;
         rdfs:comment "Wah effect controllable by the input volume envelope or by LFO." ;

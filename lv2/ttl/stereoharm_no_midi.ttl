@@ -18,18 +18,13 @@
         a lv2:Plugin, lv2:PitchPlugin ;
         doap:name "rkr StereoHarmonizer (no midi)" ;
         doap:description "Dual Harmonizing Pitch Shifters";
-        doap:license <http://opensource.org/licenses/gpl-2.0> ;
-        doap:maintainer [
-                foaf:name "Rakarrack Team" ;
-                foaf:homepage <http://rakarrack.sourceforge.net>;
-                foaf:mbox <mailto:ssjackson71@gmail.com> ;
-        ] ;
+        lv2:project <http://rakarrack.sourceforge.net/effects.html>;
         lv2:minorVersion 0 ;
         lv2:microVersion 0 ;
         rdfs:comment "Pitch shifter that harmonizes 2 voices with your dry signal. This works best for monophonic sounds (a single note at a time). This version has a detune for stereo chorus effects. Also allows selection of root and chord for intelligent harmonies." ;
         lv2:optionalFeature lv2:hardRTCapable,
             <http://lv2plug.in/ns/ext/urid#map>,
-            <http://lv2plug.in/ns/ext/bufsz#boundedBlockLength>;
+            <http://lv2plug.in/ns/ext/buf-size#boundedBlockLength>;
 #        ui:ui  <http://rakarrack.sourceforge.net/effects.html#StereoHarm_ui> ;
 
         lv2:port [
@@ -131,7 +126,7 @@
                 lv2:index 11 ;
                 lv2:symbol "CHR" ;
                 lv2:name "Right Chroma" ;
-                rdfs:description "Detune right channel" ;
+                #rdfs:description "Detune right channel" ;
                 lv2:default 0 ;
                 lv2:minimum -2000 ;
                 lv2:maximum 2000 ;

@@ -4,6 +4,7 @@
 @prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix units: <http://lv2plug.in/ns/extensions/units#> .
 @prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+@prefix mod:   <http://moddevices.com/ns/mod#>.
 
 @prefix lv2:   <http://lv2plug.in/ns/lv2core#> .
 @prefix ui:   <http://lv2plug.in/ns/extensions/ui#> .
@@ -17,13 +18,9 @@
 <http://rakarrack.sourceforge.net/effects.html#Otrem>
         a lv2:Plugin, lv2:ModulatorPlugin ;
         doap:name "rkr OpticalTrem" ;
+        mod:brand "Rakarrack";
         doap:description "Optical Tremolo Emulation";
-        doap:license <http://opensource.org/licenses/GPL-2.0> ;
-        doap:maintainer [
-                foaf:name "Rakarrack Team" ;
-                foaf:homepage <http://rakarrack.sourceforge.net>;
-                foaf:mbox <mailto:ssjackson71@gmail.com> ;
-        ] ;
+        lv2:project <http://rakarrack.sourceforge.net/effects.html>;
         lv2:minorVersion 0 ;
         lv2:microVersion 0 ;
         rdfs:comment "An optical tremolo effect emulation such as often built into a guitar amplifier. This varies the signal volume through an LFO."

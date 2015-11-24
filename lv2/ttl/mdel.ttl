@@ -6,6 +6,7 @@
 @prefix pset: <http://lv2plug.in/ns/ext/presets#> .
 @prefix pg: <http://lv2plug.in/ns/ext/port-groups#> .
 @prefix param: <http://lv2plug.in/ns/ext/parameters#> .
+@prefix mod:   <http://moddevices.com/ns/mod#>.
 
 @prefix lv2:   <http://lv2plug.in/ns/lv2core#> .
 @prefix ui:   <http://lv2plug.in/ns/extensions/ui#> .
@@ -30,19 +31,16 @@
 <http://rakarrack.sourceforge.net/effects.html#delm>
         a lv2:Plugin, lv2:DelayPlugin ;
         doap:name "rkr Musical Delay" ;
+        mod:brand "Rakarrack";
+        mod:label "Musical Delay";
         doap:description "Tempo Selectable Dual Delay";
-        doap:license <http://opensource.org/licenses/gpl-2.0> ;
-        doap:maintainer [
-                foaf:name "Rakarrack Team" ;
-                foaf:homepage <http://rakarrack.sourceforge.net>;
-                foaf:mbox <mailto:ssjackson71@gmail.com> ;
-        ] ;
+        lv2:project <http://rakarrack.sourceforge.net/effects.html>;
         lv2:minorVersion 0 ;
         lv2:microVersion 0 ;
         rdfs:comment "Dual delay with delay times selectable by tempo and note subdivision." ;
         lv2:optionalFeature lv2:hardRTCapable,
             <http://lv2plug.in/ns/ext/urid#map>,
-            <http://lv2plug.in/ns/ext/bufsz#boundedBlockLength>;
+            <http://lv2plug.in/ns/ext/buf-size#boundedBlockLength>;
 #        ui:ui  <http://rakarrack.sourceforge.net/effects.html#delm_ui> ;
 
         lv2:port [

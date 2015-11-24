@@ -6,6 +6,7 @@
 @prefix pg: <http://lv2plug.in/ns/ext/port-groups#> .
 @prefix param: <http://lv2plug.in/ns/ext/parameters#> .
 @prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+@prefix mod:   <http://moddevices.com/ns/mod#>.
 
 @prefix lv2:   <http://lv2plug.in/ns/lv2core#> .
 @prefix ui:   <http://lv2plug.in/ns/extensions/ui#> .
@@ -30,13 +31,9 @@
 <http://rakarrack.sourceforge.net/effects.html#VaryBand>
         a lv2:Plugin, lv2:ModulatorPlugin ;
         doap:name "rkr VaryBand" ;
+        mod:brand "Rakarrack" ;
         doap:description "Multi-Band Volume Modulator";
-        doap:license <http://opensource.org/licenses/gpl-2.0> ;
-        doap:maintainer [
-                foaf:name "Rakarrack Team" ;
-                foaf:homepage <http://rakarrack.sourceforge.net>;
-                foaf:mbox <mailto:ssjackson71@gmail.com> ;
-        ] ;
+        lv2:project <http://rakarrack.sourceforge.net/effects.html>;
         lv2:minorVersion 0 ;
         lv2:microVersion 0 ;
         rdfs:comment "Multi-band tremolo effect allowing 2 LFOs to modulate volume of any combination of 4 frequency bands." ;
