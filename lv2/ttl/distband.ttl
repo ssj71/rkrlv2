@@ -18,18 +18,13 @@
         a lv2:Plugin, lv2:DistortionPlugin ;
         doap:name "rkr DistBand" ;
         doap:description "Multi-Band Distortion";
-        doap:license <http://opensource.org/licenses/gpl-2.0> ;
-        doap:maintainer [
-                foaf:name "Rakarrack Team" ;
-                foaf:homepage <http://rakarrack.sourceforge.net>;
-                foaf:mbox <mailto:ssjackson71@gmail.com> ;
-        ] ;
+        lv2:project <http://rakarrack.sourceforge.net/effects.html>;
         lv2:minorVersion 0 ;
         lv2:microVersion 0 ;
         rdfs:comment "A multi-band distortion allowing different character distortion of different frequencies. It is a waveshaping distortion with a different waveshaper selectable for each band." ;
         lv2:optionalFeature lv2:hardRTCapable,
             <http://lv2plug.in/ns/ext/urid#map>,
-            <http://lv2plug.in/ns/ext/bufsz#boundedBlockLength>;
+            <http://lv2plug.in/ns/ext/buf-size#boundedBlockLength>;
 #        ui:ui  <http://rakarrack.sourceforge.net/effects.html#DistBand_ui> ;
 
         lv2:port [

@@ -35,12 +35,7 @@
         a lv2:Plugin, lv2:ParaEQPlugin ;
         doap:name "rkr Parametric EQ" ;
         doap:description "3 Band Parametric Eq";
-        doap:license <http://opensource.org/licenses/gpl-2.0> ;
-        doap:maintainer [
-                foaf:name "Rakarrack Team" ;
-                foaf:homepage <http://rakarrack.sourceforge.net>;
-                foaf:mbox <mailto:ssjackson71@gmail.com> ;
-        ] ;
+        lv2:project <http://rakarrack.sourceforge.net/effects.html>;
         lv2:minorVersion 0 ;
         lv2:microVersion 0 ;
         rdfs:comment "3 band parametric peak-filter equalizer." ;

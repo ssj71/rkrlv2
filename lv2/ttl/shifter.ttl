@@ -19,12 +19,7 @@
         a lv2:Plugin, lv2:PitchPlugin ;
         doap:name "rkr Shifter" ;
         doap:description "whammy effect with envelope triggering";
-        doap:license <http://opensource.org/licenses/gpl-2.0> ;
-        doap:maintainer [
-                foaf:name "Rakarrack Team" ;
-                foaf:homepage <http://rakarrack.sourceforge.net>;
-                foaf:mbox <mailto:ssjackson71@gmail.com> ;
-        ] ;
+        lv2:project <http://rakarrack.sourceforge.net/effects.html>;
         lv2:minorVersion 0 ;
         lv2:microVersion 0 ;
         rdfs:comment "Pitch shifter with easy controls for expression pedal controled whammy effects. Also has a mode for envelope based control." ;

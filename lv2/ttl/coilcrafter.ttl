@@ -6,6 +6,7 @@
 @prefix pg: <http://lv2plug.in/ns/ext/port-groups#> .
 @prefix param: <http://lv2plug.in/ns/ext/parameters#> .
 @prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+@prefix mod:   <http://moddevices.com/ns/mod#>.
 
 @prefix lv2:   <http://lv2plug.in/ns/lv2core#> .
 @prefix ui:   <http://lv2plug.in/ns/extensions/ui#> .
@@ -19,13 +20,9 @@
 <http://rakarrack.sourceforge.net/effects.html#CoilCrafter>
         a lv2:Plugin, lv2:FilterPlugin ;
         doap:name "rkr Coil Crafter" ;
+        mod:brand "Rakarrack";
         doap:description "Guitar Pickup Emulator";
-        doap:license <http://opensource.org/licenses/GPL-2.0> ;
-        doap:maintainer [
-                foaf:name "Rakarrack Team" ;
-                foaf:homepage <http://rakarrack.sourceforge.net>;
-                foaf:mbox <mailto:ssjackson71@gmail.com> ;
-        ] ;
+        lv2:project <http://rakarrack.sourceforge.net/effects.html>;
         lv2:minorVersion 0 ;
         lv2:microVersion 0 ;
         rdfs:comment "A equalizer that makes your pickups sound like different pickups. Can switch a strat to sound like humbuckers in a strat etc." ;
@@ -84,7 +81,7 @@
                 lv2:minimum 2600 ;
                 lv2:maximum 4500 ;
                 lv2:portProperty lv2:integer ;
-                lv2:units units:hz ;
+                units:unit units:hz ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 7 ;
@@ -103,7 +100,7 @@
                 lv2:minimum 2600
                 lv2:maximum 4500 ;
                 lv2:portProperty lv2:integer ;
-                lv2:units units:hz ;
+                units:unit units:hz ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 9 ;
@@ -122,7 +119,7 @@
                 lv2:minimum 20 ;
                 lv2:maximum 4400 ;
                 lv2:portProperty lv2:integer ;
-                lv2:units units:hz ;
+                units:unit units:hz ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 11 ;

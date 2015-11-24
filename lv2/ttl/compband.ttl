@@ -20,12 +20,7 @@
         a lv2:Plugin, lv2:CompressorPlugin ;
         doap:name "rkr CompBand" ;
         doap:description "Multi-Band Compressor";
-        doap:license <http://opensource.org/licenses/gpl-2.0> ;
-        doap:maintainer [
-                foaf:name "Rakarrack Team" ;
-                foaf:homepage <http://rakarrack.sourceforge.net>;
-                foaf:mbox <mailto:ssjackson71@gmail.com> ;
-        ] ;
+        lv2:project <http://rakarrack.sourceforge.net/effects.html>;
         lv2:minorVersion 0 ;
         lv2:microVersion 0 ;
         rdfs:comment "Multi-band compressor with 4 frequency bands and wet/dry mix control. Each band has individual ratio and threshold controls." ;

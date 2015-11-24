@@ -17,15 +17,10 @@
 # 	.
 
 <http://rakarrack.sourceforge.net/effects.html#Sustainer>
-        a lv2:Plugin, lv2:CompressionPlugin ;
+        a lv2:Plugin, lv2:CompressorPlugin ;
         doap:name "rkr Sustainer" ;
         doap:description "Sustain-Enhancing Compression";
-        doap:license <http://opensource.org/licenses/gpl-2.0> ;
-        doap:maintainer [
-                foaf:name "Rakarrack Team" ;
-                foaf:homepage <http://rakarrack.sourceforge.net>;
-                foaf:mbox <mailto:ssjackson71@gmail.com> ;
-        ] ;
+        lv2:project <http://rakarrack.sourceforge.net/effects.html>;
         lv2:minorVersion 0 ;
         lv2:microVersion 0 ;
         rdfs:comment "A very simple, no-frills soft knee compressor good for making notes sustain. Brighter than the full Rakarrack Compressor." ;

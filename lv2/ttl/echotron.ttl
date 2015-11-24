@@ -35,12 +35,7 @@
     a lv2:Plugin, lv2:DelayPlugin ;
     doap:name "rkr Echotron" ;
     doap:description "Extremely Configurable Delay" ;
-    doap:license <http://opensource.org/licenses/gpl-2.0> ;
-    doap:maintainer [
-            foaf:name "Rakarrack Team" ;
-            foaf:homepage <http://rakarrack.sourceforge.net>;
-            foaf:mbox <mailto:ssjackson71@gmail.com> ;
-    ] ;
+    lv2:project <http://rakarrack.sourceforge.net/effects.html>;
     lv2:minorVersion 0 ;
     lv2:microVersion 0 ;
     rdfs:comment "An extremely-configurable delay that allows up to 127 taps. Individual tap timing can be customized and loaded through text files. You can also have a custom filter on each tap. Several example files included." ;

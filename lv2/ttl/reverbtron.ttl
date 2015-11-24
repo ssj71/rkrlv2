@@ -35,12 +35,7 @@
     a lv2:Plugin, lv2:ReverbPlugin ;
     doap:name "rkr Reverbtron" ;
     doap:description "Convolution-Based Reverb" ;
-    doap:license <http://opensource.org/licenses/gpl-2.0> ;
-    doap:maintainer [
-            foaf:name "Rakarrack Team" ;
-            foaf:homepage <http://rakarrack.sourceforge.net>;
-            foaf:mbox <mailto:ssjackson71@gmail.com> ;
-    ] ;
+    lv2:project <http://rakarrack.sourceforge.net/effects.html>;
     lv2:minorVersion 0 ;
     lv2:microVersion 0 ;
     rdfs:comment "Convolution-based reverb effect. IR samples can be converted to .rvb format and loaded into this effect for a less cpu-intensive convolution. Several files included." ;
