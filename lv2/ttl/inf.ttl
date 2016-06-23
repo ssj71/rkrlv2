@@ -78,7 +78,6 @@
                 lv2:minimum -64 ;
                 lv2:maximum 64 ;
                 lv2:portProperty lv2:integer ;
-                units:unit units:bpm ;
         ], [
                 a lv2:InputPort, lv2:ControlPort ;
                 lv2:index 7 ;
