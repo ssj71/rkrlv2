@@ -74,6 +74,8 @@ typedef struct _RKRLV2
     uint8_t prev_bypass;
     RvbFile* rvbfile;//file for reverbtron
     DlyFile* dlyfile;//file for echotron
+    float	*tmp_l;//temporary buffers for wet/dry mixing
+    float 	*tmp_r;
 
     //ports
     float *input_l_p;
@@ -215,6 +217,22 @@ have_signal(float* efxoutl, float* efxoutr, uint32_t period)
     else  return 0;
 }
 
+//checks if input and output buffers are shared and copies it in a temp buffer so wet/dry works
+void
+check_shared_buf(RKRLV2* plug, uint32_t nframes)
+{
+	if(plug->input_l_p == plug->output_l_p )
+	{
+		memcpy(plug->input_l_p,plug->tmp_l,sizeof(float)*nframes);
+		plug->input_l_p = plug->tmp_l;
+	}
+	if(plug->input_r_p == plug->output_r_p)
+	{
+		memcpy(plug->input_r_p,plug->tmp_r,sizeof(float)*nframes);
+		plug->input_r_p = plug->tmp_r;
+	}
+}
+
 void
 xfade_in (RKRLV2* plug, uint32_t period)
 {
@@ -278,6 +296,8 @@ void getFeatures(RKRLV2* plug, const LV2_Feature * const* host_features)
                     if(option[j].type == plug->URIDs.atom_Int)
                     {
                         plug->period_max = *(const int*)option[j].value;
+                        plug->tmp_l = (float*)malloc(sizeof(float)*plug->period_max);//initialize these here, it will take some extra space because its possible some plugins won't use them, but I'm lazy
+                        plug->tmp_r = (float*)malloc(sizeof(float)*plug->period_max);
                     }
                     //other types?
                 }
@@ -622,6 +642,8 @@ LV2_Handle init_choruslv2(const LV2_Descriptor *descriptor,double sample_freq, c
     plug->effectindex = ICHORUS;
     plug->prev_bypass = 1;
 
+    getFeatures(plug, host_features);
+
     plug->chorus = new Chorus(0,0,sample_freq);
 
     return plug;
@@ -643,6 +665,7 @@ void run_choruslv2(LV2_Handle handle, uint32_t nframes)
         memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
         return;
     }
+    check_shared_buf(plug,nframes);
 
     //LFO effects require period be set before setting other params
     plug->chorus->PERIOD = nframes;
