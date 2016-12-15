@@ -74,8 +74,8 @@
                 lv2:symbol "PRESET" ;
                 lv2:name "Preset" ;
                 lv2:default 0 ;
-                lv2:minimum -64 ;
-                lv2:maximum 63 ;
+                lv2:minimum 0 ;
+                lv2:maximum 10 ;
                 lv2:portProperty lv2:integer ;
                 lv2:portProperty lv2:enumeration;
                 lv2:scalePoint [ rdfs:label "Marshall 4-12\""; rdf:value 0 ] ;
