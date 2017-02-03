@@ -23,7 +23,7 @@
         lv2:project <http://rakarrack.sourceforge.net/effects.html>;
         lv2:minorVersion 0 ;
         lv2:microVersion 0 ;
-        rdfs:comment "An optical tremolo effect emulation such as often built into a guitar amplifier. This varies the signal volume through an LFO."
+        rdfs:comment "An optical tremolo effect emulation such as often built into a guitar amplifier. This varies the signal volume through an LFO." ;
         lv2:optionalFeature lv2:hardRTCapable ;
 #        ui:ui  <http://rakarrack.sourceforge.net/effects.html#Otrem_ui> ;
 
