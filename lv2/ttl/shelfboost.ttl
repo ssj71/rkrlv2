@@ -95,7 +95,7 @@
                 lv2:symbol "STEREO" ;
                 lv2:name "Stereo" ;
                 lv2:default 1 ;
-                lv2:minimum 0
+                lv2:minimum 0 ;
                 lv2:maximum 1 ;
                 lv2:portProperty lv2:integer ;
                 lv2:portProperty lv2:toggled ;
