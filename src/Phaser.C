@@ -39,7 +39,7 @@ Phaser::Phaser (float * efxoutl_, float * efxoutr_, double sample_rate)
     lfo = new EffectLFO(sample_rate);
 
     Ppreset = 0;
-    PERIOD = 255; //make best guess for init;
+    PERIOD = 256; //best guess until the effect starts running;
     setpreset (Ppreset);
     cleanup ();
 };
