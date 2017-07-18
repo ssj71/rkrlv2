@@ -44,6 +44,7 @@
 #define OPTTREMLV2_URI "http://rakarrack.sourceforge.net/effects.html#Otrem"
 #define VIBELV2_URI "http://rakarrack.sourceforge.net/effects.html#Vibe"
 #define INFLV2_URI "http://rakarrack.sourceforge.net/effects.html#Infinity"
+#define PHASELV2_URI "http://rakarrack.sourceforge.net/effects.html#phas"
 
 #define RVBFILE_URI "http://rakarrack.sourceforge.net/effects.html#Reverbtron:rvbfile"
 #define DLYFILE_URI "http://rakarrack.sourceforge.net/effects.html#Echotron:dlyfile"
@@ -123,7 +124,8 @@ enum RKRLV2_effects_
 	IMBCOMP,
 	IOPTTREM,
 	IVIBE,//40
-	IINF
+	IINF,
+	IPHASE
 };
 
 #endif

@@ -77,6 +77,7 @@ add_library(rkrlv2 SHARED
   ../src/Opticaltrem.C
   ../src/Vibe.C
   ../src/Infinity.C
+  ../src/Phaser.C
 )
 
 set_target_properties(rkrlv2 PROPERTIES PREFIX "")

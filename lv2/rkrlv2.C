@@ -58,6 +58,7 @@
 #include"Opticaltrem.h"
 #include"Vibe.h"
 #include"Infinity.h"
+#include"Phaser.h"
 
 //this is the default hopefully hosts don't use periods of more than this, or they will communicate the max bufsize
 #define INTERMEDIATE_BUFSIZE 1024
@@ -69,6 +70,7 @@ typedef struct _RKRLV2
     uint8_t effectindex;//index of effect
     uint16_t period_max;
     uint8_t loading_file;//flag to indicate that file load work is underway
+    uint8_t init_params; //flag to indicate to force parameter (LFO) update & sample update on first run
     uint8_t file_changed;
     uint8_t prev_bypass;
     RvbFile* rvbfile;//file for reverbtron
@@ -152,6 +154,7 @@ typedef struct _RKRLV2
     Opticaltrem* otrem; //39
     Vibe* vibe;			//40
     Infinity* inf;		//41
+    Phaser* phase;		//42
 } RKRLV2;
 
 enum other_ports
@@ -3790,6 +3793,95 @@ void run_inflv2(LV2_Handle handle, uint32_t nframes)
     return;
 }
 
+///// Phaser /////////
+LV2_Handle init_phaselv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 12;
+    plug->effectindex = IPHASE;
+    plug->prev_bypass = 1;
+
+    plug->phase = new Phaser(0,0,sample_freq);
+    plug->init_params = 1; // LFO init
+
+    return plug;
+}
+
+void run_phaselv2(LV2_Handle handle, uint32_t nframes)
+{
+    int i;
+    int val;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p && plug->prev_bypass)
+    {
+        plug->phase->cleanup();
+        //copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+
+    //LFO effects require period be set before setting other params
+    if(plug->init_params)
+    {
+        plug->phase->PERIOD = nframes;
+        plug->phase->lfo->updateparams(nframes);
+        plug->init_params = 0; // so we only do this once
+    }
+
+    //check and set changed parameters
+    for(i=0; i<1; i++) //0-4
+    {
+        val = (int)*plug->param_p[i];
+        if(plug->phase->getpar(i) != val)
+        {
+            plug->phase->changepar(i,val);
+        }
+    }
+    val = (int)*plug->param_p[i] +64;// 1 Pan offset
+    if(plug->phase->getpar(i) != val)
+    {
+        plug->phase->changepar(i,val);
+    }
+    for(i++; i<9; i++)
+    {
+        val = (int)*plug->param_p[i];
+        if(plug->phase->getpar(i) != val)
+        {
+            plug->phase->changepar(i,val);
+        }
+    }
+    val = (int)*plug->param_p[i] +64 ;// 9 l/r cross offset
+    if(plug->phase->getpar(i) != val)
+    {
+        plug->phase->changepar(i,val);
+    }
+    for(i++; i<plug->nparams; i++)
+    {
+        val = (int)*plug->param_p[i];
+        if(plug->phase->getpar(i) != val)
+        {
+            plug->phase->changepar(i,val);
+        }
+    }
+
+    //now set out ports and global period size
+    plug->phase->efxoutl = plug->output_l_p;
+    plug->phase->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->phase->out(plug->input_l_p,plug->input_r_p,nframes);
+
+    //and for whatever reason we have to do the wet/dry mix ourselves
+    wetdry_mix(plug, plug->phase->outvolume, nframes);
+
+    xfade_check(plug,nframes);
+    return;
+}
+
 /////////////////////////////////
 //       END OF FX
 /////////////////////////////////
@@ -3930,6 +4022,9 @@ void cleanup_rkrlv2(LV2_Handle handle)
     case IINF:
     	delete plug->inf;
     	break;
+    case IPHASE:
+        delete plug->phase;
+        break;
     }
     free(plug);
 }
@@ -4612,6 +4707,18 @@ static const LV2_Descriptor inflv2_descriptor=
     cleanup_rkrlv2
 };
 
+static const LV2_Descriptor phaselv2_descriptor=
+{
+    PHASELV2_URI,
+    init_phaselv2,
+    connect_rkrlv2_ports,
+    0,//activate
+    run_phaselv2,
+    0,//deactivate
+    cleanup_rkrlv2,
+    0//extension
+};
+
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor* lv2_descriptor(uint32_t index)
 {
@@ -4701,6 +4808,8 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
     	return &vibelv2_descriptor ;
     case IINF:
     	return &inflv2_descriptor ;
+    case IPHASE:
+        return &phaselv2_descriptor ;
     default:
         return 0;
     }
