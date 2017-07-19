@@ -1,0 +1,260 @@
+@prefix atom: <http://lv2plug.in/ns/ext/atom#> .
+@prefix lv2: <http://lv2plug.in/ns/lv2core#> .
+@prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix state: <http://lv2plug.in/ns/ext/state#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://rakarrack.sourceforge.net/effects.html#phas:preset:phaser_1> 
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#phas> ;
+	rdfs:label "Phaser 1" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 64.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "TEMPO" ;
+		pset:value 11.0
+	] , [
+		lv2:symbol "RND" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "STDL" ;
+		pset:value 64.0
+	] , [
+		lv2:symbol "DEPTH" ;
+		pset:value 110.0
+	] , [
+		lv2:symbol "FB" ;
+		pset:value 64.0
+	] , [
+		lv2:symbol "STAGES" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "LRCR" ;
+		pset:value -64.0
+	] , [
+		lv2:symbol "SUB" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "PHASE" ;
+		pset:value 20.0
+	] .
+
+<http://rakarrack.sourceforge.net/effects.html#phas:preset:phaser_2> 
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#phas> ;
+	rdfs:label "Phaser 2" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 64.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "TEMPO" ;
+		pset:value 10.0
+	] , [
+		lv2:symbol "RND" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "STDL" ;
+		pset:value 88.0
+	] , [
+		lv2:symbol "DEPTH" ;
+		pset:value 40.0
+	] , [
+		lv2:symbol "FB" ;
+		pset:value 64.0
+	] , [
+		lv2:symbol "STAGES" ;
+		pset:value 3.0
+	] , [
+		lv2:symbol "LRCR" ;
+		pset:value -64.0
+	] , [
+		lv2:symbol "SUB" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "PHASE" ;
+		pset:value 20.0
+	] .
+
+<http://rakarrack.sourceforge.net/effects.html#phas:preset:phaser_3> 
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#phas> ;
+	rdfs:label "Phaser 3" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 64.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "TEMPO" ;
+		pset:value 8.0
+	] , [
+		lv2:symbol "RND" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "STDL" ;
+		pset:value 66.0
+	] , [
+		lv2:symbol "DEPTH" ;
+		pset:value 68.0
+	] , [
+		lv2:symbol "FB" ;
+		pset:value 107.0
+	] , [
+		lv2:symbol "STAGES" ;
+		pset:value 2.0
+	] , [
+		lv2:symbol "LRCR" ;
+		pset:value -64.0
+	] , [
+		lv2:symbol "SUB" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "PHASE" ;
+		pset:value 20.0
+	] .
+
+<http://rakarrack.sourceforge.net/effects.html#phas:preset:phaser_4> 
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#phas> ;
+	rdfs:label "Phaser 4" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 39.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "TEMPO" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "RND" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "STDL" ;
+		pset:value 66.0
+	] , [
+		lv2:symbol "DEPTH" ;
+		pset:value 67.0
+	] , [
+		lv2:symbol "FB" ;
+		pset:value 10.0
+	] , [
+		lv2:symbol "STAGES" ;
+		pset:value 5.0
+	] , [
+		lv2:symbol "LRCR" ;
+		pset:value -64.0
+	] , [
+		lv2:symbol "SUB" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "PHASE" ;
+		pset:value 20.0
+	] .
+
+<http://rakarrack.sourceforge.net/effects.html#phas:preset:phaser_5> 
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#phas> ;
+	rdfs:label "Phaser 5" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 64.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "TEMPO" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "RND" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 1.0
+	] , [
+		lv2:symbol "STDL" ;
+		pset:value 110.0
+	] , [
+		lv2:symbol "DEPTH" ;
+		pset:value 67.0
+	] , [
+		lv2:symbol "FB" ;
+		pset:value 78.0
+	] , [
+		lv2:symbol "STAGES" ;
+		pset:value 10.0
+	] , [
+		lv2:symbol "LRCR" ;
+		pset:value -64.0
+	] , [
+		lv2:symbol "SUB" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "PHASE" ;
+		pset:value 20.0
+	] .
+
+<http://rakarrack.sourceforge.net/effects.html#phas:preset:phaser_6> 
+	a pset:Preset ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#phas> ;
+	rdfs:label "Phaser 6" ;
+	lv2:port [
+		lv2:symbol "WETDRY" ;
+		pset:value 64.0
+	] , [
+		lv2:symbol "PAN" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "TEMPO" ;
+		pset:value 31.0
+	] , [
+		lv2:symbol "RND" ;
+		pset:value 100.0
+	] , [
+		lv2:symbol "TYPE" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "STDL" ;
+		pset:value 58.0
+	] , [
+		lv2:symbol "DEPTH" ;
+		pset:value 37.0
+	] , [
+		lv2:symbol "FB" ;
+		pset:value 78.0
+	] , [
+		lv2:symbol "STAGES" ;
+		pset:value 3.0
+	] , [
+		lv2:symbol "LRCR" ;
+		pset:value -64.0
+	] , [
+		lv2:symbol "SUB" ;
+		pset:value 0.0
+	] , [
+		lv2:symbol "PHASE" ;
+		pset:value 20.0
+	] .
+

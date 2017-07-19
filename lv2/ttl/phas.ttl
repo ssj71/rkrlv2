@@ -1,0 +1,222 @@
+@prefix doap:  <http://usefulinc.com/ns/doap#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix units: <http://lv2plug.in/ns/extensions/units#> .
+@prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+@prefix mod:   <http://moddevices.com/ns/mod#>.
+
+@prefix lv2:   <http://lv2plug.in/ns/lv2core#> .
+@prefix ui:   <http://lv2plug.in/ns/extensions/ui#> .
+
+# <http://rakarrack.sourceforge.net/effects.html#phas_ui>
+# 	a ui:X11UI ;
+# 	ui:binary <rkrlv2_ui.so> ;
+# 	lv2:extensionData ui:idleInterface;
+# 	.
+
+<http://rakarrack.sourceforge.net/effects.html#phas>
+        a lv2:Plugin, lv2:PhaserPlugin ;
+        doap:name "rkr Phaser" ;
+        mod:brand "Rakarrack";
+        mod:label "Phaser";
+        doap:description "Phaser";
+        doap:license <http://opensource.org/licenses/GPL-2.0> ;
+        lv2:project <http://rakarrack.sourceforge.net/effects.html>;
+        lv2:minorVersion 0 ;
+        lv2:microVersion 0 ;
+        rdfs:comment "More mild digital phaser with exponential LFO sweep." ;
+        lv2:optionalFeature lv2:hardRTCapable ;
+#        ui:ui  <http://rakarrack.sourceforge.net/effects.html#phas_ui> ;
+
+        lv2:port [
+                a lv2:InputPort, lv2:AudioPort ;
+                lv2:index 0 ;
+                lv2:symbol "INPUT_L" ;
+                lv2:name "Audio In L" ;
+        ] ;
+        lv2:port [
+                a lv2:InputPort, lv2:AudioPort ;
+                lv2:index 1 ;
+                lv2:symbol "INPUT_R" ;
+                lv2:name "Audio In R" ;
+        ] ;
+        lv2:port [
+                a lv2:OutputPort, lv2:AudioPort ;
+                lv2:index 2 ;
+                lv2:symbol "OUTPUT_L" ;
+                lv2:name "Audio Out L" ;
+        ] ;
+        lv2:port [
+                a lv2:OutputPort, lv2:AudioPort ;
+                lv2:index 3 ;
+                lv2:symbol "OUTPUT_R" ;
+                lv2:name "Audio Out R" ;
+        ] ;
+
+        lv2:port [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 4 ;
+                lv2:symbol "BYPASS" ;
+                lv2:name "Bypass" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 1 ;
+                lv2:portProperty lv2:integer ;
+                lv2:portProperty lv2:toggled ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 5 ;
+                lv2:symbol "WETDRY" ;
+                lv2:name "Wet/Dry" ;
+                lv2:default 64 ;
+                lv2:minimum 0 ;
+                lv2:maximum 127 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 6 ;
+                lv2:symbol "PAN" ;
+                lv2:name "Panning" ;
+                lv2:default 0 ;
+                lv2:minimum -64 ;
+                lv2:maximum 63 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 7 ;
+                lv2:symbol "TEMPO" ;
+                lv2:name "Tempo" ;
+                lv2:default 11 ;
+                lv2:minimum 1 ;
+                lv2:maximum 600 ;
+                lv2:portProperty lv2:integer ;
+                units:unit units:bpm ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 8 ;
+                lv2:symbol "RND" ;
+                lv2:name "Randomness" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 127 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 9 ;
+                lv2:symbol "TYPE" ;
+                lv2:name "LFO Type" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 11 ;
+                lv2:portProperty lv2:integer ;
+                lv2:portProperty lv2:enumeration;
+                lv2:scalePoint [ rdfs:label "Sine"; rdf:value 0 ] ;
+                lv2:scalePoint [ rdfs:label "Triangle"; rdf:value 1 ] ;
+                lv2:scalePoint [ rdfs:label "Ramp Up"; rdf:value 2 ] ;
+                lv2:scalePoint [ rdfs:label "Ramp Down"; rdf:value 3 ] ;
+                lv2:scalePoint [ rdfs:label "ZigZag"; rdf:value 4 ] ;
+                lv2:scalePoint [ rdfs:label "Modulated Square"; rdf:value 5 ] ;
+                lv2:scalePoint [ rdfs:label "Modulated Saw"; rdf:value 6 ] ;
+                lv2:scalePoint [ rdfs:label "Lorenz Fractal"; rdf:value 7 ] ;
+                lv2:scalePoint [ rdfs:label "Lorenz Fractal XY"; rdf:value 8 ] ;
+                lv2:scalePoint [ rdfs:label "Random Sample and Hold"; rdf:value 9 ] ;
+                lv2:scalePoint [ rdfs:label "Triangle Topped Sine"; rdf:value 10 ] ;
+                lv2:scalePoint [ rdfs:label "Triangle Bottomed Sine"; rdf:value 11 ] ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 10 ;
+                lv2:symbol "STDL" ;
+                lv2:name "LFO L/R Delay" ;
+                lv2:default 64 ;
+                lv2:minimum 0 ;
+                lv2:maximum 127 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 11 ;
+                lv2:symbol "DEPTH" ;
+                lv2:name "Phase Depth" ;
+                lv2:default 110 ;
+                lv2:minimum 0 ;
+                lv2:maximum 127 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 12 ;
+                lv2:symbol "FB" ;
+                lv2:name "Feedback" ;
+                lv2:default 64 ;
+                lv2:minimum 0 ;
+                lv2:maximum 127 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 13 ;
+                lv2:symbol "STAGES" ;
+                lv2:name "Stages" ;
+                lv2:default 1 ;
+                lv2:minimum 1 ;
+                lv2:maximum 12 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 14 ;
+                lv2:symbol "LRCR" ;
+                lv2:name "Left/Right Crossover" ;
+                lv2:default -64 ;
+                lv2:minimum -64 ;
+                lv2:maximum  64 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 15 ;
+                lv2:symbol "SUB" ;
+                lv2:name "Subtract" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 1 ;
+                lv2:portProperty lv2:integer ;
+                lv2:portProperty lv2:toggled ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 16 ;
+                lv2:symbol "PHASE" ;
+                lv2:name "Phase" ;
+                lv2:default 20 ;
+                lv2:minimum 0 ;
+                lv2:maximum 127 ;
+                lv2:portProperty lv2:integer ;
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#phas:preset:phaser_1>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#phas> ;
+        rdfs:seeAlso <phas_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#phas:preset:phaser_2>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#phas> ;
+        rdfs:seeAlso <phas_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#phas:preset:phaser_3>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#phas> ;
+        rdfs:seeAlso <phas_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#phas:preset:phaser_4>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#phas> ;
+        rdfs:seeAlso <phas_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#phas:preset:phaser_5>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#phas> ;
+        rdfs:seeAlso <phas_presets.ttl> .
+
+<http://rakarrack.sourceforge.net/effects.html#phas:preset:phaser_6>
+        a pset:Preset ;
+        lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#phas> ;
+        rdfs:seeAlso <phas_presets.ttl> .
+
