@@ -82,7 +82,7 @@ Phaser::out (float * smpsl, float * smpsr, uint32_t period)
         rgain = 0.0f;
 
     for (i = 0; i < period; i++) {
-        float x = (float) i / float(period);
+        float x = (float) i / ((float)period);
         float x1 = 1.0f - x;
         float gl = lgain * x + oldlgain * x1;
         float gr = rgain * x + oldrgain * x1;
