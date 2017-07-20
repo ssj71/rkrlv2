@@ -1,0 +1,146 @@
+@prefix doap:  <http://usefulinc.com/ns/doap#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix units: <http://lv2plug.in/ns/extensions/units#> .
+@prefix pset: <http://lv2plug.in/ns/ext/presets#> .
+
+@prefix lv2:   <http://lv2plug.in/ns/lv2core#> .
+@prefix ui:   <http://lv2plug.in/ns/extensions/ui#> .
+
+# <http://rakarrack.sourceforge.net/effects.html#gate_ui>
+# 	a ui:X11UI ;
+# 	ui:binary <rkrlv2_ui.so> ;
+# 	lv2:extensionData ui:idleInterface;
+# 	.
+
+<http://rakarrack.sourceforge.net/effects.html#gate>
+        a lv2:Plugin, lv2:gatePlugin ;
+        doap:name "rkr NoiseGate" ;
+        doap:description "Dynamic gate";
+        lv2:project <http://rakarrack.sourceforge.net/effects.html>;
+        lv2:minorVersion 0 ;
+        lv2:microVersion 0 ;
+        rdfs:comment "Based on Gate, Steve Harris LADSPA plugin." ;
+        lv2:optionalFeature lv2:hardRTCapable ;
+#        ui:ui  <http://rakarrack.sourceforge.net/effects.html#gate_ui> ;
+
+        lv2:port [
+                a lv2:InputPort, lv2:AudioPort ;
+                lv2:index 0 ;
+                lv2:symbol "INPUT_L" ;
+                lv2:name "Audio In L" ;
+        ] ;
+        lv2:port [
+                a lv2:InputPort, lv2:AudioPort ;
+                lv2:index 1 ;
+                lv2:symbol "INPUT_R" ;
+                lv2:name "Audio In R" ;
+        ] ;
+        lv2:port [
+                a lv2:OutputPort, lv2:AudioPort ;
+                lv2:index 2 ;
+                lv2:symbol "OUTPUT_L" ;
+                lv2:name "Audio Out L" ;
+        ] ;
+        lv2:port [
+                a lv2:OutputPort, lv2:AudioPort ;
+                lv2:index 3 ;
+                lv2:symbol "OUTPUT_R" ;
+                lv2:name "Audio Out R" ;
+        ] ;
+        lv2:port [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 4 ;
+                lv2:symbol "BYPASS" ;
+                lv2:name "Bypass" ;
+                lv2:default 0 ;
+                lv2:minimum 0 ;
+                lv2:maximum 1 ;
+                lv2:portProperty lv2:integer ;
+                lv2:portProperty lv2:toggled ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 5 ;
+                lv2:symbol "THRESHOLD" ;
+                lv2:name "Threshold" ;
+                lv2:default 0 ;
+                lv2:minimum -70 ;
+                lv2:maximum 20 ;
+                lv2:portProperty lv2:integer ;
+                units:unit units:db;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 6 ;
+                lv2:symbol "RANGE" ;
+                lv2:name "Range" ;
+                lv2:default 0 ;
+                lv2:minimum -90 ;
+                lv2:maximum 0 ;
+                lv2:portProperty lv2:integer ;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 7 ;
+                lv2:symbol "ATTACK" ;
+                lv2:name "Attack Time" ;
+                lv2:default 1 ;
+                lv2:minimum 1 ;
+                lv2:maximum 250 ;
+                lv2:portProperty lv2:integer ;
+                units:unit units:ms;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 8 ;
+                lv2:symbol "RELEASE" ;
+                lv2:name "Release Time" ;
+                lv2:default 2 ;
+                lv2:minimum 2 ;
+                lv2:maximum 250 ;
+                lv2:portProperty lv2:integer ;
+                units:unit units:ms;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 9 ;
+                lv2:symbol "LPF" ;
+                lv2:name "Lowpass Filter" ;
+                lv2:default 6703 ;
+                lv2:minimum 20 ;
+                lv2:maximum 26000 ;
+                lv2:portProperty lv2:integer ;
+                units:unit units:hz;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 10 ;
+                lv2:symbol "HPF" ;
+                lv2:name "Highpass Filter" ;
+                lv2:default 76 ;
+                lv2:minimum 20 ;
+                lv2:maximum 20000 ;
+                lv2:portProperty lv2:integer ;
+                units:unit units:hz;
+        ], [
+                a lv2:InputPort, lv2:ControlPort ;
+                lv2:index 11 ;
+                lv2:symbol "HOLD" ;
+                lv2:name "Hold" ;
+                lv2:default 2 ;
+                lv2:minimum 2 ;
+                lv2:maximum 500 ;
+                lv2:portProperty lv2:integer ;
+        ] ;
+	.
+
+<http://rakarrack.sourceforge.net/effects.html#gate:preset:0dB>
+	a pset:Preset ;
+	rdfs:seeAlso <gate_presets.ttl> ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#gate> .
+
+<http://rakarrack.sourceforge.net/effects.html#gate:preset:-10dB>
+	a pset:Preset ;
+	rdfs:seeAlso <gate_presets.ttl> ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#gate> .
+
+<http://rakarrack.sourceforge.net/effects.html#gate:preset:-20dB>
+	a pset:Preset ;
+	rdfs:seeAlso <gate_presets.ttl> ;
+	lv2:appliesTo <http://rakarrack.sourceforge.net/effects.html#gate> .
