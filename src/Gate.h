@@ -38,10 +38,10 @@ class Gate
 
 public:
 
-    Gate (float * efxoutl_, float * efxoutr_);
+    Gate (float * efxoutl_, float * efxoutr_, double samplerate, uint32_t intermediate_bufsize);
     ~Gate ();
 
-    void out (float * smps_l, float * smps_r);
+    void out (float * smps_l, float * smps_r, uint32_t period);
 
     void Gate_Change (int np, int value);
     void Gate_Change_Preset (int npreset);
@@ -85,7 +85,7 @@ private:
     float hold;
 
 
-
+    float* interpbuf; //buffer for filters
     AnalogFilter *lpfl, *lpfr, *hpfl, *hpfr;
     class FPreset *Fpre;
 

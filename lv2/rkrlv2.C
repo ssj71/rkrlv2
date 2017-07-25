@@ -59,6 +59,7 @@
 #include"Vibe.h"
 #include"Infinity.h"
 #include"Phaser.h"
+#include"Gate.h"
 
 //this is the default hopefully hosts don't use periods of more than this, or they will communicate the max bufsize
 #define INTERMEDIATE_BUFSIZE 1024
@@ -155,6 +156,7 @@ typedef struct _RKRLV2
     Vibe* vibe;			//40
     Infinity* inf;		//41
     Phaser* phase;		//42
+    Gate* gate;         //43
 } RKRLV2;
 
 enum other_ports
@@ -3882,6 +3884,63 @@ void run_phaselv2(LV2_Handle handle, uint32_t nframes)
     return;
 }
 
+///// NoiseGate /////////
+LV2_Handle init_gatelv2(const LV2_Descriptor *descriptor,double sample_freq, const char *bundle_path,const LV2_Feature * const* host_features)
+{
+    RKRLV2* plug = (RKRLV2*)malloc(sizeof(RKRLV2));
+
+    plug->nparams = 7;
+    plug->effectindex = IGATE;
+    plug->prev_bypass = 1;
+
+    getFeatures(plug,host_features);
+
+    plug->gate = new Gate(0,0, sample_freq, plug->period_max);
+
+    return plug;
+}
+
+void run_gatelv2(LV2_Handle handle, uint32_t nframes)
+{
+    int i;
+    int val;
+
+    RKRLV2* plug = (RKRLV2*)handle;
+
+    if(*plug->bypass_p && plug->prev_bypass)
+    {
+        plug->gate->cleanup();
+        //copy dry signal
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        return;
+    }
+
+    //check and set changed parameters
+    for(i=0; i<plug->nparams; i++)
+    {
+        val = (int)*plug->param_p[i];
+        if(plug->gate->getpar(i+1) != val)//this effect is 1 indexed
+        {
+            plug->gate->Gate_Change(i+1,val);
+        }
+    }
+
+    //gate does inline
+    memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+    memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+
+    //now set out ports
+    plug->gate->efxoutl = plug->output_l_p;
+    plug->gate->efxoutr = plug->output_r_p;
+
+    //now run
+    plug->gate->out(plug->output_l_p,plug->output_r_p,nframes);
+
+    xfade_check(plug,nframes);
+    return;
+}
+
 /////////////////////////////////
 //       END OF FX
 /////////////////////////////////
@@ -4024,6 +4083,9 @@ void cleanup_rkrlv2(LV2_Handle handle)
     	break;
     case IPHASE:
         delete plug->phase;
+        break;
+    case IGATE:
+        delete plug->gate;
         break;
     }
     free(plug);
@@ -4719,6 +4781,18 @@ static const LV2_Descriptor phaselv2_descriptor=
     0//extension
 };
 
+static const LV2_Descriptor gatelv2_descriptor=
+{
+    GATELV2_URI,
+    init_gatelv2,
+    connect_rkrlv2_ports,
+    0,//activate
+    run_gatelv2,
+    0,//deactivate
+    cleanup_rkrlv2,
+    0//extension
+};
+
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor* lv2_descriptor(uint32_t index)
 {
@@ -4810,6 +4884,8 @@ const LV2_Descriptor* lv2_descriptor(uint32_t index)
     	return &inflv2_descriptor ;
     case IPHASE:
         return &phaselv2_descriptor ;
+    case IGATE:
+        return &gatelv2_descriptor ;
     default:
         return 0;
     }

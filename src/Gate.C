@@ -30,21 +30,22 @@
 #include "Gate.h"
 
 
-Gate::Gate (float * efxoutl_, float * efxoutr_)
+Gate::Gate (float * efxoutl_, float * efxoutr_, double samplerate, uint32_t intermediate_bufsize)
 {
 
     efxoutl = efxoutl_;
     efxoutr = efxoutr_;
 
+    interpbuf = new float[intermediate_bufsize];
 
-    lpfl = new AnalogFilter (2, 22000, 1, 0);
-    lpfr = new AnalogFilter (2, 22000, 1, 0);
-    hpfl = new AnalogFilter (3, 20, 1, 0);
-    hpfr = new AnalogFilter (3, 20, 1, 0);
+    lpfl = new AnalogFilter (2, 22000, 1, 0, samplerate, interpbuf);
+    lpfr = new AnalogFilter (2, 22000, 1, 0, samplerate, interpbuf);
+    hpfl = new AnalogFilter (3, 20, 1, 0, samplerate, interpbuf);
+    hpfr = new AnalogFilter (3, 20, 1, 0, samplerate, interpbuf);
 
     env = 0.0;
     gate = 0.0;
-    fs = fSAMPLE_RATE;
+    fs = samplerate;
     state = CLOSED;
     hold_count = 0;
 
@@ -52,6 +53,11 @@ Gate::Gate (float * efxoutl_, float * efxoutr_)
 
 Gate::~Gate ()
 {
+    delete[] interpbuf;
+    delete lpfl;
+    delete lpfr;
+    delete hpfl;
+    delete hpfr;
 }
 
 
@@ -119,10 +125,7 @@ Gate::Gate_Change (int np, int value)
         Phold = value;
         hold = (float)Phold;
         break;
-
     }
-
-
 }
 
 int
@@ -167,6 +170,7 @@ Gate::Gate_Change_Preset (int npreset)
 
     const int PRESET_SIZE = 7;
     const int NUM_PRESETS = 3;
+    int pdata[PRESET_SIZE];
     int presets[NUM_PRESETS][PRESET_SIZE] = {
         //0
         {0, 0, 1, 2, 6703, 76, 2},
@@ -178,7 +182,7 @@ Gate::Gate_Change_Preset (int npreset)
 
     if(npreset>NUM_PRESETS-1) {
 
-        Fpre->ReadPreset(16,npreset-NUM_PRESETS+1);
+        Fpre->ReadPreset(16,npreset-NUM_PRESETS+1,pdata);
         for (int n = 0; n < PRESET_SIZE; n++)
             Gate_Change(n + 1, pdata[n]);
     } else {
@@ -191,18 +195,16 @@ Gate::Gate_Change_Preset (int npreset)
 
 
 void
-Gate::out (float *efxoutl, float *efxoutr)
+Gate::out (float *efxoutl, float *efxoutr, uint32_t period)
 {
+    unsigned i;
+    float sum = 0.0f;
 
 
-    int i;
-    float sum;
-
-
-    lpfl->filterout (efxoutl);
-    hpfl->filterout (efxoutl);
-    lpfr->filterout (efxoutr);
-    hpfr->filterout (efxoutr);
+    lpfl->filterout (efxoutl,period);
+    hpfl->filterout (efxoutl,period);
+    lpfr->filterout (efxoutr,period);
+    hpfr->filterout (efxoutr,period);
 
 
     for (i = 0; i < period; i++) {
@@ -247,7 +249,4 @@ Gate::out (float *efxoutl, float *efxoutr)
         efxoutr[i] *= (cut * (1.0f - gate) + gate);
 
     }
-
-
-
 };

@@ -228,3 +228,8 @@
         a lv2:Plugin, lv2:PhaserPlugin ;
         lv2:binary <rkrlv2.so> ;
         rdfs:seeAlso <phas.ttl> .
+# 43 
+<http://rakarrack.sourceforge.net/effects.html#gate>
+        a lv2:Plugin, lv2:GatePlugin ;
+        lv2:binary <rkrlv2.so> ;
+        rdfs:seeAlso <gate.ttl> .
