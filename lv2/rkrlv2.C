@@ -15,6 +15,7 @@
 #include<stdio.h>
 #include<string.h>
 #include<unistd.h>
+#include<samplerate.h>
 #include"rkrlv2.h"
 
 #include"EQ.h"
@@ -803,7 +804,7 @@ LV2_Handle init_harmnomidlv2(const LV2_Descriptor *descriptor,double sample_freq
     getFeatures(plug,host_features);
 
     //magic numbers: shift qual 4, downsample 5, up qual 4, down qual 2,
-    plug->harm = new Harmonizer(0,0,4,5,4,2, plug->period_max, sample_freq);
+    plug->harm = new Harmonizer(0,0,4,5,SRC_LINEAR,SRC_SINC_FASTEST, plug->period_max, sample_freq);
     plug->noteID = new Recognize(0,0,.6, sample_freq, 440.0, plug->period_max);//.6 is default trigger value
     plug->chordID = new RecChord();
 
@@ -2809,7 +2810,7 @@ LV2_Handle init_stomplv2(const LV2_Descriptor *descriptor,double sample_freq, co
     getFeatures(plug,host_features);
 
     plug->stomp = new StompBox(0,0, sample_freq, plug->period_max, /*oversampling*/2,
-                               /*up interpolation method*/4, /*down interpolation method*/2);
+                               /*up interpolation method*/SRC_LINEAR, /*down interpolation method*/SRC_SINC_FASTEST);
 
     return plug;
 }
@@ -2866,8 +2867,8 @@ LV2_Handle init_stomp_fuzzlv2(const LV2_Descriptor *descriptor,double sample_fre
 
     getFeatures(plug,host_features);
 
-    plug->stomp = new StompBox(0,0, sample_freq, plug->period_max, /*oversampling*/2,
-                               /*up interpolation method*/4, /*down interpolation method*/2);
+    plug->stomp = new StompBox(0,0, sample_freq, plug->period_max, /*oversampling*/1,
+                               /*up interpolation method*/SRC_LINEAR, /*down interpolation method*/SRC_LINEAR);
     plug->stomp->changepar(5,7);//set to fuzz
 
     return plug;
@@ -2891,7 +2892,7 @@ LV2_Handle init_revtronlv2(const LV2_Descriptor *descriptor,double sample_freq, 
     }
     lv2_atom_forge_init(&plug->forge, plug->urid_map);
 
-    plug->revtron = new Reverbtron(0,0, sample_freq, plug->period_max, /*downsample*/5, /*up interpolation method*/4, /*down interpolation method*/2);
+    plug->revtron = new Reverbtron(0,0, sample_freq, plug->period_max, /*downsample*/5, /*up interpolation method*/SRC_LINEAR, /*down interpolation method*/SRC_SINC_FASTEST);
     plug->revtron->changepar(4,1);//set to user selected files
     plug->rvbfile = new RvbFile;
 

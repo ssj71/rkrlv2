@@ -41,10 +41,6 @@ Dflange::Dflange (float * efxoutl_, float * efxoutr_, double sample_rate)
     //default values
     Ppreset = 0;
 
-    ldelay = NULL;
-    rdelay = NULL;
-
-
     maxx_delay = (int) sample_rate * 0.055f;
     ldelay = new float[maxx_delay];
     rdelay = new float[maxx_delay];
@@ -80,6 +76,8 @@ Dflange::Dflange (float * efxoutl_, float * efxoutr_, double sample_rate)
     lsB = 0.0f;
     logmax = logf(1000.0f)/logf(2.0f);
 
+    kl = kr = 0;
+
     lfo = new EffectLFO(sample_rate);
     PERIOD = 255;//best guess for init
     setpreset (Ppreset);
@@ -88,10 +86,10 @@ Dflange::Dflange (float * efxoutl_, float * efxoutr_, double sample_rate)
 
 Dflange::~Dflange ()
 {
-    delete ldelay;
-    delete rdelay;
-    delete zldelay;
-    delete zrdelay;
+    delete[] ldelay;
+    delete[] rdelay;
+    delete[] zldelay;
+    delete[] zrdelay;
     delete ldelayline0;
     delete rdelayline0;
     delete ldelayline1;
