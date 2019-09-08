@@ -64,6 +64,7 @@
 
 //this is the default hopefully hosts don't use periods of more than this, or they will communicate the max bufsize
 #define INTERMEDIATE_BUFSIZE 1024
+#define MAX_INPLACE 8192
 
 
 typedef struct _RKRLV2
@@ -88,6 +89,10 @@ typedef struct _RKRLV2
     LV2_Atom_Sequence* atom_out_p;
     float *param_p[20];
     float *dbg_p;
+
+    // no-inplace buffers
+    float input_buf_l[MAX_INPLACE];
+    float input_buf_r[MAX_INPLACE];
 
     //various "advanced" lv2 stuffs
     LV2_Worker_Schedule* scheduler;
@@ -218,6 +223,22 @@ have_signal(float* efxoutl, float* efxoutr, uint32_t period)
 
     if ((il_sum+ir_sum) > 0.0004999f)  return  1;
     else  return 0;
+}
+
+static void
+inplace_check (RKRLV2* plug, uint32_t period)
+{
+    if (period > MAX_INPLACE) {
+        return;
+    }
+    if (plug->input_l_p == plug->output_l_p) {
+        memcpy (plug->input_buf_l, plug->input_l_p, sizeof(float) * period);
+        plug->input_l_p = plug->input_buf_l;
+    }
+    if (plug->input_r_p == plug->output_r_p) {
+        memcpy (plug->input_buf_r, plug->input_r_p, sizeof(float) * period);
+        plug->input_r_p = plug->input_buf_l;
+    }
 }
 
 static void
@@ -414,7 +435,7 @@ void run_eqlv2(LV2_Handle handle, uint32_t nframes)
     //now run
     plug->eq->out(plug->output_l_p,plug->output_r_p,nframes);
 
-    xfade_check(plug,nframes);
+    xfade_check(plug,nframes); // XXX broken due to in-place
 
     return;
 }
@@ -529,6 +550,8 @@ void run_distlv2(LV2_Handle handle, uint32_t nframes)
         plug->dist->changepar(i,val);
     }
 
+    inplace_check(plug,nframes);
+
     //now set out ports and global period size
     plug->dist->efxoutl = plug->output_l_p;
     plug->dist->efxoutr = plug->output_r_p;
@@ -605,6 +628,8 @@ void run_echolv2(LV2_Handle handle, uint32_t nframes)
             plug->echo->changepar(i,val);
         }
     }
+
+    inplace_check(plug,nframes);
 
     //now set out ports and global period size
     plug->echo->efxoutl = plug->output_l_p;
@@ -696,6 +721,8 @@ void run_choruslv2(LV2_Handle handle, uint32_t nframes)
         }
     }
 
+    inplace_check(plug,nframes);
+
     //now set out ports and global period size
     plug->chorus->efxoutl = plug->output_l_p;
     plug->chorus->efxoutr = plug->output_r_p;
@@ -775,6 +802,8 @@ void run_aphaselv2(LV2_Handle handle, uint32_t nframes)
             plug->aphase->changepar(i,val);
         }
     }
+
+    inplace_check(plug,nframes);
 
     //now set out ports and global period size
     plug->aphase->efxoutl = plug->output_l_p;
@@ -905,6 +934,9 @@ void run_harmnomidlv2(LV2_Handle handle, uint32_t nframes)
             }
         }
     }
+
+    inplace_check(plug,nframes);
+
     //now set out ports and global period size
     plug->harm->efxoutl = plug->output_l_p;
     plug->harm->efxoutr = plug->output_r_p;
@@ -1041,6 +1073,8 @@ void run_panlv2(LV2_Handle handle, uint32_t nframes)
         }
     }
 
+    inplace_check(plug,nframes);
+
     //now set out ports and global period size
     plug->pan->efxoutl = plug->output_l_p;
     plug->pan->efxoutr = plug->output_r_p;
@@ -1122,6 +1156,8 @@ void run_alienlv2(LV2_Handle handle, uint32_t nframes)
         }
     }
 
+    inplace_check(plug,nframes);
+
     //now set out ports and global period size
     plug->alien->efxoutl = plug->output_l_p;
     plug->alien->efxoutr = plug->output_r_p;
@@ -1196,6 +1232,8 @@ void run_revelv2(LV2_Handle handle, uint32_t nframes)
             plug->reve->changepar(i+2,val);
         }
     }
+
+    inplace_check(plug,nframes);
 
     //now set out ports and global period size
     plug->reve->efxoutl = plug->output_l_p;
@@ -1417,6 +1455,8 @@ void run_mdellv2(LV2_Handle handle, uint32_t nframes)
         }
     }
 
+    inplace_check(plug,nframes);
+
     //now set out ports and global period size
     plug->mdel->efxoutl = plug->output_l_p;
     plug->mdel->efxoutr = plug->output_r_p;
@@ -1499,6 +1539,8 @@ void run_wahlv2(LV2_Handle handle, uint32_t nframes)
         }
     }
 
+    inplace_check(plug,nframes);
+
     //now set out ports and global period size
     plug->wah->efxoutl = plug->output_l_p;
     plug->wah->efxoutr = plug->output_r_p;
@@ -1566,6 +1608,8 @@ void run_derelv2(LV2_Handle handle, uint32_t nframes)
         }
     }
 
+    inplace_check(plug,nframes);
+
     //now set out ports and global period size
     plug->dere->efxoutl = plug->output_l_p;
     plug->dere->efxoutr = plug->output_r_p;
@@ -1631,6 +1675,8 @@ void run_valvelv2(LV2_Handle handle, uint32_t nframes)
             plug->valve->changepar(i,val);
         }
     }
+
+    inplace_check(plug,nframes);
 
     //now set out ports and global period size
     plug->valve->efxoutl = plug->output_l_p;
@@ -1770,14 +1816,16 @@ void run_ringlv2(LV2_Handle handle, uint32_t nframes)
             plug->ring->changepar(i,val);
         }
     }
+
+    inplace_check(plug,nframes);
+
 //see process.C ln 1539
 
     //TODO may need to make sure input is over some threshold
     if(plug->ring->Pafreq)
     {
         //copy over the data so that noteID doesn't tamper with it
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug,nframes);
         plug->noteID->schmittFloat(plug->output_l_p,plug->output_r_p,nframes);
         if(plug->noteID->reconota != -1 && plug->noteID->reconota != plug->noteID->last)
         {
@@ -1857,6 +1905,8 @@ void run_mbdistlv2(LV2_Handle handle, uint32_t nframes)
         }
     }
 
+    inplace_check(plug,nframes);
+
     //now set out ports and global period size
     plug->mbdist->efxoutl = plug->output_l_p;
     plug->mbdist->efxoutr = plug->output_r_p;
@@ -1932,6 +1982,8 @@ void run_arplv2(LV2_Handle handle, uint32_t nframes)
             plug->arp->changepar(i,val);
         }
     }
+
+    inplace_check(plug,nframes);
 
     //now set out ports and global period size
     plug->arp->efxoutl = plug->output_l_p;
@@ -2041,6 +2093,8 @@ void run_shuflv2(LV2_Handle handle, uint32_t nframes)
         }
     }
 
+    inplace_check(plug,nframes);
+
     //now set out ports and global period size
     plug->shuf->efxoutl = plug->output_l_p;
     plug->shuf->efxoutr = plug->output_r_p;
@@ -2109,6 +2163,8 @@ void run_synthlv2(LV2_Handle handle, uint32_t nframes)
             plug->synth->changepar(i,val);
         }
     }
+
+    inplace_check(plug,nframes);
 
     //now set out ports and global period size
     plug->synth->efxoutl = plug->output_l_p;
@@ -2192,6 +2248,8 @@ void run_mbvollv2(LV2_Handle handle, uint32_t nframes)
         }
     }
 
+    inplace_check(plug,nframes);
+
     //now set out ports and global period size
     plug->mbvol->efxoutl = plug->output_l_p;
     plug->mbvol->efxoutr = plug->output_r_p;
@@ -2268,6 +2326,8 @@ void run_mutrolv2(LV2_Handle handle, uint32_t nframes)
             plug->mutro->changepar(i+2,val);
         }
     }
+
+    inplace_check(plug,nframes);
 
     //now set out ports and global period size
     plug->mutro->efxoutl = plug->output_l_p;
@@ -2346,6 +2406,8 @@ void run_echoverselv2(LV2_Handle handle, uint32_t nframes)
             plug->echoverse->changepar(i,val);
         }
     }
+
+    inplace_check(plug,nframes);
 
     //now set out ports and global period size
     plug->echoverse->efxoutl = plug->output_l_p;
@@ -2526,6 +2588,8 @@ void run_voclv2(LV2_Handle handle, uint32_t nframes)
         }
     }
 
+    inplace_check(plug,nframes);
+
     //set aux input and out ports
     plug->voc->auxresampled = plug->param_p[VOCODER_AUX_IN];
     plug->voc->efxoutl = plug->output_l_p;
@@ -2651,6 +2715,8 @@ void run_seqlv2(LV2_Handle handle, uint32_t nframes)
         }
     }
 
+    inplace_check(plug,nframes);
+
     //set out ports
     plug->seq->efxoutl = plug->output_l_p;
     plug->seq->efxoutr = plug->output_r_p;
@@ -2719,6 +2785,8 @@ void run_shiftlv2(LV2_Handle handle, uint32_t nframes)
             plug->shift->changepar(i,val);
         }
     }
+
+    inplace_check(plug,nframes);
 
     //set out ports
     plug->shift->efxoutl = plug->output_l_p;
@@ -2946,6 +3014,8 @@ void run_revtronlv2(LV2_Handle handle, uint32_t nframes)
             }
         }//atom is object
     }//each atom in sequence
+
+    inplace_check(plug,nframes);
 
     //now set out ports
     plug->revtron->efxoutl = plug->output_l_p;
@@ -3216,6 +3286,8 @@ void run_echotronlv2(LV2_Handle handle, uint32_t nframes)
         }//atom is object
     }//each atom in sequence
 
+    inplace_check(plug,nframes);
+
     //now set out ports
     plug->echotron->efxoutl = plug->output_l_p;
     plug->echotron->efxoutr = plug->output_r_p;
@@ -3442,6 +3514,9 @@ void run_sharmnomidlv2(LV2_Handle handle, uint32_t nframes)
             }
         }
     }
+
+    inplace_check(plug,nframes);
+
     //now set out ports and global period size
     plug->sharm->efxoutl = plug->output_l_p;
     plug->sharm->efxoutr = plug->output_r_p;
@@ -3495,6 +3570,8 @@ void run_mbcomplv2(LV2_Handle handle, uint32_t nframes)
             plug->mbcomp->changepar(i,val);
         }
     }
+
+    inplace_check(plug,nframes);
 
     //now set out ports
     plug->mbcomp->efxoutl = plug->output_l_p;
@@ -3646,6 +3723,8 @@ void run_vibelv2(LV2_Handle handle, uint32_t nframes)
         }
     }
 
+    inplace_check(plug,nframes);
+
     //now set out ports
     plug->vibe->efxoutl = plug->output_l_p;
     plug->vibe->efxoutr = plug->output_r_p;
@@ -3699,6 +3778,8 @@ void run_inflv2(LV2_Handle handle, uint32_t nframes)
             plug->inf->changepar(i,val);
         }
     }
+
+    inplace_check(plug,nframes);
 
     //now set out ports
     plug->inf->efxoutl = plug->output_l_p;
@@ -3786,6 +3867,8 @@ void run_phaselv2(LV2_Handle handle, uint32_t nframes)
             plug->phase->changepar(i,val);
         }
     }
+
+    inplace_check(plug,nframes);
 
     //now set out ports and global period size
     plug->phase->efxoutl = plug->output_l_p;
