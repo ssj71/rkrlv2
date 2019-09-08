@@ -220,6 +220,18 @@ have_signal(float* efxoutl, float* efxoutr, uint32_t period)
     else  return 0;
 }
 
+static void
+bypass_stereo (RKRLV2* plug, uint32_t nframes)
+{
+    // copy only if needed. memcpy() src/dest memory areas must not overlap.
+    if (plug->output_l_p != plug->input_l_p) {
+        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
+    }
+    if (plug->output_r_p != plug->input_r_p) {
+        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+    }
+}
+
 void
 xfade_in (RKRLV2* plug, uint32_t period)
 {
@@ -363,9 +375,7 @@ void run_eqlv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->eq->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -394,9 +404,8 @@ void run_eqlv2(LV2_Handle handle, uint32_t nframes)
         }
     }
 
-    //eq does in inline?
-    memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-    memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+    //eq does process in-place ?
+    bypass_stereo (plug, nframes);
 
     //now set out ports
     plug->eq->efxoutl = plug->output_l_p;
@@ -434,9 +443,7 @@ void run_complv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->comp->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -450,9 +457,8 @@ void run_complv2(LV2_Handle handle, uint32_t nframes)
         }
     }
 
-    //comp does in inline
-    memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-    memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+    //comp does process in-place
+    bypass_stereo (plug, nframes);
 
     //now set out ports
     plug->comp->efxoutl = plug->output_l_p;
@@ -492,9 +498,7 @@ void run_distlv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->dist->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -564,9 +568,7 @@ void run_echolv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->echo->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -643,9 +645,7 @@ void run_choruslv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->chorus->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -734,9 +734,7 @@ void run_aphaselv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->aphase->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -823,9 +821,7 @@ void run_harmnomidlv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->harm->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -951,9 +947,7 @@ void run_exciterlv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->exciter->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -967,9 +961,8 @@ void run_exciterlv2(LV2_Handle handle, uint32_t nframes)
         }
     }
 
-    //comp does in inline
-    memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-    memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+    //comp does process in-place
+    bypass_stereo (plug, nframes);
 
     //now set out ports
     plug->exciter->efxoutl = plug->output_l_p;
@@ -1006,9 +999,7 @@ void run_panlv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->pan->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -1089,9 +1080,7 @@ void run_alienlv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->alien->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -1174,9 +1163,7 @@ void run_revelv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->reve->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -1258,9 +1245,7 @@ void run_eqplv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->eq->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -1298,9 +1283,8 @@ void run_eqplv2(LV2_Handle handle, uint32_t nframes)
         }
     }
 
-    //eq does it inline?
-    memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-    memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+    //eq does process in-place ?
+    bypass_stereo (plug, nframes);
 
     //now set out ports
     plug->eq->efxoutl = plug->output_l_p;
@@ -1338,9 +1322,7 @@ void run_cablv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->cab->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -1357,9 +1339,8 @@ void run_cablv2(LV2_Handle handle, uint32_t nframes)
         plug->cab->setpreset(val);
     }
 
-    //cab does it inline?
-    memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-    memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+    //cab does process in-place?
+    bypass_stereo (plug, nframes);
 
     //now set out ports
     plug->cab->efxoutl = plug->output_l_p;
@@ -1396,9 +1377,7 @@ void run_mdellv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->mdel->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -1478,9 +1457,7 @@ void run_wahlv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->wah->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -1563,9 +1540,7 @@ void run_derelv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->dere->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -1631,9 +1606,7 @@ void run_valvelv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->valve->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -1697,9 +1670,7 @@ void run_dflangelv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->dflange->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -1726,9 +1697,8 @@ void run_dflangelv2(LV2_Handle handle, uint32_t nframes)
     plug->dflange->efxoutl = plug->output_l_p;
     plug->dflange->efxoutr = plug->output_r_p;
 
-    //dflange does it inline?
-    memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-    memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+    //dflange does process in-place?
+    bypass_stereo (plug, nframes);
 
     //now set out ports
     plug->dflange->efxoutl = plug->output_l_p;
@@ -1769,9 +1739,7 @@ void run_ringlv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->ring->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -1863,9 +1831,7 @@ void run_mbdistlv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->mbdist->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -1929,9 +1895,7 @@ void run_arplv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->arp->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -2009,9 +1973,7 @@ void run_expandlv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->expand->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -2025,9 +1987,8 @@ void run_expandlv2(LV2_Handle handle, uint32_t nframes)
         }
     }
 
-    //comp does in inline
-    memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-    memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+    //comp does process in-place
+    bypass_stereo (plug, nframes);
 
     //now set out ports
     plug->expand->efxoutl = plug->output_l_p;
@@ -2066,9 +2027,7 @@ void run_shuflv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->shuf->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -2121,9 +2080,7 @@ void run_synthlv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->synth->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -2193,9 +2150,7 @@ void run_mbvollv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->mbvol->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -2277,9 +2232,7 @@ void run_mutrolv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->mutro->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -2354,9 +2307,7 @@ void run_echoverselv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->echoverse->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -2436,9 +2387,7 @@ void run_coillv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->coil->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -2457,9 +2406,8 @@ void run_coillv2(LV2_Handle handle, uint32_t nframes)
             plug->coil->changepar(i+2,val);
         }
     }
-    //coilcrafter does it inline
-    memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-    memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+    //coilcrafter does process in-place
+    bypass_stereo (plug, nframes);
 
     //now set out ports
     plug->coil->efxoutl = plug->output_l_p;
@@ -2498,9 +2446,7 @@ void run_shelflv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->shelf->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -2513,9 +2459,8 @@ void run_shelflv2(LV2_Handle handle, uint32_t nframes)
             plug->shelf->changepar(i,val);
         }
     }
-    //coilcrafter does it inline
-    memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-    memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+    //coilcrafter does process in-place
+    bypass_stereo (plug, nframes);
 
     //now set out ports
     plug->shelf->efxoutl = plug->output_l_p;
@@ -2555,9 +2500,7 @@ void run_voclv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->voc->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -2626,9 +2569,7 @@ void run_suslv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->sus->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -2642,9 +2583,8 @@ void run_suslv2(LV2_Handle handle, uint32_t nframes)
         }
     }
 
-    //sustainer does it inline
-    memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-    memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+    //sustainer does process in-place
+    bypass_stereo (plug, nframes);
 
     //now set out ports
     plug->sus->efxoutl = plug->output_l_p;
@@ -2684,9 +2624,7 @@ void run_seqlv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->seq->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -2754,9 +2692,7 @@ void run_shiftlv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->shift->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -2825,9 +2761,7 @@ void run_stomplv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->stomp->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -2841,9 +2775,8 @@ void run_stomplv2(LV2_Handle handle, uint32_t nframes)
         }
     }
 
-    //stompbox does it inline
-    memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-    memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+    //stompbox does process in-place
+    bypass_stereo (plug, nframes);
 
     //now set out ports
     plug->stomp->efxoutl = plug->output_l_p;
@@ -2909,9 +2842,7 @@ void run_revtronlv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->revtron->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -3163,9 +3094,7 @@ void run_echotronlv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->echotron->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -3431,9 +3360,7 @@ void run_sharmnomidlv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->sharm->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -3555,9 +3482,7 @@ void run_mbcomplv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->mbcomp->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -3609,9 +3534,7 @@ void run_otremlv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->otrem->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -3641,9 +3564,8 @@ void run_otremlv2(LV2_Handle handle, uint32_t nframes)
         plug->otrem->changepar(i,val);
     }
 
-    //optotrem does it inline
-    memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-    memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+    //optotrem does process in-place
+    bypass_stereo (plug, nframes);
 
     //now set out ports
     plug->otrem->efxoutl = plug->output_l_p;
@@ -3680,9 +3602,7 @@ void run_vibelv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->vibe->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -3766,9 +3686,7 @@ void run_inflv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->inf->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -3821,9 +3739,7 @@ void run_phaselv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->phase->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -3911,9 +3827,7 @@ void run_gatelv2(LV2_Handle handle, uint32_t nframes)
     if(*plug->bypass_p && plug->prev_bypass)
     {
         plug->gate->cleanup();
-        //copy dry signal
-        memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-        memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+        bypass_stereo (plug, nframes);
         return;
     }
 
@@ -3927,9 +3841,8 @@ void run_gatelv2(LV2_Handle handle, uint32_t nframes)
         }
     }
 
-    //gate does inline
-    memcpy(plug->output_l_p,plug->input_l_p,sizeof(float)*nframes);
-    memcpy(plug->output_r_p,plug->input_r_p,sizeof(float)*nframes);
+    //gate does process in-place
+    bypass_stereo (plug, nframes);
 
     //now set out ports
     plug->gate->efxoutl = plug->output_l_p;
