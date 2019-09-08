@@ -253,6 +253,22 @@ bypass_stereo (RKRLV2* plug, uint32_t nframes)
     }
 }
 
+static void
+prepare_inplace (RKRLV2* plug, uint32_t nframes)
+{
+	/* When a plugin processes in-place, but the
+	 * host provides separate i/o buffers,
+	 * copy inputs to outputs */
+	bypass_stereo(plug,nframes);
+
+	/* when a host provides inplace buffers,
+	 * make a backup f x-fade IFF required
+	 */
+	if (*plug->bypass_p || plug->prev_bypass) {
+		inplace_check (plug,nframes);
+	}
+}
+
 void
 xfade_in (RKRLV2* plug, uint32_t period)
 {
@@ -426,7 +442,7 @@ void run_eqlv2(LV2_Handle handle, uint32_t nframes)
     }
 
     //eq does process in-place ?
-    bypass_stereo (plug, nframes);
+    prepare_inplace (plug, nframes);
 
     //now set out ports
     plug->eq->efxoutl = plug->output_l_p;
@@ -435,7 +451,7 @@ void run_eqlv2(LV2_Handle handle, uint32_t nframes)
     //now run
     plug->eq->out(plug->output_l_p,plug->output_r_p,nframes);
 
-    xfade_check(plug,nframes); // XXX broken due to in-place
+    xfade_check(plug,nframes);
 
     return;
 }
@@ -479,7 +495,7 @@ void run_complv2(LV2_Handle handle, uint32_t nframes)
     }
 
     //comp does process in-place
-    bypass_stereo (plug, nframes);
+    prepare_inplace (plug, nframes);
 
     //now set out ports
     plug->comp->efxoutl = plug->output_l_p;
@@ -994,7 +1010,7 @@ void run_exciterlv2(LV2_Handle handle, uint32_t nframes)
     }
 
     //comp does process in-place
-    bypass_stereo (plug, nframes);
+    prepare_inplace (plug, nframes);
 
     //now set out ports
     plug->exciter->efxoutl = plug->output_l_p;
@@ -1322,7 +1338,7 @@ void run_eqplv2(LV2_Handle handle, uint32_t nframes)
     }
 
     //eq does process in-place ?
-    bypass_stereo (plug, nframes);
+    prepare_inplace (plug, nframes);
 
     //now set out ports
     plug->eq->efxoutl = plug->output_l_p;
@@ -1378,7 +1394,7 @@ void run_cablv2(LV2_Handle handle, uint32_t nframes)
     }
 
     //cab does process in-place?
-    bypass_stereo (plug, nframes);
+    prepare_inplace (plug, nframes);
 
     //now set out ports
     plug->cab->efxoutl = plug->output_l_p;
@@ -1744,7 +1760,7 @@ void run_dflangelv2(LV2_Handle handle, uint32_t nframes)
     plug->dflange->efxoutr = plug->output_r_p;
 
     //dflange does process in-place?
-    bypass_stereo (plug, nframes);
+    prepare_inplace (plug, nframes);
 
     //now set out ports
     plug->dflange->efxoutl = plug->output_l_p;
@@ -2040,7 +2056,7 @@ void run_expandlv2(LV2_Handle handle, uint32_t nframes)
     }
 
     //comp does process in-place
-    bypass_stereo (plug, nframes);
+    prepare_inplace (plug, nframes);
 
     //now set out ports
     plug->expand->efxoutl = plug->output_l_p;
@@ -2469,7 +2485,7 @@ void run_coillv2(LV2_Handle handle, uint32_t nframes)
         }
     }
     //coilcrafter does process in-place
-    bypass_stereo (plug, nframes);
+    prepare_inplace (plug, nframes);
 
     //now set out ports
     plug->coil->efxoutl = plug->output_l_p;
@@ -2522,7 +2538,7 @@ void run_shelflv2(LV2_Handle handle, uint32_t nframes)
         }
     }
     //coilcrafter does process in-place
-    bypass_stereo (plug, nframes);
+    prepare_inplace (plug, nframes);
 
     //now set out ports
     plug->shelf->efxoutl = plug->output_l_p;
@@ -2648,7 +2664,7 @@ void run_suslv2(LV2_Handle handle, uint32_t nframes)
     }
 
     //sustainer does process in-place
-    bypass_stereo (plug, nframes);
+    prepare_inplace (plug, nframes);
 
     //now set out ports
     plug->sus->efxoutl = plug->output_l_p;
@@ -2844,7 +2860,7 @@ void run_stomplv2(LV2_Handle handle, uint32_t nframes)
     }
 
     //stompbox does process in-place
-    bypass_stereo (plug, nframes);
+    prepare_inplace (plug, nframes);
 
     //now set out ports
     plug->stomp->efxoutl = plug->output_l_p;
@@ -3642,7 +3658,7 @@ void run_otremlv2(LV2_Handle handle, uint32_t nframes)
     }
 
     //optotrem does process in-place
-    bypass_stereo (plug, nframes);
+    prepare_inplace (plug, nframes);
 
     //now set out ports
     plug->otrem->efxoutl = plug->output_l_p;
@@ -3925,7 +3941,7 @@ void run_gatelv2(LV2_Handle handle, uint32_t nframes)
     }
 
     //gate does process in-place
-    bypass_stereo (plug, nframes);
+    prepare_inplace (plug, nframes);
 
     //now set out ports
     plug->gate->efxoutl = plug->output_l_p;
