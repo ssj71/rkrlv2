@@ -96,7 +96,9 @@ Vibe::out (float *smpsl, float *smpsr, uint32_t period)
 
     unsigned int i,j;
     float lfol, lfor, xl, xr, fxl, fxr;
-    //float vbe,vin;
+#ifdef VIBE_INLINE_PROCESS
+    float vbe,vin;
+#endif
     float cvolt, ocvolt, evolt, input;
     float emitterfb = 0.0f;
     float outl, outr;
@@ -156,8 +158,7 @@ Vibe::out (float *smpsl, float *smpsr, uint32_t period)
         input = bjt_shape(fbl + smpsl[i]);
 
 
-        /*
-        //Inline BJT Shaper below
+#ifdef VIBE_INLINE_PROCESS
             vin = 7.5f*(1.0f + fbl+smpsl[i]);
             if(vin<0.0f) vin = 0.0f;
             if(vin>15.0f) vin = 15.0f;
@@ -165,11 +166,11 @@ Vibe::out (float *smpsl, float *smpsr, uint32_t period)
             input = vin - vbe;
             input = input*0.1333333333f -0.90588f;  //some magic numbers to return gain to unity & zero the DC
 
-        */
+#endif
 
         emitterfb = 25.0f/fxl;
         for(j=0; j<4; j++) { //4 stages phasing
-            /*
+#ifdef VIBE_INLINE_PROCESS
             //Inline filter implementation below
                 float y0 = 0.0f;
                 y0 = input*ecvc[j].n0 + ecvc[j].x1*ecvc[j].n1 - ecvc[j].y1*ecvc[j].d1;
@@ -202,16 +203,15 @@ Vibe::out (float *smpsl, float *smpsr, uint32_t period)
                 vbe = 0.8f - 0.8f/(vin + 1.0f);  //really rough, simplistic bjt turn-on emulator
                 input = vin - vbe;
                 input = input*0.1333333333f -0.90588f;  //some magic numbers to return gain to unity & zero the DC
-            */
 
-// Orig code, Comment below if instead using inline
+#else // Orig code, Comment below if instead using inline
             cvolt = vibefilter(input,ecvc,j) + vibefilter(input + emitterfb*oldcvolt[j],vc,j);
             ocvolt = vibefilter(cvolt,vcvo,j);
             oldcvolt[j] = ocvolt;
             evolt = vibefilter(input, vevo,j);
 
             input = bjt_shape(ocvolt + evolt);
-            //Close comment here if using inline
+#endif
 
         }
         fbl = fb*ocvolt;
@@ -220,7 +220,7 @@ Vibe::out (float *smpsl, float *smpsr, uint32_t period)
         //Right channel
 
         if(Pstereo) {
-            /*
+#ifdef VIBE_INLINE_PROCESS
             //Inline BJT shaper
              vin = 7.5f*(1.0f + fbr+smpsr[i]);
              if(vin<0.0f) vin = 0.0f;
@@ -228,7 +228,7 @@ Vibe::out (float *smpsl, float *smpsr, uint32_t period)
              vbe = 0.8f - 0.8f/(vin + 1.0f);  //really rough, simplistic bjt turn-on emulator
              input = vin - vbe;
              input = input*0.1333333333f -0.90588f;  //some magic numbers to return gain to unity & zero the DC
-             */
+#endif
 
 
 //Orig code
@@ -238,8 +238,7 @@ Vibe::out (float *smpsl, float *smpsr, uint32_t period)
             emitterfb = 25.0f/fxr;
             for(j=4; j<8; j++) { //4 stages phasing
 
-                /*
-                //This is the inline version
+#ifdef VIBE_INLINE_PROCESS
 
                     float y0 = 0.0f;
                     y0 = input*ecvc[j].n0 + ecvc[j].x1*ecvc[j].n1 - ecvc[j].y1*ecvc[j].d1;
@@ -274,16 +273,14 @@ Vibe::out (float *smpsl, float *smpsr, uint32_t period)
                     input = vin - vbe;
                     input = input*0.1333333333f -0.90588f;  //some magic numbers to return gain to unity & zero the DC
 
-                */
-
-//  Comment block below if using inline code instead
+#else
                 cvolt = vibefilter(input,ecvc,j) + vibefilter(input + emitterfb*oldcvolt[j],vc,j);
                 ocvolt = vibefilter(cvolt,vcvo,j);
                 oldcvolt[j] = ocvolt;
                 evolt = vibefilter(input, vevo,j);
 
                 input = bjt_shape(ocvolt + evolt);
-// Close comment here if inlining
+#endif
             }
 
             fbr = fb*ocvolt;
