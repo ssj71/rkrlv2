@@ -3594,7 +3594,7 @@ void run_mbcomplv2(LV2_Handle handle, uint32_t nframes)
     plug->mbcomp->efxoutr = plug->output_r_p;
 
     //now run
-    plug->mbcomp->out(plug->output_l_p,plug->output_r_p,nframes);
+    plug->mbcomp->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
     wetdry_mix(plug, plug->mbcomp->outvolume, nframes);
@@ -3746,7 +3746,7 @@ void run_vibelv2(LV2_Handle handle, uint32_t nframes)
     plug->vibe->efxoutr = plug->output_r_p;
 
     //now run
-    plug->vibe->out(plug->output_l_p,plug->output_r_p,nframes);
+    plug->vibe->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
     wetdry_mix(plug, plug->vibe->outvolume, nframes);
@@ -3802,7 +3802,7 @@ void run_inflv2(LV2_Handle handle, uint32_t nframes)
     plug->inf->efxoutr = plug->output_r_p;
 
     //now run
-    plug->inf->out(plug->output_l_p,plug->output_r_p,nframes);
+    plug->inf->out(plug->input_l_p,plug->input_r_p,nframes);
 
     //and for whatever reason we have to do the wet/dry mix ourselves
     wetdry_mix(plug, plug->inf->outvolume, nframes);
