@@ -86,8 +86,19 @@ Vibe::~Vibe ()
 void
 Vibe::cleanup ()
 {
+    /* also used after bypass to reset filter state */
+    for (int i = 0; i < 8; ++i) {
+        vc[i].clear ();
+        vcvo[i].clear ();
+        ecvc[i].clear ();
+        vevo[i].clear ();
+        bootstrap[i].clear ();
+    }
 
-
+    /* should probably reset modulation state here,
+     * but Vibe::cleanup is currently called periodically
+     * on every bypass call. -- That need fixing first.
+     */
 };
 
 void
@@ -298,7 +309,7 @@ Vibe::out (float *smpsl, float *smpsr, uint32_t period)
 };
 
 float
-Vibe::vibefilter(float data, fparams *ftype, int stage)
+Vibe::vibefilter(float data, fparams *ftype, int stage) const
 {
     float y0 = 0.0f;
     y0 = data*ftype[stage].n0 + ftype[stage].x1*ftype[stage].n1 - ftype[stage].y1*ftype[stage].d1;
@@ -308,7 +319,7 @@ Vibe::vibefilter(float data, fparams *ftype, int stage)
 };
 
 float
-Vibe::bjt_shape(float data)
+Vibe::bjt_shape(float data) const
 {
     float vbe, vout;
     float vin = 7.5f*(1.0f + data);
