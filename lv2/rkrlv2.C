@@ -411,7 +411,6 @@ void run_eqlv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->eq->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -452,6 +451,10 @@ void run_eqlv2(LV2_Handle handle, uint32_t nframes)
     plug->eq->out(plug->output_l_p,plug->output_r_p,nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->eq->cleanup();
+    }
 
     return;
 }
@@ -479,7 +482,6 @@ void run_complv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->comp->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -505,6 +507,10 @@ void run_complv2(LV2_Handle handle, uint32_t nframes)
     plug->comp->out(plug->output_l_p,plug->output_r_p,nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->comp->cleanup();
+    }
     return;
 }
 
@@ -534,7 +540,6 @@ void run_distlv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->dist->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -579,6 +584,10 @@ void run_distlv2(LV2_Handle handle, uint32_t nframes)
     wetdry_mix(plug, plug->dist->outvolume, nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->dist->cleanup();
+    }
     return;
 }
 
@@ -606,7 +615,6 @@ void run_echolv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->echo->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -658,6 +666,10 @@ void run_echolv2(LV2_Handle handle, uint32_t nframes)
     wetdry_mix(plug, plug->echo->outvolume, nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->echo->cleanup();
+    }
     return;
 }
 
@@ -685,7 +697,6 @@ void run_choruslv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->chorus->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -750,6 +761,10 @@ void run_choruslv2(LV2_Handle handle, uint32_t nframes)
     wetdry_mix(plug, plug->chorus->outvolume, nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->chorus->cleanup();
+    }
     return;
 }
 
@@ -776,7 +791,6 @@ void run_aphaselv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->aphase->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -832,6 +846,10 @@ void run_aphaselv2(LV2_Handle handle, uint32_t nframes)
     wetdry_mix(plug, plug->aphase->outvolume, nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->aphase->cleanup();
+    }
     return;
 }
 
@@ -865,7 +883,6 @@ void run_harmnomidlv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->harm->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -964,6 +981,10 @@ void run_harmnomidlv2(LV2_Handle handle, uint32_t nframes)
     wetdry_mix(plug, plug->harm->outvolume, nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->harm->cleanup();
+    }
     return;
 }
 
@@ -994,7 +1015,6 @@ void run_exciterlv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->exciter->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -1020,6 +1040,10 @@ void run_exciterlv2(LV2_Handle handle, uint32_t nframes)
     plug->exciter->out(plug->output_l_p,plug->output_r_p,nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->exciter->cleanup();
+    }
     return;
 }
 
@@ -1046,7 +1070,6 @@ void run_panlv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->pan->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -1102,6 +1125,10 @@ void run_panlv2(LV2_Handle handle, uint32_t nframes)
     wetdry_mix(plug, plug->pan->outvolume, nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->pan->cleanup();
+    }
     return;
 }
 
@@ -1129,7 +1156,6 @@ void run_alienlv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->alien->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -1185,6 +1211,10 @@ void run_alienlv2(LV2_Handle handle, uint32_t nframes)
     wetdry_mix(plug, plug->alien->outvolume, nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->alien->cleanup();
+    }
     return;
 }
 
@@ -1214,7 +1244,6 @@ void run_revelv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->reve->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -1262,6 +1291,10 @@ void run_revelv2(LV2_Handle handle, uint32_t nframes)
     wetdry_mix(plug, plug->reve->outvolume, nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->reve->cleanup();
+    }
     return;
 }
 
@@ -1298,7 +1331,6 @@ void run_eqplv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->eq->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -1348,6 +1380,10 @@ void run_eqplv2(LV2_Handle handle, uint32_t nframes)
     plug->eq->out(plug->output_l_p,plug->output_r_p,nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->eq->cleanup();
+    }
     return;
 }
 
@@ -1375,7 +1411,6 @@ void run_cablv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->cab->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -1404,6 +1439,10 @@ void run_cablv2(LV2_Handle handle, uint32_t nframes)
     plug->cab->out(plug->output_l_p,plug->output_r_p,nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->cab->cleanup();
+    }
     return;
 }
 
@@ -1430,7 +1469,6 @@ void run_mdellv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->mdel->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -1484,6 +1522,10 @@ void run_mdellv2(LV2_Handle handle, uint32_t nframes)
     wetdry_mix(plug, plug->mdel->outvolume, nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->mdel->cleanup();
+    }
     return;
 }
 
@@ -1512,7 +1554,6 @@ void run_wahlv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->wah->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -1568,6 +1609,10 @@ void run_wahlv2(LV2_Handle handle, uint32_t nframes)
     wetdry_mix(plug, plug->wah->outvolume, nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->wah->cleanup();
+    }
     return;
 }
 
@@ -1597,7 +1642,6 @@ void run_derelv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->dere->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -1637,6 +1681,10 @@ void run_derelv2(LV2_Handle handle, uint32_t nframes)
     wetdry_mix(plug, plug->dere->outvolume, nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->dere->cleanup();
+    }
     return;
 }
 
@@ -1665,7 +1713,6 @@ void run_valvelv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->valve->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -1705,6 +1752,10 @@ void run_valvelv2(LV2_Handle handle, uint32_t nframes)
     wetdry_mix(plug, plug->valve->outvolume, nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->valve->cleanup();
+    }
     return;
 }
 
@@ -1731,7 +1782,6 @@ void run_dflangelv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->dflange->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -1770,6 +1820,10 @@ void run_dflangelv2(LV2_Handle handle, uint32_t nframes)
     plug->dflange->out(plug->output_l_p,plug->output_r_p,nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->dflange->cleanup();
+    }
     return;
 }
 
@@ -1800,7 +1854,6 @@ void run_ringlv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->ring->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -1864,6 +1917,10 @@ void run_ringlv2(LV2_Handle handle, uint32_t nframes)
     wetdry_mix(plug, plug->ring->outvolume, nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->ring->cleanup();
+    }
     return;
 }
 
@@ -1894,7 +1951,6 @@ void run_mbdistlv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->mbdist->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -1934,6 +1990,10 @@ void run_mbdistlv2(LV2_Handle handle, uint32_t nframes)
     wetdry_mix(plug, plug->mbdist->outvolume, nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->mbdist->cleanup();
+    }
     return;
 }
 
@@ -1960,7 +2020,6 @@ void run_arplv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->arp->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -2012,6 +2071,10 @@ void run_arplv2(LV2_Handle handle, uint32_t nframes)
     wetdry_mix(plug, plug->arp->outvolume, nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->arp->cleanup();
+    }
     return;
 }
 
@@ -2040,7 +2103,6 @@ void run_expandlv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->expand->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -2066,6 +2128,10 @@ void run_expandlv2(LV2_Handle handle, uint32_t nframes)
     plug->expand->out(plug->output_l_p,plug->output_r_p,nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->expand->cleanup();
+    }
     return;
 }
 
@@ -2094,7 +2160,6 @@ void run_shuflv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->shuf->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -2122,6 +2187,10 @@ void run_shuflv2(LV2_Handle handle, uint32_t nframes)
     wetdry_mix(plug, plug->shuf->outvolume, nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->shuf->cleanup();
+    }
     return;
 }
 
@@ -2149,7 +2218,6 @@ void run_synthlv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->synth->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -2193,6 +2261,10 @@ void run_synthlv2(LV2_Handle handle, uint32_t nframes)
     wetdry_mix(plug, plug->synth->outvolume, nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->synth->cleanup();
+    }
     return;
 }
 
@@ -2221,7 +2293,6 @@ void run_mbvollv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->mbvol->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -2277,6 +2348,10 @@ void run_mbvollv2(LV2_Handle handle, uint32_t nframes)
     wetdry_mix(plug, plug->mbvol->outvolume, nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->mbvol->cleanup();
+    }
     return;
 }
 
@@ -2305,7 +2380,6 @@ void run_mutrolv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->mutro->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -2356,6 +2430,10 @@ void run_mutrolv2(LV2_Handle handle, uint32_t nframes)
     wetdry_mix(plug, plug->mutro->outvolume, nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->mutro->cleanup();
+    }
     return;
 }
 
@@ -2382,7 +2460,6 @@ void run_echoverselv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->echoverse->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -2436,6 +2513,10 @@ void run_echoverselv2(LV2_Handle handle, uint32_t nframes)
     wetdry_mix(plug, plug->echoverse->outvolume, nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->echoverse->cleanup();
+    }
     return;
 }
 
@@ -2464,7 +2545,6 @@ void run_coillv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->coil->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -2495,6 +2575,10 @@ void run_coillv2(LV2_Handle handle, uint32_t nframes)
     plug->coil->out(plug->output_l_p,plug->output_r_p,nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->coil->cleanup();
+    }
     return;
 }
 
@@ -2523,7 +2607,6 @@ void run_shelflv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->shelf->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -2548,6 +2631,10 @@ void run_shelflv2(LV2_Handle handle, uint32_t nframes)
     plug->shelf->out(plug->output_l_p,plug->output_r_p,nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->shelf->cleanup();
+    }
     return;
 }
 
@@ -2577,7 +2664,6 @@ void run_voclv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->voc->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -2621,6 +2707,10 @@ void run_voclv2(LV2_Handle handle, uint32_t nframes)
     *plug->param_p[VOCODER_VU_LEVEL] = plug->voc->vulevel;
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->voc->cleanup();
+    }
     return;
 }
 
@@ -2648,7 +2738,6 @@ void run_suslv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->sus->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -2674,6 +2763,10 @@ void run_suslv2(LV2_Handle handle, uint32_t nframes)
     plug->sus->out(plug->output_l_p,plug->output_r_p,nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->sus->cleanup();
+    }
     return;
 }
 
@@ -2703,7 +2796,6 @@ void run_seqlv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->seq->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -2744,6 +2836,10 @@ void run_seqlv2(LV2_Handle handle, uint32_t nframes)
     wetdry_mix(plug, plug->seq->outvolume, nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->seq->cleanup();
+    }
     return;
 }
 
@@ -2773,7 +2869,6 @@ void run_shiftlv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->shift->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -2815,6 +2910,10 @@ void run_shiftlv2(LV2_Handle handle, uint32_t nframes)
     wetdry_mix(plug, plug->shift->outvolume, nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->shift->cleanup();
+    }
     return;
 }
 
@@ -2844,7 +2943,6 @@ void run_stomplv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->stomp->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -2870,6 +2968,10 @@ void run_stomplv2(LV2_Handle handle, uint32_t nframes)
     plug->stomp->out(plug->output_l_p,plug->output_r_p,nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->stomp->cleanup();
+    }
     return;
 }
 ///// StompBox Fuzz /////////
@@ -2925,7 +3027,6 @@ void run_revtronlv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->revtron->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -3044,6 +3145,10 @@ void run_revtronlv2(LV2_Handle handle, uint32_t nframes)
     wetdry_mix(plug, plug->revtron->outvolume, nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->revtron->cleanup();
+    }
     return;
 }
 
@@ -3179,7 +3284,6 @@ void run_echotronlv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->echotron->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -3315,6 +3419,10 @@ void run_echotronlv2(LV2_Handle handle, uint32_t nframes)
     wetdry_mix(plug, plug->echotron->outvolume, nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->echotron->cleanup();
+    }
     return;
 }
 
@@ -3447,7 +3555,6 @@ void run_sharmnomidlv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->sharm->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -3544,6 +3651,10 @@ void run_sharmnomidlv2(LV2_Handle handle, uint32_t nframes)
     wetdry_mix(plug, plug->sharm->outvolume, nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->sharm->cleanup();
+    }
     return;
 }
 
@@ -3572,7 +3683,6 @@ void run_mbcomplv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->mbcomp->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -3600,6 +3710,10 @@ void run_mbcomplv2(LV2_Handle handle, uint32_t nframes)
     wetdry_mix(plug, plug->mbcomp->outvolume, nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->mbcomp->cleanup();
+    }
     return;
 }
 
@@ -3626,7 +3740,6 @@ void run_otremlv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->otrem->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -3668,6 +3781,10 @@ void run_otremlv2(LV2_Handle handle, uint32_t nframes)
     plug->otrem->out(plug->output_l_p,plug->output_r_p,nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->otrem->cleanup();
+    }
     return;
 }
 
@@ -3694,7 +3811,6 @@ void run_vibelv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->vibe->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -3752,6 +3868,10 @@ void run_vibelv2(LV2_Handle handle, uint32_t nframes)
     wetdry_mix(plug, plug->vibe->outvolume, nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->vibe->cleanup();
+    }
     return;
 }
 
@@ -3780,7 +3900,6 @@ void run_inflv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->inf->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -3808,6 +3927,10 @@ void run_inflv2(LV2_Handle handle, uint32_t nframes)
     wetdry_mix(plug, plug->inf->outvolume, nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->inf->cleanup();
+    }
     return;
 }
 
@@ -3835,7 +3958,6 @@ void run_phaselv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->phase->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -3897,6 +4019,10 @@ void run_phaselv2(LV2_Handle handle, uint32_t nframes)
     wetdry_mix(plug, plug->phase->outvolume, nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->phase->cleanup();
+    }
     return;
 }
 
@@ -3925,7 +4051,6 @@ void run_gatelv2(LV2_Handle handle, uint32_t nframes)
 
     if(*plug->bypass_p && plug->prev_bypass)
     {
-        plug->gate->cleanup();
         bypass_stereo (plug, nframes);
         return;
     }
@@ -3951,6 +4076,10 @@ void run_gatelv2(LV2_Handle handle, uint32_t nframes)
     plug->gate->out(plug->output_l_p,plug->output_r_p,nframes);
 
     xfade_check(plug,nframes);
+    if(plug->prev_bypass)
+    {
+        plug->gate->cleanup();
+    }
     return;
 }
 
